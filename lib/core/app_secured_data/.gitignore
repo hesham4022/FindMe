@@ -1,0 +1,6 @@
+# Hide key from version control
+# api_keys.dart
+mo_email.dart
+# exclude all ..env files from source control
+*.env
+env.g.dart

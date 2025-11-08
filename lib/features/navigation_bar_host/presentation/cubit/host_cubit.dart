@@ -1,0 +1,57 @@
+import 'package:equatable/equatable.dart';
+import 'package:find_me_app/features/auth/data/model/signin_user.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:find_me_app/core/error_management/exception.dart';
+import 'package:find_me_app/core/error_management/failure.dart';
+import 'package:find_me_app/features/auth/data/model/authed_user.dart';
+import 'package:find_me_app/features/auth/data/source/auth_local.dart';
+
+part 'host_state.dart';
+
+class HostCubit extends Cubit<HostState> {
+  HostCubit(
+    int initialIndex,
+    this._authLocal,
+  ) : super(HostState.initial(initialIndex));
+
+  final AuthLocal _authLocal;
+
+  void changeIndex(int index) {
+    emit(state.copyWith(
+      selectedIndex: index,
+      status: HostStatus.success,
+      clearFailure: true,
+    ));
+  }
+
+  // Future<void> getUserData() async {
+  //   try {
+  //     emit(state.copyWith(status: HostStatus.loading, clearFailure: true));
+
+  //     // بـ يرجّع AuthedUser الجديد من الكاش
+  //     final authedUser = await _authLocal.getCachedAuthedUser();
+
+  //     emit(state.copyWith(
+  //       user: authedUser, // ← احفظ AuthedUser مباشرة
+  //       status: HostStatus.success,
+  //       clearFailure: true,
+  //     ));
+  //   } on UserTokenException catch (e) {
+  //     emit(state.copyWith(
+  //       status: HostStatus.failure,
+  //       failure: UserTokenFailure(e.msg),
+  //     ));
+  //   } catch (e) {
+  //     emit(state.copyWith(
+  //       status: HostStatus.failure,
+  //       failure: Failure(e.toString()),
+  //     ));
+  //   }
+  // }
+
+  Future<void> logout() async {
+    await _authLocal.deleteAuthedUser();
+    emit(state.copyWith(
+        user: null, status: HostStatus.initial, clearFailure: true));
+  }
+}
