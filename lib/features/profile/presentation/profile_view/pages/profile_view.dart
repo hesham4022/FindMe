@@ -3,6 +3,7 @@ import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/features/Home/presentation/cubit/cubit/user_cubit.dart';
+import 'package:find_me_app/features/auth/presentation/cubit/delete_account/delete_account_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/pages/signin.dart';
 import 'package:find_me_app/features/navigation_bar_host/data/model/bottom_nav_bar.dart';
@@ -21,6 +22,7 @@ class ProfileView extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: const CustomAppBar(
+        hideBackButton: true,
         title: Text("My Profile"),
       ),
       body: BlocBuilder<UserCubit, UserState>(

@@ -1,5 +1,6 @@
 import 'package:find_me_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/features/navigation_bar_host/data/model/bottom_nav_bar.dart';
@@ -25,9 +26,29 @@ class HostView extends StatelessWidget {
         builder: (context, state) {
           return PopScope(
             canPop: false,
+            onPopInvoked: (didPop) {
+              if (!didPop) {
+                final hostCubit = context.read<HostCubit>();
+                final history = hostCubit.tabHistory;
+
+                final currentIndex = hostCubit.state.selectedIndex;
+
+                if (currentIndex == 0) {
+                  SystemNavigator.pop();
+                  return;
+                }
+
+                if (history.length > 1) {
+                  history.removeLast();
+                  final previousIndex = history.last;
+                  hostCubit.emit(
+                      hostCubit.state.copyWith(selectedIndex: previousIndex));
+                } else {
+                  SystemNavigator.pop();
+                }
+              }
+            },
             child: Scaffold(
-              backgroundColor: Colors.white,
-              resizeToAvoidBottomInset: false,
               body: Center(
                 child: kUserBottomBarTabs[state.selectedIndex].screen,
               ),

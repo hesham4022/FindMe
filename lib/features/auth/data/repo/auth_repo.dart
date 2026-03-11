@@ -138,7 +138,6 @@ class AuthRepo {
         final json = await _authRemote.resetPassword(request);
         final response = ResetPasswordResponse.fromJson(json);
 
-        // ✅ خزّن المستخدم والتوكنات وحالة الدخول
         await Future.wait([
           _localSource.saveUser(response.user),
           _localSource.saveAccessToken(response.accessToken),
@@ -174,6 +173,18 @@ class AuthRepo {
   //     },
   //   );
   // }
+
+  Future<Either<Failure, String>> deleteAccount() {
+    print('🗑️ [AuthRepo] Sending delete account request');
+
+    return executeFunctionality<String>(
+      function: () async {
+        final result = await _authRemote.deleteAccount();
+        print('✅ [AuthRepo] Delete Account Response: $result');
+        return result;
+      },
+    );
+  }
 
   Future<Either<Failure, SuccessResponse>> sendOTP(String email) {
     return executeFunctionality<SuccessResponse>(

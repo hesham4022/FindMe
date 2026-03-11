@@ -1,20 +1,17 @@
 import 'package:easy_localization/easy_localization.dart';
+import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
-import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
-import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
-import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/auth/presentation/widgets/signin_fields.dart';
-import 'package:find_me_app/features/profile/data/model/info_tile_model.dart';
+import 'package:find_me_app/features/auth/presentation/cubit/delete_account/delete_account_cubit.dart';
+import 'package:find_me_app/features/auth/presentation/cubit/delete_account/delete_account_listener.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/menu_Item_widget.dart';
-import 'package:find_me_app/features/profile/presentation/widgets/profile_info_list_widget.dart';
+import 'package:find_me_app/features/settings/presentation/pages/widgets/delete_account_dialog.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:find_me_app/core/resources/strings.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SettingsView extends StatelessWidget {
   const SettingsView({
@@ -23,15 +20,19 @@ class SettingsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
+        hideBackButton: true,
         height: 46,
         background: Colors.white,
         titleText: AppStrings.settings,
       ),
       resizeToAvoidBottomInset: false,
-      body: const _PersonalInfoBody(),
+      body: BlocProvider(
+        create: (context) => DeleteAccountCubit(sl()),
+        child: const _PersonalInfoBody(),
+      ),
     );
   }
 }
@@ -41,49 +42,59 @@ class _PersonalInfoBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      // padding: const EdgeInsets.only(top: 8, bottom: 20).h,
-      children: [
-        VSpace(30),
-        MenuItemWidget(
-          isContainer: false,
-          icon: Icons.lightbulb_outlined,
-          title: "Notification Setting",
-          onTap: () {
-            context.toNamed(AppRoutes.notificationSettingRoute);
-          },
-        ),
-        VSpace(10),
-        MenuItemWidget(
-          isContainer: false,
-          icon: Icons.key,
-          title: "Password Manager",
-          onTap: () {
-            context.toNamed(AppRoutes.changePasswordRoute);
-          },
-        ),
-        VSpace(10),
-        MenuItemWidget(
-          isContainer: false,
-          icon: Icons.person_outlined,
-          title: "Delete Account",
-          onTap: () {},
-        ),
-        VSpace(10),
-        MenuItemWidget(
-          isContainer: false,
-          icon: Icons.public_rounded,
-          title: "Change Language",
-          onTap: () {
-            context.locale.languageCode == 'en'
-                ? context.setLocale(Locale('ar'))
-                : context.setLocale(Locale('en'));
-          },
-        ),
+    return BlocListener<DeleteAccountCubit, DeleteAccountState>(
+      listener: deleteAccountListener,
+      child: ListView(
+        // padding: const EdgeInsets.only(top: 8, bottom: 20).h,
+        children: [
+          VSpace(30),
+          MenuItemWidget(
+            isContainer: false,
+            icon: Icons.lightbulb_outlined,
+            title: "Notification Setting",
+            onTap: () {
+              context.toNamed(AppRoutes.notificationSettingRoute);
+            },
+          ),
+          VSpace(10),
+          MenuItemWidget(
+            isContainer: false,
+            icon: Icons.key,
+            title: "Password Manager",
+            onTap: () {
+              context.toNamed(AppRoutes.changePasswordRoute);
+            },
+          ),
+          VSpace(10),
+          MenuItemWidget(
+            isContainer: false,
+            icon: Icons.person_outlined,
+            title: "Delete Account",
+            onTap: () {
+              DeleteAcountDialog.show(
+                context,
+                onConfirm: () {
+                  context.read<DeleteAccountCubit>().deleteAccount();
+                },
+              );
+            },
+          ),
+          VSpace(10),
+          MenuItemWidget(
+            isContainer: false,
+            icon: Icons.public_rounded,
+            title: "Change Language",
+            onTap: () {
+              context.locale.languageCode == 'en'
+                  ? context.setLocale(Locale('ar'))
+                  : context.setLocale(Locale('en'));
+            },
+          ),
 
-        // _General(),
-        // const _Supportive(),
-      ],
+          // _General(),
+          // const _Supportive(),
+        ],
+      ),
     );
   }
 }

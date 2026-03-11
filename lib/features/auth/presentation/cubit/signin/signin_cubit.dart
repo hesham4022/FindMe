@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:developer';
-import 'dart:io';
 
 import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
@@ -10,9 +8,7 @@ import 'package:find_me_app/features/auth/presentation/pages/verify_otp.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/services/location/location_service.dart';
-import 'package:find_me_app/core/shared/functions.dart';
 import 'package:find_me_app/features/auth/data/model/base_url_response.dart';
 import 'package:find_me_app/features/auth/data/model/signin_user.dart';
 import 'package:find_me_app/features/auth/data/repo/auth_repo.dart';

@@ -33,9 +33,10 @@ class CardAllCaseInfo extends StatelessWidget {
                   image: DecorationImage(
                     image: CachedNetworkImageProvider(
                       caseInfo!.photos.isNotEmpty
-                          ? "http://192.168.1.17:8000${caseInfo!.photos.first.url!}"
-                          : "https://via.placeholder.com/150", // صورة افتراضية لو مفيش صور
+                          ? caseInfo!.photos.first.url!
+                          : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
                     ),
+                    fit: BoxFit.cover,
                   ),
                 ),
               ),

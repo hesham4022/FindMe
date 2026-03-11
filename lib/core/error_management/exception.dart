@@ -38,9 +38,9 @@ class NavigateToVerifyEmailException implements Exception {
   String toString() => message ?? "NavigateToVerifyEmailException";
 }
 
-// class UserTokenException extends AppException {
-//   UserTokenException() : super(AppStrings.tokenInValid);
-// }
+class UserTokenException extends AppException {
+  UserTokenException() : super(AppStrings.tokenInValid);
+}
 
 class InternetException extends AppException {
   InternetException() : super(AppStrings.noInternetTitle);

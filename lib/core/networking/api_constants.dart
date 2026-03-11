@@ -30,7 +30,12 @@ class ApiConstants {
   static final String signinUrl = "$_authUrl/login";
   static final String sinUpUrl = "$_authUrl/register";
   static final String allReportsUrl = "$_baseUrl/api/reports";
+  static final String getCaseByIdUrl = "$_baseUrl/api/reports/";
+  static final String searchByImageUrl = "$_baseUrl/api/search";
+  static final String likeInPostUrl = "$_baseUrl/api/reports/like/";
+  static final String updateReportUrl = "$_baseUrl/api/reports/";
   static final String activateAccountUrl = "$_baseUrl/api/verify-email";
+  static final String deleteAccountUrl = "$_baseUrl/api/deleteAcount";
   static final String resendOTP = "$_authUrl/resend-code";
 
   static final String changePasswordUrl = "$_authUrl/change-password";

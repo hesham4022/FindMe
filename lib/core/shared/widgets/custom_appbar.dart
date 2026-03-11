@@ -21,6 +21,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
   final PreferredSizeWidget? bottom;
   final Widget? flexibleSpace;
   final bool centerTitle;
+  final bool hideBackButton;
 
   const CustomAppBar({
     super.key,
@@ -38,6 +39,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.background = Colors.white,
     this.centerTitle = true,
     this.titleText,
+    this.hideBackButton = false,
   });
 
   @override
@@ -52,6 +54,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       elevation: 0,
       scrolledUnderElevation: 0, // 👈 في Material 3
       backgroundColor: background,
+      automaticallyImplyLeading: false,
       systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: overlayColor,
         statusBarBrightness: Brightness.light,
@@ -69,7 +72,7 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: title ??
           Text(
             titleText?.ts ?? "",
-            style: effectiveStyle, // نسيبها برضه جوّه الـ Text
+            style: effectiveStyle, //Text
           ),
       // bottom: PreferredSize(
       //     preferredSize: const Size.fromHeight(1),
@@ -78,8 +81,9 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       //       color: AppColors.saltBox100,
       //     )),
       flexibleSpace: flexibleSpace,
-      leading: leading ??
-          (Navigator.canPop(context)
+      leading: hideBackButton
+          ? Container()
+          : (Navigator.canPop(context)
               ? IconButton(
                   onPressed: () async => context.back(),
                   icon: Padding(
@@ -92,6 +96,8 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 )
               : null),
+
+      // leading: leading,
     );
   }
 

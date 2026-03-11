@@ -1,6 +1,6 @@
 import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/add_case/presentation/widgets/child_name_widgets/add_case_child_info_fields.dart';
+import 'package:find_me_app/features/add_case/presentation/widgets_Missing/child_name_widgets/add_case_child_info_fields.dart';
 import 'package:flutter/material.dart';
 
 class WeightHeightFeilds extends StatelessWidget {
@@ -24,27 +24,14 @@ class WeightHeightFeilds extends StatelessWidget {
                 ),
           ),
         ),
-        VSpace(5),
-        const IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: WeightField(),
-                ),
-              ),
-              HSpace(5),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: HeightField(),
-                ),
-              ),
-            ],
-          ),
-        ),
+        const VSpace(5),
+        const Row(
+          children: [
+            Expanded(child: WeightField()),
+            HSpace(5),
+            Expanded(child: HeightField()),
+          ],
+        )
       ],
     );
   }

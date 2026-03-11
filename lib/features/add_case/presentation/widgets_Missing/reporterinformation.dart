@@ -2,7 +2,7 @@ import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/add_case/presentation/widgets/reporter_information_widgets/reporter_information_feilds.dart';
+import 'package:find_me_app/features/add_case/presentation/widgets_Missing/reporter_information_widgets/reporter_information_feilds.dart';
 
 import 'package:flutter/material.dart';
 

@@ -58,6 +58,8 @@ dependencies:
   permission_handler: ^11.4.0
   flutter_scrolling_fab_animated: ^0.1.5
   flutter_image_compress: ^2.4.0
+  flutter_launcher_icons: ^0.14.4
+  
 
 
 dev_dependencies:
@@ -83,6 +85,15 @@ flutter_native_splash:
   android_12:
     color: "#1D4ED8"
     image: assets\images\splash_logo.png
+
+  flutter_launcher_icons: ^0.14.4
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/Logo-image.png" 
+
+    
 
 
 flutter:

@@ -9,7 +9,7 @@ void verifyOTPListener(BuildContext context, VerifyOTPState state) {
     if (state.isVerifyOTPSuccess) {
       showAlertSnackBar(
         context,
-        "تم تفعيل الحساب بنجاح ✅",
+        state.success?.msg ?? "تم تفعيل الحساب بنجاح ✅",
         AlertType.success,
       );
       context.toNamed(AppRoutes.hostRoute);

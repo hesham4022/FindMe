@@ -3,10 +3,9 @@ import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
-import 'package:find_me_app/core/helpers/extensions/context.dart';
+import 'package:find_me_app/core/helpers/enums/report_type.dart';
 import 'package:find_me_app/core/helpers/formfield_validator.dart';
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
-import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/features/add_case/data/model/create_report.dart';
 import 'package:find_me_app/features/add_case/data/repo/add_case_repo.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
@@ -25,6 +24,11 @@ class AddCaseCubit extends Cubit<AddCaseState> {
   AddCaseCubit(this._repo) : super(AddCaseState.initial());
 
   // 🔹 Field changes
+
+  void reportTypeChanged(ReportType type) {
+    emit(state.copyWith(reportType: type));
+  }
+
   void firstNameChanged(String value) => emit(state.copyWith(
         firstName: value,
         firstNameErrorText: null,
@@ -69,6 +73,12 @@ class AddCaseCubit extends Cubit<AddCaseState> {
   void heightErrorChanged(String value) =>
       emit(state.copyWith(heightErrorText: value));
 
+  void clothingDescriptionChanged(String value) =>
+      emit(state.copyWith(clothingDescription: value));
+
+  void clothingDescriptionErrorChanged(String value) =>
+      emit(state.copyWith(clothingDescriptionErrorText: value));
+
   void descriptionChanged(String value) =>
       emit(state.copyWith(description: value));
 
@@ -101,11 +111,20 @@ class AddCaseCubit extends Cubit<AddCaseState> {
   void breakdownDetailsErrorChanged(String value) =>
       emit(state.copyWith(fullBreakdownDetailsError: value));
 
+  void policeStationChanged(String value) =>
+      emit(state.copyWith(policeStation: value));
+
+  void policeStationErrorChanged(String value) =>
+      emit(state.copyWith(policeStationErrorText: value));
+
   void confirmInformationChanged(bool value) =>
       emit(state.copyWith(confirmInformation: value, consentErrorText: null));
 
   void consentToShareChanged(bool value) =>
       emit(state.copyWith(consentToShare: value, consentErrorText: null));
+  void resetState() {
+    emit(AddCaseState.initial());
+  }
 
   final ImagePicker _picker = ImagePicker();
 
@@ -139,7 +158,6 @@ class AddCaseCubit extends Cubit<AddCaseState> {
     return result as File;
   }
 
-  /// حذف صورة مثلاً (لو حبيت تستخدمها)
   void removePhoto(String path) {
     final newPhotos = List<String>.from(state.photos)..remove(path);
     emit(state.copyWith(photos: newPhotos));
@@ -198,11 +216,11 @@ class AddCaseCubit extends Cubit<AddCaseState> {
     if (!hasError) {
       submitReport(context);
     } else {
-      log("⛔ Some fields have error, submission stopped");
+      showAlertSnackBar(
+          context, "Please fix the highlighted fields", AlertType.error);
     }
   }
 
-  // 🔹 إرسال البلاغ
   Future<void> submitReport(BuildContext context) async {
     if (state.isLoading) return;
     emit(state.copyWith(status: AddCaseStatus.loading));
@@ -233,20 +251,11 @@ class AddCaseCubit extends Cubit<AddCaseState> {
     result.fold(
       (failure) {
         emit(state.copyWith(status: AddCaseStatus.error, error: failure));
-
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          showAlertSnackBar(context, failure.msg, AlertType.error);
-        });
       },
       (response) {
         CaseInfoModel? caseInfoModel = response.data;
         emit(state.copyWith(status: AddCaseStatus.success, success: response));
         context.read<AllCasesCubit>().state.filtered.insert(0, caseInfoModel);
-        WidgetsBinding.instance.addPostFrameCallback((_) {
-          showAlertSnackBar(
-              context, "تم إنشاء البلاغ بنجاح ✅", AlertType.success);
-          context.toNamed(AppRoutes.hostRoute);
-        });
       },
     );
   }

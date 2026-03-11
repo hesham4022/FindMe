@@ -146,14 +146,11 @@ enum SignInStatus {
 class SignInState extends Equatable {
   final String? username;
   final String? password;
-
   final String? usernameErrorText;
   final String? passwordErrorText;
-
   final SignInStatus status;
   final SuccessResponse? success;
   final Failure? error;
-
   final bool isActivated;
   final BaseUrlResponse? baseUrlResponse; // لو لسه عايزه داخليًا
   final double? lat;

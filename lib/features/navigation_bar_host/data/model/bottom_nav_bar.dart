@@ -1,18 +1,9 @@
-import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
-import 'package:find_me_app/core/resources/colors.dart';
-import 'package:find_me_app/core/resources/routes.dart';
-import 'package:find_me_app/core/resources/themes.dart';
-import 'package:find_me_app/core/shared/widgets/buttons/custom_btn.dart';
-import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
-import 'package:find_me_app/features/auth/presentation/pages/signin.dart';
-import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:find_me_app/features/all_cases/presentation/pages/all_Cases.dart';
 import 'package:find_me_app/features/Home/presentation/pages/home.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/pages/profile_view.dart';
 import 'package:find_me_app/features/settings/presentation/pages/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:find_me_app/core/resources/strings.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 
 class BottomNavBarTab {
   Widget? screen;

@@ -29,11 +29,10 @@ class CaseCard extends StatelessWidget {
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               image: DecorationImage(
-                image: CachedNetworkImageProvider(
-                  caseModel.photos.isNotEmpty
-                      ? caseModel.photos.first.url!
-                      : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png", // صورة افتراضية لو مفيش صور
-                ),
+                image: caseModel.photos.isNotEmpty
+                    ? CachedNetworkImageProvider(caseModel.photos.first.url!)
+                    : const AssetImage(
+                        "assets/images/Portrait_Placeholder.png"),
                 fit: BoxFit.cover,
               ),
             ),
@@ -44,7 +43,6 @@ class CaseCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 16.w),
-
                 Text(
                   "${caseModel.firstName} ${caseModel.lastName}",
                   style: TextStyle(

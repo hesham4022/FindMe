@@ -64,7 +64,6 @@ class HomePageNoNavBar extends StatelessWidget {
               ),
               const SizedBox(height: 18),
 
-              // باقي المحتوى بيكون Expandable علشان يعمل Scroll بس للكروت
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -92,7 +91,7 @@ class HomePageNoNavBar extends StatelessWidget {
                                   slidingDirection: index % 2 == 1
                                       ? SlidingDirection.fromLeft
                                       : SlidingDirection.fromRight,
-                                  duration: 5,
+                                  duration: 2,
                                   child: CaseCard(
                                     caseModel: state.filtered[index],
                                     onTap: () {

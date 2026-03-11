@@ -3,6 +3,7 @@ import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/shared/widgets/animated_transition_widget/animated_transition_widget.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/Home/presentation/widgets/chip.dart';
+import 'package:find_me_app/features/Home/presentation/widgets/convert_time.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/case_card.dart';
@@ -31,11 +32,9 @@ class CaseCard extends StatelessWidget {
             CircleAvatar(
               radius: 36,
               backgroundColor: Colors.black12,
-              backgroundImage: CachedNetworkImageProvider(
-                caseModel.photos.isNotEmpty
-                    ? caseModel.photos.first.url!
-                    : "https://via.placeholder.com/150",
-              ),
+              backgroundImage: caseModel.photos.isNotEmpty
+                  ? CachedNetworkImageProvider(caseModel.photos.first.url!)
+                  : const AssetImage("assets/images/Portrait_Placeholder.png"),
               onBackgroundImageError: (_, __) {},
             ),
             const SizedBox(width: 10),
@@ -52,9 +51,7 @@ class CaseCard extends StatelessWidget {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                            "${caseModel.firstName} ${caseModel.lastName}" ??
-                                '',
+                        Text("${caseModel.firstName} ${caseModel.lastName}",
                             style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w700,
@@ -86,7 +83,7 @@ class CaseCard extends StatelessWidget {
                   Row(
                     children: [
                       CustomeChip(
-                        label: '${caseModel.dateLastSeen} days ago',
+                        label: '${timeAgo(caseModel.createdAt)}',
                       ),
                       const Spacer(),
                       CustomeChip(

@@ -18,7 +18,7 @@ class AddCaseRemote {
   AddCaseRemote();
 
   Future<Map<String, dynamic>> addCase(CreateReportRequest data) async {
-    final client = sl<AppHttpClient>().client;
+    // final client = sl<AppHttpClient>().client;
 
     try {
       final fields = {
@@ -88,8 +88,6 @@ class AddCaseRemote {
       }
 
       return json;
-    } finally {
-      client.close();
-    }
+    } finally {}
   }
 }

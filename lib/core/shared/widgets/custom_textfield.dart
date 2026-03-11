@@ -35,7 +35,7 @@ class CustomTextField extends StatefulWidget {
     this.errorText,
     this.textDirection,
     this.textAlign = TextAlign.start,
-    this.autoFocus = true,
+    this.autoFocus = false,
     this.borderStyle = BorderStyle.solid,
     this.textCapitalization = TextCapitalization.none,
     this.focusNode,

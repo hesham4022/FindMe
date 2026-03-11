@@ -176,9 +176,16 @@ class AppRoutes {
       // );
       case addCaseView:
         return MaterialPageRoute(
-          builder: (context) => const AddCaseView(),
+          builder: (context) => AddCaseView(),
           settings: settings,
         );
+      // case addCaseView:
+      //   final caseInfo = settings.arguments as CaseInfoModel;
+      //   return MaterialPageRoute(
+      //     builder: (context) => AddCaseView(caseInfo: caseInfo),
+      //     settings: settings,
+      //   );
+
       case notificationsRoute:
         return MaterialPageRoute(
           builder: (context) => const NotificationsView(),

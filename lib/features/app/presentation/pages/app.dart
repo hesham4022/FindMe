@@ -47,8 +47,8 @@ class MainApp extends StatelessWidget {
                       imageUrl: "https://i.pravatar.cc/120?img=12")),
               ),
               BlocProvider(
-                // create: (_) => HostCubit(0, sl())..getUserData(),
-                create: (_) => HostCubit(0, sl()),
+                create: (_) => HostCubit(0, sl())..getUserData(),
+                // create: (_) => HostCubit(0, sl()),
               ),
               BlocProvider(
                 create: (_) => NetworkInfo(sl())..listenToConnection(),

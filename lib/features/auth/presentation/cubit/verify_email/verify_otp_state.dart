@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/networking/success_response.dart';
+import 'package:find_me_app/features/auth/data/model/verify_otp.dart';
 
 enum VerifyStatus {
   initial,

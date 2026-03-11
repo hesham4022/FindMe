@@ -33,7 +33,6 @@ class UserCubit extends Cubit<UserState> {
   }
 
   Future<void> uploadProfileImage(String localPath) async {
-    // هنا بتعمل simulate للـ API
     await Future.delayed(const Duration(seconds: 2));
 
     const fakeServerUrl = "'https://i.pravatar.cc/120?img=12'";

@@ -161,6 +161,10 @@ class SinupCubit extends Cubit<SinupState> {
     log("🗑️ Image removed. Remaining: ${nationalIdImages.length}");
   }
 
+  void reset() {
+    emit(SinupState.initial());
+  }
+
   void validateFieldsBeforeSinup(BuildContext context) {
     bool hasError = false;
     log("✅ validateFieldsBeforeSinup called");
@@ -297,8 +301,9 @@ class SinupCubit extends Cubit<SinupState> {
       passwordConfirmation: state.passwordConfirmation!,
     );
 
+    print("-------------------------------");
     print('📤 Request Body: ${request.toJson()}');
-
+    print("-------------------------------");
     try {
       // 🧩 استدعاء الريبو
       final result = await _authRepo.signup(request);

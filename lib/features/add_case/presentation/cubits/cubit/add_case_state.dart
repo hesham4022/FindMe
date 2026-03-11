@@ -14,6 +14,7 @@ class AddCaseState extends Equatable {
   final String? gender;
   final double? weight;
   final double? height;
+  final String? clothingDescription;
   final String? description;
   final bool hasVehicle;
   final String? vehicleDetails;
@@ -24,9 +25,9 @@ class AddCaseState extends Equatable {
 
   final bool confirmInformation;
   final bool consentToShare;
-
+  final ReportType? reportType;
   final List<String> photos;
-
+  final String? policeStation;
   // validation messages (اختياري)
   final String? firstNameErrorText;
   final String? lastNameErrorText;
@@ -35,6 +36,7 @@ class AddCaseState extends Equatable {
   final String? genderErrorText;
   final String? weightErrorText;
   final String? heightErrorText;
+  final String? clothingDescriptionErrorText;
   final String? descriptionErrorText;
   final String? dateLastSeenError;
   final String? lastSeenLocationError;
@@ -42,11 +44,11 @@ class AddCaseState extends Equatable {
   final String? vehicleDetailsError;
   final String? consentErrorText;
   final CreateReportRequest? createReportRequest;
+  final String? policeStationErrorText;
 
-  // حالة الطلب
   final AddCaseStatus status;
 
-  // النتائج
+  ///////
   final CreateReportResponse? success;
   final Failure? error;
 
@@ -57,6 +59,7 @@ class AddCaseState extends Equatable {
     this.gender,
     this.weight,
     this.height,
+    this.clothingDescription,
     this.description,
     this.hasVehicle = false,
     this.vehicleDetails,
@@ -74,6 +77,7 @@ class AddCaseState extends Equatable {
     this.genderErrorText,
     this.weightErrorText,
     this.heightErrorText,
+    this.clothingDescriptionErrorText,
     this.descriptionErrorText,
     this.dateLastSeenError,
     this.lastSeenLocationError,
@@ -84,6 +88,9 @@ class AddCaseState extends Equatable {
     this.success,
     this.error,
     this.createReportRequest,
+    this.reportType,
+    this.policeStation,
+    this.policeStationErrorText,
   });
 
   AddCaseState copyWith({
@@ -93,6 +100,7 @@ class AddCaseState extends Equatable {
     String? gender,
     double? weight,
     double? height,
+    String? clothingDescription,
     String? description,
     bool? hasVehicle,
     String? vehicleDetails,
@@ -110,6 +118,7 @@ class AddCaseState extends Equatable {
     String? genderErrorText,
     String? weightErrorText,
     String? heightErrorText,
+    String? clothingDescriptionErrorText,
     String? descriptionErrorText,
     String? dateLastSeenError,
     String? lastSeenLocationError,
@@ -120,6 +129,9 @@ class AddCaseState extends Equatable {
     CreateReportResponse? success,
     Failure? error,
     CreateReportRequest? createReportRequest,
+    ReportType? reportType,
+    String? policeStation,
+    String? policeStationErrorText,
   }) {
     return AddCaseState(
       firstName: firstName ?? this.firstName,
@@ -128,6 +140,7 @@ class AddCaseState extends Equatable {
       gender: gender ?? this.gender,
       weight: weight ?? this.weight,
       height: height ?? this.height,
+      clothingDescription: clothingDescription ?? this.clothingDescription,
       description: description ?? this.description,
       hasVehicle: hasVehicle ?? this.hasVehicle,
       vehicleDetails: vehicleDetails ?? this.vehicleDetails,
@@ -145,6 +158,8 @@ class AddCaseState extends Equatable {
       genderErrorText: genderErrorText ?? this.genderErrorText,
       weightErrorText: weightErrorText ?? this.weightErrorText,
       heightErrorText: heightErrorText ?? this.heightErrorText,
+      clothingDescriptionErrorText:
+          clothingDescriptionErrorText ?? this.clothingDescriptionErrorText,
       descriptionErrorText: descriptionErrorText ?? this.descriptionErrorText,
       dateLastSeenError: dateLastSeenError ?? this.dateLastSeenError,
       lastSeenLocationError:
@@ -157,6 +172,10 @@ class AddCaseState extends Equatable {
       success: success ?? this.success,
       error: error ?? this.error,
       createReportRequest: createReportRequest ?? this.createReportRequest,
+      reportType: reportType ?? this.reportType,
+      policeStation: policeStation ?? this.policeStation,
+      policeStationErrorText:
+          policeStationErrorText ?? this.policeStationErrorText,
     );
   }
 
@@ -188,6 +207,7 @@ class AddCaseState extends Equatable {
         gender,
         weight,
         height,
+        clothingDescription,
         description,
         hasVehicle,
         vehicleDetails,
@@ -205,6 +225,7 @@ class AddCaseState extends Equatable {
         genderErrorText,
         weightErrorText,
         heightErrorText,
+        clothingDescriptionErrorText,
         descriptionErrorText,
         dateLastSeenError,
         lastSeenLocationError,
@@ -215,5 +236,8 @@ class AddCaseState extends Equatable {
         success,
         error,
         createReportRequest,
+        reportType,
+        policeStation,
+        policeStationErrorText,
       ];
 }

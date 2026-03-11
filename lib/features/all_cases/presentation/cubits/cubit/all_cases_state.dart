@@ -10,6 +10,7 @@ class AllCasesState extends Equatable {
   final List<CaseInfoModel> filtered;
   final AllCasesFilter activeFilter;
   final AllCasesStatus status;
+  final CaseInfoModel? selectedCase;
   // final SuccessResponse? success;
   final Failure? failure;
 
@@ -23,6 +24,7 @@ class AllCasesState extends Equatable {
     required this.filtered,
     this.activeFilter = AllCasesFilter.all,
     required this.status,
+    this.selectedCase,
     this.isScroll = false,
     // this.success,
     this.failure,
@@ -40,6 +42,7 @@ class AllCasesState extends Equatable {
     List<CaseInfoModel>? filtered,
     AllCasesFilter? activeFilter,
     AllCasesStatus? status,
+    final CaseInfoModel? selectedCase,
     bool? isScroll,
     // SuccessResponse? success,
     AllCasesResponse? allCasesResponse,
@@ -49,6 +52,7 @@ class AllCasesState extends Equatable {
       filtered: filtered ?? this.filtered,
       activeFilter: activeFilter ?? this.activeFilter,
       status: status ?? this.status,
+      selectedCase: selectedCase ?? this.selectedCase,
       isScroll: isScroll ?? this.isScroll,
       // success: success ?? this.success,
       failure: failure ?? this.failure,
@@ -61,6 +65,7 @@ class AllCasesState extends Equatable {
         filtered,
         activeFilter,
         status,
+        selectedCase,
         isScroll,
         allCasesResponse,
         failure,

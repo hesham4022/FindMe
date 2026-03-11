@@ -7,8 +7,8 @@ import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChildNameField extends StatelessWidget {
-  const ChildNameField({
+class ChildFirstNameField extends StatelessWidget {
+  const ChildFirstNameField({
     super.key,
     this.onSubmit,
   });
@@ -150,11 +150,11 @@ class AddressOfChild extends StatelessWidget {
                     ),
               ),
             ),
-            VSpace(5),
+            const VSpace(5),
             CustomTextField(
               radius: 30,
               contentPadding:
-                  const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+                  const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
               hint: "Cairo , Giza".ts,
               errorText: state.addressErrorText,
               // errorText: "Feild is required",
@@ -243,51 +243,59 @@ class HeightField extends StatelessWidget {
   }
 }
 
-// class ClothingDescroptionField extends StatelessWidget {
-//   const ClothingDescroptionField({
-//     super.key,
-//     this.onSubmit,
-//   });
+class ClothingDescroptionField extends StatelessWidget {
+  const ClothingDescroptionField({
+    super.key,
+    this.onSubmit,
+  });
 
-//   final Function(String)? onSubmit;
+  final Function(String)? onSubmit;
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Padding(
-//           padding: const EdgeInsets.only(left: 8),
-//           child: Text(
-//             "Clothing description:".ts,
-//             style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
-//                   fontSize: 13,
-//                   fontWeight: FontWeight.w400,
-//                 ),
-//           ),
-//         ),
-//         VSpace(5),
-//         CustomTextField(
-//           maxLines: 3,
-//           radius: 13,
-//           contentPadding:
-//               const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
-//           hint: "what they were last seen wearing".ts,
-//           // errorText: state.usernameErrorText,
-//           // errorText: "Feild is required",
-//           onSubmit: onSubmit,
-//           onChanged: (value) {},
-//           onValidate: (value) {
-//             final err =
-//                 AppValidators.validateUsername(value); // String? (null لو صحيح)
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AddCaseCubit, AddCaseState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                "Other Identifying Details:".ts,
+                style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+            ),
+            const VSpace(5),
+            CustomTextField(
+              maxLines: 3,
+              radius: 13,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+              hint: "what they were last seen wearing".ts,
+              errorText: state.clothingDescriptionErrorText,
+              // errorText: "Feild is required",
+              onSubmit: onSubmit,
+              onChanged: (value) {
+                context.read<AddCaseCubit>().clothingDescriptionChanged(value);
+              },
+              onValidate: (value) {
+                final err = AppValidators.validateUsername(value);
+                context
+                    .read<AddCaseCubit>()
+                    .clothingDescriptionErrorChanged(err ?? "");
 
-//             return (err == null || err.trim().isEmpty) ? null : err;
-//           },
-//         ),
-//       ],
-//     );
-//   }
-// }
+                return (err == null || err.trim().isEmpty) ? null : err;
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
 
 class OtherIdentifyingDetailsField extends StatelessWidget {
   const OtherIdentifyingDetailsField({
@@ -314,7 +322,7 @@ class OtherIdentifyingDetailsField extends StatelessWidget {
                     ),
               ),
             ),
-            VSpace(5),
+            const VSpace(5),
             CustomTextField(
               maxLines: 3,
               radius: 13,
@@ -329,7 +337,7 @@ class OtherIdentifyingDetailsField extends StatelessWidget {
               },
               onValidate: (value) {
                 final err = AppValidators.validateUsername(value);
-                context.read<AddCaseCubit>().descriptionChanged(err ?? "");
+                context.read<AddCaseCubit>().descriptionErrorChanged(err ?? "");
 
                 return (err == null || err.trim().isEmpty) ? null : err;
               },

@@ -72,9 +72,7 @@ class AuthRemote {
     log('[📩 SIGNIN RESPONSE CODE]: ${response.statusCode}');
     log('[📩 SIGNIN RESPONSE BODY]: ${response.body}');
 
-    // 🧩 تحقق من كود الحالة
     if (response.statusCode == 409) {
-      // السيرفر بيرجع message فقط
       final decoded = jsonDecode(utf8.decode(response.bodyBytes));
       final message =
           decoded["message"] ?? "Please verify your email before logging in.";
@@ -82,7 +80,6 @@ class AuthRemote {
       throw NavigateToVerifyEmailException(message);
     }
 
-    // ✅ أي كود تاني → رجّع body عادي
     return utf8.decode(response.bodyBytes);
   }
 
@@ -143,7 +140,6 @@ class AuthRemote {
     try {
       final uri = Uri.parse(ApiConstants.activateAccountUrl);
 
-      // تحضير الحقول
       final fields = {
         'email': data.username,
         'otp': data.otp,
@@ -344,6 +340,19 @@ class AuthRemote {
   //     }
   //   };
   // }
+
+  Future<String> deleteAccount() async {
+    final response = await makeHttpRequest(
+      url: ApiConstants.deleteAccountUrl,
+      requestType: HttpRequestType.post,
+      requiresAuth: true,
+      needParsedResponse: false,
+    );
+    final responseString = utf8.decode(response.bodyBytes);
+    final jsonData = jsonDecode(responseString);
+
+    return jsonData['message'] ?? "error try again";
+  }
 
   Future<String> sendOTP(String email) async {
     final uri = Uri.parse(ApiConstants.sendOtp(email));

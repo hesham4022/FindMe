@@ -15,39 +15,50 @@ class HostCubit extends Cubit<HostState> {
   ) : super(HostState.initial(initialIndex));
 
   final AuthLocal _authLocal;
+  List<int> tabHistory = [0];
+
+  // void changeIndex(int index) {
+  //   emit(state.copyWith(
+  //     selectedIndex: index,
+  //     status: HostStatus.success,
+  //     clearFailure: true,
+  //   ));
+  // }
 
   void changeIndex(int index) {
-    emit(state.copyWith(
-      selectedIndex: index,
-      status: HostStatus.success,
-      clearFailure: true,
-    ));
+    if (index == state.selectedIndex) return;
+
+    if (tabHistory.isEmpty || tabHistory.last != index) {
+      tabHistory.add(index);
+    }
+
+    emit(state.copyWith(selectedIndex: index));
   }
 
-  // Future<void> getUserData() async {
-  //   try {
-  //     emit(state.copyWith(status: HostStatus.loading, clearFailure: true));
+  Future<void> getUserData() async {
+    try {
+      emit(state.copyWith(status: HostStatus.loading, clearFailure: true));
 
-  //     // بـ يرجّع AuthedUser الجديد من الكاش
-  //     final authedUser = await _authLocal.getCachedAuthedUser();
+      // بـ يرجّع AuthedUser الجديد من الكاش
+      final authedUser = await _authLocal.getCachedAuthedUser();
 
-  //     emit(state.copyWith(
-  //       user: authedUser, // ← احفظ AuthedUser مباشرة
-  //       status: HostStatus.success,
-  //       clearFailure: true,
-  //     ));
-  //   } on UserTokenException catch (e) {
-  //     emit(state.copyWith(
-  //       status: HostStatus.failure,
-  //       failure: UserTokenFailure(e.msg),
-  //     ));
-  //   } catch (e) {
-  //     emit(state.copyWith(
-  //       status: HostStatus.failure,
-  //       failure: Failure(e.toString()),
-  //     ));
-  //   }
-  // }
+      emit(state.copyWith(
+        user: authedUser, // ← احفظ AuthedUser مباشرة
+        status: HostStatus.success,
+        clearFailure: true,
+      ));
+    } on UserTokenException catch (e) {
+      emit(state.copyWith(
+        status: HostStatus.failure,
+        failure: UserTokenFailure(e.msg),
+      ));
+    } catch (e) {
+      emit(state.copyWith(
+        status: HostStatus.failure,
+        failure: Failure(e.toString()),
+      ));
+    }
+  }
 
   Future<void> logout() async {
     await _authLocal.deleteAuthedUser();

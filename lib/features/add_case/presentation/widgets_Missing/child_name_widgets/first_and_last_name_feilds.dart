@@ -1,6 +1,6 @@
 import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/add_case/presentation/widgets/child_name_widgets/add_case_child_info_fields.dart';
+import 'package:find_me_app/features/add_case/presentation/widgets_Missing/child_name_widgets/add_case_child_info_fields.dart';
 import 'package:flutter/material.dart';
 
 class FirstAndLastNameFeilds extends StatelessWidget {
@@ -23,27 +23,14 @@ class FirstAndLastNameFeilds extends StatelessWidget {
                 ),
           ),
         ),
-        VSpace(5),
-        const IntrinsicHeight(
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: ChildNameField(),
-                ),
-              ),
-              HSpace(5),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: ChildLastNameField(),
-                ),
-              ),
-            ],
-          ),
-        ),
+        const VSpace(5),
+        const Row(
+          children: [
+            Expanded(child: ChildFirstNameField()),
+            HSpace(5),
+            Expanded(child: ChildLastNameField()),
+          ],
+        )
       ],
     );
   }

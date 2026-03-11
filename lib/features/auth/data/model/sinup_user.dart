@@ -2,9 +2,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:find_me_app/features/auth/data/model/authed_user.dart';
 
-/// =============
-/// طلب التسجيل
-/// =============
 class SignUpUserRequest extends Equatable {
   final String fullName;
   final String email;
@@ -12,8 +9,7 @@ class SignUpUserRequest extends Equatable {
   final String nationalId;
   final String password;
   final String passwordConfirmation;
-  final String nationalPhotoPath; // مسار الصورة في الجهاز
-
+  final String nationalPhotoPath;
   const SignUpUserRequest({
     required this.fullName,
     required this.email,
@@ -24,7 +20,6 @@ class SignUpUserRequest extends Equatable {
     required this.nationalPhotoPath,
   });
 
-  /// لتحويل البيانات العادية
   Map<String, String> toMap() {
     return {
       'full_name': fullName,
@@ -36,7 +31,6 @@ class SignUpUserRequest extends Equatable {
     };
   }
 
-  /// في حالة استخدام Multipart (عشان الصورة)
   Map<String, dynamic> toMultipartMap() {
     final map = Map<String, dynamic>.from(toMap());
     if (nationalPhotoPath != null) {
@@ -59,13 +53,10 @@ class SignUpUserRequest extends Equatable {
       ];
 }
 
-/// =============
-/// رد التسجيل
-/// =============
 class SignUpUserResponse extends Equatable {
   final String message;
   final AuthedUser user;
-  final String? emailVerification; // ← أضفنا الحقل الجديد
+  final String? emailVerification;
 
   const SignUpUserResponse({
     required this.message,
@@ -77,7 +68,7 @@ class SignUpUserResponse extends Equatable {
     return SignUpUserResponse(
       message: map['message'] ?? '',
       user: AuthedUser.fromMap(map['user'] ?? {}),
-      emailVerification: map['email_verification'], // ← اسم الحقل من JSON
+      emailVerification: map['email_verification'],
     );
   }
 

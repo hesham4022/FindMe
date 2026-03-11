@@ -27,23 +27,19 @@ const kAppEnvironment = AppEnvironments.dev;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  // 🔹 إجبار التطبيق على الوضع الرأسي فقط
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
 
-  // 🔹 تهيئة الـ Dependency Injection و EasyLocalization و Sembast
   await Future.wait([
     di.init(),
     EasyLocalization.ensureInitialized(),
     di.initSembast(),
   ]);
 
-  // 🔹 احصل على إحداثيات المستخدم
   await sl<LocationService>().getUserLocationCoordinates();
 
-  // 🔹 تهيئة AppEnvironmentData مباشرة من .env
   await sl<AppEnvironmentData>().init(kAppEnvironment);
   log('Env.baseDevUrl (raw) = ${Env.baseDevUrl}');
   print(
@@ -54,34 +50,24 @@ void main() async {
   final authLocal =
       AuthLocal(StoreRef.main(), sharedPrefs, FlutterSecureStorage());
 
-  // 🔹 Override HTTP (لتخطي مشاكل SSL في dev)
   HttpOverrides.global = MyHttpOverrides();
 
-  // 🔹 مسح أي baseUrl قديم
-  // await authLocal.clearBaseUrlCache();
-
-  // 🔹 حذف "/api" إذا موجود قبل التخزين
   String cleanedBaseUrl = Env.baseDevUrl.replaceAll(RegExp(r'/api$'), '');
   print('Cleaned baseUrl = $cleanedBaseUrl');
 
-  // 🔹 تخزين baseUrl الجديد بعد التنظيف
   await authLocal.cacheBaseUrl(cleanedBaseUrl);
 
-  // 🔹 تحديث AppEnvironmentData singleton بعد التخزين
   sl<AppEnvironmentData>().setNewUrl(cleanedBaseUrl);
 
-  // 🔹 تحقق من التخزين بنجاح
   final cachedBaseUrl = await authLocal.getBaseUrl();
   print('✅ Cached baseUrl = $cachedBaseUrl');
   print(
       'AppEnvironmentData.baseUrl (after cache) = ${sl<AppEnvironmentData>().baseUrl}');
 
-  // 🔹 Load cached BaseUrlResponse إذا موجود
   await authLocal.getBaseUrlResponse();
 
   log("📦 Loaded base URL from storage: $cachedBaseUrl");
 
-  // 🔹 تشغيل التطبيق مع EasyLocalization
   runApp(
     EasyLocalization(
       path: 'assets/translations',

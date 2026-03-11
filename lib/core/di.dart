@@ -5,7 +5,9 @@ import 'package:find_me_app/core/networking/network_info.dart';
 import 'package:find_me_app/core/services/local_notifications/notifications_service_cubit.dart';
 import 'package:find_me_app/core/services/location/location_service.dart';
 import 'package:find_me_app/features/add_case/data/repo/add_case_repo.dart';
+import 'package:find_me_app/features/add_case/data/repo/update_case_repo.dart';
 import 'package:find_me_app/features/add_case/data/source/add_case_remote.dart';
+import 'package:find_me_app/features/add_case/data/source/update_case_remote.dart';
 import 'package:find_me_app/features/all_cases/data/repo/all_cases_repo.dart';
 import 'package:find_me_app/features/all_cases/data/source/all_cases_remote.dart';
 import 'package:find_me_app/features/app/data/repo/app_repo.dart';
@@ -14,6 +16,10 @@ import 'package:find_me_app/features/app/data/source/app_remote.dart';
 import 'package:find_me_app/features/auth/data/repo/auth_repo.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:find_me_app/features/auth/data/source/auth_remote.dart';
+import 'package:find_me_app/features/case_info/data/repo/single_case_repo.dart';
+import 'package:find_me_app/features/case_info/data/source/single_case_remote.dart';
+import 'package:find_me_app/features/likes/data/repo/like_repo.dart';
+import 'package:find_me_app/features/likes/data/source/like_remote.dart';
 import 'package:find_me_app/features/notifications/data/repo/notification_repo.dart';
 import 'package:find_me_app/features/notifications/data/source/notification_remote.dart';
 import 'package:find_me_app/features/profile/data/repo/profile_repo.dart';
@@ -75,10 +81,20 @@ Future<void> init() async {
   sl.registerLazySingleton<ProfileRemote>(() => ProfileRemote(sl()));
 
   //! All Cases
-  sl.registerLazySingleton<AllCasesRemote>(() => AllCasesRemote(sl()));
+  sl.registerLazySingleton<AllCasesRemote>(() => AllCasesRemote());
   sl.registerLazySingleton<AllCasesRepo>(() => AllCasesRepo(sl()));
+
+  sl.registerLazySingleton<SingleCaseRemote>(() => SingleCaseRemote());
+  sl.registerLazySingleton<SingleCaseRepo>(() => SingleCaseRepo(sl()));
+
   sl.registerLazySingleton<AddCaseRemote>(() => AddCaseRemote());
   sl.registerLazySingleton<AddCasesRepo>(() => AddCasesRepo(sl()));
+
+  // sl.registerLazySingleton<UpdateReportRemote>(() => UpdateReportRemote());
+  // sl.registerLazySingleton<UpdateReportRepo>(() => UpdateReportRepo(sl()));
+
+  sl.registerLazySingleton<LikeRemote>(() => LikeRemote());
+  sl.registerLazySingleton<LikeRepo>(() => LikeRepo(sl()));
 }
 
 //! Sembast Local DB

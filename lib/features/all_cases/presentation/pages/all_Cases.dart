@@ -26,6 +26,7 @@ class _AllCasesViewState extends State<AllCasesView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
+        hideBackButton: true,
         title: const Text("All Cases"),
         elevation: 2,
         actions: [
@@ -80,7 +81,7 @@ class _AllCasesViewState extends State<AllCasesView> {
                   filter: AllCasesFilter.favorites,
                 ),
 
-                // فلتر Female
+                //  Female filter
                 const FilterCases(
                   iconOn: Icons.female,
                   iconOff: Icons.female,
@@ -113,7 +114,7 @@ class _AllCasesViewState extends State<AllCasesView> {
                         slidingDirection: index % 2 == 1
                             ? SlidingDirection.fromLeft
                             : SlidingDirection.fromRight,
-                        duration: 5,
+                        duration: 2,
                         child: GestureDetector(
                           onTap: () => context.toNamed(AppRoutes.caseInfoRoute,
                               arguments: state.filtered[index]),

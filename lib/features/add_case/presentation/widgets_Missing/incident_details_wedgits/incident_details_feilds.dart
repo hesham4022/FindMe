@@ -17,7 +17,6 @@ class DateTimeLastSeenField extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AddCaseCubit, AddCaseState>(
       builder: (context, state) {
-        // controller بيتحدث كل ما الحالة تتغير
         final controller =
             TextEditingController(text: state.dateLastSeen ?? "");
 
@@ -40,7 +39,7 @@ class DateTimeLastSeenField extends StatelessWidget {
               readOnly: true,
               radius: 20,
               contentPadding: const EdgeInsets.symmetric(
-                vertical: 5,
+                vertical: 7,
                 horizontal: 12,
               ),
               height: 30,
@@ -105,7 +104,7 @@ class LastKnownLocation extends StatelessWidget {
             CustomTextField(
               radius: 30,
               contentPadding:
-                  const EdgeInsets.symmetric(vertical: 5, horizontal: 12),
+                  const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
               hint: "Street And Area".ts,
               errorText: state.lastSeenLocationError,
               // errorText: "Feild is required",
@@ -228,6 +227,60 @@ class VehicleDetailsField extends StatelessWidget {
                 context
                     .read<AddCaseCubit>()
                     .vehicleDetailsErrorChanged(err ?? "");
+
+                return (err == null || err.trim().isEmpty) ? null : err;
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
+class CurrentChildLocationField extends StatelessWidget {
+  const CurrentChildLocationField({
+    super.key,
+    this.onSubmit,
+  });
+
+  final Function(String)? onSubmit;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<AddCaseCubit, AddCaseState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                "Police station details:".ts,
+                style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+            ),
+            VSpace(5),
+            CustomTextField(
+              maxLines: 2,
+              radius: 13,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+              hint: "Which police station did you drop the child off to?".ts,
+              errorText: state.policeStationErrorText,
+              // errorText: "Feild is required",
+              onSubmit: onSubmit,
+              onChanged: (value) {
+                context.read<AddCaseCubit>().policeStationChanged(value);
+              },
+              onValidate: (value) {
+                final err = AppValidators.validateUsername(value);
+                context
+                    .read<AddCaseCubit>()
+                    .policeStationErrorChanged(err ?? "");
 
                 return (err == null || err.trim().isEmpty) ? null : err;
               },
