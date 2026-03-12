@@ -33,8 +33,8 @@ class _AddCaseViewBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
-        title: const Text(
+      appBar: const CustomAppBar(
+        title: Text(
           "Report a Missing or Abducted Child",
           style: TextStyle(fontSize: 16),
         ),
@@ -47,34 +47,41 @@ class _AddCaseViewBody extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 12),
-                const Text("What are you reporting"),
-                Row(
+                const Text(
+                  "What are you reporting?",
+                  style: TextStyle(fontSize: 16),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Expanded(
-                      child: RadioListTile<ReportType>(
-                        title: const Text('Missing child'),
-                        value: ReportType.missingChild,
-                        groupValue: state.reportType,
-                        onChanged: (value) {
-                          if (value != null) {
-                            context
-                                .read<AddCaseCubit>()
-                                .reportTypeChanged(value);
-                          }
-                        },
-                      ),
-                    ),
-                    Expanded(
-                      child: RadioListTile<ReportType>(
-                        title: const Text('Found child'),
-                        value: ReportType.foundChild,
-                        groupValue: state.reportType,
-                        onChanged: (value) {
-                          if (value != null) {
-                            context
-                                .read<AddCaseCubit>()
-                                .reportTypeChanged(value);
-                          }
+                    const SizedBox(height: 8),
+                    SizedBox(
+                      width: double.infinity,
+                      child: SegmentedButton<ReportType>(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              WidgetStateProperty.resolveWith((states) {
+                            if (states.contains(WidgetState.selected)) {
+                              return AppColors.secondColor;
+                            }
+                            return Colors.white;
+                          }),
+                        ),
+                        segments: const [
+                          ButtonSegment(
+                            value: ReportType.missingChild,
+                            label: Text('Missing child'),
+                          ),
+                          ButtonSegment(
+                            value: ReportType.foundChild,
+                            label: Text('Found child'),
+                          ),
+                        ],
+                        selected: {state.reportType ?? ReportType.missingChild},
+                        onSelectionChanged: (newSelection) {
+                          context
+                              .read<AddCaseCubit>()
+                              .reportTypeChanged(newSelection.first);
                         },
                       ),
                     ),
