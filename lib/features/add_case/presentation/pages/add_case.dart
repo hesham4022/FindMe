@@ -133,8 +133,6 @@ class _AddCaseViewBody extends StatelessWidget {
                       const VSpace(40),
                     ],
                   ),
-
-                  //secound screen
                 ),
               ],
             ),
