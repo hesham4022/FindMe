@@ -33,7 +33,7 @@ class ReporterInformation extends StatelessWidget {
                   ),
             ),
           ),
-          VSpace(10),
+          const VSpace(10),
           SizedBox(
             width: MediaQuery.of(context).size.width * 0.62,
             child: FullNameField(),
