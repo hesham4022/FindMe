@@ -10,6 +10,7 @@ import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/child_info.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/incident_details_container.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/consent_verification_section.dart';
+import 'package:find_me_app/features/add_case/presentation/widgets_Missing/reporterinformation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -93,7 +94,8 @@ class _AddCaseViewBody extends StatelessWidget {
                       const VSpace(35),
                       const IncidentDetailsContainer(),
                       const VSpace(35),
-                      const VSpace(20),
+                      const ReporterInformation(),
+                      const VSpace(35),
                       const ConsentVerificationSection(),
                       const VSpace(40),
                       BlocListener<AddCaseCubit, AddCaseState>(

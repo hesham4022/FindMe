@@ -261,7 +261,7 @@ class ClothingDescroptionField extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Text(
-                "Other Identifying Details:".ts,
+                "Clothing description:".ts,
                 style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
