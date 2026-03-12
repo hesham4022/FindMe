@@ -7,11 +7,9 @@ import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_listener.dart';
-import 'package:find_me_app/features/add_case/presentation/widget_Found/child_name_widgets/add_case_child_info_section.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/child_info.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/incident_details_container.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/consent_verification_section.dart';
-import 'package:find_me_app/features/profile/presentation/profile_view/widgets/widgets_help_center/selected_tab.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
