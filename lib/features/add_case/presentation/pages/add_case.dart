@@ -48,25 +48,37 @@ class _AddCaseViewBody extends StatelessWidget {
               children: [
                 const SizedBox(height: 12),
                 const Text("What are you reporting"),
-                RadioListTile<ReportType>(
-                  title: const Text('Missing child'),
-                  value: ReportType.missingChild,
-                  groupValue: state.reportType,
-                  onChanged: (value) {
-                    if (value != null) {
-                      context.read<AddCaseCubit>().reportTypeChanged(value);
-                    }
-                  },
-                ),
-                RadioListTile<ReportType>(
-                  title: const Text('Found child'),
-                  value: ReportType.foundChild,
-                  groupValue: state.reportType,
-                  onChanged: (value) {
-                    if (value != null) {
-                      context.read<AddCaseCubit>().reportTypeChanged(value);
-                    }
-                  },
+                Row(
+                  children: [
+                    Expanded(
+                      child: RadioListTile<ReportType>(
+                        title: const Text('Missing child'),
+                        value: ReportType.missingChild,
+                        groupValue: state.reportType,
+                        onChanged: (value) {
+                          if (value != null) {
+                            context
+                                .read<AddCaseCubit>()
+                                .reportTypeChanged(value);
+                          }
+                        },
+                      ),
+                    ),
+                    Expanded(
+                      child: RadioListTile<ReportType>(
+                        title: const Text('Found child'),
+                        value: ReportType.foundChild,
+                        groupValue: state.reportType,
+                        onChanged: (value) {
+                          if (value != null) {
+                            context
+                                .read<AddCaseCubit>()
+                                .reportTypeChanged(value);
+                          }
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 const SizedBox(height: 10),
                 Expanded(
