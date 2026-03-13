@@ -1,6 +1,7 @@
 import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/themes.dart';
+import 'package:find_me_app/core/shared/widgets/partial_width_field.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/reporter_information_widgets/reporter_information_feilds.dart';
 
@@ -30,8 +31,6 @@ class ReporterInformation extends StatelessWidget {
       ),
       child: LayoutBuilder(
         builder: (context, constraints) {
-          final fieldWidth = constraints.maxWidth * _fieldWidthFactor;
-
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -49,7 +48,7 @@ class ReporterInformation extends StatelessWidget {
               ...fields.map(
                 (field) => Padding(
                   padding: const EdgeInsets.only(bottom: _spacing),
-                  child: SizedBox(width: fieldWidth, child: field),
+                  child: PartialWidthField(child: field),
                 ),
               ),
             ],

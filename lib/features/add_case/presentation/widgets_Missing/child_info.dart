@@ -1,4 +1,5 @@
 import 'package:find_me_app/core/resources/colors.dart';
+import 'package:find_me_app/core/shared/widgets/partial_width_field.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/child_name_widgets/add_case_child_info_fields.dart';
 
@@ -51,36 +52,6 @@ class ChildInfo extends StatelessWidget {
           PartialWidthField(child: OtherIdentifyingDetailsField()),
         ],
       ),
-    );
-  }
-}
-
-// core/shared/widgets/half_width_field.dart
-class HalfWidthField extends StatelessWidget {
-  const HalfWidthField({super.key, required this.child});
-  final Widget child;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.5,
-      child: child,
-    );
-  }
-}
-
-// core/shared/widgets/partial_width_field.dart
-class PartialWidthField extends StatelessWidget {
-  const PartialWidthField(
-      {super.key, required this.child, this.widthFactor = 0.62});
-  final Widget child;
-  final double widthFactor;
-
-  @override
-  Widget build(BuildContext context) {
-    return SizedBox(
-      width: MediaQuery.of(context).size.width * widthFactor,
-      child: child,
     );
   }
 }

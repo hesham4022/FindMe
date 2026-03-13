@@ -2,6 +2,8 @@ import 'package:find_me_app/core/helpers/enums/report_type.dart';
 import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/themes.dart';
+import 'package:find_me_app/core/shared/widgets/half_width_field.dart';
+import 'package:find_me_app/core/shared/widgets/partial_width_field.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/incident_details_wedgits/incident_details_feilds.dart';
@@ -37,13 +39,11 @@ class IncidentDetailsContainer extends StatelessWidget {
             ),
           ),
           const VSpace(10),
-          SizedBox(width: halfWidth, child: const DateTimeLastSeenField()),
+          const HalfWidthField(child: DateTimeLastSeenField()),
           const VSpace(10),
-          SizedBox(width: halfWidth, child: const LastKnownLocation()),
+          const HalfWidthField(child: LastKnownLocation()),
           const VSpace(10),
-          SizedBox(
-              width: fieldWidth,
-              child: const FullBreakdownOfTheincidentField()),
+          const PartialWidthField(child: FullBreakdownOfTheincidentField()),
           const VSpace(10),
           SizedBox(width: fieldWidth, child: const VehicleDetailsField()),
           _ConditionalLocationField(fieldWidth: fieldWidth),
@@ -64,11 +64,10 @@ class _ConditionalLocationField extends StatelessWidget {
       selector: (state) => state.reportType,
       builder: (context, reportType) {
         if (reportType != ReportType.foundChild) return const SizedBox.shrink();
-        return Column(
+        return const Column(
           children: [
-            const VSpace(10),
-            SizedBox(
-                width: fieldWidth, child: const CurrentChildLocationField()),
+            VSpace(10),
+            PartialWidthField(child: CurrentChildLocationField()),
           ],
         );
       },
