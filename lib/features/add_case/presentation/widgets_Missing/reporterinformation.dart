@@ -7,53 +7,54 @@ import 'package:find_me_app/features/add_case/presentation/widgets_Missing/repor
 import 'package:flutter/material.dart';
 
 class ReporterInformation extends StatelessWidget {
-  const ReporterInformation({
-    super.key,
-  });
+  const ReporterInformation({super.key});
+
+  static const _fieldWidthFactor = 0.70;
+  static const _spacing = 10.0;
 
   @override
   Widget build(BuildContext context) {
+    final fields = [
+      const FullNameField(),
+      const RelationshipChildField(),
+      const PhoneNumberField(),
+      const EmailAddressField(),
+    ];
+
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 7, vertical: 25),
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
       width: double.infinity,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         color: AppColors.secondColor,
       ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(left: 12),
-            child: Text(
-              "Reporter’s Information:".ts,
-              style: Theme.of(context).textTheme.kHeadingH2ExtraBold.copyWith(
-                    fontSize: 16,
-                    fontWeight: FontWeight.w500,
-                  ),
-            ),
-          ),
-          const VSpace(10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.62,
-            child: FullNameField(),
-          ),
-          VSpace(10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.62,
-            child: RelationshipChildField(),
-          ),
-          VSpace(10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.62,
-            child: PhoneNumberField(),
-          ),
-          VSpace(10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.62,
-            child: EmailAddressField(),
-          ),
-        ],
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          final fieldWidth = constraints.maxWidth * _fieldWidthFactor;
+
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 12),
+                child: Text(
+                  "Reporter's Information:".ts,
+                  style: Theme.of(context)
+                      .textTheme
+                      .kHeadingH2ExtraBold
+                      .copyWith(fontSize: 16, fontWeight: FontWeight.w500),
+                ),
+              ),
+              const VSpace(_spacing),
+              ...fields.map(
+                (field) => Padding(
+                  padding: const EdgeInsets.only(bottom: _spacing),
+                  child: SizedBox(width: fieldWidth, child: field),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

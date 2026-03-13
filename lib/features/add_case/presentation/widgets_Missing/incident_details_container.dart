@@ -8,87 +8,68 @@ import 'package:find_me_app/features/add_case/presentation/widgets_Missing/incid
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:flutter_screenutil/flutter_screenutil.dart';
-
 class IncidentDetailsContainer extends StatelessWidget {
-  const IncidentDetailsContainer({
-    super.key,
-  });
+  const IncidentDetailsContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.of(context).size.width * 0.62;
-    return BlocBuilder<AddCaseCubit, AddCaseState>(
-      builder: (context, state) {
-        return Container(
-          padding: EdgeInsets.symmetric(horizontal: 7, vertical: 25),
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: AppColors.secondColor,
-            borderRadius: BorderRadius.circular(10),
+    final halfWidth = MediaQuery.of(context).size.width * 0.5;
+    final fieldWidth = MediaQuery.of(context).size.width * 0.62;
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 25),
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: AppColors.secondColor,
+        borderRadius: BorderRadius.circular(10),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 12),
+            child: Text(
+              "Incident details:".ts,
+              style: Theme.of(context).textTheme.kHeadingH2ExtraBold.copyWith(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w500,
+                  ),
+            ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 12),
-                child: Text(
-                  "Incident details:".ts,
-                  style:
-                      Theme.of(context).textTheme.kHeadingH2ExtraBold.copyWith(
-                            fontSize: 16,
-                            fontWeight: FontWeight.w500,
-                          ),
-                ),
-              ),
-              const VSpace(10),
-              const Row(
-                children: [
-                  Expanded(
-                    child: DateTimeLastSeenField(),
-                  ),
-                  HSpace(5),
-                  Expanded(
-                    child: SizedBox(),
-                  ),
-                ],
-              ),
+          const VSpace(10),
+          SizedBox(width: halfWidth, child: const DateTimeLastSeenField()),
+          const VSpace(10),
+          SizedBox(width: halfWidth, child: const LastKnownLocation()),
+          const VSpace(10),
+          SizedBox(
+              width: fieldWidth,
+              child: const FullBreakdownOfTheincidentField()),
+          const VSpace(10),
+          SizedBox(width: fieldWidth, child: const VehicleDetailsField()),
+          _ConditionalLocationField(fieldWidth: fieldWidth),
+          const VSpace(10),
+        ],
+      ),
+    );
+  }
+}
 
-              const VSpace(10),
-              const Row(
-                children: [
-                  Expanded(
-                    child: LastKnownLocation(),
-                  ),
-                  HSpace(5),
-                  Expanded(
-                    child: SizedBox(),
-                  ),
-                ],
-              ),
+class _ConditionalLocationField extends StatelessWidget {
+  const _ConditionalLocationField({required this.fieldWidth});
+  final double fieldWidth;
 
-              const VSpace(10),
-              SizedBox(
-                width: screenWidth,
-                child: const FullBreakdownOfTheincidentField(),
-              ),
-              const VSpace(10),
-              SizedBox(
-                width: screenWidth,
-                child: const VehicleDetailsField(),
-              ),
-              if (state.reportType == ReportType.foundChild) ...[
-                const VSpace(10),
-                SizedBox(
-                  width: screenWidth,
-                  child: const CurrentChildLocationField(),
-                ),
-              ],
-              // VSpace(10),
-
-              VSpace(10),
-            ],
-          ),
+  @override
+  Widget build(BuildContext context) {
+    return BlocSelector<AddCaseCubit, AddCaseState, ReportType?>(
+      selector: (state) => state.reportType,
+      builder: (context, reportType) {
+        if (reportType != ReportType.foundChild) return const SizedBox.shrink();
+        return Column(
+          children: [
+            const VSpace(10),
+            SizedBox(
+                width: fieldWidth, child: const CurrentChildLocationField()),
+          ],
         );
       },
     );

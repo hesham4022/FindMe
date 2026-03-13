@@ -9,64 +9,78 @@ import 'package:find_me_app/features/add_case/presentation/widgets_Missing/child
 import 'package:flutter/material.dart';
 
 class ChildInfo extends StatelessWidget {
-  const ChildInfo({
-    super.key,
-  });
+  const ChildInfo({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(left: 6, right: 6, bottom: 40, top: 20),
+      padding: const EdgeInsets.only(left: 6, right: 6, bottom: 40, top: 20),
       decoration: BoxDecoration(
         color: AppColors.secondColor,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Column(
+      child: const Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const HeaderOfChildInfo(),
-          const VSpace(10),
-          const FirstAndLastNameFeilds(),
-          const VSpace(10),
-          const Row(
+          HeaderOfChildInfo(),
+          VSpace(10),
+          FirstAndLastNameFeilds(),
+          VSpace(10),
+          Row(
             children: [
-              Expanded(
-                child: AddressOfChild(),
-              ),
+              Expanded(child: AddressOfChild()),
               HSpace(5),
-              Expanded(
-                child: SizedBox(),
-              ),
+              Expanded(child: SizedBox()),
             ],
           ),
-          const VSpace(10),
-          const Row(
+          VSpace(10),
+          Row(
             children: [
-              Expanded(
-                child: AgeField(),
-              ),
+              Expanded(child: AgeField()),
               HSpace(5),
-              Expanded(
-                child: SizedBox(),
-              ),
+              Expanded(child: SizedBox()),
             ],
           ),
-          const VSpace(10),
-          const SelectedGender(labels: ['male', 'female']),
-          const VSpace(10),
-          const WeightHeightFeilds(),
-          const VSpace(10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.62,
-            child: const ClothingDescroptionField(),
-          ),
-          const VSpace(10),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.62,
-            child: const OtherIdentifyingDetailsField(),
-          ),
+          VSpace(10),
+          SelectedGender(labels: ['male', 'female']),
+          VSpace(10),
+          WeightHeightFeilds(),
+          VSpace(10),
+          PartialWidthField(child: ClothingDescroptionField()),
+          VSpace(10),
+          PartialWidthField(child: OtherIdentifyingDetailsField()),
         ],
       ),
+    );
+  }
+}
+
+// core/shared/widgets/half_width_field.dart
+class HalfWidthField extends StatelessWidget {
+  const HalfWidthField({super.key, required this.child});
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * 0.5,
+      child: child,
+    );
+  }
+}
+
+// core/shared/widgets/partial_width_field.dart
+class PartialWidthField extends StatelessWidget {
+  const PartialWidthField(
+      {super.key, required this.child, this.widthFactor = 0.62});
+  final Widget child;
+  final double widthFactor;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * widthFactor,
+      child: child,
     );
   }
 }
