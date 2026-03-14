@@ -236,7 +236,7 @@ class HeightField extends StatelessWidget {
             context.read<AddCaseCubit>().heightChanged(value);
           },
           onValidate: (value) {
-            final err = AppValidators.validateWeight(value);
+            final err = AppValidators.validateHeight(value);
             context.read<AddCaseCubit>().heightErrorChanged(err ?? "");
             return (err == null || err.trim().isEmpty) ? null : err;
           },

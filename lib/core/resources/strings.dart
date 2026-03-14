@@ -315,6 +315,9 @@ class AppStrings {
       "Last name must be at most 50 characters.";
   static const weightTooLow = "Weight must be at least 1 kg";
   static const weightTooHigh = "Weight must be less than 300 kg";
+  static const notValidHeight = "Please enter a valid height";
+  static const heightTooLow = "Height must be greater than 0";
+  static const heightTooHigh = "Height must be less than 250 cm";
   static const String notValidEmail = "Invalid email format.";
   static const String notValidFirstName =
       "First name should contain only English or Arabic letters.";
