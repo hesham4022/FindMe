@@ -9,7 +9,8 @@ class AppValidators {
   static final passwordRegex = RegExp(
       r"^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$");
 
-  static final nameRegex = RegExp(r'^[a-zA-Z]+$');
+  // static final nameRegex = RegExp(r'^[a-zA-Z]+$');
+  static final nameRegex = RegExp(r"^[\u0600-\u06FF a-zA-Z]+$");
   static final tokenIDRegex = RegExp(r'^\d+$');
   static final numberRegex = RegExp(r'^\d+\.?\d{0,2}');
   // static final nameRegex = RegExp(r'[^a-zA-Z\u0600-\u06FF]');
