@@ -98,20 +98,47 @@ class _CustomTextFieldState extends State<CustomTextField> {
     _focusNode = FocusNode();
 
     // Listener to detect focus changes
+    // _focusNode.addListener(() {
+    //   if (_focusNode.hasFocus) {
+    //     if (_state != CustomState.error) {
+    //       _state = CustomState.active;
+    //     }
+    //   } else {
+    //     if (_state != CustomState.error) {
+    //       _state = CustomState.inActive;
+    //     }
+    //   }
+
+    //   setState(() {
+    //     _state;
+    //   });
+    // });
+
     _focusNode.addListener(() {
       if (_focusNode.hasFocus) {
         if (_state != CustomState.error) {
           _state = CustomState.active;
         }
       } else {
-        if (_state != CustomState.error) {
+        // هنا نعمل validation لما يخرج من الفيلد
+        if (widget.onValidate != null) {
+          final error = widget.onValidate!(
+            widget.controller?.text ?? '',
+          );
+
+          _errorText = error;
+
+          if (_errorText != null && _errorText!.isNotEmpty) {
+            _state = CustomState.error;
+          } else {
+            _state = CustomState.inActive;
+          }
+        } else {
           _state = CustomState.inActive;
         }
       }
 
-      setState(() {
-        _state;
-      });
+      setState(() {});
     });
 
     super.initState();
@@ -257,15 +284,26 @@ class _CustomTextFieldState extends State<CustomTextField> {
           scrollPadding: EdgeInsets.only(
               bottom: MediaQuery.of(context).viewInsets.bottom +
                   Theme.of(context).textTheme.kCaptionRegular.fontSize! * 4),
+          // onChanged: (value) {
+          //   if (widget.onValidate != null) {
+          //     setState(() {
+          //       _errorText = widget.onValidate!(value);
+          //       if (_errorText != null && _errorText!.isNotEmpty) {
+          //         _state = CustomState.error;
+          //       } else {
+          //         _state = CustomState.active;
+          //       }
+          //     });
+          //   }
+
+          //   widget.onChanged?.call(value);
+          // },
+
           onChanged: (value) {
-            if (widget.onValidate != null) {
+            if (_errorText != null) {
               setState(() {
-                _errorText = widget.onValidate!(value);
-                if (_errorText != null && _errorText!.isNotEmpty) {
-                  _state = CustomState.error;
-                } else {
-                  _state = CustomState.active;
-                }
+                _errorText = null;
+                _state = CustomState.active;
               });
             }
 
