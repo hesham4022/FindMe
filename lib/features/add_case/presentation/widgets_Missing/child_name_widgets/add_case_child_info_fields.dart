@@ -201,7 +201,7 @@ class WeightField extends StatelessWidget {
             context.read<AddCaseCubit>().weightChanged(value);
           },
           onValidate: (value) {
-            final err = AppValidators.validateUsername(value);
+            final err = AppValidators.validateWeightAndHieght(value);
             context.read<AddCaseCubit>().weightErrorChanged(err ?? "");
             return (err == null || err.trim().isEmpty) ? null : err;
           },
@@ -236,7 +236,7 @@ class HeightField extends StatelessWidget {
             context.read<AddCaseCubit>().heightChanged(value);
           },
           onValidate: (value) {
-            final err = AppValidators.validateUsername(value);
+            final err = AppValidators.validateWeightAndHieght(value);
             context.read<AddCaseCubit>().heightErrorChanged(err ?? "");
             return (err == null || err.trim().isEmpty) ? null : err;
           },

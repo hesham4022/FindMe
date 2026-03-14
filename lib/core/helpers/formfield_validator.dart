@@ -65,7 +65,7 @@ class AppValidators {
 
   static String? validateWeightAndHieght(String? value) {
     if (value == null || value.trim().isEmpty) {
-      return "textFieldIsRequired".ts;
+      return null;
     } else {
       bool nameValid = nameRegex.hasMatch(value);
       if (nameValid == false) {
