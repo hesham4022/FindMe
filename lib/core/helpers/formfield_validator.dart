@@ -63,6 +63,26 @@ class AppValidators {
     return null;
   }
 
+  static String? validateWeightAndHieght(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return "textFieldIsRequired".ts;
+    } else {
+      bool nameValid = nameRegex.hasMatch(value);
+      if (nameValid == false) {
+        return AppStrings.notValidFirstName;
+      }
+      //
+      else if (value.length < 3) {
+        return AppStrings.first3Characters;
+      }
+      //
+      else if (value.length > 50) {
+        return AppStrings.first50Characters;
+      }
+    }
+    return null;
+  }
+
   /// Validate Email text form field
   static String? validateEmail(String? email) {
     if (email != null && email.trim().isNotEmpty) {
