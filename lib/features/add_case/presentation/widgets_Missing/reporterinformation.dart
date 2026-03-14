@@ -10,9 +10,6 @@ import 'package:flutter/material.dart';
 class ReporterInformation extends StatelessWidget {
   const ReporterInformation({super.key});
 
-  static const _fieldWidthFactor = 0.70;
-  static const _spacing = 10.0;
-
   @override
   Widget build(BuildContext context) {
     final fields = [
@@ -44,10 +41,10 @@ class ReporterInformation extends StatelessWidget {
                       .copyWith(fontSize: 16, fontWeight: FontWeight.w500),
                 ),
               ),
-              const VSpace(_spacing),
+              const VSpace(10),
               ...fields.map(
                 (field) => Padding(
-                  padding: const EdgeInsets.only(bottom: _spacing),
+                  padding: const EdgeInsets.only(bottom: 10),
                   child: PartialWidthField(child: field),
                 ),
               ),

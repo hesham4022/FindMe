@@ -28,9 +28,9 @@ class FullNameField extends StatelessWidget {
                 ),
           ),
         ),
-        VSpace(5),
+        const VSpace(5),
         CustomTextField(
-          radius: 13,
+          radius: 30,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
           hint: "Name".ts,
@@ -74,9 +74,9 @@ class RelationshipChildField extends StatelessWidget {
                 ),
           ),
         ),
-        VSpace(5),
+        const VSpace(5),
         CustomTextField(
-          radius: 13,
+          radius: 30,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
           hint: "e.g., parent, guardian, relative".ts,
@@ -119,9 +119,9 @@ class PhoneNumberField extends StatelessWidget {
                 ),
           ),
         ),
-        VSpace(5),
+        const VSpace(5),
         CustomTextField(
-          radius: 13,
+          radius: 30,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
           hint: "e.g., parent, guardian, relative".ts,
@@ -164,9 +164,9 @@ class EmailAddressField extends StatelessWidget {
                 ),
           ),
         ),
-        VSpace(5),
+        const VSpace(5),
         CustomTextField(
-          radius: 13,
+          radius: 30,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
           hint: "emailLabel".ts,
