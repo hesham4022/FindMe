@@ -313,10 +313,12 @@ class AppStrings {
       "First name must be at most 50 characters.";
   static const String last50Characters =
       "Last name must be at most 50 characters.";
+  static const weightTooLow = "Weight must be at least 1 kg";
+  static const weightTooHigh = "Weight must be less than 300 kg";
   static const String notValidEmail = "Invalid email format.";
   static const String notValidFirstName =
       "First name should contain only English or Arabic letters.";
-  static const String notValidWeightAndHieght =
+  static const String notValidWeight =
       "this field should contain only numbers.";
   static const String phoneRequired = "Phone number is required.";
   static const String notValidPhone = "Invalid phone number.";

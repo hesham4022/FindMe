@@ -65,23 +65,15 @@ class AppValidators {
     return null;
   }
 
-  static String? validateWeightAndHieght(String? value) {
-    if (value == null || value.trim().isEmpty) {
-      return null;
-    } else {
-      bool fieldValid = numberRegex.hasMatch(value);
-      if (fieldValid == false) {
-        return AppStrings.notValidWeightAndHieght;
-      }
-      //
-      else if (value.length < 3) {
-        return AppStrings.first3Characters;
-      }
-      //
-      else if (value.length > 50) {
-        return AppStrings.first50Characters;
-      }
-    }
+  static String? validateWeight(String? value) {
+    if (value == null || value.trim().isEmpty) return null;
+
+    if (!numberRegex.hasMatch(value)) return AppStrings.notValidWeight;
+
+    final weight = double.tryParse(value);
+    if (weight == null || weight <= 0) return AppStrings.weightTooLow;
+    if (weight > 300) return AppStrings.weightTooHigh;
+
     return null;
   }
 

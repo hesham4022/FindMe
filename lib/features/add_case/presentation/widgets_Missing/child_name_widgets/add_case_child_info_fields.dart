@@ -201,7 +201,7 @@ class WeightField extends StatelessWidget {
             context.read<AddCaseCubit>().weightChanged(value);
           },
           onValidate: (value) {
-            final err = AppValidators.validateWeightAndHieght(value);
+            final err = AppValidators.validateWeight(value);
             context.read<AddCaseCubit>().weightErrorChanged(err ?? "");
             return (err == null || err.trim().isEmpty) ? null : err;
           },
@@ -236,7 +236,7 @@ class HeightField extends StatelessWidget {
             context.read<AddCaseCubit>().heightChanged(value);
           },
           onValidate: (value) {
-            final err = AppValidators.validateWeightAndHieght(value);
+            final err = AppValidators.validateWeight(value);
             context.read<AddCaseCubit>().heightErrorChanged(err ?? "");
             return (err == null || err.trim().isEmpty) ? null : err;
           },
@@ -284,7 +284,7 @@ class ClothingDescroptionField extends StatelessWidget {
                 context.read<AddCaseCubit>().clothingDescriptionChanged(value);
               },
               onValidate: (value) {
-                final err = AppValidators.validateUsername(value);
+                final err = AppValidators.validatInGeneralStringFielfs(value);
                 context
                     .read<AddCaseCubit>()
                     .clothingDescriptionErrorChanged(err ?? "");
@@ -338,7 +338,7 @@ class OtherIdentifyingDetailsField extends StatelessWidget {
                 context.read<AddCaseCubit>().descriptionChanged(value);
               },
               onValidate: (value) {
-                final err = AppValidators.validateUsername(value);
+                final err = AppValidators.validatInGeneralStringFielfs(value);
                 context.read<AddCaseCubit>().descriptionErrorChanged(err ?? "");
 
                 return (err == null || err.trim().isEmpty) ? null : err;
