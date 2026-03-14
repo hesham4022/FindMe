@@ -301,8 +301,14 @@ class AppStrings {
       "Last name should contain only English letters.";
   static const String last3Characters =
       "Last name must be at least 3 characters.";
+  static const String general5Characters =
+      "this field must be at least 5 characters.";
+  static const String general50Characters =
+      "this field must be at most 50 characters.";
+
   static const String first3Characters =
       "First name must be at least 3 characters.";
+
   static const String first50Characters =
       "First name must be at most 50 characters.";
   static const String last50Characters =
@@ -310,6 +316,8 @@ class AppStrings {
   static const String notValidEmail = "Invalid email format.";
   static const String notValidFirstName =
       "First name should contain only English or Arabic letters.";
+  static const String notValidWeightAndHieght =
+      "this field should contain only numbers.";
   static const String phoneRequired = "Phone number is required.";
   static const String notValidPhone = "Invalid phone number.";
   static const String logout = "Logout";

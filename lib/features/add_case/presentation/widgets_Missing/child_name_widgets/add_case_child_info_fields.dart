@@ -279,7 +279,6 @@ class ClothingDescroptionField extends StatelessWidget {
                   const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
               hint: "what they were last seen wearing".ts,
               errorText: state.clothingDescriptionErrorText,
-              // errorText: "Feild is required",
               onSubmit: onSubmit,
               onChanged: (value) {
                 context.read<AddCaseCubit>().clothingDescriptionChanged(value);

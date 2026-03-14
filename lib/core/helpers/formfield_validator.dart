@@ -11,6 +11,7 @@ class AppValidators {
 
   // static final nameRegex = RegExp(r'^[a-zA-Z]+$');
   static final nameRegex = RegExp(r"^[\u0600-\u06FF a-zA-Z]+$");
+  static final StringRegex = RegExp(r".*");
   static final tokenIDRegex = RegExp(r'^\d+$');
   static final numberRegex = RegExp(r'^\d+\.?\d{0,2}');
   // static final nameRegex = RegExp(r'[^a-zA-Z\u0600-\u06FF]');
@@ -41,6 +42,7 @@ class AppValidators {
         return AppStrings.first50Characters;
       }
     }
+    return null;
   }
 
   static String? validateLastName(String? value) {
@@ -67,12 +69,28 @@ class AppValidators {
     if (value == null || value.trim().isEmpty) {
       return null;
     } else {
-      bool nameValid = nameRegex.hasMatch(value);
-      if (nameValid == false) {
-        return AppStrings.notValidFirstName;
+      bool fieldValid = numberRegex.hasMatch(value);
+      if (fieldValid == false) {
+        return AppStrings.notValidWeightAndHieght;
       }
       //
       else if (value.length < 3) {
+        return AppStrings.first3Characters;
+      }
+      //
+      else if (value.length > 50) {
+        return AppStrings.first50Characters;
+      }
+    }
+    return null;
+  }
+
+  static String? validatInGeneralStringFielfs(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return null;
+    } else {
+      //
+      if (value.length < 3) {
         return AppStrings.first3Characters;
       }
       //
