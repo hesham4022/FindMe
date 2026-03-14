@@ -82,6 +82,7 @@ class CustomTextField extends StatefulWidget {
 }
 
 class _CustomTextFieldState extends State<CustomTextField> {
+  late final TextEditingController _controller;
   String? _errorText;
 
   late Color _filledColor;
@@ -90,12 +91,26 @@ class _CustomTextFieldState extends State<CustomTextField> {
   late CustomState _state;
 
   late final FocusNode _focusNode;
+  void _runValidation() {
+    if (widget.onValidate != null) {
+      final error = widget.onValidate!(_controller.text);
+
+      setState(() {
+        _errorText = error;
+        _state = (error != null && error.isNotEmpty)
+            ? CustomState.error
+            : CustomState.inActive;
+      });
+    }
+  }
 
   @override
   void initState() {
     _state = CustomState.inActive;
     _errorText = widget.errorText;
-    _focusNode = FocusNode();
+    _controller = widget.controller ?? TextEditingController();
+
+    _focusNode = widget.focusNode ?? FocusNode();
 
     // Listener to detect focus changes
     // _focusNode.addListener(() {
@@ -114,31 +129,18 @@ class _CustomTextFieldState extends State<CustomTextField> {
     //   });
     // });
 
+    // _controller = widget.controller ?? TextEditingController();
+
     _focusNode.addListener(() {
-      if (_focusNode.hasFocus) {
-        if (_state != CustomState.error) {
-          _state = CustomState.active;
-        }
+      if (!_focusNode.hasFocus) {
+        _runValidation();
       } else {
-        // هنا نعمل validation لما يخرج من الفيلد
-        if (widget.onValidate != null) {
-          final error = widget.onValidate!(
-            widget.controller?.text ?? '',
-          );
-
-          _errorText = error;
-
-          if (_errorText != null && _errorText!.isNotEmpty) {
-            _state = CustomState.error;
-          } else {
-            _state = CustomState.inActive;
-          }
-        } else {
-          _state = CustomState.inActive;
+        if (_state != CustomState.error) {
+          setState(() {
+            _state = CustomState.active;
+          });
         }
       }
-
-      setState(() {});
     });
 
     super.initState();
@@ -261,7 +263,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           ),
           enabled: _state == CustomState.disabled ? false : true,
           autofocus: widget.autoFocus,
-          focusNode: widget.focusNode ?? _focusNode,
+          focusNode: _focusNode,
           obscureText: widget.secureText,
           inputFormatters: widget.formatter,
           keyboardType: widget.keyboardType,
@@ -275,7 +277,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
           minLines: widget.minLines,
           maxLines: widget.maxLines,
           readOnly: widget.readOnly,
-          controller: widget.controller,
+          controller: _controller,
           textDirection: widget.textDirection,
           textAlign: widget.textAlign,
           textCapitalization: widget.textCapitalization,
