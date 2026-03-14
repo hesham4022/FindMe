@@ -102,6 +102,7 @@ class AgeField extends StatelessWidget {
             ),
             VSpace(5),
             CustomTextField(
+              keyboardType: TextInputType.number,
               radius: 30,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
@@ -189,6 +190,7 @@ class WeightField extends StatelessWidget {
     return BlocBuilder<AddCaseCubit, AddCaseState>(
       builder: (context, state) {
         return CustomTextField(
+          keyboardType: TextInputType.number,
           radius: 30,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
@@ -222,6 +224,7 @@ class HeightField extends StatelessWidget {
     return BlocBuilder<AddCaseCubit, AddCaseState>(
       builder: (context, state) {
         return CustomTextField(
+          keyboardType: TextInputType.number,
           radius: 30,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 7, horizontal: 12),

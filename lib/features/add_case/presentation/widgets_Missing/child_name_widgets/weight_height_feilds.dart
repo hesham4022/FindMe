@@ -26,6 +26,7 @@ class WeightHeightFeilds extends StatelessWidget {
         ),
         const VSpace(5),
         const Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(child: WeightField()),
             HSpace(5),

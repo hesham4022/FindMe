@@ -309,7 +309,7 @@ class AppStrings {
       "Last name must be at most 50 characters.";
   static const String notValidEmail = "Invalid email format.";
   static const String notValidFirstName =
-      "First name should contain only English letters.";
+      "First name should contain only English or Arabic letters.";
   static const String phoneRequired = "Phone number is required.";
   static const String notValidPhone = "Invalid phone number.";
   static const String logout = "Logout";

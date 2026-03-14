@@ -25,6 +25,7 @@ class FirstAndLastNameFeilds extends StatelessWidget {
         ),
         const VSpace(5),
         const Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(child: ChildFirstNameField()),
             HSpace(5),
