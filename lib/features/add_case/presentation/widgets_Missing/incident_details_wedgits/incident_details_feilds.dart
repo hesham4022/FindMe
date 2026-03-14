@@ -10,67 +10,70 @@ import 'package:find_me_app/features/profile/presentation/profile_view/widgets/s
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DateTimeLastSeenField extends StatelessWidget {
+class DateTimeLastSeenField extends StatefulWidget {
   const DateTimeLastSeenField({super.key});
 
   @override
+  State<DateTimeLastSeenField> createState() => _DateTimeLastSeenFieldState();
+}
+
+class _DateTimeLastSeenFieldState extends State<DateTimeLastSeenField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    final initialDate = context.read<AddCaseCubit>().state.dateLastSeen;
+    _controller = TextEditingController(text: initialDate ?? "");
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AddCaseCubit, AddCaseState>(
-      builder: (context, state) {
-        final controller =
-            TextEditingController(text: state.dateLastSeen ?? "");
-
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 8),
-              child: Text(
-                "Date & Time Last Seen:".ts,
-                style: Theme.of(context).textTheme.kSubheadingRegular.copyWith(
-                      fontSize: 13,
-                      fontWeight: FontWeight.w400,
-                    ),
-              ),
-            ),
-            VSpace(5),
-            CustomTextField(
-              controller: controller,
-              readOnly: true,
-              radius: 20,
-              contentPadding: const EdgeInsets.symmetric(
-                vertical: 7,
-                horizontal: 12,
-              ),
-              height: 30,
-              hint: "DD / MM / YY",
-              suffixIcon: const Icon(
-                Icons.calendar_month_outlined,
-                color: AppColors.saltBox900,
-              ),
-              onTap: () => kShowCalendarBottomSheet(
-                context,
-                onSelected: (value) {
-                  final formattedDate =
-                      DateFormat('yyyy-MM-dd', 'en_US').format(value);
-
-                  context
-                      .read<AddCaseCubit>()
-                      .dateLastseenChanged(formattedDate);
-                },
-              ),
-              onValidate: (value) {
-                final err = AppValidators.validateUsername(value);
-                context
-                    .read<AddCaseCubit>()
-                    .dateLastseenErrorChanged(err ?? "");
-
-                return (err == null || err.trim().isEmpty) ? null : err;
-              },
-            ),
-          ],
-        );
-      },
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: Text(
+            "Date & Time Last Seen:".ts,
+            style: Theme.of(context).textTheme.kSubheadingRegular.copyWith(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
+                ),
+          ),
+        ),
+        const VSpace(5),
+        CustomTextField(
+          controller: _controller,
+          readOnly: true,
+          radius: 20,
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 7,
+            horizontal: 12,
+          ),
+          height: 30,
+          hint: "DD / MM / YY",
+          suffixIcon: const Icon(
+            Icons.calendar_month_outlined,
+            color: AppColors.saltBox900,
+          ),
+          onTap: () => kShowCalendarBottomSheet(
+            context,
+            onSelected: (value) {
+              final formattedDate =
+                  DateFormat('yyyy-MM-dd', 'en_US').format(value);
+              _controller.text = formattedDate;
+              context.read<AddCaseCubit>().dateLastseenChanged(formattedDate);
+            },
+          ),
+        ),
+      ],
     );
   }
 }
@@ -113,7 +116,7 @@ class LastKnownLocation extends StatelessWidget {
                 context.read<AddCaseCubit>().lastseenLocationChanged(value);
               },
               onValidate: (value) {
-                final err = AppValidators.validateUsername(value);
+                final err = AppValidators.validatInGeneralStringFielfs(value);
                 context
                     .read<AddCaseCubit>()
                     .lastseenLocationErrorChanged(err ?? "");
@@ -167,7 +170,7 @@ class FullBreakdownOfTheincidentField extends StatelessWidget {
                 context.read<AddCaseCubit>().breakdownDetailsChanged(value);
               },
               onValidate: (value) {
-                final err = AppValidators.validateUsername(value);
+                final err = AppValidators.validatInGeneralStringFielfs(value);
                 context
                     .read<AddCaseCubit>()
                     .breakdownDetailsErrorChanged(err ?? "");
@@ -223,7 +226,7 @@ class VehicleDetailsField extends StatelessWidget {
                 context.read<AddCaseCubit>().vehicleDetailsChanged(value);
               },
               onValidate: (value) {
-                final err = AppValidators.validateUsername(value);
+                final err = AppValidators.validatInGeneralStringFielfs(value);
                 context
                     .read<AddCaseCubit>()
                     .vehicleDetailsErrorChanged(err ?? "");

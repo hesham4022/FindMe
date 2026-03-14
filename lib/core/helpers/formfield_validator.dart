@@ -110,12 +110,12 @@ class AppValidators {
       return null;
     } else {
       //
-      if (value.length < 3) {
-        return AppStrings.first3Characters;
+      if (value.length < 5) {
+        return AppStrings.general5Characters;
       }
       //
       else if (value.length > 50) {
-        return AppStrings.first50Characters;
+        return AppStrings.general50Characters;
       }
     }
     return null;
