@@ -8,25 +8,37 @@ enum AddCaseStatus {
 }
 
 class AddCaseState extends Equatable {
+  final List<String> photos;
   final String? firstName;
   final String? lastName;
+  final String? address;
   final int? age;
   final String? gender;
   final double? weight;
   final double? height;
   final String? clothingDescription;
   final String? description;
+
+/////
+  final String? dateLastSeen;
   final bool hasVehicle;
   final String? vehicleDetails;
   final String? fullBreakdownDetails;
-  final String? address;
   final String? lastSeenLocation;
-  final String? dateLastSeen;
 
+////////
+
+  final String? fullNameOfReporter;
+  final String? relationShipToChild;
+  final String? phoneOfReporter;
+  final String? emailOfReporter;
+
+///////
+  ///
   final bool confirmInformation;
   final bool consentToShare;
   final ReportType? reportType;
-  final List<String> photos;
+
   final String? policeStation;
   // validation messages (اختياري)
   final String? firstNameErrorText;

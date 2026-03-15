@@ -3,7 +3,9 @@ import 'package:find_me_app/core/helpers/formfield_validator.dart';
 import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/custom_textfield.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
+import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class FullNameField extends StatelessWidget {
   const FullNameField({
@@ -15,38 +17,42 @@ class FullNameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: Text(
-            "Your Full Name:".ts,
-            style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                ),
-          ),
-        ),
-        const VSpace(5),
-        CustomTextField(
-          radius: 30,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
-          hint: "Name".ts,
+    return BlocBuilder<AddCaseCubit, AddCaseState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                "Your Full Name:".ts,
+                style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+            ),
+            const VSpace(5),
+            CustomTextField(
+              radius: 30,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+              hint: "Name".ts,
 
-          // errorText: state.usernameErrorText,
-          // errorText: "Feild is required",
-          onSubmit: onSubmit,
-          onChanged: (value) {},
-          onValidate: (value) {
-            final err =
-                AppValidators.validateUsername(value); // String? (null لو صحيح)
+              // errorText: state.,
+              // errorText: "Feild is required",
+              onSubmit: onSubmit,
+              onChanged: (value) {},
+              onValidate: (value) {
+                final err = AppValidators.validateUsername(
+                    value); // String? (null لو صحيح)
 
-            return (err == null || err.trim().isEmpty) ? null : err;
-          },
-        ),
-      ],
+                return (err == null || err.trim().isEmpty) ? null : err;
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
