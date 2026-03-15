@@ -117,6 +117,33 @@ class AddCaseCubit extends Cubit<AddCaseState> {
   void policeStationErrorChanged(String value) =>
       emit(state.copyWith(policeStationErrorText: value));
 
+  //reporter information
+  void fullNameOfReporterChanged(String value) =>
+      emit(state.copyWith(fullNameOfReporter: value));
+
+  void fullNameOfReporterErrorChanged(String value) =>
+      emit(state.copyWith(fullNameOfReporterError: value));
+
+  void emailOfReporterChanged(String value) =>
+      emit(state.copyWith(emailOfReporter: value));
+
+  void emailOfReporterErrorChanged(String value) =>
+      emit(state.copyWith(emailOfReporterError: value));
+
+  void phoneOfReporterChanged(String value) =>
+      emit(state.copyWith(phoneOfReporter: value));
+
+  void phoneOfReporterErrorChanged(String value) =>
+      emit(state.copyWith(phoneOfReporterError: value));
+
+  void relationShipToChildChanged(String value) =>
+      emit(state.copyWith(relationShipToChild: value));
+
+  void relationShipToChildErrorChanged(String value) =>
+      emit(state.copyWith(relationShipToChildError: value));
+
+  ////
+
   void confirmInformationChanged(bool value) =>
       emit(state.copyWith(confirmInformation: value, consentErrorText: null));
 

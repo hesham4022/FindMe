@@ -8,6 +8,7 @@ enum AddCaseStatus {
 }
 
 class AddCaseState extends Equatable {
+  final ReportType? reportType;
   final List<String> photos;
   final String? firstName;
   final String? lastName;
@@ -25,7 +26,7 @@ class AddCaseState extends Equatable {
   final String? vehicleDetails;
   final String? fullBreakdownDetails;
   final String? lastSeenLocation;
-
+  final String? policeStation;
 ////////
 
   final String? fullNameOfReporter;
@@ -34,13 +35,11 @@ class AddCaseState extends Equatable {
   final String? emailOfReporter;
 
 ///////
-  ///
   final bool confirmInformation;
   final bool consentToShare;
-  final ReportType? reportType;
 
-  final String? policeStation;
-  // validation messages (اختياري)
+  // validation messages
+
   final String? firstNameErrorText;
   final String? lastNameErrorText;
   final String? addressErrorText;
@@ -50,14 +49,25 @@ class AddCaseState extends Equatable {
   final String? heightErrorText;
   final String? clothingDescriptionErrorText;
   final String? descriptionErrorText;
+
+  ////
   final String? dateLastSeenError;
   final String? lastSeenLocationError;
   final String? fullBreakdownDetailsError;
   final String? vehicleDetailsError;
-  final String? consentErrorText;
-  final CreateReportRequest? createReportRequest;
   final String? policeStationErrorText;
 
+  ///
+
+  final String? fullNameOfReporterError;
+  final String? relationShipToChildError;
+  final String? phoneOfReporterError;
+  final String? emailOfReporterError;
+
+  ///
+
+  final String? consentErrorText;
+  final CreateReportRequest? createReportRequest;
   final AddCaseStatus status;
 
   ///////
@@ -103,6 +113,14 @@ class AddCaseState extends Equatable {
     this.reportType,
     this.policeStation,
     this.policeStationErrorText,
+    this.fullNameOfReporter,
+    this.emailOfReporter,
+    this.phoneOfReporter,
+    this.relationShipToChild,
+    this.fullNameOfReporterError,
+    this.emailOfReporterError,
+    this.phoneOfReporterError,
+    this.relationShipToChildError,
   });
 
   AddCaseState copyWith({
@@ -144,6 +162,18 @@ class AddCaseState extends Equatable {
     ReportType? reportType,
     String? policeStation,
     String? policeStationErrorText,
+
+    /////
+    String? fullNameOfReporter,
+    String? relationShipToChild,
+    String? phoneOfReporter,
+    String? emailOfReporter,
+
+    ///
+    String? fullNameOfReporterError,
+    String? relationShipToChildError,
+    String? phoneOfReporterError,
+    String? emailOfReporterError,
   }) {
     return AddCaseState(
       firstName: firstName ?? this.firstName,
@@ -188,6 +218,21 @@ class AddCaseState extends Equatable {
       policeStation: policeStation ?? this.policeStation,
       policeStationErrorText:
           policeStationErrorText ?? this.policeStationErrorText,
+
+      ///
+      fullNameOfReporter: fullNameOfReporter ?? this.fullNameOfReporter,
+      relationShipToChild: relationShipToChild ?? this.relationShipToChild,
+      phoneOfReporter: phoneOfReporter ?? this.phoneOfReporter,
+      emailOfReporter: emailOfReporter ?? this.emailOfReporter,
+
+      ///
+
+      fullNameOfReporterError:
+          fullNameOfReporterError ?? this.fullNameOfReporterError,
+      relationShipToChildError:
+          relationShipToChildError ?? this.relationShipToChildError,
+      phoneOfReporterError: phoneOfReporterError ?? this.phoneOfReporterError,
+      emailOfReporterError: emailOfReporterError ?? this.emailOfReporterError,
     );
   }
 
@@ -251,5 +296,13 @@ class AddCaseState extends Equatable {
         reportType,
         policeStation,
         policeStationErrorText,
+        fullNameOfReporter,
+        fullNameOfReporterError,
+        emailOfReporter,
+        emailOfReporterError,
+        phoneOfReporter,
+        phoneOfReporterError,
+        relationShipToChild,
+        relationShipToChildError,
       ];
 }
