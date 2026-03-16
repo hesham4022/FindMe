@@ -323,11 +323,11 @@ class _CustomTextFieldState extends State<CustomTextField> {
                 color: AppColors.error500,
                 size: 16,
               ),
-              HSpace(4),
+              const HSpace(4),
               Expanded(
                 child: Text(
                   _errorText!.ts,
-                  strutStyle: StrutStyle(forceStrutHeight: true),
+                  strutStyle: const StrutStyle(forceStrutHeight: true),
                   style: Theme.of(context)
                       .textTheme
                       .kParagraph01Regular

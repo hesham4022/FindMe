@@ -38,15 +38,16 @@ class FullNameField extends StatelessWidget {
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
               hint: "Name".ts,
-
-              // errorText: state.,
-              // errorText: "Feild is required",
+              errorText: state.fullNameOfReporterError,
               onSubmit: onSubmit,
-              onChanged: (value) {},
+              onChanged: (value) {
+                context.read<AddCaseCubit>().fullNameOfReporterChanged(value);
+              },
               onValidate: (value) {
-                final err = AppValidators.validateUsername(
-                    value); // String? (null لو صحيح)
-
+                final err = AppValidators.validateUsername(value);
+                context
+                    .read<AddCaseCubit>()
+                    .fullNameOfReporterErrorChanged(err ?? "");
                 return (err == null || err.trim().isEmpty) ? null : err;
               },
             ),
