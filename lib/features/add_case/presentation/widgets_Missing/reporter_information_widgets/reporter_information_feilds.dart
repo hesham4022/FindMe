@@ -68,37 +68,43 @@ class RelationshipChildField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: Text(
-            "Relationship to the Child:".ts,
-            style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                ),
-          ),
-        ),
-        const VSpace(5),
-        CustomTextField(
-          radius: 30,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
-          hint: "e.g., parent, guardian, relative".ts,
-
-          // errorText: state.usernameErrorText,
-          onSubmit: onSubmit,
-          onChanged: (value) {},
-          onValidate: (value) {
-            final err =
-                AppValidators.validateUsername(value); // String? (null لو صحيح)
-
-            return (err == null || err.trim().isEmpty) ? null : err;
-          },
-        ),
-      ],
+    return BlocBuilder<AddCaseCubit, AddCaseState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                "Relationship to the Child:".ts,
+                style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+            ),
+            const VSpace(5),
+            CustomTextField(
+              radius: 30,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+              hint: "e.g., parent, guardian, relative".ts,
+              errorText: state.relationShipToChildError,
+              onSubmit: onSubmit,
+              onChanged: (value) {
+                context.read<AddCaseCubit>().relationShipToChildChanged(value);
+              },
+              onValidate: (value) {
+                final err = AppValidators.validateUsername(value);
+                context
+                    .read<AddCaseCubit>()
+                    .relationShipToChildErrorChanged(err ?? "");
+                return (err == null || err.trim().isEmpty) ? null : err;
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -113,37 +119,44 @@ class PhoneNumberField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: Text(
-            "Phone Number:".ts,
-            style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                ),
-          ),
-        ),
-        const VSpace(5),
-        CustomTextField(
-          radius: 30,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
-          hint: "e.g., parent, guardian, relative".ts,
-
-          // errorText: state.usernameErrorText,
-          onSubmit: onSubmit,
-          onChanged: (value) {},
-          onValidate: (value) {
-            final err =
-                AppValidators.validateUsername(value); // String? (null لو صحيح)
-
-            return (err == null || err.trim().isEmpty) ? null : err;
-          },
-        ),
-      ],
+    return BlocBuilder<AddCaseCubit, AddCaseState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                "Phone Number:".ts,
+                style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+            ),
+            const VSpace(5),
+            CustomTextField(
+              keyboardType: TextInputType.phone,
+              radius: 30,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+              hint: "Number".ts,
+              errorText: state.phoneOfReporterError,
+              onSubmit: onSubmit,
+              onChanged: (value) {
+                context.read<AddCaseCubit>().phoneOfReporterChanged(value);
+              },
+              onValidate: (value) {
+                final err = AppValidators.validatePhoneNumber(value);
+                context
+                    .read<AddCaseCubit>()
+                    .phoneOfReporterErrorChanged(err ?? "");
+                return (err == null || err.trim().isEmpty) ? null : err;
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
@@ -158,37 +171,43 @@ class EmailAddressField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: Text(
-            "Email address:".ts,
-            style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                ),
-          ),
-        ),
-        const VSpace(5),
-        CustomTextField(
-          radius: 30,
-          contentPadding:
-              const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
-          hint: "emailLabel".ts,
-
-          // errorText: state.usernameErrorText,
-          onSubmit: onSubmit,
-          onChanged: (value) {},
-          onValidate: (value) {
-            final err =
-                AppValidators.validateUsername(value); // String? (null لو صحيح)
-
-            return (err == null || err.trim().isEmpty) ? null : err;
-          },
-        ),
-      ],
+    return BlocBuilder<AddCaseCubit, AddCaseState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                "Email address:".ts,
+                style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+            ),
+            const VSpace(5),
+            CustomTextField(
+              radius: 30,
+              contentPadding:
+                  const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+              hint: "emailLabel".ts,
+              errorText: state.emailOfReporterError,
+              onSubmit: onSubmit,
+              onChanged: (value) {
+                context.read<AddCaseCubit>().emailOfReporterChanged(value);
+              },
+              onValidate: (value) {
+                final err = AppValidators.validateEmail(value);
+                context
+                    .read<AddCaseCubit>()
+                    .emailOfReporterErrorChanged(err ?? "");
+                return (err == null || err.trim().isEmpty) ? null : err;
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
