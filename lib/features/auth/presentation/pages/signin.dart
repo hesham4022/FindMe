@@ -27,7 +27,7 @@ class SigninView extends StatelessWidget {
             style: Theme.of(context).textTheme.kHeadingH4SmallBoldBlack),
       ),
       resizeToAvoidBottomInset: false,
-      body: _SignInBody(),
+      body: const _SignInBody(),
     );
   }
 }

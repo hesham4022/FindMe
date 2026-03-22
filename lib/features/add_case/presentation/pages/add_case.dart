@@ -112,12 +112,10 @@ class _AddCaseViewBody extends StatelessWidget {
                                   : () {
                                       context
                                           .read<AddCaseCubit>()
-                                          .validateFieldsBeforeSubmit(context);
+                                          .submitReport(context);
                                     },
                               title: Text(
-                                state.isLoading
-                                    ? "Sending..."
-                                    : "Send alert now",
+                                "Send alert now",
                                 style: Theme.of(context)
                                     .textTheme
                                     .kDisplay02ExtraBold
@@ -127,6 +125,7 @@ class _AddCaseViewBody extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                               ),
+                              loading: state.isLoading,
                               width: 200,
                               radius: 20,
                             );

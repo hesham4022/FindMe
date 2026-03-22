@@ -201,47 +201,6 @@ class AddCaseCubit extends Cubit<AddCaseState> {
         state.consentToShare;
   }
 
-  void validateFieldsBeforeSubmit(BuildContext context) {
-    log("✅ validateFieldsBeforeSubmit called");
-
-    final firstNameErr = AppValidators.validateUsername(state.firstName);
-    final lastNameErr = AppValidators.validateLastName(state.lastName);
-    final addressErr = AppValidators.validateAddress(state.address);
-    final ageErr = AppValidators.validateAge(state.age?.toString());
-    final genderErr = (state.gender == null || state.gender!.isEmpty)
-        ? "Please select a gender"
-        : null;
-    final consentErr = (!state.confirmInformation || !state.consentToShare)
-        ? "You must confirm and consent before submitting."
-        : null;
-
-    final hasError = firstNameErr != null ||
-        lastNameErr != null ||
-        addressErr != null ||
-        ageErr != null ||
-        genderErr != null ||
-        consentErr != null;
-
-    emit(state.copyWith(
-      firstNameErrorText: firstNameErr,
-      lastNameErrorText: lastNameErr,
-      addressErrorText: addressErr,
-      ageErrorText: ageErr,
-      genderErrorText: genderErr,
-      consentErrorText: consentErr,
-    ));
-
-    if (!hasError) {
-      submitReport(context);
-    } else {
-      showAlertSnackBar(
-        context,
-        "Please fix the highlighted fields",
-        AlertType.error,
-      );
-    }
-  }
-
   // 🔹 Validation
   // void validateFieldsBeforeSubmit(BuildContext context) {
   //   bool hasError = false;
