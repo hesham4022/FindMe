@@ -190,53 +190,105 @@ class AddCaseCubit extends Cubit<AddCaseState> {
     emit(state.copyWith(photos: newPhotos));
   }
 
-  // 🔹 Validation
+  bool get isFormValid {
+    return AppValidators.validateUsername(state.firstName) == null &&
+        AppValidators.validateLastName(state.lastName) == null &&
+        AppValidators.validateAddress(state.address) == null &&
+        AppValidators.validateAge(state.age?.toString()) == null &&
+        state.gender != null &&
+        state.gender!.isNotEmpty &&
+        state.confirmInformation &&
+        state.consentToShare;
+  }
+
   void validateFieldsBeforeSubmit(BuildContext context) {
-    bool hasError = false;
     log("✅ validateFieldsBeforeSubmit called");
 
     final firstNameErr = AppValidators.validateUsername(state.firstName);
-    if (firstNameErr != null) {
-      emit(state.copyWith(firstNameErrorText: firstNameErr));
-      hasError = true;
-    }
-
     final lastNameErr = AppValidators.validateLastName(state.lastName);
-    if (lastNameErr != null) {
-      emit(state.copyWith(lastNameErrorText: lastNameErr));
-      hasError = true;
-    }
-
     final addressErr = AppValidators.validateAddress(state.address);
-    if (addressErr != null) {
-      emit(state.copyWith(addressErrorText: addressErr));
-      hasError = true;
-    }
-
     final ageErr = AppValidators.validateAge(state.age?.toString());
-    if (ageErr != null) {
-      emit(state.copyWith(ageErrorText: ageErr));
-      hasError = true;
-    }
+    final genderErr = (state.gender == null || state.gender!.isEmpty)
+        ? "Please select a gender"
+        : null;
+    final consentErr = (!state.confirmInformation || !state.consentToShare)
+        ? "You must confirm and consent before submitting."
+        : null;
 
-    if (state.gender == null || state.gender!.isEmpty) {
-      emit(state.copyWith(genderErrorText: "Please select a gender"));
-      hasError = true;
-    }
+    final hasError = firstNameErr != null ||
+        lastNameErr != null ||
+        addressErr != null ||
+        ageErr != null ||
+        genderErr != null ||
+        consentErr != null;
 
-    if (!state.confirmInformation || !state.consentToShare) {
-      emit(state.copyWith(
-          consentErrorText: "You must confirm and consent before submitting."));
-      hasError = true;
-    }
+    emit(state.copyWith(
+      firstNameErrorText: firstNameErr,
+      lastNameErrorText: lastNameErr,
+      addressErrorText: addressErr,
+      ageErrorText: ageErr,
+      genderErrorText: genderErr,
+      consentErrorText: consentErr,
+    ));
 
     if (!hasError) {
       submitReport(context);
     } else {
       showAlertSnackBar(
-          context, "Please fix the highlighted fields", AlertType.error);
+        context,
+        "Please fix the highlighted fields",
+        AlertType.error,
+      );
     }
   }
+
+  // 🔹 Validation
+  // void validateFieldsBeforeSubmit(BuildContext context) {
+  //   bool hasError = false;
+  //   log("✅ validateFieldsBeforeSubmit called");
+
+  //   final firstNameErr = AppValidators.validateUsername(state.firstName);
+  //   if (firstNameErr != null) {
+  //     emit(state.copyWith(firstNameErrorText: firstNameErr));
+  //     hasError = true;
+  //   }
+
+  //   final lastNameErr = AppValidators.validateLastName(state.lastName);
+  //   if (lastNameErr != null) {
+  //     emit(state.copyWith(lastNameErrorText: lastNameErr));
+  //     hasError = true;
+  //   }
+
+  //   final addressErr = AppValidators.validateAddress(state.address);
+  //   if (addressErr != null) {
+  //     emit(state.copyWith(addressErrorText: addressErr));
+  //     hasError = true;
+  //   }
+
+  //   final ageErr = AppValidators.validateAge(state.age?.toString());
+  //   if (ageErr != null) {
+  //     emit(state.copyWith(ageErrorText: ageErr));
+  //     hasError = true;
+  //   }
+
+  //   if (state.gender == null || state.gender!.isEmpty) {
+  //     emit(state.copyWith(genderErrorText: "Please select a gender"));
+  //     hasError = true;
+  //   }
+
+  //   if (!state.confirmInformation || !state.consentToShare) {
+  //     emit(state.copyWith(
+  //         consentErrorText: "You must confirm and consent before submitting."));
+  //     hasError = true;
+  //   }
+
+  //   if (!hasError) {
+  //     submitReport(context);
+  //   } else {
+  //     showAlertSnackBar(
+  //         context, "Please fix the highlighted fields", AlertType.error);
+  //   }
+  // }
 
   Future<void> submitReport(BuildContext context) async {
     if (state.isLoading) return;

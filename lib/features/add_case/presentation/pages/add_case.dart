@@ -92,9 +92,9 @@ class _AddCaseViewBody extends StatelessWidget {
                     children: [
                       const ChildInfo(),
                       const VSpace(35),
-                      const IncidentDetailsContainer(),
-                      const VSpace(35),
-                      const ReporterInformation(),
+                      // const IncidentDetailsContainer(),
+                      // const VSpace(35),
+                      // const ReporterInformation(),
                       const VSpace(35),
                       const ConsentVerificationSection(),
                       const VSpace(40),
@@ -103,6 +103,9 @@ class _AddCaseViewBody extends StatelessWidget {
                         child: BlocBuilder<AddCaseCubit, AddCaseState>(
                           builder: (context, state) {
                             return CustomFilledButton(
+                              state: context.read<AddCaseCubit>().isFormValid
+                                  ? CustomState.active
+                                  : CustomState.disabled,
                               color: Colors.red,
                               onPressed: state.isLoading
                                   ? null
