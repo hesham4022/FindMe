@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:find_me_app/core/di.dart';
@@ -39,7 +40,7 @@ class AddCaseRemote {
       };
 
       final files = <UploadFile>[];
-
+      log("[DATE_LAST_SEEN_CHECK] ${fields['date_last_seen']}");
       if (data.photos.isNotEmpty) {
         for (final photoPath in data.photos) {
           if (photoPath.isNotEmpty) {
