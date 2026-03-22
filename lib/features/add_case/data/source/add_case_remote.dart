@@ -1,17 +1,14 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:math';
 
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/helpers/enums/request_type.dart';
 import 'package:find_me_app/core/networking/api_constants.dart';
 import 'package:find_me_app/core/networking/functions.dart';
-import 'package:find_me_app/core/networking/http_interceptors.dart';
 import 'package:find_me_app/core/shared/models/upload_file.dart';
 import 'package:find_me_app/features/add_case/data/model/create_report.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
-import 'package:http/http.dart' as http;
 import 'package:path/path.dart';
 
 class AddCaseRemote {
@@ -24,7 +21,7 @@ class AddCaseRemote {
       final fields = {
         'first_name': data.firstName,
         'last_name': data.lastName,
-        'age': '${data.age ?? ''}',
+        'age': '${data.age}',
         'gender': data.gender,
         'weight': data.weight?.toString() ?? '',
         'height': data.height?.toString() ?? '',

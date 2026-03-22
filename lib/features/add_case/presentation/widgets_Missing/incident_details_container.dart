@@ -15,7 +15,6 @@ class IncidentDetailsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final halfWidth = MediaQuery.of(context).size.width * 0.5;
     final fieldWidth = MediaQuery.of(context).size.width * 0.62;
 
     return Container(
