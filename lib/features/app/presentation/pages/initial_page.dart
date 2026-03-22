@@ -30,8 +30,8 @@ class MiddlewarePage extends StatelessWidget {
 
   Widget _getScreen(BuildContext context) {
     if (sl<AuthLocal>().isUserLoggedIn() == false) {
-      // return const SinupOrLogin();
-      return const HostView(currentIndex: 0);
+      return const SinupOrLogin();
+      // return const HostView(currentIndex: 0);
     }
     // HostView
     else {

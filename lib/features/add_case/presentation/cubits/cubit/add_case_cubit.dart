@@ -190,16 +190,6 @@ class AddCaseCubit extends Cubit<AddCaseState> {
     emit(state.copyWith(photos: newPhotos));
   }
 
-  // void addPhoto(String path) {
-  //   final updatedPhotos = [...state.photos, path];
-  //   emit(state.copyWith(photos: updatedPhotos));
-  // }
-
-  // void removePhoto(String path) {
-  //   final updatedPhotos = List<String>.from(state.photos)..remove(path);
-  //   emit(state.copyWith(photos: updatedPhotos));
-  // }
-
   // 🔹 Validation
   void validateFieldsBeforeSubmit(BuildContext context) {
     bool hasError = false;
