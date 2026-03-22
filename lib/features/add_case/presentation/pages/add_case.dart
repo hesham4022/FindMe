@@ -92,9 +92,9 @@ class _AddCaseViewBody extends StatelessWidget {
                     children: [
                       const ChildInfo(),
                       const VSpace(35),
-                      // const IncidentDetailsContainer(),
-                      // const VSpace(35),
-                      // const ReporterInformation(),
+                      const IncidentDetailsContainer(),
+                      const VSpace(35),
+                      const ReporterInformation(),
                       const VSpace(35),
                       const ConsentVerificationSection(),
                       const VSpace(40),
