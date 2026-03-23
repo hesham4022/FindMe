@@ -21,7 +21,7 @@ class AllCasesView extends StatefulWidget {
 }
 
 class _AllCasesViewState extends State<AllCasesView> {
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
