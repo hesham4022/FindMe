@@ -1,7 +1,7 @@
 class UserModel {
   final String name;
-  final String imageUrl; // من السيرفر
-  final String? localImage; // صورة محلية مؤقتة
+  final String imageUrl;
+  final String? localImage;
 
   UserModel({
     required this.name,
