@@ -11,7 +11,7 @@ class RecentCasesCubit extends Cubit<RecentCasesState> {
 
   final AllCasesRepo _repo;
 
-  List<CaseInfoModel> _allRecentCases = [];
+  List<CaseInfoModel> allRecentCases = [];
 
   Future<bool> getRecentCases() async {
     emit(state.copyWith(
@@ -32,10 +32,10 @@ class RecentCasesCubit extends Cubit<RecentCasesState> {
         isSuccess = false;
       },
       (success) {
-        _allRecentCases = List<CaseInfoModel>.from(success.allCases);
+        allRecentCases = List<CaseInfoModel>.from(success.allCases);
         emit(state.copyWith(
           status: RecentCasesStatus.success,
-          recentCases: _allRecentCases,
+          recentCases: allRecentCases,
         ));
 
         isSuccess = true;
@@ -46,20 +46,19 @@ class RecentCasesCubit extends Cubit<RecentCasesState> {
   }
 
   void toggleFavoriteCard(int caseId) {
-    _allRecentCases = _allRecentCases.map((c) {
+    allRecentCases = allRecentCases.map((c) {
       if (c.id == caseId) {
         return c.copyWith(isFavorite: !c.isFavorite);
       }
       return c;
     }).toList();
 
-    emit(
-        state.copyWith(recentCases: List<CaseInfoModel>.from(_allRecentCases)));
+    emit(state.copyWith(recentCases: List<CaseInfoModel>.from(allRecentCases)));
   }
 
   void refreshRecentCases() {
     emit(state.copyWith(
-      recentCases: List<CaseInfoModel>.from(_allRecentCases),
+      recentCases: List<CaseInfoModel>.from(allRecentCases),
     ));
   }
 

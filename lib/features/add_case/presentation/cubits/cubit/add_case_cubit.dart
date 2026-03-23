@@ -6,6 +6,7 @@ import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/helpers/enums/report_type.dart';
 import 'package:find_me_app/core/helpers/formfield_validator.dart';
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
+import 'package:find_me_app/features/Home/presentation/cubit/recent_cases_cubit/recent_cases_cubit.dart';
 import 'package:find_me_app/features/add_case/data/model/create_report.dart';
 import 'package:find_me_app/features/add_case/data/repo/add_case_repo.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
@@ -284,6 +285,10 @@ class AddCaseCubit extends Cubit<AddCaseState> {
         CaseInfoModel? caseInfoModel = response.data;
         emit(state.copyWith(status: AddCaseStatus.success, success: response));
         context.read<AllCasesCubit>().state.filtered.insert(0, caseInfoModel);
+        context
+            .read<RecentCasesCubit>()
+            .allRecentCases
+            .insert(0, caseInfoModel);
       },
     );
   }
