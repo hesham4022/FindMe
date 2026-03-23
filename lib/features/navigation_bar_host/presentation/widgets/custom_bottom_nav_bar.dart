@@ -201,8 +201,6 @@ class CutomBottomNavigationBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final barBg =
-        AppColors.daisyBush800.withOpacity(0.12); // خلفية البار الفاتحة
     final activeBg = AppColors.daisyBush800; // خلفية الدائرة النشطة
     final inactive = Color(0xff00278C);
     final iconSize = 28.w;
@@ -238,7 +236,6 @@ class CutomBottomNavigationBar extends StatelessWidget {
                   color: isActive ? Colors.white : inactive,
                 );
               } else if (tabs[index].img != null) {
-                // لو بتستخدم SVGs
                 icon = SvgPicture.asset(
                   isActive
                       ? (tabs[index].activeImg ?? tabs[index].img!)
