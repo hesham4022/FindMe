@@ -1,12 +1,10 @@
 import 'dart:developer';
 import 'dart:io';
-import 'package:bloc/bloc.dart';
+
 import 'package:equatable/equatable.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/helpers/enums/report_type.dart';
 import 'package:find_me_app/core/helpers/formfield_validator.dart';
-import 'package:find_me_app/core/shared/widgets/alerts.dart';
-import 'package:find_me_app/features/Home/presentation/cubit/recent_cases_cubit/recent_cases_cubit.dart';
 import 'package:find_me_app/features/add_case/data/model/create_report.dart';
 import 'package:find_me_app/features/add_case/data/repo/add_case_repo.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
@@ -202,54 +200,6 @@ class AddCaseCubit extends Cubit<AddCaseState> {
         state.consentToShare;
   }
 
-  // 🔹 Validation
-  // void validateFieldsBeforeSubmit(BuildContext context) {
-  //   bool hasError = false;
-  //   log("✅ validateFieldsBeforeSubmit called");
-
-  //   final firstNameErr = AppValidators.validateUsername(state.firstName);
-  //   if (firstNameErr != null) {
-  //     emit(state.copyWith(firstNameErrorText: firstNameErr));
-  //     hasError = true;
-  //   }
-
-  //   final lastNameErr = AppValidators.validateLastName(state.lastName);
-  //   if (lastNameErr != null) {
-  //     emit(state.copyWith(lastNameErrorText: lastNameErr));
-  //     hasError = true;
-  //   }
-
-  //   final addressErr = AppValidators.validateAddress(state.address);
-  //   if (addressErr != null) {
-  //     emit(state.copyWith(addressErrorText: addressErr));
-  //     hasError = true;
-  //   }
-
-  //   final ageErr = AppValidators.validateAge(state.age?.toString());
-  //   if (ageErr != null) {
-  //     emit(state.copyWith(ageErrorText: ageErr));
-  //     hasError = true;
-  //   }
-
-  //   if (state.gender == null || state.gender!.isEmpty) {
-  //     emit(state.copyWith(genderErrorText: "Please select a gender"));
-  //     hasError = true;
-  //   }
-
-  //   if (!state.confirmInformation || !state.consentToShare) {
-  //     emit(state.copyWith(
-  //         consentErrorText: "You must confirm and consent before submitting."));
-  //     hasError = true;
-  //   }
-
-  //   if (!hasError) {
-  //     submitReport(context);
-  //   } else {
-  //     showAlertSnackBar(
-  //         context, "Please fix the highlighted fields", AlertType.error);
-  //   }
-  // }
-
   Future<void> submitReport(BuildContext context) async {
     if (state.isLoading) return;
     emit(state.copyWith(status: AddCaseStatus.loading));
@@ -282,13 +232,9 @@ class AddCaseCubit extends Cubit<AddCaseState> {
         emit(state.copyWith(status: AddCaseStatus.error, error: failure));
       },
       (response) {
-        CaseInfoModel? caseInfoModel = response.data;
         emit(state.copyWith(status: AddCaseStatus.success, success: response));
-        context.read<AllCasesCubit>().state.filtered.insert(0, caseInfoModel);
-        context
-            .read<RecentCasesCubit>()
-            .allRecentCases
-            .insert(0, caseInfoModel);
+        CaseInfoModel? caseInfoModel = response.data;
+        context.read<AllCasesCubit>().addNewCase(caseInfoModel);
       },
     );
   }
