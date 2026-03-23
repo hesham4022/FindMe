@@ -141,6 +141,14 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     emit(state.copyWith(filtered: _allCases));
   }
 
+  void clearFilter() {
+    final allCases = state.allCasesResponse?.allCases ?? [];
+    emit(state.copyWith(
+      activeFilter: AllCasesFilter.all,
+      filtered: allCases,
+    ));
+  }
+
   void updateScroll(double pixels) {
     if (pixels > 50 && !state.isScroll) {
       emit(state.copyWith(isScroll: true));

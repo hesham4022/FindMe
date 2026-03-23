@@ -56,7 +56,7 @@ class AllCasesState extends Equatable {
       isScroll: isScroll ?? this.isScroll,
       // success: success ?? this.success,
       failure: failure ?? this.failure,
-      allCasesResponse: allCasesResponse ?? allCasesResponse,
+      allCasesResponse: allCasesResponse ?? this.allCasesResponse,
     );
   }
 

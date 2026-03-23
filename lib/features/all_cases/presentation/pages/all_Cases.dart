@@ -1,3 +1,5 @@
+// ignore_for_file: dead_code
+
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
@@ -22,6 +24,12 @@ class AllCasesView extends StatefulWidget {
 
 class _AllCasesViewState extends State<AllCasesView> {
   final ScrollController _scrollController = ScrollController();
+  @override
+  void initState() {
+    super.initState();
+    context.read<AllCasesCubit>().clearFilter();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
