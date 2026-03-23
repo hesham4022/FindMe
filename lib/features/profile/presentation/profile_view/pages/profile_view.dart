@@ -2,7 +2,7 @@ import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
-import 'package:find_me_app/features/Home/presentation/cubit/cubit/user_cubit.dart';
+import 'package:find_me_app/features/Home/presentation/cubit/user/user_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/delete_account/delete_account_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/pages/signin.dart';

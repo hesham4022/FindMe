@@ -1,6 +1,6 @@
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/Home/presentation/cubit/cubit/user_cubit.dart';
+import 'package:find_me_app/features/Home/presentation/cubit/user/user_cubit.dart';
 
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/profile_avater.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/update_profile_fields.dart';

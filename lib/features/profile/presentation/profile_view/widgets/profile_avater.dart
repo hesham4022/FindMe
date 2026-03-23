@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:find_me_app/core/shared/models/userdata.dart';
-import 'package:find_me_app/features/Home/presentation/cubit/cubit/user_cubit.dart';
+import 'package:find_me_app/features/Home/presentation/cubit/user/user_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
