@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:find_me_app/features/Home/presentation/cubit/recent_cases_cubit/recent_cases_cubit.dart';
 import 'package:find_me_app/features/all_cases/data/repo/all_cases_repo.dart';
 import 'package:find_me_app/features/auth/presentation/pages/sinup_or_login.dart';
@@ -38,8 +40,11 @@ class MiddlewarePage extends StatelessWidget {
     // HostView
     else {
       return BlocProvider(
-        create: (context) =>
-            RecentCasesCubit(sl<AllCasesRepo>())..getRecentCases(),
+        create: (context) {
+          final cubit = RecentCasesCubit(sl<AllCasesRepo>());
+          unawaited(cubit.getRecentCases());
+          return cubit;
+        },
         child: const HostView(currentIndex: 0),
       );
     }
