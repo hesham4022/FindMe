@@ -16,6 +16,30 @@ class AllCasesCubit extends Cubit<AllCasesState> {
 
   List<CaseInfoModel> _allCases = [];
 
+  void addNewCase(CaseInfoModel newCase) {
+    _allCases.insert(0, newCase);
+
+    emit(state.copyWith(
+      allCasesResponse: state.allCasesResponse?.copyWith(
+        allCases: List.from(_allCases),
+      ),
+    ));
+
+    // applyFilters(); // لو محتاج
+  }
+
+  List<CaseInfoModel> getLatestFiveCases() {
+    final cases = List<CaseInfoModel>.from(_allCases);
+
+    cases.sort((a, b) {
+      final aDate = DateTime.tryParse(a.createdAt ?? '') ?? DateTime(1900);
+      final bDate = DateTime.tryParse(b.createdAt ?? '') ?? DateTime(1900);
+      return bDate.compareTo(aDate);
+    });
+
+    return cases.take(5).toList();
+  }
+
   Future<bool> getAllCasesResponseData() async {
     emit(state.copyWith(
       status: AllCasesStatus.loading,

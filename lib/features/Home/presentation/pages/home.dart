@@ -7,6 +7,7 @@ import 'package:find_me_app/features/Home/presentation/cubit/recent_cases_cubit/
 import 'package:find_me_app/features/Home/presentation/widgets/case_item.dart';
 import 'package:find_me_app/features/Home/presentation/widgets/custome_appBar.dart';
 import 'package:find_me_app/features/Home/presentation/widgets/search_textField.dart';
+import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,7 +31,7 @@ class HomePageNoNavBar extends StatelessWidget {
       backgroundColor: Colors.white,
       body: SafeArea(
         child: BlurryModalProgressHUD(
-          inAsyncCall: context.watch<RecentCasesCubit>().state.isLoading,
+          inAsyncCall: context.watch<AllCasesCubit>().state.isLoading,
           progressIndicator: const CustomLoadingWidget(),
           blurEffectIntensity: 4,
           child: Column(
@@ -63,9 +64,10 @@ class HomePageNoNavBar extends StatelessWidget {
               Expanded(
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 16),
-                  child: BlocBuilder<RecentCasesCubit, RecentCasesState>(
+                  child: BlocBuilder<AllCasesCubit, AllCasesState>(
                     builder: (context, state) {
-                      final recentCases = state.recentCases;
+                      final recentCases =
+                          context.read<AllCasesCubit>().getLatestFiveCases();
 
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
