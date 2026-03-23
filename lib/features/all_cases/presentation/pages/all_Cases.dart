@@ -25,12 +25,6 @@ class AllCasesView extends StatefulWidget {
 class _AllCasesViewState extends State<AllCasesView> {
   final ScrollController _scrollController = ScrollController();
   @override
-  void initState() {
-    super.initState();
-    context.read<AllCasesCubit>().clearFilter();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
