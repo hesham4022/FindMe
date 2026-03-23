@@ -40,7 +40,6 @@ class AddCaseRemote {
       };
 
       final files = <UploadFile>[];
-      log("[DATE_LAST_SEEN_CHECK] ${fields['date_last_seen']}");
       if (data.photos.isNotEmpty) {
         for (final photoPath in data.photos) {
           if (photoPath.isNotEmpty) {
@@ -79,7 +78,6 @@ class AddCaseRemote {
       print('[log] [📩 RESPONSE CODE]: ${response.statusCode}');
       print('[log] [📩 RESPONSE BODY]: $json');
 
-      // ✅ تحقق من كود الحالة
       if (response.statusCode >= 400) {
         final message = json['message'] ?? 'Server error';
         throw ServerException(message);
