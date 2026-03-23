@@ -1,6 +1,10 @@
+import 'dart:async';
+
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me_app/core/shared/models/userdata.dart';
+import 'package:find_me_app/features/Home/presentation/cubit/recent_cases_cubit/recent_cases_cubit.dart';
 import 'package:find_me_app/features/Home/presentation/cubit/user/user_cubit.dart';
+import 'package:find_me_app/features/all_cases/data/repo/all_cases_repo.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,6 +43,14 @@ class MainApp extends StatelessWidget {
               ),
               BlocProvider(
                 create: (_) => AllCasesCubit(sl())..onInit(),
+              ),
+
+              BlocProvider(
+                create: (context) {
+                  final cubit = RecentCasesCubit(sl<AllCasesRepo>());
+                  unawaited(cubit.getRecentCases());
+                  return cubit;
+                },
               ),
               BlocProvider(
                 create: (_) => UserCubit()

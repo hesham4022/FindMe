@@ -1,7 +1,3 @@
-import 'dart:async';
-
-import 'package:find_me_app/features/Home/presentation/cubit/recent_cases_cubit/recent_cases_cubit.dart';
-import 'package:find_me_app/features/all_cases/data/repo/all_cases_repo.dart';
 import 'package:find_me_app/features/auth/presentation/pages/sinup_or_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -39,14 +35,7 @@ class MiddlewarePage extends StatelessWidget {
     }
     // HostView
     else {
-      return BlocProvider(
-        create: (context) {
-          final cubit = RecentCasesCubit(sl<AllCasesRepo>());
-          unawaited(cubit.getRecentCases());
-          return cubit;
-        },
-        child: const HostView(currentIndex: 0),
-      );
+      return const HostView(currentIndex: 0);
     }
   }
 }
