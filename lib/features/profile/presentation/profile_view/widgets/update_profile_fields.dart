@@ -8,13 +8,14 @@ import 'package:find_me_app/core/shared/widgets/custom_textfield.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
+import 'package:find_me_app/features/profile/presentation/cubit/update_profile_cubit/cubit/update_profile_cubit.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/show_calendar_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class NameField extends StatelessWidget {
-  const NameField({
+class FullNameField extends StatelessWidget {
+  const FullNameField({
     super.key,
     this.onSubmit,
   });
@@ -23,7 +24,7 @@ class NameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignInCubit, SignInState>(
+    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
       // buildWhen: (previous, current) => (previous.usernameErrorText != current.usernameErrorText),
       builder: (context, state) {
         return Column(
@@ -33,10 +34,10 @@ class NameField extends StatelessWidget {
               "fullNameLabel".ts,
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
-            VSpace(10),
+            const VSpace(10),
             CustomTextField(
                 hint: "hintname".ts,
-                errorText: state.usernameErrorText,
+                errorText: state.fullNameErrorText,
                 prefixIcon: Icon(
                   Icons.account_circle_outlined,
                   size: 20.sp,
@@ -44,16 +45,13 @@ class NameField extends StatelessWidget {
                 ),
                 onSubmit: onSubmit,
                 onChanged: (value) {
-                  context.read<SignInCubit>().usernameChanged(value);
+                  context.read<UpdateProfileCubit>().fullNameChanged(value);
                 },
                 onValidate: (value) {
-                  final err = AppValidators.validateUsername(
-                      value); // String? (null لو صحيح)
-                  // خزّن الرسالة في الـ state عشان UI تقدر تعرضها
+                  final err = AppValidators.validateUsername(value);
                   context
-                      .read<SignInCubit>()
-                      .usernameErrorTextChanged(err ?? "");
-                  // مهم: رجّع null لما الإدخال صحيح
+                      .read<UpdateProfileCubit>()
+                      .fullNameErrorTextChanged(err ?? "");
                   return (err == null || err.trim().isEmpty) ? null : err;
                 }),
           ],
@@ -73,7 +71,7 @@ class PhoneNumberField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignInCubit, SignInState>(
+    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
       // buildWhen: (previous, current) => (previous.usernameErrorText != current.usernameErrorText),
       builder: (context, state) {
         return Column(
@@ -83,10 +81,10 @@ class PhoneNumberField extends StatelessWidget {
               "phoneNumberLabel".ts,
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
-            VSpace(10),
+            const VSpace(10),
             CustomTextField(
                 hint: "hintPhone".ts,
-                errorText: state.usernameErrorText,
+                errorText: state.mobileNumberErrorText,
                 prefixIcon: Icon(
                   Icons.account_circle_outlined,
                   size: 20.sp,
@@ -95,16 +93,14 @@ class PhoneNumberField extends StatelessWidget {
                 keyboardType: TextInputType.number,
                 onSubmit: onSubmit,
                 onChanged: (value) {
-                  context.read<SignInCubit>().usernameChanged(value);
+                  context.read<UpdateProfileCubit>().mobileNumberChanged(value);
                 },
                 onValidate: (value) {
-                  final err = AppValidators.validateUsername(
-                      value); // String? (null لو صحيح)
-                  // خزّن الرسالة في الـ state عشان UI تقدر تعرضها
+                  final err = AppValidators.validateUsername(value);
                   context
-                      .read<SignInCubit>()
-                      .usernameErrorTextChanged(err ?? "");
-                  // مهم: رجّع null لما الإدخال صحيح
+                      .read<UpdateProfileCubit>()
+                      .mobileNumberErrorTextChanged(err ?? "");
+
                   return (err == null || err.trim().isEmpty) ? null : err;
                 }),
           ],
@@ -114,8 +110,8 @@ class PhoneNumberField extends StatelessWidget {
   }
 }
 
-class UpdateProfileUserNameField extends StatelessWidget {
-  const UpdateProfileUserNameField({
+class EmailField extends StatelessWidget {
+  const EmailField({
     super.key,
     this.onSubmit,
   });
@@ -124,7 +120,7 @@ class UpdateProfileUserNameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignInCubit, SignInState>(
+    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
       // buildWhen: (previous, current) => (previous.usernameErrorText != current.usernameErrorText),
       builder: (context, state) {
         return Column(
@@ -137,7 +133,7 @@ class UpdateProfileUserNameField extends StatelessWidget {
             VSpace(10),
             CustomTextField(
                 hint: AppStrings.username.ts,
-                errorText: state.usernameErrorText,
+                errorText: state.emailErrorText,
                 prefixIcon: Icon(
                   Icons.account_circle_outlined,
                   size: 20.sp,

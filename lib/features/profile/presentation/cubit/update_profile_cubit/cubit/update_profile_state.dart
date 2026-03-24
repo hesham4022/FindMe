@@ -14,6 +14,13 @@ class UpdateProfileState extends Equatable {
   final String? photo;
   final DateTime? dateOfBirth;
 
+  //
+  final String? fullNameErrorText;
+  final String? emailErrorText;
+  final String? mobileNumberErrorText;
+  final String? photoError;
+  final String? dateOfBirthErrorText;
+
   final UpdateProfileRequest? updateProfileRequest;
   final UpdateProfileStatus status;
   final UpdateProfileResponse? success;
@@ -25,6 +32,11 @@ class UpdateProfileState extends Equatable {
     this.mobileNumber,
     this.photo,
     this.dateOfBirth,
+    this.fullNameErrorText,
+    this.emailErrorText,
+    this.mobileNumberErrorText,
+    this.dateOfBirthErrorText,
+    this.photoError,
     this.updateProfileRequest,
     required this.status,
     this.success,
@@ -37,6 +49,11 @@ class UpdateProfileState extends Equatable {
     String? mobileNumber,
     String? photo,
     DateTime? dateOfBirth,
+    String? fullNameErrorText,
+    String? emailErrorText,
+    String? mobileNumberErrorText,
+    String? photoError,
+    String? dateOfBirthErrorText,
     UpdateProfileRequest? updateProfileRequest,
     UpdateProfileStatus? status,
     UpdateProfileResponse? success,
@@ -48,6 +65,12 @@ class UpdateProfileState extends Equatable {
       mobileNumber: mobileNumber ?? this.mobileNumber,
       photo: photo ?? this.photo,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
+      fullNameErrorText: fullNameErrorText ?? this.fullNameErrorText,
+      emailErrorText: emailErrorText ?? this.emailErrorText,
+      mobileNumberErrorText:
+          mobileNumberErrorText ?? this.mobileNumberErrorText,
+      photoError: photoError ?? this.photoError,
+      dateOfBirthErrorText: dateOfBirthErrorText ?? this.dateOfBirthErrorText,
       updateProfileRequest: updateProfileRequest ?? this.updateProfileRequest,
       status: status ?? this.status,
       success: success ?? this.success,
@@ -79,6 +102,11 @@ class UpdateProfileState extends Equatable {
         mobileNumber,
         photo,
         dateOfBirth,
+        fullNameErrorText,
+        emailErrorText,
+        mobileNumberErrorText,
+        photoError,
+        dateOfBirthErrorText,
         updateProfileRequest,
         status,
         success,

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +30,21 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   void dateOfBirthChanged(DateTime? value) {
     emit(state.copyWith(dateOfBirth: value));
   }
+
+  void fullNameErrorTextChanged(String? value) =>
+      emit(state.copyWith(fullNameErrorText: value));
+
+  void emailErrorTextChanged(String? value) =>
+      emit(state.copyWith(emailErrorText: value));
+
+  void mobileNumberErrorTextChanged(String? value) =>
+      emit(state.copyWith(mobileNumberErrorText: value));
+
+  void photoErrorChanged(String? value) =>
+      emit(state.copyWith(photoError: value));
+
+  void dateOfBirthErrorTextChanged(String? value) =>
+      emit(state.copyWith(dateOfBirthErrorText: value));
 
   void photoChanged(String? value) {
     emit(state.copyWith(photo: value));
