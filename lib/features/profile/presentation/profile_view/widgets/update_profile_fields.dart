@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/helpers/formfield_validator.dart';
 import 'package:find_me_app/core/resources/colors.dart';
@@ -158,53 +159,70 @@ class EmailField extends StatelessWidget {
   }
 }
 
-class DateField extends StatelessWidget {
-  const DateField({
-    super.key,
-    this.onSubmit,
-  });
+class DateField extends StatefulWidget {
+  const DateField({super.key});
 
-  final Function(String)? onSubmit;
+  @override
+  State<DateField> createState() => _DateTimeLastSeenFieldState();
+}
+
+class _DateTimeLastSeenFieldState extends State<DateField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    final initialDate = context.read<UpdateProfileCubit>().state.dateOfBirth;
+    _controller = TextEditingController(text: initialDate ?? "");
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
-      // buildWhen: (previous, current) => (previous.usernameErrorText != current.usernameErrorText),
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Date Of Birth".ts,
-              style: Theme.of(context).textTheme.kSubheadingRegular,
-            ),
-            const VSpace(10),
-            CustomTextField(
-                hint: "DD / MM / YY",
-                errorText: state.emailErrorText,
-                prefixIcon:const Icon(
-                  Icons.calendar_month_outlined,
-                color: AppColors.saltBox900,
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(left: 8),
+          child: Text(
+            "Date & Time Last Seen:".ts,
+            style: Theme.of(context).textTheme.kSubheadingRegular.copyWith(
+                  fontSize: 13,
+                  fontWeight: FontWeight.w400,
                 ),
-                keyboardType: TextInputType.emailAddress,
-                onSubmit: onSubmit,
-                onChanged: (value) {
-                  context.read<UpdateProfileCubit>().emailChanged(value);
-                },
-                onTap: () => kShowCalendarBottomSheet(
-                context,
-                onSelected: (value) {},
-              ),
-                onValidate: (value) {
-                  final err = AppValidators.validateEmail(value);
-                  context
-                      .read<UpdateProfileCubit>()
-                      .emailErrorTextChanged(err ?? "");
-                  return (err == null || err.trim().isEmpty) ? null : err;
-                }),
-          ],
-        );
-      },
+          ),
+        ),
+        const VSpace(5),
+        CustomTextField(
+          controller: _controller,
+          readOnly: true,
+          radius: 20,
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 7,
+            horizontal: 12,
+          ),
+          height: 30,
+          hint: "DD / MM / YY",
+          suffixIcon: const Icon(
+            Icons.calendar_month_outlined,
+            color: AppColors.saltBox900,
+          ),
+          onTap: () => kShowCalendarBottomSheet(
+            context,
+            onSelected: (value) {
+              final formattedDate =
+                  DateFormat('yyyy-MM-dd', 'en_US').format(value);
+              _controller.text = formattedDate;
+              context.read<UpdateProfileCubit>().dateOfBirthChanged(formattedDate);
+            },
+          ),
+        ),
+      ],
     );
   }
 }
