@@ -1,7 +1,7 @@
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
-import 'package:find_me_app/features/Home/presentation/cubit/user/user_cubit.dart';
+import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/pages/signin.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/menu_Item_widget.dart';
@@ -20,9 +20,10 @@ class ProfileView extends StatelessWidget {
         hideBackButton: true,
         title: Text("My Profile"),
       ),
-      body: BlocBuilder<UserCubit, UserState>(
+      body: BlocBuilder<AuthCubit, AuthState>(
         builder: (context, state) {
           final user = state.user;
+
           if (user == null) {
             return const Center(
               child: Text("no data"),
@@ -34,25 +35,17 @@ class ProfileView extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-
-                // Profile Avatar Section
                 ProfileAvater(user: user),
-
                 const SizedBox(height: 10),
-
-                // User Name from Cubit
                 Text(
-                  user.name,
+                  user.fullName,
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
                     color: Colors.black,
                   ),
                 ),
-
                 const SizedBox(height: 20),
-
-                // Menu Items
                 MenuItemWidget(
                   isContainer: true,
                   icon: Icons.person_outline,
@@ -83,7 +76,6 @@ class ProfileView extends StatelessWidget {
                     context.read<HostCubit>().changeIndex(3);
                   },
                 ),
-
                 MenuItemWidget(
                   isContainer: true,
                   icon: Icons.help_outline,
@@ -103,7 +95,7 @@ class ProfileView extends StatelessWidget {
                         context.read<HostCubit>().logout();
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
-                            builder: (_) => SigninView(),
+                            builder: (_) => const SigninView(),
                           ),
                           (route) => false,
                         );
@@ -111,7 +103,6 @@ class ProfileView extends StatelessWidget {
                     );
                   },
                 ),
-
                 const SizedBox(height: 40),
               ],
             ),
