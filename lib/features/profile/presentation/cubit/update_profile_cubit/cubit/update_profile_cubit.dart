@@ -1,6 +1,8 @@
 import 'dart:developer';
 import 'package:equatable/equatable.dart';
+import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
+import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:find_me_app/features/profile/data/model/update_profile_model.dart';
@@ -92,12 +94,15 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
           error: failure,
         ));
       },
-      (response) {
+      (response) async {
         emit(state.copyWith(
           status: UpdateProfileStatus.success,
           success: response,
           error: null,
         ));
+
+        await sl<AuthLocal>().updateCachedUserFromProfile(response.data);
+        log("${await sl<AuthLocal>().getCachedAuthedUser()}");
       },
     );
   }

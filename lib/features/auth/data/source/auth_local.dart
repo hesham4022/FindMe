@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:find_me_app/features/auth/data/model/authed_user.dart';
+import 'package:find_me_app/features/profile/data/model/update_profile_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/exception.dart';
@@ -295,6 +296,31 @@ class AuthLocal {
     }
     _cachedUser = null;
     _baseUrl = null;
+  }
+
+  Future<void> updateCachedUserFromProfile(ProfileData profile) async {
+    final cachedUser = await getCachedAuthedUser();
+
+    final updatedUser = cachedUser.copyWith(
+      id: profile.id,
+      email: profile.email,
+      fullName: profile.fullName,
+      mobileNumber: profile.mobileNumber,
+      photo: profile.photo,
+      dateOfBirth: profile.dateOfBirth,
+      language: profile.language,
+      soundEnable: profile.soundEnable,
+      notificationEnable: profile.notificationEnable,
+      role: profile.role,
+      nationalId: profile.nationalId,
+      nationalPhoto: profile.nationalPhoto,
+      emailVerifiedAt: profile.emailVerifiedAt,
+      createdAt: profile.createdAt,
+      updatedAt: profile.updatedAt,
+      emailCode: profile.emailCode,
+    );
+
+    await saveUser(updatedUser);
   }
 }
 
