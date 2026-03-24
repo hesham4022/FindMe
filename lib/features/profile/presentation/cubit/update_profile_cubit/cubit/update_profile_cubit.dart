@@ -3,6 +3,7 @@ import 'package:equatable/equatable.dart';
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
+import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:find_me_app/features/profile/data/model/update_profile_model.dart';
@@ -101,7 +102,14 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
           error: null,
         ));
 
+        // 1) حدّث الكاش
         await sl<AuthLocal>().updateCachedUserFromProfile(response.data);
+
+        // 2) هات اليوزر الجديد من الكاش
+        final updatedUser = await sl<AuthLocal>().getCachedAuthedUser();
+
+        // 3) حدّث AuthCubit (دي أهم خطوة)
+        await sl<AuthCubit>().updateCurrentUser(updatedUser);
         log("${await sl<AuthLocal>().getCachedAuthedUser()}");
       },
     );
