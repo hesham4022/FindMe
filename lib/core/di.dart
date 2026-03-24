@@ -23,7 +23,9 @@ import 'package:find_me_app/features/likes/data/source/like_remote.dart';
 import 'package:find_me_app/features/notifications/data/repo/notification_repo.dart';
 import 'package:find_me_app/features/notifications/data/source/notification_remote.dart';
 import 'package:find_me_app/features/profile/data/repo/profile_repo.dart';
+import 'package:find_me_app/features/profile/data/repo/update_profile_repo.dart';
 import 'package:find_me_app/features/profile/data/source/profile_remote.dart';
+import 'package:find_me_app/features/profile/data/source/update_profile_remote.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get_it/get_it.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
@@ -77,6 +79,9 @@ Future<void> init() async {
   sl.registerLazySingleton<NotificationRepo>(() => NotificationRepo(sl()));
 
   //! Profile
+  sl.registerLazySingleton<UpdateProfileRepo>(() => UpdateProfileRepo(sl()));
+  sl.registerLazySingleton<UpdateProfileRemote>(() => UpdateProfileRemote());
+
   sl.registerLazySingleton<ProfileRepo>(() => ProfileRepo(sl()));
   sl.registerLazySingleton<ProfileRemote>(() => ProfileRemote(sl()));
 
