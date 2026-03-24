@@ -163,17 +163,22 @@ class DateField extends StatefulWidget {
   const DateField({super.key});
 
   @override
-  State<DateField> createState() => _DateTimeLastSeenFieldState();
+  State<DateField> createState() => _DateFieldState();
 }
 
-class _DateTimeLastSeenFieldState extends State<DateField> {
+class _DateFieldState extends State<DateField> {
   late final TextEditingController _controller;
 
   @override
   void initState() {
     super.initState();
     final initialDate = context.read<UpdateProfileCubit>().state.dateOfBirth;
-    _controller = TextEditingController(text: initialDate ?? "");
+
+    _controller = TextEditingController(
+      text: initialDate != null
+          ? DateFormat('yyyy-MM-dd', 'en_US').format(initialDate)
+          : '',
+    );
   }
 
   @override
@@ -190,7 +195,7 @@ class _DateTimeLastSeenFieldState extends State<DateField> {
         Padding(
           padding: const EdgeInsets.only(left: 8),
           child: Text(
-            "Date & Time Last Seen:".ts,
+            "Date of Birth:".ts,
             style: Theme.of(context).textTheme.kSubheadingRegular.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,
@@ -207,7 +212,7 @@ class _DateTimeLastSeenFieldState extends State<DateField> {
             horizontal: 12,
           ),
           height: 30,
-          hint: "DD / MM / YY",
+          hint: "YYYY-MM-DD",
           suffixIcon: const Icon(
             Icons.calendar_month_outlined,
             color: AppColors.saltBox900,
@@ -217,8 +222,10 @@ class _DateTimeLastSeenFieldState extends State<DateField> {
             onSelected: (value) {
               final formattedDate =
                   DateFormat('yyyy-MM-dd', 'en_US').format(value);
+
               _controller.text = formattedDate;
-              context.read<UpdateProfileCubit>().dateOfBirthChanged(formattedDate);
+
+              context.read<UpdateProfileCubit>().dateOfBirthChanged(value);
             },
           ),
         ),
@@ -226,46 +233,6 @@ class _DateTimeLastSeenFieldState extends State<DateField> {
     );
   }
 }
-
-
-class DateField extends StatelessWidget {
-  const DateField({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Date Of Birth",
-              style: Theme.of(context).textTheme.kSubheadingRegular,
-            ),
-           const VSpace(10),
-            CustomTextField(
-              readOnly: true,
-              // controller: context.read<BusinessTripsCubit>().fromDateCtrl,
-              errorText: ,
-              hint: "DD / MM / YY",
-              suffixIcon: const Icon(
-                Icons.calendar_month_outlined,
-                color: AppColors.saltBox900,
-              ),
-              onTap: () => kShowCalendarBottomSheet(
-                context,
-                onSelected: (value) {},
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
-}
-
-
-
 
 class UpdateProfileButton extends StatelessWidget {
   const UpdateProfileButton({
@@ -279,7 +246,7 @@ class UpdateProfileButton extends StatelessWidget {
               previous.isLoading != current.isLoading),
       builder: (context, state) {
         return Align(
-          alignment: Alignment.center, // اختياري
+          alignment: Alignment.center,
           child: CustomFilledButton(
             width: 207,
             height: 45,
@@ -289,7 +256,7 @@ class UpdateProfileButton extends StatelessWidget {
             state: CustomState.active,
             loading: state.isLoading,
             onPressed: () {
-              context.read<SignInCubit>().submitSignIn(context);
+              context.read<UpdateProfileCubit>().updateProfile();
             },
           ),
         );
