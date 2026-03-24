@@ -1,4 +1,3 @@
-// all_cases_cubit.dart
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/data/repo/all_cases_repo.dart';
@@ -24,8 +23,6 @@ class AllCasesCubit extends Cubit<AllCasesState> {
         allCases: List.from(_allCases),
       ),
     ));
-
-    // applyFilters(); // لو محتاج
   }
 
   List<CaseInfoModel> getLatestFiveCases() {
@@ -55,7 +52,7 @@ class AllCasesCubit extends Cubit<AllCasesState> {
           status: AllCasesStatus.error,
           failure: failure,
         ));
-        isSuccess = false; // Explicitly set to false
+        isSuccess = false;
       },
       (success) {
         _allCases = success.allCases;

@@ -109,24 +109,33 @@ class _AllCasesViewState extends State<AllCasesView> {
                           .updateScroll(notification.metrics.pixels);
                       return true;
                     },
-                    child: ListView.separated(
-                      controller: _scrollController,
-                      itemCount: state.filtered.length,
-                      itemBuilder: (context, index) => TransitionSlidingWidget(
-                        slidingDirection: index % 2 == 1
-                            ? SlidingDirection.fromLeft
-                            : SlidingDirection.fromRight,
-                        duration: 2,
-                        child: GestureDetector(
-                          onTap: () => context.toNamed(AppRoutes.caseInfoRoute,
-                              arguments: state.filtered[index]),
-                          child: CaseCard(
-                            caseModel: state.filtered[index],
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        await context
+                            .read<AllCasesCubit>()
+                            .getAllCasesResponseData();
+                      },
+                      child: ListView.separated(
+                        controller: _scrollController,
+                        itemCount: state.filtered.length,
+                        itemBuilder: (context, index) =>
+                            TransitionSlidingWidget(
+                          slidingDirection: index % 2 == 1
+                              ? SlidingDirection.fromLeft
+                              : SlidingDirection.fromRight,
+                          duration: 2,
+                          child: GestureDetector(
+                            onTap: () => context.toNamed(
+                                AppRoutes.caseInfoRoute,
+                                arguments: state.filtered[index]),
+                            child: CaseCard(
+                              caseModel: state.filtered[index],
+                            ),
                           ),
                         ),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(height: 12.h),
                       ),
-                      separatorBuilder: (context, index) =>
-                          SizedBox(height: 12.h),
                     ),
                   );
                 },
