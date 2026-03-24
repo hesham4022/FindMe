@@ -76,7 +76,6 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     } else {
       emit(state.copyWith(activeFilter: filter));
     }
-
     applyFilters();
   }
 
