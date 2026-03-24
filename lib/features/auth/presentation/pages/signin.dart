@@ -12,7 +12,6 @@ import 'package:find_me_app/features/auth/presentation/widgets/signin_fields.dar
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_listener.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
-import 'package:find_me_app/features/auth/presentation/widgets/auth_appbar.dart';
 
 class SigninView extends StatelessWidget {
   const SigninView({

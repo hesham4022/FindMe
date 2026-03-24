@@ -217,7 +217,7 @@ class AppRoutes {
 
       case updateProfileRoute:
         return MaterialPageRoute(
-          builder: (context) => UpdateProfile(),
+          builder: (context) => UpdateProfileView(),
           settings: settings,
         );
       case privacyRoute:

@@ -1,14 +1,30 @@
+import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/Home/presentation/cubit/user/user_cubit.dart';
+import 'package:find_me_app/features/profile/presentation/cubit/update_profile_cubit/cubit/update_profile_cubit.dart';
 
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/profile_avater.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/update_profile_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UpdateProfile extends StatelessWidget {
-  const UpdateProfile({super.key});
+class UpdateProfileView extends StatelessWidget {
+  const UpdateProfileView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => UpdateProfileCubit(
+        sl(),
+      ),
+      child: const UpdateProfileBody(),
+    );
+  }
+}
+
+class UpdateProfileBody extends StatelessWidget {
+  const UpdateProfileBody({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -43,9 +59,9 @@ class UpdateProfile extends StatelessWidget {
               const VSpace(10),
               const EmailField(),
               const VSpace(10),
-              DateField(),
+              const DateField(),
               const VSpace(50),
-              UpdateProfileButton(),
+              const UpdateProfileButton(),
             ],
           ),
         ),
