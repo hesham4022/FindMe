@@ -96,7 +96,7 @@ class PhoneNumberField extends StatelessWidget {
                   context.read<UpdateProfileCubit>().mobileNumberChanged(value);
                 },
                 onValidate: (value) {
-                  final err = AppValidators.validateUsername(value);
+                  final err = AppValidators.validatePhoneNumber(value);
                   context
                       .read<UpdateProfileCubit>()
                       .mobileNumberErrorTextChanged(err ?? "");
@@ -130,7 +130,7 @@ class EmailField extends StatelessWidget {
               "emailLabel".ts,
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
-            VSpace(10),
+            const VSpace(10),
             CustomTextField(
                 hint: AppStrings.username.ts,
                 errorText: state.emailErrorText,
@@ -142,16 +142,14 @@ class EmailField extends StatelessWidget {
                 keyboardType: TextInputType.emailAddress,
                 onSubmit: onSubmit,
                 onChanged: (value) {
-                  context.read<SignInCubit>().usernameChanged(value);
+                  context.read<UpdateProfileCubit>().emailChanged(value);
                 },
                 onValidate: (value) {
-                  final err = AppValidators.validateUsername(
-                      value); // String? (null لو صحيح)
-                  // خزّن الرسالة في الـ state عشان UI تقدر تعرضها
+                  final err = AppValidators.validateEmail(value);
                   context
-                      .read<SignInCubit>()
-                      .usernameErrorTextChanged(err ?? "");
-                  // مهم: رجّع null لما الإدخال صحيح
+                      .read<UpdateProfileCubit>()
+                      .emailErrorTextChanged(err ?? "");
+
                   return (err == null || err.trim().isEmpty) ? null : err;
                 }),
           ],
