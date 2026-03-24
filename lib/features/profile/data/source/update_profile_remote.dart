@@ -1,14 +1,11 @@
 import 'dart:convert';
-
 import 'dart:io';
-
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/helpers/enums/request_type.dart';
 import 'package:find_me_app/core/networking/api_constants.dart';
 import 'package:find_me_app/core/networking/functions.dart';
 import 'package:find_me_app/core/shared/models/upload_file.dart';
-import 'package:find_me_app/features/add_case/data/model/create_report.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:find_me_app/features/profile/data/model/update_profile_model.dart';
 import 'package:path/path.dart';
@@ -20,11 +17,12 @@ class UpdateProfileRemote {
     // final client = sl<AppHttpClient>().client;
 
     try {
-      final fields = {
-        'full_name': data.fullName,
-        'email': data.email,
-        'mobile_number': data.mobileNumber,
-        'date_of_birth': data.dateOfBirth,
+      final fields = <String, String>{
+        if (data.fullName != null) 'full_name': data.fullName!,
+        if (data.email != null) 'email': data.email!,
+        if (data.mobileNumber != null) 'mobile_number': data.mobileNumber!,
+        if (data.dateOfBirth != null)
+          'date_of_birth': data.dateOfBirth!.toIso8601String(),
       };
 
       final files = <UploadFile>[];
@@ -49,7 +47,7 @@ class UpdateProfileRemote {
       };
 
       final response = await makeMultipartRequest(
-        url: ApiConstants.createReportURL,
+        url: ApiConstants.updateProfileUrl,
         requestType: HttpRequestType.post,
         // client: client,
         fields: fields,

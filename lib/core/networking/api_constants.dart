@@ -29,6 +29,7 @@ class ApiConstants {
   static final String forgetPasswordUrl = "$_authUrl/forgot-password";
   static final String signinUrl = "$_authUrl/login";
   static final String sinUpUrl = "$_authUrl/register";
+  static final String updateProfileUrl = "$_authUrl/profile/update";
   static final String allReportsUrl = "$_baseUrl/api/reports";
   static final String getCaseByIdUrl = "$_baseUrl/api/reports/";
   static final String searchByImageUrl = "$_baseUrl/api/search";
