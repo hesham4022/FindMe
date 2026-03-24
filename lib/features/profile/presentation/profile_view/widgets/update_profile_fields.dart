@@ -149,7 +149,6 @@ class EmailField extends StatelessWidget {
                   context
                       .read<UpdateProfileCubit>()
                       .emailErrorTextChanged(err ?? "");
-
                   return (err == null || err.trim().isEmpty) ? null : err;
                 }),
           ],
@@ -160,35 +159,95 @@ class EmailField extends StatelessWidget {
 }
 
 class DateField extends StatelessWidget {
+  const DateField({
+    super.key,
+    this.onSubmit,
+  });
+
+  final Function(String)? onSubmit;
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+      // buildWhen: (previous, current) => (previous.usernameErrorText != current.usernameErrorText),
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Date Of Birth".ts,
+              style: Theme.of(context).textTheme.kSubheadingRegular,
+            ),
+            const VSpace(10),
+            CustomTextField(
+                hint: "DD / MM / YY",
+                errorText: state.emailErrorText,
+                prefixIcon:const Icon(
+                  Icons.calendar_month_outlined,
+                color: AppColors.saltBox900,
+                ),
+                keyboardType: TextInputType.emailAddress,
+                onSubmit: onSubmit,
+                onChanged: (value) {
+                  context.read<UpdateProfileCubit>().emailChanged(value);
+                },
+                onTap: () => kShowCalendarBottomSheet(
+                context,
+                onSelected: (value) {},
+              ),
+                onValidate: (value) {
+                  final err = AppValidators.validateEmail(value);
+                  context
+                      .read<UpdateProfileCubit>()
+                      .emailErrorTextChanged(err ?? "");
+                  return (err == null || err.trim().isEmpty) ? null : err;
+                }),
+          ],
+        );
+      },
+    );
+  }
+}
+
+
+class DateField extends StatelessWidget {
   const DateField({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "Date Of Birth",
-          style: Theme.of(context).textTheme.kSubheadingRegular,
-        ),
-        VSpace(10),
-        CustomTextField(
-          readOnly: true,
-          // controller: context.read<BusinessTripsCubit>().fromDateCtrl,
-          hint: "DD / MM / YY",
-          suffixIcon: const Icon(
-            Icons.calendar_month_outlined,
-            color: AppColors.saltBox900,
-          ),
-          onTap: () => kShowCalendarBottomSheet(
-            context,
-            onSelected: (value) {},
-          ),
-        ),
-      ],
+    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Date Of Birth",
+              style: Theme.of(context).textTheme.kSubheadingRegular,
+            ),
+           const VSpace(10),
+            CustomTextField(
+              readOnly: true,
+              // controller: context.read<BusinessTripsCubit>().fromDateCtrl,
+              errorText: ,
+              hint: "DD / MM / YY",
+              suffixIcon: const Icon(
+                Icons.calendar_month_outlined,
+                color: AppColors.saltBox900,
+              ),
+              onTap: () => kShowCalendarBottomSheet(
+                context,
+                onSelected: (value) {},
+              ),
+            ),
+          ],
+        );
+      },
     );
   }
 }
+
+
+
 
 class UpdateProfileButton extends StatelessWidget {
   const UpdateProfileButton({
@@ -214,7 +273,6 @@ class UpdateProfileButton extends StatelessWidget {
             onPressed: () {
               context.read<SignInCubit>().submitSignIn(context);
             },
-            // سيب width/height جوّا البتن فاضيين
           ),
         );
       },
