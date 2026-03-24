@@ -3,7 +3,6 @@ import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/animated_transition_widget/animated_transition_widget.dart';
 import 'package:find_me_app/core/shared/widgets/custom_loader_widget.dart';
-import 'package:find_me_app/features/Home/presentation/cubit/recent_cases_cubit/recent_cases_cubit.dart';
 import 'package:find_me_app/features/Home/presentation/widgets/case_item.dart';
 import 'package:find_me_app/features/Home/presentation/widgets/custome_appBar.dart';
 import 'package:find_me_app/features/Home/presentation/widgets/search_textField.dart';
@@ -83,25 +82,32 @@ class HomePageNoNavBar extends StatelessWidget {
                           const SizedBox(height: 12),
                           if (recentCases.isNotEmpty)
                             Expanded(
-                              child: ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: recentCases.length < 5
-                                    ? recentCases.length
-                                    : 5,
-                                itemBuilder: (context, index) =>
-                                    TransitionSlidingWidget(
-                                  slidingDirection: index % 2 == 1
-                                      ? SlidingDirection.fromLeft
-                                      : SlidingDirection.fromRight,
-                                  duration: 2,
-                                  child: CaseCard(
-                                    caseModel: recentCases[index],
-                                    onTap: () {
-                                      context.toNamed(
-                                        AppRoutes.caseInfoRoute,
-                                        arguments: recentCases[index],
-                                      );
-                                    },
+                              child: RefreshIndicator(
+                                onRefresh: () async {
+                                  await context
+                                      .read<AllCasesCubit>()
+                                      .getAllCasesResponseData();
+                                },
+                                child: ListView.builder(
+                                  shrinkWrap: true,
+                                  itemCount: recentCases.length < 5
+                                      ? recentCases.length
+                                      : 5,
+                                  itemBuilder: (context, index) =>
+                                      TransitionSlidingWidget(
+                                    slidingDirection: index % 2 == 1
+                                        ? SlidingDirection.fromLeft
+                                        : SlidingDirection.fromRight,
+                                    duration: 2,
+                                    child: CaseCard(
+                                      caseModel: recentCases[index],
+                                      onTap: () {
+                                        context.toNamed(
+                                          AppRoutes.caseInfoRoute,
+                                          arguments: recentCases[index],
+                                        );
+                                      },
+                                    ),
                                   ),
                                 ),
                               ),
