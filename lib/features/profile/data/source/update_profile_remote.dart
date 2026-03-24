@@ -13,7 +13,7 @@ import 'package:path/path.dart';
 class UpdateProfileRemote {
   UpdateProfileRemote();
 
-  Future<Map<String, dynamic>> addCase(UpdateProfileRequest data) async {
+  Future<Map<String, dynamic>> updateProfile(UpdateProfileRequest data) async {
     // final client = sl<AppHttpClient>().client;
 
     try {
