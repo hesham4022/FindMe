@@ -2,9 +2,6 @@ import 'dart:convert';
 import 'package:equatable/equatable.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 
-/// ======================
-/// 🟢 طلب إنشاء تقرير
-/// ======================
 class CreateReportRequest extends Equatable {
   final String firstName;
   final String lastName;
@@ -102,9 +99,6 @@ class CreateReportRequest extends Equatable {
       ];
 }
 
-/// ======================
-/// 🔵 رد إنشاء التقرير
-/// ======================
 class CreateReportResponse extends Equatable {
   final String message;
   final CaseInfoModel data;
