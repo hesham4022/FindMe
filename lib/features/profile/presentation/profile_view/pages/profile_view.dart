@@ -1,14 +1,9 @@
 import 'package:find_me_app/core/helpers/extensions/context.dart';
-import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/features/Home/presentation/cubit/user/user_cubit.dart';
-import 'package:find_me_app/features/auth/presentation/cubit/delete_account/delete_account_cubit.dart';
-import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/pages/signin.dart';
-import 'package:find_me_app/features/navigation_bar_host/data/model/bottom_nav_bar.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
-import 'package:find_me_app/features/navigation_bar_host/presentation/widgets/custom_bottom_nav_bar.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/menu_Item_widget.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/profile_avater.dart';
 import 'package:flutter/material.dart';
