@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/helpers/enums/request_type.dart';
@@ -18,11 +19,14 @@ class UpdateProfileRemote {
 
     try {
       final fields = <String, String>{
-        if (data.fullName != null) 'full_name': data.fullName!,
-        if (data.email != null) 'email': data.email!,
-        if (data.mobileNumber != null) 'mobile_number': data.mobileNumber!,
+        if (data.fullName != null && data.fullName!.trim().isNotEmpty)
+          'full_name': data.fullName!.trim(),
+        if (data.email != null && data.email!.trim().isNotEmpty)
+          'email': data.email!.trim(),
+        if (data.mobileNumber != null && data.mobileNumber!.trim().isNotEmpty)
+          'mobile_number': data.mobileNumber!.trim(),
         if (data.dateOfBirth != null)
-          'date_of_birth': data.dateOfBirth!.toIso8601String(),
+          'date_of_birth': DateFormat('yyyy-MM-dd').format(data.dateOfBirth!),
       };
 
       final files = <UploadFile>[];

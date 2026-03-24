@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:easy_localization/easy_localization.dart';
 import 'package:equatable/equatable.dart';
 
 class UpdateProfileRequest extends Equatable {
@@ -19,10 +20,13 @@ class UpdateProfileRequest extends Equatable {
 
   Map<String, dynamic> toMap() {
     return {
-      'full_name': fullName,
-      'email': email,
-      'mobile_number': mobileNumber,
-      'date_of_birth': dateOfBirth?.toIso8601String(),
+      if (fullName != null && fullName!.trim().isNotEmpty)
+        'full_name': fullName!.trim(),
+      if (email != null && email!.trim().isNotEmpty) 'email': email!.trim(),
+      if (mobileNumber != null && mobileNumber!.trim().isNotEmpty)
+        'mobile_number': mobileNumber!.trim(),
+      if (dateOfBirth != null)
+        'date_of_birth': DateFormat('yyyy-MM-dd').format(dateOfBirth!),
     };
   }
 
