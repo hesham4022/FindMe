@@ -11,13 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomePageNoNavBar extends StatelessWidget {
-  final String userName;
-  final String profileImageUrl;
-
   HomePageNoNavBar({
     super.key,
-    required this.userName,
-    required this.profileImageUrl,
   });
 
   final TextEditingController controller = TextEditingController();

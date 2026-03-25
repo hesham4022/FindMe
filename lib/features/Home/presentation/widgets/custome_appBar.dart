@@ -1,5 +1,3 @@
-import 'package:find_me_app/core/helpers/extensions/context.dart';
-import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:flutter/material.dart';
@@ -24,23 +22,7 @@ class HomeHeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
     return BlocBuilder<AuthCubit, AuthState>(
       builder: (context, state) {
         final user = state.user;
-        // if (user == null) {
-        //   return AppBar(
-        //     automaticallyImplyLeading: false,
-        //     elevation: 0,
-        //     backgroundColor: Colors.white,
-        //     toolbarHeight: 96,
-        //     title: const Center(
-        //       child: CircularProgressIndicator(),
-        //     ),
-        //   );
-        // }
-
-        // لو هترجع CircleAvatar بعدين
-        // final imagePath = (user.localImage?.isNotEmpty == true)
-        //     ? user.localImage!
-        //     : (user.imageUrl ?? "");
-
+        final photo = state.user?.photo;
         return AppBar(
           automaticallyImplyLeading: false,
           elevation: 0,
@@ -57,12 +39,17 @@ class HomeHeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
                   onTap: () {
                     context.read<HostCubit>().changeIndex(2);
                   },
-                  child: const SizedBox(
+                  child: SizedBox(
                     width: 48,
                     height: 48,
                     child: CircleAvatar(
                       backgroundColor: Colors.black12,
-                      child: Icon(Icons.person, size: 24, color: Colors.grey),
+                      backgroundImage: photo != null && photo.isNotEmpty
+                          ? NetworkImage(photo)
+                          : null,
+                      child: photo == null || photo.isEmpty
+                          ? const Icon(Icons.person, color: Colors.white)
+                          : null,
                     ),
                   ),
                 ),
@@ -86,7 +73,7 @@ class HomeHeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
                           fontSize: 16,
                           color: Colors.black,
                         ),
-                        overflow: TextOverflow.ellipsis, // لو الاسم طويل
+                        overflow: TextOverflow.ellipsis,
                       ),
                     ],
                   ),

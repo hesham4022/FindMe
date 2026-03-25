@@ -26,10 +26,7 @@ class BottomNavBarTab {
 // Tabs list with persistent bottom nav bar keys
 List<BottomNavBarTab> kUserBottomBarTabs = [
   BottomNavBarTab(
-      screen: HomePageNoNavBar(
-        userName: "hesham",
-        profileImageUrl: 'assets/images/Mask group.png',
-      ),
+      screen: HomePageNoNavBar(),
       title: AppStrings.dashboard,
       img: 'assets/icons/home_icon.svg'),
   BottomNavBarTab(
