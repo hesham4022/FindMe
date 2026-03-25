@@ -2,7 +2,6 @@ import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
-import 'package:find_me_app/features/app/presentation/pages/initial_page.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/pages/signin.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
@@ -94,28 +93,26 @@ class ProfileViewBody extends StatelessWidget {
                   },
                 ),
                 MenuItemWidget(
-                    isContainer: true,
-                    icon: Icons.logout,
-                    title: 'Logout',
-                    onTap: () {
-                      LogoutDialog.show(
-                        context,
-                        onConfirm: () async {
-                          Navigator.of(context).pop();
-
-                          await context.read<HostCubit>().logout();
-
-                          if (!context.mounted) return;
-
-                          Navigator.of(context).pushAndRemoveUntil(
-                            MaterialPageRoute(
-                              builder: (_) => const MiddlewarePage(),
-                            ),
-                            (route) => false,
-                          );
-                        },
-                      );
-                    }),
+                  isContainer: true,
+                  icon: Icons.logout,
+                  title: 'Logout',
+                  onTap: () {
+                    LogoutDialog.show(
+                      context,
+                      onConfirm: () async {
+                        final nav = Navigator.of(context);
+                        final hostCubit = context.read<HostCubit>();
+                        nav.pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (_) => const SigninView(),
+                          ),
+                          (route) => false,
+                        );
+                        await hostCubit.logout();
+                      },
+                    );
+                  },
+                ),
                 const SizedBox(height: 40),
               ],
             ),

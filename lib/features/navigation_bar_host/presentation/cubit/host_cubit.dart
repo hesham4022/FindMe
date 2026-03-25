@@ -127,6 +127,7 @@ class HostCubit extends Cubit<HostState> {
     }
   }
 
+  // في HostCubit أضف reset للـ index
   Future<void> logout() async {
     await _authLocal.deleteAuthedUser();
 
@@ -135,6 +136,7 @@ class HostCubit extends Cubit<HostState> {
         clearUser: true,
         status: HostStatus.unauthenticated,
         clearFailure: true,
+        selectedIndex: 0, // ← reset الـ index للـ home
       ),
     );
   }
