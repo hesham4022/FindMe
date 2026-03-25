@@ -1,16 +1,30 @@
+import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/pages/signin.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
+import 'package:find_me_app/features/profile/presentation/cubit/update_profile_cubit/cubit/update_profile_cubit.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/menu_Item_widget.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/profile_avater.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ProfileView extends StatelessWidget {
-  const ProfileView({Key? key}) : super(key: key);
+  const ProfileView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => UpdateProfileCubit(sl(), context.read<AuthCubit>()),
+      child: const ProfileViewBody(),
+    );
+  }
+}
+
+class ProfileViewBody extends StatelessWidget {
+  const ProfileViewBody({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

@@ -207,7 +207,7 @@ class AppRoutes {
         // final args = settings.arguments as Map<String, dynamic>;
 
         return MaterialPageRoute(
-          builder: (context) => ProfileView(
+          builder: (context) => ProfileViewBody(
               // isPersonal: args['isPersonal'] as bool,
               // employeeId: args['employeeId']
               // as int?, // Ensure it's nullable if not always provided
