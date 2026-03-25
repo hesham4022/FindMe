@@ -2,6 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me_app/core/shared/models/userdata.dart';
 import 'package:find_me_app/features/Home/presentation/cubit/user/user_cubit.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
+import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,11 +42,9 @@ class MainApp extends StatelessWidget {
               ),
 
               BlocProvider(
-                create: (_) => UserCubit()
-                  ..setUser(UserModel(
-                      name: "Hesham",
-                      imageUrl: "https://i.pravatar.cc/120?img=12")),
+                create: (_) => AuthCubit(sl())..loadCachedUser(),
               ),
+
               BlocProvider(
                 create: (_) => HostCubit(0, sl())..getUserData(),
                 // create: (_) => HostCubit(0, sl()),

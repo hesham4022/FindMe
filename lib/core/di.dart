@@ -16,6 +16,7 @@ import 'package:find_me_app/features/app/data/source/app_remote.dart';
 import 'package:find_me_app/features/auth/data/repo/auth_repo.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:find_me_app/features/auth/data/source/auth_remote.dart';
+import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
 import 'package:find_me_app/features/case_info/data/repo/single_case_repo.dart';
 import 'package:find_me_app/features/case_info/data/source/single_case_remote.dart';
 import 'package:find_me_app/features/likes/data/repo/like_repo.dart';
@@ -60,6 +61,7 @@ Future<void> init() async {
 
   //! Auth
   sl.registerLazySingleton<AuthRepo>(() => AuthRepo(sl(), sl()));
+
   sl.registerLazySingleton<AppInterceptor>(() => AppInterceptor());
 
   sl.registerLazySingleton<AppHttpClient>(() => AppHttpClient());

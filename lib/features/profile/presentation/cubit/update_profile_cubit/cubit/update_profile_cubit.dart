@@ -13,8 +13,9 @@ part 'update_profile_state.dart';
 
 class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   final UpdateProfileRepo _repo;
-
-  UpdateProfileCubit(this._repo) : super(UpdateProfileState.initial());
+  final AuthCubit _authCubit;
+  UpdateProfileCubit(this._repo, this._authCubit)
+      : super(UpdateProfileState.initial());
 
   final ImagePicker _picker = ImagePicker();
 
@@ -109,7 +110,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
         final updatedUser = await sl<AuthLocal>().getCachedAuthedUser();
 
         // 3) حدّث AuthCubit (دي أهم خطوة)
-        await sl<AuthCubit>().updateCurrentUser(updatedUser);
+        _authCubit.updateCurrentUser(updatedUser);
         log("${await sl<AuthLocal>().getCachedAuthedUser()}");
       },
     );
