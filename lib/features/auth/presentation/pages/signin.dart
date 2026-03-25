@@ -26,7 +26,6 @@ class _SigninViewState extends State<SigninView> {
   @override
   void initState() {
     super.initState();
-
     context.read<SignInCubit>().resetState();
   }
 
@@ -56,22 +55,16 @@ class _SignInBody extends StatelessWidget {
       builder: (context, state) {
         return BlurryModalProgressHUD(
           inAsyncCall: state.isLoading,
-          progressIndicator: CustomLoadingWidget(),
+          progressIndicator: const CustomLoadingWidget(),
           child: ListView(
             padding: EdgeInsets.fromLTRB(20, 20, 20, bottom).r,
             keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
             children: [
-              // AuthHeader(
-              //   companyName: context.isArabic
-              //       ? context.read<SignInCubit>().baseUrlInstance?.nameA
-              //       : context.read<SignInCubit>().baseUrlInstance?.nameL,
-              // ),
-              VSpace(36),
+              const VSpace(36),
               Text(
                 AppStrings.welcomeMessage2.ts,
                 style: Theme.of(context).textTheme.kHeadingH4SmallBoldBlack,
               ),
-
               const VSpace(36),
               const UserNameField(),
               const VSpace(20),

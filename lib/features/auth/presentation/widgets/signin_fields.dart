@@ -315,7 +315,7 @@ class UserNameField extends StatelessWidget {
               "emailOrMobileNumber".ts,
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
-            VSpace(10),
+            const VSpace(10),
             CustomTextField(
                 hint: AppStrings.username.ts,
                 errorText: state.usernameErrorText,
@@ -330,13 +330,10 @@ class UserNameField extends StatelessWidget {
                   context.read<SignInCubit>().usernameChanged(value);
                 },
                 onValidate: (value) {
-                  final err = AppValidators.validateEmail(
-                      value); // String? (null لو صحيح)
-                  // خزّن الرسالة في الـ state عشان UI تقدر تعرضها
+                  final err = AppValidators.validateEmail(value);
                   context
                       .read<SignInCubit>()
                       .usernameErrorTextChanged(err ?? "");
-                  // مهم: رجّع null لما الإدخال صحيح
                   return (err == null || err.trim().isEmpty) ? null : err;
                 }),
           ],
@@ -349,12 +346,7 @@ class UserNameField extends StatelessWidget {
 class PasswordField extends StatelessWidget {
   const PasswordField({
     super.key,
-    this.label = AppStrings.password,
-    this.hint = AppStrings.password,
   });
-
-  final String label;
-  final String hint;
 
   @override
   Widget build(BuildContext context) {
@@ -369,10 +361,10 @@ class PasswordField extends StatelessWidget {
               "passordLabel".ts,
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
-            VSpace(10),
+            const VSpace(10),
             RPasswordField(
               errorText: state.passwordErrorText,
-              hint: hint.ts,
+              hint: "*********".ts,
               prefixIcon: Icon(
                 MdiIcons.lockOpenVariantOutline,
                 size: 20.sp,
@@ -431,21 +423,25 @@ class SignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SignInCubit, SignInState>(
       builder: (context, state) {
+        final isValid =
+            AppValidators.validateUsername(state.username) == null &&
+                AppValidators.validateSignInPassword(state.password) == null;
         return Align(
           alignment: Alignment.center,
           child: SizedBox(
             width: 207,
             height: 45,
             child: CustomFilledButton(
+              state: isValid ? CustomState.active : CustomState.disabled,
+              color: AppColors.mainColor,
               width: 207,
               height: 45,
               radius: 30,
               title: Text("login".ts,
                   style: Theme.of(context).textTheme.kHeadingH4SmallBold),
-              state: CustomState.active,
               loading: state.isLoading,
               onPressed: () {
-                context.read<SignInCubit>().validateFieldsBeforeSubmit(context);
+                context.read<SignInCubit>().submitSignIn(context);
               },
             ),
           ),
@@ -475,12 +471,12 @@ class SwitchLanguage extends StatelessWidget {
             size: 17.sp,
             color: AppColors.saltBox600,
           ),
-          HSpace(10),
+          const HSpace(10),
           Text(
             context.locale.languageCode == 'en'
                 ? AppStrings.switchToArabic.ts
                 : AppStrings.switchToEnglish.ts,
-            strutStyle: StrutStyle(forceStrutHeight: true),
+            strutStyle: const StrutStyle(forceStrutHeight: true),
             style: Theme.of(context)
                 .textTheme
                 .kCaptionSemiBold
@@ -507,11 +503,7 @@ class Footer extends StatelessWidget {
               .kCaptionRegular
               .copyWith(color: AppColors.saltBox500),
         ),
-        HSpace(4),
-        // SvgPicture.asset(
-        //   AppImages.appLogo,
-        //   width: 38.w,
-        // ),
+        const HSpace(4),
       ],
     );
   }
@@ -535,8 +527,8 @@ class DontHaveAcountButton extends StatelessWidget {
         const SizedBox(width: 2),
         TextButton(
             style: TextButton.styleFrom(
-              padding: EdgeInsets.zero, // 👈 مهم عشان يشيل البادينج الافتراضي
-              minimumSize: Size(0, 0), // 👈 يخلي الزر على قد النص
+              padding: EdgeInsets.zero,
+              minimumSize: const Size(0, 0),
               tapTargetSize: MaterialTapTargetSize.shrinkWrap,
             ),
             onPressed: () {
