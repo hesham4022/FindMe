@@ -24,12 +24,6 @@ class ProfileView extends StatelessWidget {
         builder: (context, state) {
           final user = state.user;
 
-          if (user == null) {
-            return const Center(
-              child: Text("no data"),
-            );
-          }
-
           return SingleChildScrollView(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
@@ -38,7 +32,7 @@ class ProfileView extends StatelessWidget {
                 ProfileAvater(user: user),
                 const SizedBox(height: 10),
                 Text(
-                  user.fullName,
+                  user?.fullName ?? "",
                   style: const TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.bold,
