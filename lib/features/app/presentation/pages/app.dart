@@ -63,7 +63,7 @@ class MainApp extends StatelessWidget {
               //   lazy: false,
               // ),
               BlocProvider(
-                create: (_) => SignInCubit(sl(), sl()),
+                create: (_) => SignInCubit(sl(), sl(), sl()),
                 lazy: false,
               ),
               // BlocProvider(create: (context) => HostCubit(0)),
