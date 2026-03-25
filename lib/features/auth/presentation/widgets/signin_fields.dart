@@ -423,9 +423,8 @@ class SignInButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SignInCubit, SignInState>(
       builder: (context, state) {
-        final isValid =
-            AppValidators.validateUsername(state.username) == null &&
-                AppValidators.validateSignInPassword(state.password) == null;
+        final isValid = AppValidators.validateEmail(state.username) == null &&
+            AppValidators.validateSignInPassword(state.password) == null;
         return Align(
           alignment: Alignment.center,
           child: SizedBox(
