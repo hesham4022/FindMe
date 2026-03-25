@@ -6,6 +6,7 @@ import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/pages/verify_otp.dart';
+import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:geolocator/geolocator.dart';
@@ -157,11 +158,9 @@ class SignInCubit extends Cubit<SignInState> {
           });
         },
         (data) async {
-          // 🧠 حفظ بيانات المستخدم
           await _authLocal.saveAccessToken(data.accessToken);
           await _authLocal.saveRefreshToken(data.refreshToken);
-          await context.read<AuthCubit>().setAuthenticatedUser(data.user);
-
+          context.read<HostCubit>().setAuthenticatedUser(data.user);
           emit(state.copyWith(
             status: SignInStatus.success,
             isActivated: true,

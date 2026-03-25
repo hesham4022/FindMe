@@ -25,6 +25,16 @@ class HostCubit extends Cubit<HostState> {
   //   ));
   // }
 
+  void setAuthenticatedUser(AuthedUser user) {
+    emit(
+      state.copyWith(
+        user: user,
+        status: HostStatus.authenticated,
+        clearFailure: true,
+      ),
+    );
+  }
+
   void changeIndex(int index) {
     if (index == state.selectedIndex) return;
 
@@ -39,12 +49,11 @@ class HostCubit extends Cubit<HostState> {
     try {
       emit(state.copyWith(status: HostStatus.loading, clearFailure: true));
 
-      // بـ يرجّع AuthedUser الجديد من الكاش
       final authedUser = await _authLocal.getCachedAuthedUser();
 
       emit(state.copyWith(
-        user: authedUser, // ← احفظ AuthedUser مباشرة
-        status: HostStatus.success,
+        user: authedUser,
+        status: HostStatus.authenticated,
         clearFailure: true,
       ));
     } on UserTokenException catch (e) {
@@ -60,9 +69,20 @@ class HostCubit extends Cubit<HostState> {
     }
   }
 
+  // Future<void> logout() async {
+  //   await _authLocal.deleteAuthedUser();
+  //   emit(state.copyWith(
+  //       user: null, status: HostStatus.initial, clearFailure: true));
+  // }
+
   Future<void> logout() async {
     await _authLocal.deleteAuthedUser();
-    emit(state.copyWith(
-        user: null, status: HostStatus.initial, clearFailure: true));
+    emit(
+      state.copyWith(
+        clearUser: true,
+        status: HostStatus.unauthenticated,
+        clearFailure: true,
+      ),
+    );
   }
 }
