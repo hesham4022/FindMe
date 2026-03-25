@@ -102,12 +102,12 @@ class ProfileViewBody extends StatelessWidget {
                       onConfirm: () async {
                         final nav = Navigator.of(context);
                         final hostCubit = context.read<HostCubit>();
+
                         nav.pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (_) => const SigninView(),
-                          ),
+                          MaterialPageRoute(builder: (_) => const SigninView()),
                           (route) => false,
                         );
+
                         await hostCubit.logout();
                       },
                     );

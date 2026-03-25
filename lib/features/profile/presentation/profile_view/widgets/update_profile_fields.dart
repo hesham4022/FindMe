@@ -241,9 +241,6 @@ class UpdateProfileButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignInCubit, SignInState>(
-      buildWhen: (previous, current) =>
-          (previous.isButtonEnabled != current.isButtonEnabled ||
-              previous.isLoading != current.isLoading),
       builder: (context, state) {
         return Align(
           alignment: Alignment.center,

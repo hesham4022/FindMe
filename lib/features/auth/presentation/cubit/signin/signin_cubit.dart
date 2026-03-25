@@ -61,28 +61,6 @@ class SignInCubit extends Cubit<SignInState> {
     ));
   }
 
-  bool get isFormValid {
-    return AppValidators.validateUsername(state.username) == null &&
-        AppValidators.validateSignInPassword(state.password) == null;
-  }
-
-  // -------------------- Validation --------------------
-  // void validateFieldsBeforeSubmit(BuildContext context) {
-  //   bool hasError = false;
-
-  //   if (state.username == null || state.username!.trim().isEmpty) {
-  //     emit(state.copyWith(usernameErrorText: "Field is required"));
-  //     hasError = true;
-  //   }
-
-  //   if (state.password == null || state.password!.trim().isEmpty) {
-  //     emit(state.copyWith(passwordErrorText: "Field is required"));
-  //     hasError = true;
-  //   }
-
-  //   if (!hasError) submitSignIn(context);
-  // }
-
   void resetState() {
     emit(SignInState.initial());
   }

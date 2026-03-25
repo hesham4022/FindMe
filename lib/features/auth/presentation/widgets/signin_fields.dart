@@ -438,7 +438,7 @@ class SignInButton extends StatelessWidget {
               radius: 30,
               title: Text("login".ts,
                   style: Theme.of(context).textTheme.kHeadingH4SmallBold),
-              loading: state.isLoading,
+              loading: false,
               onPressed: () {
                 context.read<SignInCubit>().submitSignIn(context);
               },

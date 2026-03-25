@@ -13,24 +13,16 @@ import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_listener.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
 
-class SigninView extends StatefulWidget {
+class SigninView extends StatelessWidget {
   const SigninView({
     super.key,
   });
 
   @override
-  State<SigninView> createState() => _SigninViewState();
-}
-
-class _SigninViewState extends State<SigninView> {
-  @override
-  void initState() {
-    super.initState();
-    context.read<SignInCubit>().resetState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      context.read<SignInCubit>().resetState();
+    });
     return Scaffold(
       appBar: CustomAppBar(
         title: Text("welcomeMessage".ts,

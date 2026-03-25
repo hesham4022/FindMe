@@ -50,7 +50,6 @@ import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state
 
 void signInListener(BuildContext context, SignInState state) {
   WidgetsBinding.instance.addPostFrameCallback((_) {
-    // ⚠️ حالة الخطأ
     if (state.isError) {
       showAlertSnackBar(
         context,
