@@ -44,7 +44,7 @@ class UpdateProfileBody extends StatelessWidget {
                       child: Text("no data"),
                     );
                   }
-                  return ProfileAvater(user: user);
+                  return ProfileAvatar();
                 },
               ),
               const VSpace(40),

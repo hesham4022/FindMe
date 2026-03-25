@@ -29,7 +29,7 @@ class ProfileView extends StatelessWidget {
             child: Column(
               children: [
                 const SizedBox(height: 10),
-                ProfileAvater(user: user),
+                ProfileAvatar(),
                 const SizedBox(height: 10),
                 Text(
                   user?.fullName ?? "",

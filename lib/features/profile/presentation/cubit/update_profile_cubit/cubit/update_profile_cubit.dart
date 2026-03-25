@@ -69,6 +69,15 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
     emit(UpdateProfileState.initial());
   }
 
+  Future<void> pickAndUploadPhoto() async {
+    final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile == null) return;
+
+    emit(state.copyWith(photo: pickedFile.path));
+
+    await updateProfile();
+  }
+
   Future<void> updateProfile() async {
     if (state.isLoading) return;
 
