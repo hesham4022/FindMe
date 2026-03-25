@@ -430,12 +430,9 @@ class SignInButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignInCubit, SignInState>(
-      buildWhen: (previous, current) =>
-          (previous.isButtonEnabled != current.isButtonEnabled ||
-              previous.isLoading != current.isLoading),
       builder: (context, state) {
         return Align(
-          alignment: Alignment.center, // اختياري
+          alignment: Alignment.center,
           child: SizedBox(
             width: 207,
             height: 45,
@@ -443,7 +440,6 @@ class SignInButton extends StatelessWidget {
               width: 207,
               height: 45,
               radius: 30,
-
               title: Text("login".ts,
                   style: Theme.of(context).textTheme.kHeadingH4SmallBold),
               state: CustomState.active,
@@ -451,7 +447,6 @@ class SignInButton extends StatelessWidget {
               onPressed: () {
                 context.read<SignInCubit>().validateFieldsBeforeSubmit(context);
               },
-              // سيب width/height جوّا البتن فاضيين
             ),
           ),
         );
