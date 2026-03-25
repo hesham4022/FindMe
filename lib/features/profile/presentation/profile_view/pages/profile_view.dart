@@ -100,7 +100,7 @@ class ProfileViewBody extends StatelessWidget {
                     LogoutDialog.show(
                       context,
                       onConfirm: () async {
-                        context.read<HostCubit>().logout();
+                        await context.read<HostCubit>().logout();
                         Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
                             builder: (_) => const SigninView(),
