@@ -41,13 +41,16 @@ class MainApp extends StatelessWidget {
                 create: (_) => AllCasesCubit(sl())..onInit(),
               ),
 
-              BlocProvider(
-                create: (_) => AuthCubit(sl())..loadCachedUser(),
-              ),
+              // BlocProvider(
+              //   create: (_) => AuthCubit(sl())..loadCachedUser(),
+              // ),
 
+              // BlocProvider(
+              //   create: (_) => HostCubit(0, sl())..getUserData(),
+              //   // create: (_) => HostCubit(0, sl()),
+              // ),
               BlocProvider(
-                create: (_) => HostCubit(0, sl())..getUserData(),
-                // create: (_) => HostCubit(0, sl()),
+                create: (_) => HostCubit(0, sl())..loadCachedUser(),
               ),
               BlocProvider(
                 create: (_) => NetworkInfo(sl())..listenToConnection(),

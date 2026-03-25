@@ -19,7 +19,7 @@ class HomeHeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<AuthCubit, AuthState>(
+    return BlocBuilder<HostCubit, HostState>(
       builder: (context, state) {
         final user = state.user;
         final photo = state.user?.photo;

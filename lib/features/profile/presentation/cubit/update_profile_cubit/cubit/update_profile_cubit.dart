@@ -4,6 +4,7 @@ import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
+import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:find_me_app/features/profile/data/model/update_profile_model.dart';
@@ -13,8 +14,8 @@ part 'update_profile_state.dart';
 
 class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   final UpdateProfileRepo _repo;
-  final AuthCubit _authCubit;
-  UpdateProfileCubit(this._repo, this._authCubit)
+  final HostCubit _hostCubit;
+  UpdateProfileCubit(this._repo, this._hostCubit)
       : super(UpdateProfileState.initial());
 
   final ImagePicker _picker = ImagePicker();
@@ -119,7 +120,7 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
         final updatedUser = await sl<AuthLocal>().getCachedAuthedUser();
 
         // 3) حدّث AuthCubit (دي أهم خطوة)
-        _authCubit.updateCurrentUser(updatedUser);
+        _hostCubit.updateCurrentUser(updatedUser);
         log("${await sl<AuthLocal>().getCachedAuthedUser()}");
       },
     );

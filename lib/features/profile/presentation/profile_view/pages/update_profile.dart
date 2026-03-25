@@ -2,6 +2,7 @@ import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
+import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:find_me_app/features/profile/presentation/cubit/update_profile_cubit/cubit/update_profile_cubit.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/profile_avater.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/update_profile_fields.dart';
@@ -14,7 +15,7 @@ class UpdateProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => UpdateProfileCubit(sl(), context.read<AuthCubit>()),
+      create: (_) => UpdateProfileCubit(sl(), context.read<HostCubit>()),
       child: const UpdateProfileBody(),
     );
   }
@@ -35,7 +36,7 @@ class UpdateProfileBody extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              BlocBuilder<AuthCubit, AuthState>(
+              BlocBuilder<HostCubit, HostState>(
                 builder: (context, state) {
                   final user = state.user;
 

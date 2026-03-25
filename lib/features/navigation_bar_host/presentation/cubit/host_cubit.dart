@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:find_me_app/features/auth/data/model/signin_user.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
@@ -17,15 +16,66 @@ class HostCubit extends Cubit<HostState> {
   final AuthLocal _authLocal;
   List<int> tabHistory = [0];
 
-  // void changeIndex(int index) {
-  //   emit(state.copyWith(
-  //     selectedIndex: index,
-  //     status: HostStatus.success,
-  //     clearFailure: true,
-  //   ));
-  // }
+  Future<void> loadCachedUser() async {
+    try {
+      emit(state.copyWith(status: HostStatus.loading, clearFailure: true));
 
-  void setAuthenticatedUser(AuthedUser user) {
+      final isLoggedIn = _authLocal.isUserLoggedIn();
+
+      if (!isLoggedIn) {
+        emit(
+          state.copyWith(
+            clearUser: true,
+            status: HostStatus.unauthenticated,
+            clearFailure: true,
+          ),
+        );
+        return;
+      }
+
+      final user = await _authLocal.getCachedAuthedUser();
+
+      emit(
+        state.copyWith(
+          user: user,
+          status: HostStatus.authenticated,
+          clearFailure: true,
+        ),
+      );
+    } on UserTokenException catch (e) {
+      emit(
+        state.copyWith(
+          clearUser: true,
+          status: HostStatus.failure,
+          failure: UserTokenFailure(e.msg),
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          clearUser: true,
+          status: HostStatus.unauthenticated,
+          failure: Failure(e.toString()),
+        ),
+      );
+    }
+  }
+
+  Future<void> setAuthenticatedUser(AuthedUser user) async {
+    await _authLocal.saveUser(user);
+
+    emit(
+      state.copyWith(
+        user: user,
+        status: HostStatus.authenticated,
+        clearFailure: true,
+      ),
+    );
+  }
+
+  Future<void> updateCurrentUser(AuthedUser user) async {
+    await _authLocal.saveUser(user);
+
     emit(
       state.copyWith(
         user: user,
@@ -51,32 +101,35 @@ class HostCubit extends Cubit<HostState> {
 
       final authedUser = await _authLocal.getCachedAuthedUser();
 
-      emit(state.copyWith(
-        user: authedUser,
-        status: HostStatus.authenticated,
-        clearFailure: true,
-      ));
+      emit(
+        state.copyWith(
+          user: authedUser,
+          status: HostStatus.authenticated,
+          clearFailure: true,
+        ),
+      );
     } on UserTokenException catch (e) {
-      emit(state.copyWith(
-        status: HostStatus.failure,
-        failure: UserTokenFailure(e.msg),
-      ));
+      emit(
+        state.copyWith(
+          clearUser: true,
+          status: HostStatus.failure,
+          failure: UserTokenFailure(e.msg),
+        ),
+      );
     } catch (e) {
-      emit(state.copyWith(
-        status: HostStatus.failure,
-        failure: Failure(e.toString()),
-      ));
+      emit(
+        state.copyWith(
+          clearUser: true,
+          status: HostStatus.failure,
+          failure: Failure(e.toString()),
+        ),
+      );
     }
   }
 
-  // Future<void> logout() async {
-  //   await _authLocal.deleteAuthedUser();
-  //   emit(state.copyWith(
-  //       user: null, status: HostStatus.initial, clearFailure: true));
-  // }
-
   Future<void> logout() async {
     await _authLocal.deleteAuthedUser();
+
     emit(
       state.copyWith(
         clearUser: true,

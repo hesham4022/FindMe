@@ -17,7 +17,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => UpdateProfileCubit(sl(), context.read<AuthCubit>()),
+      create: (_) => UpdateProfileCubit(sl(), context.read<HostCubit>()),
       child: const ProfileViewBody(),
     );
   }
@@ -34,7 +34,7 @@ class ProfileViewBody extends StatelessWidget {
         hideBackButton: true,
         title: Text("My Profile"),
       ),
-      body: BlocBuilder<AuthCubit, AuthState>(
+      body: BlocBuilder<HostCubit, HostState>(
         builder: (context, state) {
           final user = state.user;
 
