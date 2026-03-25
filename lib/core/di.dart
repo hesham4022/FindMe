@@ -61,7 +61,6 @@ Future<void> init() async {
 
   //! Auth
   sl.registerLazySingleton<AuthRepo>(() => AuthRepo(sl(), sl()));
-
   sl.registerLazySingleton<AppInterceptor>(() => AppInterceptor());
 
   sl.registerLazySingleton<AppHttpClient>(() => AppHttpClient());

@@ -14,7 +14,7 @@ class UpdateProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => UpdateProfileCubit(sl(), sl()),
+      create: (_) => UpdateProfileCubit(sl(), context.read<AuthCubit>()),
       child: const UpdateProfileBody(),
     );
   }
