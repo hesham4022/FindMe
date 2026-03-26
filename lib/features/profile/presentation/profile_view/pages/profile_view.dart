@@ -103,15 +103,20 @@ class ProfileViewBody extends StatelessWidget {
                       onConfirm: () async {
                         final nav = Navigator.of(context);
                         final hostCubit = context.read<HostCubit>();
-                        context
-                            .read<SignInCubit>()
-                            .resetState(); // ← هنا بدل initState
-                        nav.pushAndRemoveUntil(
-                          MaterialPageRoute(builder: (_) => const SigninView()),
-                          (route) => false,
-                        );
 
+                        /// 1️⃣ اعمل logout الأول (حذف التوكن + API + cache)
                         await hostCubit.logout();
+
+                        /// 2️⃣ امسح كل الشاشات وافتح Auth Flow جديد
+                        nav.pushAndRemoveUntil(
+                          MaterialPageRoute(
+                            builder: (_) => BlocProvider(
+                              create: (_) => SignInCubit(sl(), sl()),
+                              child: const SigninView(),
+                            ),
+                          ),
+                          (_) => false,
+                        );
                       },
                     );
                   },
