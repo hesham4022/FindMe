@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me_app/core/di.dart';
@@ -32,7 +33,10 @@ class UpdateProfileRemote {
 
       final files = <UploadFile>[];
 
-      if (data.photo != null && data.photo!.isNotEmpty) {
+      // بعد
+      if (data.photo != null &&
+          data.photo!.isNotEmpty &&
+          !data.photo!.startsWith('http')) {
         files.add(
           UploadFile(
             file: File(data.photo!),
@@ -72,6 +76,9 @@ class UpdateProfileRemote {
       }
 
       return json;
-    } finally {}
+    } catch (e) {
+      log("❌ Error in updateProfile: $e");
+      rethrow;
+    }
   }
 }
