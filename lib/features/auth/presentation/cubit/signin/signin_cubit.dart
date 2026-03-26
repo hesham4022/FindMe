@@ -35,6 +35,7 @@ class SignInCubit extends Cubit<SignInState> {
     emit(state.copyWith(
       username: value,
       usernameErrorText: null,
+      status: state.isLoading ? SignInStatus.loading : state.status,
     ));
   }
 
@@ -42,6 +43,7 @@ class SignInCubit extends Cubit<SignInState> {
     emit(state.copyWith(
       password: value,
       passwordErrorText: null,
+      status: state.isLoading ? SignInStatus.loading : state.status,
     ));
   }
 
