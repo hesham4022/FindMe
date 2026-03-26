@@ -440,7 +440,7 @@ class SignInButton extends StatelessWidget {
                   style: Theme.of(context).textTheme.kHeadingH4SmallBold),
               loading: false,
               onPressed: () {
-                context.read<SignInCubit>().submitSignIn(context);
+                context.read<SignInCubit>().submitSignIn();
               },
             ),
           ),

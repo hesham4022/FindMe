@@ -1,61 +1,27 @@
-// import 'package:flutter/material.dart';
-// import 'package:find_me_app/core/helpers/extensions/context.dart';
-// import 'package:find_me_app/core/resources/routes.dart';
-// import 'package:find_me_app/core/shared/widgets/alerts.dart';
-// import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
-// import 'package:find_me_app/features/auth/presentation/pages/verify_otp.dart';
-
-// void signInListener(BuildContext context, SignInState state) {
-//   if (state.isSuccess) {
-//     //! If Account is activated
-//     if (state.isActivated) {
-//       context.offAllNamed(AppRoutes.hostRoute);
-//     }
-//     //! If Account is not activated
-//     else {
-//       context.toNamed(
-//         AppRoutes.verifyOTPRoute,
-//         arguments: VerifyOTPArgs(
-//           username: state.username!,
-//         ),
-//       );
-
-//       showAlertSnackBar(
-//         context,
-//         state.error?.msg ?? "",
-//         AlertType.error,
-//       );
-//     }
-//   } else if (state.isError) {
-//     showAlertSnackBar(
-//       context,
-//       state.error?.msg ?? "",
-//       AlertType.error,
-//     );
-//   }
-// }
-
-// void tokenIdListener(BuildContext context, SignInState state) {
-//   if (state.isTokenIsInvalid) {
-//     showAlertSnackBar(
-//       context,
-//       state.error?.msg ?? "",
-//       AlertType.error,
-//     );
-//   }
-// }
-import 'package:flutter/material.dart';
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
+import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
+import 'package:find_me_app/features/navigation_bar_host/presentation/pages/host.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void signInListener(BuildContext context, SignInState state) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
-    if (state.isError) {
-      showAlertSnackBar(
-        context,
-        state.error?.msg ?? "حدث خطأ غير متوقع. حاول مرة أخرى.",
-        AlertType.error,
-      );
-    }
-  });
+  if (state.isError) {
+    showAlertSnackBar(
+      context,
+      state.error?.msg ?? "Error",
+      AlertType.error,
+    );
+  }
+
+  if (state.isSuccess) {
+    context.read<HostCubit>().setAuthenticatedUser();
+
+    Navigator.of(context).pushAndRemoveUntil(
+      MaterialPageRoute(
+        builder: (_) => const HostView(currentIndex: 0),
+      ),
+      (_) => false,
+    );
+  }
 }

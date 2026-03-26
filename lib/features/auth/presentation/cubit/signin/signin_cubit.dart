@@ -66,75 +66,35 @@ class SignInCubit extends Cubit<SignInState> {
   }
 
   // -------------------- Submit --------------------
-  Future<void> submitSignIn(BuildContext context) async {
+  Future<void> submitSignIn() async {
     if (state.isLoading) return;
-
-    // 🧩 وضع التطوير: دخول بدون API
-    if (allowAnonymousLogin) {
-      emit(state.copyWith(status: SignInStatus.loading));
-      emit(state.copyWith(
-        status: SignInStatus.success,
-        isActivated: true,
-      ));
-      return;
-    }
 
     emit(state.copyWith(status: SignInStatus.loading));
 
-    try {
-      final request = SignInUserRequest(
-        email: state.username!,
-        password: state.password!,
-      );
+    final request = SignInUserRequest(
+      email: state.username!,
+      password: state.password!,
+    );
 
-      print('📤 Request Body: ${request.toJson()}'); // للتأكد من البيانات
+    final result = await _authRepo.signin(request);
 
-      final result = await _authRepo.signin(request);
+    result.fold(
+      (error) {
+        emit(state.copyWith(
+          status: SignInStatus.error,
+          error: error,
+        ));
+      },
+      (data) async {
+        await _authLocal.saveAccessToken(data.accessToken);
+        await _authLocal.saveRefreshToken(data.refreshToken);
 
-      result.fold(
-        (error) {
-          emit(state.copyWith(status: SignInStatus.error, error: error));
-
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            showAlertSnackBar(
-              context,
-              error.msg,
-              AlertType.error,
-            );
-          });
-        },
-        (data) async {
-          await _authLocal.saveAccessToken(data.accessToken);
-          await _authLocal.saveRefreshToken(data.refreshToken);
-          context.read<HostCubit>().setAuthenticatedUser(data.user);
-          emit(state.copyWith(
-            status: SignInStatus.success,
-            isActivated: true,
-          ));
-          WidgetsBinding.instance.addPostFrameCallback((_) {
-            Navigator.of(context).pushAndRemoveUntil(
-              MaterialPageRoute(
-                builder: (_) => const HostView(currentIndex: 0),
-              ),
-              (route) => false,
-            );
-          });
-        },
-      );
-    } catch (e, s) {
-      log("❌ submitSignIn error: $e");
-      log("Stack: $s");
-
-      emit(state.copyWith(status: SignInStatus.error));
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        showAlertSnackBar(
-          context,
-          "Something went wrong. Please try again later.",
-          AlertType.error,
-        );
-      });
-    }
+        emit(state.copyWith(
+          status: SignInStatus.success,
+          isActivated: true,
+        ));
+      },
+    );
   }
 
   // -------------------- Guest Login --------------------
