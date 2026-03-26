@@ -26,7 +26,8 @@ class UpdateProfileRemote {
         if (data.mobileNumber != null && data.mobileNumber!.trim().isNotEmpty)
           'mobile_number': data.mobileNumber!.trim(),
         if (data.dateOfBirth != null)
-          'date_of_birth': DateFormat('yyyy-MM-dd').format(data.dateOfBirth!),
+          'date_of_birth':
+              DateFormat('yyyy-MM-dd', 'en_US').format(data.dateOfBirth!),
       };
 
       final files = <UploadFile>[];
