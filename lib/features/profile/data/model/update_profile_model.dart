@@ -26,7 +26,7 @@ class UpdateProfileRequest extends Equatable {
       if (mobileNumber != null && mobileNumber!.trim().isNotEmpty)
         'mobile_number': mobileNumber!.trim(),
       if (dateOfBirth != null)
-        'date_of_birth': DateFormat('yyyy-MM-dd').format(dateOfBirth!),
+        'date_of_birth': DateFormat('yyyy-MM-dd', 'en_US').format(dateOfBirth!),
     };
   }
 
