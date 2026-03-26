@@ -106,7 +106,6 @@ class ProfileViewBody extends StatelessWidget {
                         context
                             .read<SignInCubit>()
                             .resetState(); // ← هنا بدل initState
-
                         nav.pushAndRemoveUntil(
                           MaterialPageRoute(builder: (_) => const SigninView()),
                           (route) => false,
