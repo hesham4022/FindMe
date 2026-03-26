@@ -1,24 +1,19 @@
 import 'package:easy_localization/easy_localization.dart';
-import 'package:find_me_app/features/auth/presentation/cubit/sinup/sinup_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/helpers/formfield_validator.dart';
 import 'package:find_me_app/core/resources/colors.dart';
-import 'package:find_me_app/core/resources/images.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/resources/strings.dart';
 import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/buttons/custom_btn.dart';
 import 'package:find_me_app/core/shared/widgets/custom_textfield.dart';
-import 'package:find_me_app/core/shared/widgets/dismiss_keyboard.dart';
 import 'package:find_me_app/core/shared/widgets/password_field.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
-import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_listener.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
@@ -425,29 +420,27 @@ class SignInButton extends StatelessWidget {
       builder: (context, state) {
         final isValid = AppValidators.validateEmail(state.username) == null &&
             AppValidators.validateSignInPassword(state.password) == null;
-        return Align(
-          alignment: Alignment.center,
-          child: SizedBox(
-            width: 207,
-            height: 45,
-            child: CustomFilledButton(
-              state: state.isLoading
+        return CustomFilledButton(
+          state: state.isLoading
+              ? CustomState.active
+              : isValid
                   ? CustomState.active
-                  : isValid
-                      ? CustomState.active
-                      : CustomState.disabled,
-              color: AppColors.mainColor,
-              width: 207,
-              height: 45,
-              radius: 30,
-              title: Text("login".ts,
-                  style: Theme.of(context).textTheme.kHeadingH4SmallBold),
-              loading: state.isLoading, // ← هنا
-              onPressed: () {
-                context.read<SignInCubit>().submitSignIn();
-              },
-            ),
+                  : CustomState.disabled,
+          color: AppColors.mainColor,
+          width: 0.55.sw,
+          height: 45.h,
+          radius: 30.r,
+          title: Text(
+            "login".ts,
+            style: Theme.of(context)
+                .textTheme
+                .kHeadingH4SmallBold
+                .copyWith(fontSize: 22.sp),
           ),
+          loading: state.isLoading, // ← هنا
+          onPressed: () {
+            context.read<SignInCubit>().submitSignIn();
+          },
         );
       },
     );

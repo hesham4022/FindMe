@@ -6,6 +6,7 @@ import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/buttons/custom_btn.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class SinupOrLogin extends StatelessWidget {
@@ -25,11 +26,6 @@ class SinupOrLogin extends StatelessWidget {
                   'assets/images/FindMe logo new.svg',
                   width: 139,
                   height: 139,
-                  placeholderBuilder: (context) => Center(
-                    child: CircularProgressIndicator(
-                      color: AppColors.mainColor,
-                    ),
-                  ),
                 ),
                 Text(
                   AppStrings.appName,
@@ -48,41 +44,39 @@ class SinupOrLogin extends StatelessWidget {
               CustomFilledButton(
                 title: Text(
                   AppStrings.login,
-                  style: Theme.of(context).textTheme.kHeadingH4SmallBold,
+                  style: Theme.of(context)
+                      .textTheme
+                      .kHeadingH4SmallBold
+                      .copyWith(fontSize: 22.sp),
                 ),
-                // state:
-                // state.isButtonEnabled ? CustomState.active : CustomState.disabled,
-                // loading: state.isLoading || state.isTokenIsLoading,
-                //"context.read<SignInCubit>().submitSignIn"
                 onPressed: () {
                   context.toNamed(
                     AppRoutes.signinRoute,
                   );
                 },
-                width: 207,
-                height: 45,
-                radius: 30,
+                width: 0.55.sw,
+                height: 45.h,
+                radius: 30.r,
                 color: AppColors.mainColor,
               ),
               const VSpace(20),
               CustomFilledButton(
                 title: Text(
                   AppStrings.sinup,
-                  style: Theme.of(context).textTheme.kHeadingH4SmallSemiBold,
+                  style: Theme.of(context)
+                      .textTheme
+                      .kHeadingH4SmallBold
+                      .copyWith(fontSize: 22.sp, color: AppColors.mainColor),
                 ),
-                // state:
-                // state.isButtonEnabled ? CustomState.active : CustomState.disabled,
-                // loading: state.isLoading || state.isTokenIsLoading,
-                //"context.read<SignInCubit>().submitSignIn"
                 onPressed: () {
                   context.toNamed(
                     AppRoutes.signupRoute,
                   );
                 },
-                width: 207,
-                height: 45,
-                radius: 30,
-                color: const Color(0xffCAD6FF),
+                width: 0.55.sw,
+                height: 45.h,
+                radius: 30.r,
+                color: AppColors.secondColor,
               ),
             ],
           ),

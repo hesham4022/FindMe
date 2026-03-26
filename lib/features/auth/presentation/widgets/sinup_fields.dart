@@ -9,18 +9,14 @@ import 'package:find_me_app/core/shared/widgets/buttons/custom_btn.dart';
 import 'package:find_me_app/core/shared/widgets/custom_textfield.dart';
 import 'package:find_me_app/core/shared/widgets/password_field.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
-import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/sinup/sinup_cubit.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'dart:io';
-import 'package:path/path.dart' as p;
 
 // class NameField extends StatelessWidget {
 //   const NameField({
@@ -83,14 +79,11 @@ class NameField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // 🏷️ العنوان فوق الحقل
         Text(
           "fullNameLabel".ts,
           style: Theme.of(context).textTheme.kSubheadingRegular,
         ),
-        const SizedBox(height: 10), // بدل VSpace(10)
-
-        // 🧩 BlocBuilder بيبني الـ TextField فقط
+        const VSpace(10),
         BlocBuilder<SinupCubit, SinupState>(
           buildWhen: (previous, current) =>
               previous.nameErrorText != current.nameErrorText,
@@ -140,7 +133,7 @@ class SignUpPasswordField extends StatelessWidget {
               "passordLabel".ts,
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
-            VSpace(10),
+            const VSpace(10),
             RPasswordField(
               errorText: state.passwordErrorText,
               hint: '******',
@@ -186,7 +179,7 @@ class SignUpConfirmPasswordField extends StatelessWidget {
               "confirmpassordLabel".ts,
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
-            VSpace(10),
+            const VSpace(10),
             RPasswordField(
               errorText: state.passwordConfirmationErrorText,
               hint: "******",
@@ -241,7 +234,7 @@ class SinUpUserNameField extends StatelessWidget {
               "emailLabel".ts,
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
-            VSpace(10),
+            const VSpace(10),
             CustomTextField(
                 hint: AppStrings.username.ts,
                 errorText: state.emailErrorText,
@@ -256,11 +249,8 @@ class SinUpUserNameField extends StatelessWidget {
                   context.read<SinupCubit>().emailChanged(value);
                 },
                 onValidate: (value) {
-                  final err = AppValidators.validateEmail(
-                      value); // String? (null لو صحيح)
-                  // خزّن الرسالة في الـ state عشان UI تقدر تعرضها
+                  final err = AppValidators.validateEmail(value);
                   context.read<SinupCubit>().emailErrorTextChanged(err ?? "");
-                  // مهم: رجّع null لما الإدخال صحيح
                   return (err == null || err.trim().isEmpty) ? null : err;
                 }),
           ],
@@ -290,7 +280,7 @@ class PhoneNumberField extends StatelessWidget {
               "phoneNumberLabel".ts,
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
-            VSpace(10),
+            const VSpace(10),
             CustomTextField(
                 hint: "hintPhone".ts,
                 errorText: state.phoneErrorText,
@@ -305,11 +295,8 @@ class PhoneNumberField extends StatelessWidget {
                   context.read<SinupCubit>().phoneChanged(value);
                 },
                 onValidate: (value) {
-                  final err = AppValidators.validatePhoneNumber(
-                      value); // String? (null لو صحيح)
-                  // خزّن الرسالة في الـ state عشان UI تقدر تعرضها
+                  final err = AppValidators.validatePhoneNumber(value);
                   context.read<SinupCubit>().phoneErrorTextChanged(err ?? "");
-                  // مهم: رجّع null لما الإدخال صحيح
                   return (err == null || err.trim().isEmpty) ? null : err;
                 }),
           ],
@@ -339,7 +326,7 @@ class NationalIdField extends StatelessWidget {
               "nationalidLabel".ts,
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
-            VSpace(10),
+            const VSpace(10),
             CustomTextField(
                 hint: "hintId".ts,
                 errorText: state.nationalIdErrorText,
@@ -354,13 +341,10 @@ class NationalIdField extends StatelessWidget {
                   context.read<SinupCubit>().nationalIdChanged(value);
                 },
                 onValidate: (value) {
-                  final err = AppValidators.validateNumber(
-                      value); // String? (null لو صحيح)
-                  // خزّن الرسالة في الـ state عشان UI تقدر تعرضها
+                  final err = AppValidators.validateNumber(value);
                   context
                       .read<SinupCubit>()
                       .nationalIdErrorTextChanged(err ?? "");
-                  // مهم: رجّع null لما الإدخال صحيح
                   return (err == null || err.trim().isEmpty) ? null : err;
                 }),
           ],
@@ -414,7 +398,6 @@ class UplaodNationalId extends StatelessWidget {
               ),
             ),
 
-            // 🧩 هنا نعرض رسالة الخطأ لو فيه
             if (state.nationalPhotoPathErrorText != null &&
                 state.nationalPhotoPathErrorText!.isNotEmpty)
               Padding(
@@ -515,7 +498,7 @@ class TermsAndPrivacyText extends StatelessWidget {
                 // Open Terms page
               },
           ),
-          TextSpan(text: "and".ts, style: TextStyle(fontSize: 12)),
+          TextSpan(text: "and".ts, style: const TextStyle(fontSize: 12)),
           TextSpan(
             text: "Privacy Policy".ts,
             style: const TextStyle(
@@ -541,26 +524,24 @@ class SignUpButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SinupCubit, SinupState>(
-      // buildWhen: (previous, current) =>
-      //     (previous.isButtonEnabled != current.isButtonEnabled ||
-      //         previous.isLoading != current.isLoading),
-
       builder: (context, state) {
-        return Align(
-          alignment: Alignment.center, // اختياري
-          child: CustomFilledButton(
-            width: 207,
-            height: 45,
-            radius: 30,
-            title: Text("SignUp".ts,
-                style: Theme.of(context).textTheme.kHeadingH4SmallBold),
-            state: CustomState.active,
-            loading: state.isLoading,
-            onPressed: () {
-              context.read<SinupCubit>().validateFieldsBeforeSinup(context);
-            },
-            // سيب width/height جوّا البتن فاضيين
+        return CustomFilledButton(
+          width: 0.55.sw,
+          height: 45.h,
+          radius: 30.r,
+          title: Text(
+            "SignUp".ts,
+            style: Theme.of(context)
+                .textTheme
+                .kHeadingH4SmallBold
+                .copyWith(fontSize: 22.sp),
           ),
+          state: CustomState.active,
+          loading: state.isLoading,
+          onPressed: () {
+            context.read<SinupCubit>().validateFieldsBeforeSinup(context);
+          },
+          // سيب width/height جوّا البتن فاضيين
         );
       },
     );

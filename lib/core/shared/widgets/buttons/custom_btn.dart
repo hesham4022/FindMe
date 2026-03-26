@@ -74,50 +74,55 @@ class CustomFilledButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      child: TextButton(
-        key: Key(titleText ?? "Submit"),
-        style: ButtonStyle(
-          // elevation: state == CustomState.disabled
-          //     ? null
-          //     : WidgetStateProperty.all(0.75),
-          fixedSize: WidgetStateProperty.all(
-              Size(width?.w ?? double.infinity, height?.h ?? 45.h)),
-          overlayColor: state == CustomState.disabled
-              ? WidgetStateProperty.all(Colors.transparent)
-              : null,
-          backgroundColor: WidgetStateProperty.all(bgColor),
-          shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(radius).r,
+    return Center(
+      child: SizedBox(
+        width: width,
+        child: TextButton(
+          key: Key(titleText ?? "Submit"),
+          style: ButtonStyle(
+            // elevation: state == CustomState.disabled
+            //     ? null
+            //     : WidgetStateProperty.all(0.75),
+            // fixedSize: WidgetStateProperty.all(
+            //     Size(width ?? double.infinity, height?.h ?? 45.h)),
+            overlayColor: state == CustomState.disabled
+                ? WidgetStateProperty.all(Colors.transparent)
+                : null,
+            backgroundColor: WidgetStateProperty.all(bgColor),
+            shape: WidgetStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(radius).r,
+              ),
             ),
           ),
-        ),
-        onPressed: () {
-          if (state != CustomState.disabled) {
-            // dismissFocusedWidget(context);
-            onPressed?.call();
-          }
-          // return;
-        },
-        //! Title
-        child: AnimateWidgetsVisiblity(
-          firstWidget: CustomButtonLoader(
-            lottieAnimation: loadingAnimation,
-            color: color,
+          onPressed: () {
+            if (state != CustomState.disabled) {
+              // dismissFocusedWidget(context);
+              onPressed?.call();
+            }
+            // return;
+          },
+          //! Title
+          child: AnimateWidgetsVisiblity(
+            firstWidget: CustomButtonLoader(
+              lottieAnimation: loadingAnimation,
+              color: color,
+            ),
+            secondWidget: titleText != null
+                ? Text(
+                    titleText!.ts,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: Theme.of(context)
+                        .textTheme
+                        .kParagraph01SemiBold
+                        .copyWith(
+                          color: titleColor,
+                        ),
+                  )
+                : title!,
+            showFirst: loading,
           ),
-          secondWidget: titleText != null
-              ? Text(
-                  titleText!.ts,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                  style:
-                      Theme.of(context).textTheme.kParagraph01SemiBold.copyWith(
-                            color: titleColor,
-                          ),
-                )
-              : title!,
-          showFirst: loading,
         ),
       ),
     );
