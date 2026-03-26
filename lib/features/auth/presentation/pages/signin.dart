@@ -40,8 +40,11 @@ class _SignInBody extends StatelessWidget {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     return BlocConsumer<SignInCubit, SignInState>(
+      listenWhen: (previous, current) => previous.status != current.status,
       listener: signInListener,
       builder: (context, state) {
+        print(
+            "🔄 builder called - status: ${state.status} - isLoading: ${state.isLoading}");
         return BlurryModalProgressHUD(
           inAsyncCall: state.isLoading,
           progressIndicator: const CustomLoadingWidget(),
