@@ -13,10 +13,20 @@ import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_listener.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
 
-class SigninView extends StatelessWidget {
+class SigninView extends StatefulWidget {
   const SigninView({
     super.key,
   });
+
+  @override
+  State<SigninView> createState() => _SigninViewState();
+}
+
+class _SigninViewState extends State<SigninView> {
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +50,6 @@ class _SignInBody extends StatelessWidget {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     return BlocConsumer<SignInCubit, SignInState>(
-      listenWhen: (previous, current) => previous.status != current.status,
       listener: signInListener,
       builder: (context, state) {
         print(

@@ -101,21 +101,14 @@ class ProfileViewBody extends StatelessWidget {
                     LogoutDialog.show(
                       context,
                       onConfirm: () async {
-                        final hostCubit = context.read<HostCubit>();
-                        final signInCubit = context.read<SignInCubit>();
                         final nav = Navigator.of(context);
-
-                        /// 1️⃣ اعمل logout الأول
-                        await hostCubit.logout();
-
-                        /// 2️⃣ reset signin state
-                        signInCubit.resetState();
-
-                        /// 3️⃣ بعد ما كل حاجة تستقر اعمل navigation
+                        final hostCubit = context.read<HostCubit>();
+                        context.read<SignInCubit>().resetState();
                         nav.pushAndRemoveUntil(
                           MaterialPageRoute(builder: (_) => const SigninView()),
-                          (_) => false,
+                          (route) => false,
                         );
+                        await hostCubit.logout();
                       },
                     );
                   },
