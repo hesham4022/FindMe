@@ -127,7 +127,6 @@ class HostCubit extends Cubit<HostState> {
     }
   }
 
-  // في HostCubit أضف reset للـ index
   Future<void> logout() async {
     await _authLocal.deleteAuthedUser();
 

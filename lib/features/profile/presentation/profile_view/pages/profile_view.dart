@@ -101,20 +101,19 @@ class ProfileViewBody extends StatelessWidget {
                     LogoutDialog.show(
                       context,
                       onConfirm: () async {
-                        final nav = Navigator.of(context);
                         final hostCubit = context.read<HostCubit>();
+                        final signInCubit = context.read<SignInCubit>();
+                        final nav = Navigator.of(context);
 
-                        /// 1️⃣ اعمل logout الأول (حذف التوكن + API + cache)
+                        /// 1️⃣ اعمل logout الأول
                         await hostCubit.logout();
 
-                        /// 2️⃣ امسح كل الشاشات وافتح Auth Flow جديد
+                        /// 2️⃣ reset signin state
+                        signInCubit.resetState();
+
+                        /// 3️⃣ بعد ما كل حاجة تستقر اعمل navigation
                         nav.pushAndRemoveUntil(
-                          MaterialPageRoute(
-                            builder: (_) => BlocProvider(
-                              create: (_) => SignInCubit(sl(), sl()),
-                              child: const SigninView(),
-                            ),
-                          ),
+                          MaterialPageRoute(builder: (_) => const SigninView()),
                           (_) => false,
                         );
                       },
