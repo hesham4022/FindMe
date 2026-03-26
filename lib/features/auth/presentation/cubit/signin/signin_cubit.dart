@@ -92,6 +92,7 @@ class SignInCubit extends Cubit<SignInState> {
         emit(state.copyWith(
           status: SignInStatus.success,
           isActivated: true,
+          user: data.user,
         ));
       },
     );

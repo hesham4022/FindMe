@@ -15,7 +15,7 @@ void signInListener(BuildContext context, SignInState state) {
   }
 
   if (state.isSuccess) {
-    context.read<HostCubit>().setAuthenticatedUser();
+    context.read<HostCubit>().setAuthenticatedUser(state.user!);
 
     Navigator.of(context).pushAndRemoveUntil(
       MaterialPageRoute(

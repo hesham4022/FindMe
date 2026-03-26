@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:find_me_app/core/networking/success_response.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
+import 'package:find_me_app/features/auth/data/model/authed_user.dart';
 import 'package:find_me_app/features/auth/data/model/base_url_response.dart';
 
 enum SignInStatus {
@@ -21,19 +22,19 @@ class SignInState extends Equatable {
   final bool isActivated;
   final double? lat;
   final double? lng;
-
-  const SignInState({
-    this.username,
-    this.password,
-    this.usernameErrorText,
-    this.passwordErrorText,
-    required this.status,
-    this.success,
-    this.error,
-    this.isActivated = false,
-    this.lat,
-    this.lng,
-  });
+  final AuthedUser? user;
+  const SignInState(
+      {this.username,
+      this.password,
+      this.usernameErrorText,
+      this.passwordErrorText,
+      required this.status,
+      this.success,
+      this.error,
+      this.isActivated = false,
+      this.lat,
+      this.lng,
+      this.user});
 
   bool get isInitial => status == SignInStatus.initial;
   bool get isLoading => status == SignInStatus.loading;
@@ -60,6 +61,7 @@ class SignInState extends Equatable {
     BaseUrlResponse? baseUrlResponse,
     double? lat,
     double? lng,
+    AuthedUser? user,
   }) {
     return SignInState(
       username: username ?? this.username,
@@ -72,6 +74,7 @@ class SignInState extends Equatable {
       isActivated: isActivated ?? this.isActivated,
       lat: lat ?? this.lat,
       lng: lng ?? this.lng,
+      user: user ?? this.user,
     );
   }
 
@@ -87,5 +90,6 @@ class SignInState extends Equatable {
         isActivated,
         lat,
         lng,
+        user,
       ];
 }
