@@ -5,7 +5,6 @@ import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/animate_widgets_visibilty.dart';
 import 'package:find_me_app/core/shared/widgets/custom_loader_widget.dart';
-import 'package:find_me_app/core/shared/widgets/dismiss_keyboard.dart';
 
 enum CustomState { active, inActive, disabled, error }
 

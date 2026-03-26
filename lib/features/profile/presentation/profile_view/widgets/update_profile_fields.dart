@@ -192,25 +192,14 @@ class _DateFieldState extends State<DateField> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.only(left: 8),
-          child: Text(
-            "Date of Birth:".ts,
-            style: Theme.of(context).textTheme.kSubheadingRegular.copyWith(
-                  fontSize: 13,
-                  fontWeight: FontWeight.w400,
-                ),
-          ),
+        Text(
+          "Date of Birth:".ts,
+          style: Theme.of(context).textTheme.kSubheadingRegular,
         ),
         const VSpace(5),
         CustomTextField(
           controller: _controller,
           readOnly: true,
-          radius: 20,
-          contentPadding: const EdgeInsets.symmetric(
-            vertical: 7,
-            horizontal: 12,
-          ),
           height: 30,
           hint: "YYYY-MM-DD",
           suffixIcon: const Icon(
@@ -235,22 +224,26 @@ class _DateFieldState extends State<DateField> {
 }
 
 class UpdateProfileButton extends StatelessWidget {
-  const UpdateProfileButton({
-    super.key,
-  });
+  const UpdateProfileButton({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SignInCubit, SignInState>(
+    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
       builder: (context, state) {
         return Align(
           alignment: Alignment.center,
           child: CustomFilledButton(
-            width: 207,
-            height: 45,
-            radius: 30,
-            title: Text("update profile".ts,
-                style: Theme.of(context).textTheme.kHeadingH4SmallBold),
-            state: CustomState.active,
+            width: 0.55.sw,
+            height: 45.h,
+            radius: 30.r,
+            title: Text(
+              "update profile".ts,
+              style: Theme.of(context)
+                  .textTheme
+                  .kHeadingH4SmallBold
+                  .copyWith(fontSize: 18.sp),
+            ),
+            color: AppColors.mainColor,
             loading: state.isLoading,
             onPressed: () {
               context.read<UpdateProfileCubit>().updateProfile();

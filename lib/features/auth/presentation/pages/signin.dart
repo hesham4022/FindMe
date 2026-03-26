@@ -38,12 +38,9 @@ class _SignInBody extends StatelessWidget {
   Widget build(BuildContext context) {
     /// Used for scrolling fields disappeared when keyboard appearing
     final bottom = MediaQuery.of(context).viewInsets.bottom;
-
     return BlocConsumer<SignInCubit, SignInState>(
       listener: signInListener,
       builder: (context, state) {
-        print(
-            "🔄 builder called - status: ${state.status} - isLoading: ${state.isLoading}");
         return BlurryModalProgressHUD(
           inAsyncCall: state.isLoading,
           progressIndicator: const CustomLoadingWidget(),
