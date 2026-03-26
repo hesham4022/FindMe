@@ -288,9 +288,11 @@ class UpdateProfileButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
       builder: (context, state) {
+        final cubit = context.read<UpdateProfileCubit>();
         return Align(
           alignment: Alignment.center,
           child: CustomFilledButton(
+            state: cubit.canUpdate ? CustomState.active : CustomState.disabled,
             width: 0.55.sw,
             height: 45.h,
             radius: 30.r,

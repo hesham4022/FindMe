@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
+import 'package:find_me_app/core/helpers/formfield_validator.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -31,6 +32,30 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
       photo: user?.photo,
     ));
   }
+
+// validate
+  bool get isFormChanged {
+    final user = _hostCubit.state.user;
+    return state.fullName != user?.fullName ||
+        state.email != user?.email ||
+        state.mobileNumber != user?.mobileNumber ||
+        state.dateOfBirth !=
+            (user?.dateOfBirth != null
+                ? DateTime.tryParse(user!.dateOfBirth!)
+                : null) ||
+        (state.photo != null && state.photo != user?.photo);
+  }
+
+  bool get isFormValid {
+    return AppValidators.validateUsername(state.fullName) == null &&
+        AppValidators.validateEmail(state.email) == null &&
+        AppValidators.validatePhoneNumber(state.mobileNumber) == null &&
+        state.dateOfBirth != null;
+  }
+
+  bool get canUpdate => isFormChanged && isFormValid;
+
+  /////
 
   final ImagePicker _picker = ImagePicker();
 
