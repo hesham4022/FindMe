@@ -34,7 +34,6 @@ class SignInCubit extends Cubit<SignInState> {
   void usernameChanged(String value) {
     emit(state.copyWith(
       username: value,
-      status: SignInStatus.initial,
       usernameErrorText: null,
     ));
   }
@@ -42,7 +41,6 @@ class SignInCubit extends Cubit<SignInState> {
   void passwordChanged(String value) {
     emit(state.copyWith(
       password: value,
-      status: SignInStatus.initial,
       passwordErrorText: null,
     ));
   }
@@ -67,9 +65,14 @@ class SignInCubit extends Cubit<SignInState> {
 
   // -------------------- Submit --------------------
   Future<void> submitSignIn() async {
+    print("1️⃣ submitSignIn called");
+    print("2️⃣ isLoading: ${state.isLoading}");
+
     if (state.isLoading) return;
 
+    print("3️⃣ emitting loading");
     emit(state.copyWith(status: SignInStatus.loading));
+    print("4️⃣ loading emitted: ${state.isLoading}");
 
     final request = SignInUserRequest(
       email: state.username!,
@@ -77,18 +80,17 @@ class SignInCubit extends Cubit<SignInState> {
     );
 
     final result = await _authRepo.signin(request);
+    print("5️⃣ got result");
 
     result.fold(
       (error) {
-        emit(state.copyWith(
-          status: SignInStatus.error,
-          error: error,
-        ));
+        print("6️⃣ error: ${error.msg}");
+        emit(state.copyWith(status: SignInStatus.error, error: error));
       },
       (data) async {
+        print("7️⃣ success");
         await _authLocal.saveAccessToken(data.accessToken);
         await _authLocal.saveRefreshToken(data.refreshToken);
-
         emit(state.copyWith(
           status: SignInStatus.success,
           isActivated: true,

@@ -431,14 +431,18 @@ class SignInButton extends StatelessWidget {
             width: 207,
             height: 45,
             child: CustomFilledButton(
-              state: isValid ? CustomState.active : CustomState.disabled,
+              state: state.isLoading
+                  ? CustomState.active
+                  : isValid
+                      ? CustomState.active
+                      : CustomState.disabled,
               color: AppColors.mainColor,
               width: 207,
               height: 45,
               radius: 30,
               title: Text("login".ts,
                   style: Theme.of(context).textTheme.kHeadingH4SmallBold),
-              loading: false,
+              loading: state.isLoading, // ← هنا
               onPressed: () {
                 context.read<SignInCubit>().submitSignIn();
               },
