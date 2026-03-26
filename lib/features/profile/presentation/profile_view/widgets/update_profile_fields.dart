@@ -7,15 +7,13 @@ import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/buttons/custom_btn.dart';
 import 'package:find_me_app/core/shared/widgets/custom_textfield.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
-import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
 import 'package:find_me_app/features/profile/presentation/cubit/update_profile_cubit/cubit/update_profile_cubit.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/show_calendar_bottom_sheet.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class FullNameField extends StatelessWidget {
+class FullNameField extends StatefulWidget {
   const FullNameField({
     super.key,
     this.onSubmit,
@@ -24,9 +22,28 @@ class FullNameField extends StatelessWidget {
   final Function(String)? onSubmit;
 
   @override
+  State<FullNameField> createState() => _FullNameFieldState();
+}
+
+class _FullNameFieldState extends State<FullNameField> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: context.read<UpdateProfileCubit>().state.fullName ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
-      // buildWhen: (previous, current) => (previous.usernameErrorText != current.usernameErrorText),
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -37,6 +54,7 @@ class FullNameField extends StatelessWidget {
             ),
             const VSpace(10),
             CustomTextField(
+                controller: _controller,
                 hint: "hintname".ts,
                 errorText: state.fullNameErrorText,
                 prefixIcon: Icon(
@@ -44,7 +62,7 @@ class FullNameField extends StatelessWidget {
                   size: 20.sp,
                   color: AppColors.saltBox600,
                 ),
-                onSubmit: onSubmit,
+                onSubmit: widget.onSubmit,
                 onChanged: (value) {
                   context.read<UpdateProfileCubit>().fullNameChanged(value);
                 },
@@ -62,7 +80,7 @@ class FullNameField extends StatelessWidget {
   }
 }
 
-class PhoneNumberField extends StatelessWidget {
+class PhoneNumberField extends StatefulWidget {
   const PhoneNumberField({
     super.key,
     this.onSubmit,
@@ -71,9 +89,28 @@ class PhoneNumberField extends StatelessWidget {
   final Function(String)? onSubmit;
 
   @override
+  State<PhoneNumberField> createState() => _PhoneNumberFieldState();
+}
+
+class _PhoneNumberFieldState extends State<PhoneNumberField> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: context.read<UpdateProfileCubit>().state.mobileNumber ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
-      // buildWhen: (previous, current) => (previous.usernameErrorText != current.usernameErrorText),
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -84,6 +121,7 @@ class PhoneNumberField extends StatelessWidget {
             ),
             const VSpace(10),
             CustomTextField(
+                controller: _controller,
                 hint: "hintPhone".ts,
                 errorText: state.mobileNumberErrorText,
                 prefixIcon: Icon(
@@ -92,7 +130,7 @@ class PhoneNumberField extends StatelessWidget {
                   color: AppColors.saltBox600,
                 ),
                 keyboardType: TextInputType.number,
-                onSubmit: onSubmit,
+                onSubmit: widget.onSubmit,
                 onChanged: (value) {
                   context.read<UpdateProfileCubit>().mobileNumberChanged(value);
                 },
@@ -111,7 +149,7 @@ class PhoneNumberField extends StatelessWidget {
   }
 }
 
-class EmailField extends StatelessWidget {
+class EmailField extends StatefulWidget {
   const EmailField({
     super.key,
     this.onSubmit,
@@ -120,9 +158,28 @@ class EmailField extends StatelessWidget {
   final Function(String)? onSubmit;
 
   @override
+  State<EmailField> createState() => _EmailFieldState();
+}
+
+class _EmailFieldState extends State<EmailField> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: context.read<UpdateProfileCubit>().state.email ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
-      // buildWhen: (previous, current) => (previous.usernameErrorText != current.usernameErrorText),
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,6 +190,7 @@ class EmailField extends StatelessWidget {
             ),
             const VSpace(10),
             CustomTextField(
+                controller: _controller,
                 hint: AppStrings.username.ts,
                 errorText: state.emailErrorText,
                 prefixIcon: Icon(
@@ -141,7 +199,7 @@ class EmailField extends StatelessWidget {
                   color: AppColors.saltBox600,
                 ),
                 keyboardType: TextInputType.emailAddress,
-                onSubmit: onSubmit,
+                onSubmit: widget.onSubmit,
                 onChanged: (value) {
                   context.read<UpdateProfileCubit>().emailChanged(value);
                 },

@@ -3,7 +3,6 @@ import 'package:equatable/equatable.dart';
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
-import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,7 +15,22 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   final UpdateProfileRepo _repo;
   final HostCubit _hostCubit;
   UpdateProfileCubit(this._repo, this._hostCubit)
-      : super(UpdateProfileState.initial());
+      : super(UpdateProfileState.initial()) {
+    _init();
+  }
+
+  void _init() {
+    final user = _hostCubit.state.user;
+    emit(state.copyWith(
+      fullName: user?.fullName,
+      email: user?.email,
+      mobileNumber: user?.mobileNumber,
+      dateOfBirth: user?.dateOfBirth != null
+          ? DateTime.tryParse(user!.dateOfBirth!)
+          : null,
+      photo: user?.photo,
+    ));
+  }
 
   final ImagePicker _picker = ImagePicker();
 
