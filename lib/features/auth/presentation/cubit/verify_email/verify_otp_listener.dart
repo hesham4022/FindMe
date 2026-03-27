@@ -1,17 +1,20 @@
+import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/verify_email/verify_otp_state.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void verifyOTPListener(BuildContext context, VerifyOTPState state) {
-  WidgetsBinding.instance.addPostFrameCallback((_) {
+  WidgetsBinding.instance.addPostFrameCallback((_) async {
     if (state.isVerifyOTPSuccess) {
       showAlertSnackBar(
         context,
         state.success?.msg ?? "تم تفعيل الحساب بنجاح ✅",
         AlertType.success,
       );
+      await context.read<HostCubit>().loadCachedUser();
       context.toNamed(AppRoutes.hostRoute);
     } else if (state.isVerifyOTPError && state.error != null) {
       showAlertSnackBar(

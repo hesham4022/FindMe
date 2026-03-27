@@ -342,7 +342,7 @@ class SinupCubit extends Cubit<SinupState> {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         context.toNamed(
           AppRoutes.verifyOTPRoute,
-          arguments: VerifyOTPArgs(username: state.email ?? ''), // نمرر الإيميل
+          arguments: VerifyOTPArgs(username: state.email ?? ''),
         );
 
         showAlertSnackBar(
