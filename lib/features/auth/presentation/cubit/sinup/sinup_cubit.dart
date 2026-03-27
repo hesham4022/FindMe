@@ -11,7 +11,9 @@ import 'package:find_me_app/features/auth/data/model/sinup_user.dart';
 import 'package:find_me_app/features/auth/data/repo/auth_repo.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:find_me_app/features/auth/presentation/pages/verify_otp.dart';
+import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 
 part 'sinup_state.dart';
@@ -128,7 +130,6 @@ class SinupCubit extends Cubit<SinupState> {
 
       nationalIdImages = [...picked];
 
-      // ✅ خزن أول صورة في الـ state
       emit(state.copyWith(
         nationalPhotoPath: picked.first.path,
         nationalPhotoPathErrorText: null,
@@ -146,7 +147,6 @@ class SinupCubit extends Cubit<SinupState> {
 
     nationalIdImages.removeAt(index);
 
-    // ✅ لو مفيش صور تاني، فضي القيمة في state
     if (nationalIdImages.isEmpty) {
       emit(state.copyWith(
           nationalPhotoPath: '',
@@ -310,7 +310,6 @@ class SinupCubit extends Cubit<SinupState> {
 
       result.fold(
         (failure) {
-          // ❌ حالة فشل السيرفر (زي 422 أو 500)
           emit(state.copyWith(
             status: SinUpStatus.error,
             error: failure,
@@ -325,12 +324,15 @@ class SinupCubit extends Cubit<SinupState> {
           });
         },
         (data) {
-          // ✅ نجاح عادي (مش محتاج Verify)
           emit(state.copyWith(status: SinUpStatus.success));
-
-          WidgetsBinding.instance.addPostFrameCallback((_) {
+          WidgetsBinding.instance.addPostFrameCallback((_) async {
+            // ✅ حط اليوزر في HostCubit
+            await context.read<HostCubit>().setAuthenticatedUser(data.user);
             context.toNamed(AppRoutes.hostRoute);
           });
+          // WidgetsBinding.instance.addPostFrameCallback((_) {
+          //   context.toNamed(AppRoutes.hostRoute);
+          // });
         },
       );
     } on NavigateToVerifyEmailException catch (e) {

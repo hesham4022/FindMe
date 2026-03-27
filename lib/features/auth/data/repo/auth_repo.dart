@@ -1,13 +1,8 @@
-import 'dart:convert';
-
 import 'package:dartz/dartz.dart';
-import 'package:find_me_app/core/app_secured_data/app_data.dart';
-import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/networking/functions.dart';
 import 'package:find_me_app/core/networking/success_response.dart';
 import 'package:find_me_app/features/auth/data/model/activate_account.dart';
-import 'package:find_me_app/features/auth/data/model/base_url_response.dart';
 import 'package:find_me_app/features/auth/data/model/change_password.dart';
 import 'package:find_me_app/features/auth/data/model/forget_password.dart';
 import 'package:find_me_app/features/auth/data/model/resend_otp.dart';
@@ -83,17 +78,11 @@ class AuthRepo {
 
     return executeFunctionality<SignUpUserResponse>(
       function: () async {
-        // 🧩 استدعاء الـ Remote
         final json = await _authRemote.signup(request);
 
-        // ✅ هنا بيكون حصل التحقق من الكود داخل interceptor أو makeMultipartRequest
-        // ولو السيرفر رجّع 409 → هيتـرمى NavigateToVerifyEmailException ومش هنوصل هنا
-
-        // 🧩 لو وصلنا هنا يبقى التسجيل تم بنجاح
         final response = SignUpUserResponse.fromMap(json);
         print('📩 [AuthRepo] Signup Response: $response');
 
-        // 🧠 نحفظ المستخدم في الـ local storage
         await _localSource.saveUser(response.user);
 
         return response;
