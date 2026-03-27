@@ -62,6 +62,7 @@ class VerifyOTPCubit extends Cubit<VerifyOTPState> {
           status: VerifyStatus.verifyOTPSuccess,
           success: SuccessResponse(msg: data.message),
           token: data.accessToken,
+          user: data.user,
           error: null,
         ));
       },

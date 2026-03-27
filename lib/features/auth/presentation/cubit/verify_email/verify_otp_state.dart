@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/networking/success_response.dart';
+import 'package:find_me_app/features/auth/data/model/authed_user.dart';
 import 'package:find_me_app/features/auth/data/model/verify_otp.dart';
 
 enum VerifyStatus {
@@ -19,6 +20,7 @@ class VerifyOTPState extends Equatable {
   final SuccessResponse? success;
   final Failure? error;
   final String? token;
+  final AuthedUser? user;
 
   const VerifyOTPState({
     this.otp,
@@ -26,6 +28,7 @@ class VerifyOTPState extends Equatable {
     this.success,
     this.error,
     this.token,
+    this.user,
   });
 
 //------------------------- Validate Fields  -------------------------
@@ -55,6 +58,7 @@ class VerifyOTPState extends Equatable {
     SuccessResponse? success,
     Failure? error,
     String? token,
+    AuthedUser? user,
   }) {
     return VerifyOTPState(
       otp: otp ?? this.otp,
@@ -62,6 +66,7 @@ class VerifyOTPState extends Equatable {
       success: success ?? this.success,
       error: error ?? this.error,
       token: token ?? this.token,
+      user: user ?? this.user,
     );
   }
 
@@ -72,5 +77,6 @@ class VerifyOTPState extends Equatable {
         success,
         error,
         token,
+        user,
       ];
 }

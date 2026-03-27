@@ -14,7 +14,7 @@ void verifyOTPListener(BuildContext context, VerifyOTPState state) {
         state.success?.msg ?? "تم تفعيل الحساب بنجاح ✅",
         AlertType.success,
       );
-      await context.read<HostCubit>().loadCachedUser();
+      await context.read<HostCubit>().setAuthenticatedUser(state.user!);
       context.toNamed(AppRoutes.hostRoute);
     } else if (state.isVerifyOTPError && state.error != null) {
       showAlertSnackBar(
