@@ -59,9 +59,12 @@ class AuthLocal {
       final legacyMap = await _localDB
           .record(ApiConstants.cachedAuthedUser)
           .get(sl<Database>());
+
+      if (legacyMap == null) return _cachedUser!;
+
+      _cachedUser = AuthedUser.fromMap(legacyMap);
       return _cachedUser!;
     }
-
     _cachedUser = AuthedUser.fromMap(userMap);
     return _cachedUser!;
   }
