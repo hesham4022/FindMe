@@ -61,11 +61,11 @@ class _SinUpViewBody extends StatelessWidget {
                 children: const [
                   NameField(),
                   VSpace(20),
+                  SinUpUserNameField(),
+                  VSpace(20),
                   SignUpPasswordField(),
                   VSpace(20),
                   SignUpConfirmPasswordField(),
-                  VSpace(20),
-                  SinUpUserNameField(),
                   VSpace(20),
                   PhoneNumberField(),
                   VSpace(20),
