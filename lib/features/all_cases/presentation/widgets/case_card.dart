@@ -241,21 +241,23 @@ class SimilarityBadge extends StatelessWidget {
     final percent = (similarity * 100).toStringAsFixed(0);
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: _getColor().withOpacity(.12),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: _getColor()),
+        color: _getColor(),
+        borderRadius: const BorderRadius.only(
+          topRight: Radius.circular(16),
+          bottomLeft: Radius.circular(16),
+        ),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(Icons.auto_awesome, size: 16, color: _getColor()),
+          const Icon(Icons.auto_awesome, size: 14, color: Colors.white),
           const SizedBox(width: 4),
           Text(
             "$percent% Match",
-            style: TextStyle(
-              color: _getColor(),
+            style: const TextStyle(
+              color: Colors.white,
               fontWeight: FontWeight.bold,
               fontSize: 12,
             ),
