@@ -120,16 +120,22 @@ class SearchByImageResponse extends Equatable {
       extractedCases = (json['matches'] as List)
           .map((match) {
             final reportData = match['report_data'];
+
             if (reportData != null) {
-              return CaseInfoModel.fromMap(reportData);
+              return CaseInfoModel.fromMap(reportData).copyWith(
+                similarityScore:
+                    (match['similarity_score'] as num?)?.toDouble(),
+              );
             }
             return null;
           })
           .whereType<CaseInfoModel>()
           .toList();
-    } else if (json['data'] != null && json['data'] is List) {
-      extractedCases =
-          (json['data'] as List).map((x) => CaseInfoModel.fromMap(x)).toList();
+
+      /// 🔥 ترتيب تلقائي حسب أعلى similarity
+      extractedCases.sort(
+        (a, b) => (b.similarityScore ?? 0).compareTo(a.similarityScore ?? 0),
+      );
     }
 
     return SearchByImageResponse(

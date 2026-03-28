@@ -58,7 +58,7 @@ class CaseInfoModel {
   String? createdAt;
   String? updatedAt;
   bool isFavorite;
-  double? similarity_score;
+  double? similarityScore;
 
   CaseInfoModel({
     this.id,
@@ -84,6 +84,7 @@ class CaseInfoModel {
     this.createdAt,
     this.updatedAt,
     this.isFavorite = false,
+    this.similarityScore,
   });
 
   factory CaseInfoModel.fromMap(Map<String, dynamic> json) => CaseInfoModel(
@@ -138,6 +139,7 @@ class CaseInfoModel {
         "address": address,
         "last_seen_location": lastSeenLocation,
         "date_last_seen": dateLastSeen,
+        "similarity_score": similarityScore,
         "latitude": latitude,
         "longitude": longitude,
         "confirm_information": confirmInformation,
@@ -165,6 +167,7 @@ class CaseInfoModel {
     String? address,
     String? lastSeenLocation,
     String? dateLastSeen,
+    double? similarityScore,
     double? latitude,
     double? longitude,
     bool? confirmInformation,
@@ -198,6 +201,7 @@ class CaseInfoModel {
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
         isFavorite: isFavorite ?? this.isFavorite,
+        similarityScore: similarityScore ?? this.similarityScore,
       );
 }
 

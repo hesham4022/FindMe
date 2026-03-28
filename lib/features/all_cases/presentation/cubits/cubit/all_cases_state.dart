@@ -12,6 +12,8 @@ class AllCasesState extends Equatable {
   final AllCasesStatus status;
   final AllCasesStatus imageSearchStatus;
   final CaseInfoModel? selectedCase;
+  final String? searchMessage;
+  final bool isImageSearch;
   // final SuccessResponse? success;
   final Failure? failure;
   final bool isScroll;
@@ -33,6 +35,8 @@ class AllCasesState extends Equatable {
     // this.success,
     this.failure,
     this.allCasesResponse,
+    this.searchMessage,
+    this.isImageSearch = false,
     this.imageSearchStatus = AllCasesStatus.initial,
   });
 
@@ -53,6 +57,8 @@ class AllCasesState extends Equatable {
     AllCasesResponse? allCasesResponse,
     Failure? failure,
     AllCasesStatus? imageSearchStatus,
+    String? searchMessage,
+    bool? isImageSearch,
   }) {
     return AllCasesState(
       filtered: filtered ?? this.filtered,
@@ -64,6 +70,8 @@ class AllCasesState extends Equatable {
       failure: failure ?? this.failure,
       allCasesResponse: allCasesResponse ?? this.allCasesResponse,
       imageSearchStatus: imageSearchStatus ?? this.imageSearchStatus,
+      searchMessage: searchMessage ?? this.searchMessage,
+      isImageSearch: isImageSearch ?? this.isImageSearch,
     );
   }
 
@@ -77,5 +85,7 @@ class AllCasesState extends Equatable {
         allCasesResponse,
         failure,
         imageSearchStatus,
+        searchMessage,
+        isImageSearch,
       ];
 }
