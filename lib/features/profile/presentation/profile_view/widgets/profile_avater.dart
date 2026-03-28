@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:find_me_app/features/profile/presentation/cubit/update_profile_cubit/cubit/update_profile_cubit.dart';
 import 'package:flutter/material.dart';
@@ -31,8 +30,7 @@ class ProfileAvatar extends StatelessWidget {
               bottom: 0,
               right: 0,
               child: InkWell(
-                // ← بيستخدم UpdateProfileCubit اللي عنده الـ repo
-                onTap: () =>
+                onTap: () async =>
                     context.read<UpdateProfileCubit>().pickPhoto().then((_) {
                   final pickedPhoto =
                       context.read<UpdateProfileCubit>().state.photo;

@@ -5,7 +5,7 @@ import 'package:find_me_app/features/navigation_bar_host/presentation/pages/host
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-void signInListener(BuildContext context, SignInState state) {
+void signInListener(BuildContext context, SignInState state) async {
   if (state.isError) {
     showAlertSnackBar(
       context,
