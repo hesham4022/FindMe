@@ -4,9 +4,7 @@ import 'package:find_me_app/features/auth/data/model/authed_user.dart';
 import 'package:find_me_app/features/profile/data/model/update_profile_model.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:find_me_app/core/di.dart';
-import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/networking/api_constants.dart';
-import 'package:find_me_app/features/auth/data/model/signin_user.dart';
 import 'package:find_me_app/features/auth/data/model/base_url_response.dart';
 import 'package:sembast/sembast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -325,6 +323,8 @@ class AuthLocal {
 
     await saveUser(updatedUser);
   }
+
+  saveIsUserLoggedIn(bool bool) {}
 }
 
 // ---------------------------------------------------------------------------

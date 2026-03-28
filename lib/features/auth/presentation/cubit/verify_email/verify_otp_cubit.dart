@@ -58,6 +58,7 @@ class VerifyOTPCubit extends Cubit<VerifyOTPState> {
         print("✅ Success! Access token: ${data.accessToken}");
         await _localSource.saveAccessToken(data.accessToken);
         await _localSource.saveUser(data.user);
+        await _localSource.saveIsUserLoggedIn(true);
         emit(state.copyWith(
           status: VerifyStatus.verifyOTPSuccess,
           success: SuccessResponse(msg: data.message),
