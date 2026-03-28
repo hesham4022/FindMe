@@ -19,6 +19,9 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
       : super(UpdateProfileState.initial()) {
     _init();
   }
+  void resetStatus() {
+    emit(state.copyWith(status: UpdateProfileStatus.initial));
+  }
 
   void _init() {
     final user = _hostCubit.state.user;
@@ -152,13 +155,8 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
           error: null,
         ));
 
-        // 1) حدّث الكاش
         await sl<AuthLocal>().updateCachedUserFromProfile(response.data);
-
-        // 2) هات اليوزر الجديد من الكاش
         final updatedUser = await sl<AuthLocal>().getCachedAuthedUser();
-
-        // 3) حدّث AuthCubit (دي أهم خطوة)
         _hostCubit.updateCurrentUser(updatedUser);
         log("${await sl<AuthLocal>().getCachedAuthedUser()}");
       },
