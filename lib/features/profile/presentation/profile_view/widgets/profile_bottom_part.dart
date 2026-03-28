@@ -1,10 +1,8 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/colors.dart';
-import 'package:find_me_app/core/resources/images.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/resources/strings.dart';
 import 'package:find_me_app/core/resources/themes.dart';

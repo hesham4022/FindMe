@@ -9,47 +9,54 @@ class ProfileAvatar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<HostCubit, HostState>(
-      builder: (context, state) {
-        final photo = state.user?.photo;
+    return BlocBuilder<UpdateProfileCubit, UpdateProfileState>(
+      builder: (context, updateState) {
+        return BlocBuilder<HostCubit, HostState>(
+          builder: (context, hostState) {
+            final photo = updateState.photo ?? hostState.user?.photo;
 
-        return Stack(
-          children: [
-            Container(
-              width: 120,
-              height: 120,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: Colors.grey[300],
-              ),
-              child: ClipOval(
-                child: _buildAvatar(photo),
-              ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              child: InkWell(
-                onTap: () async =>
-                    context.read<UpdateProfileCubit>().pickPhoto().then((_) {
-                  final pickedPhoto =
-                      context.read<UpdateProfileCubit>().state.photo;
-                  if (pickedPhoto != null) {
-                    context.read<UpdateProfileCubit>().updateProfile();
-                  }
-                }),
-                child: Container(
-                  width: 36,
-                  height: 36,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFF4A90E2),
+            return Stack(
+              children: [
+                Container(
+                  width: 120,
+                  height: 120,
+                  decoration: BoxDecoration(
                     shape: BoxShape.circle,
+                    color: Colors.grey[300],
                   ),
-                  child: const Icon(Icons.edit, color: Colors.white, size: 18),
+                  child: ClipOval(
+                    child: _buildAvatar(photo),
+                  ),
                 ),
-              ),
-            ),
-          ],
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  child: InkWell(
+                    onTap: () async => context
+                        .read<UpdateProfileCubit>()
+                        .pickPhoto()
+                        .then((_) {
+                      final pickedPhoto =
+                          context.read<UpdateProfileCubit>().state.photo;
+                      if (pickedPhoto != null) {
+                        context.read<UpdateProfileCubit>().updateProfile();
+                      }
+                    }),
+                    child: Container(
+                      width: 36,
+                      height: 36,
+                      decoration: const BoxDecoration(
+                        color: Color(0xFF4A90E2),
+                        shape: BoxShape.circle,
+                      ),
+                      child:
+                          const Icon(Icons.edit, color: Colors.white, size: 18),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
         );
       },
     );
