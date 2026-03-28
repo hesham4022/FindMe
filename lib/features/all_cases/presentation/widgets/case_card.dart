@@ -23,19 +23,49 @@ class CaseCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          Container(
-            width: 90.w,
-            height: 90.h,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: caseModel.photos.isNotEmpty
-                    ? CachedNetworkImageProvider(caseModel.photos.first.url!)
-                    : const AssetImage(
-                        "assets/images/Portrait_Placeholder.png"),
-                fit: BoxFit.cover,
+          // Container(
+          //   width: 90.w,
+          //   height: 90.h,
+          //   decoration: BoxDecoration(
+          //     shape: BoxShape.circle,
+          //     image: DecorationImage(
+          //       image: caseModel.photos.isNotEmpty
+          //           ? CachedNetworkImageProvider(caseModel.photos.first.url!)
+          //           : const AssetImage(
+          //               "assets/images/Portrait_Placeholder.png"),
+          //       fit: BoxFit.cover,
+          //     ),
+          //   ),
+          // ),
+
+          Stack(
+            children: [
+              // صورة الحالة
+              Container(
+                width: 90.w,
+                height: 90.h,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: caseModel.photos.isNotEmpty
+                        ? CachedNetworkImageProvider(
+                            caseModel.photos.first.url!) as ImageProvider
+                        : const AssetImage(
+                            "assets/images/Portrait_Placeholder.png"),
+                    fit: BoxFit.cover,
+                  ),
+                ),
               ),
-            ),
+
+              // similarity badge
+              if (caseModel.similarityScore != null)
+                Positioned(
+                  top: 0,
+                  right: 0,
+                  child:
+                      SimilarityBadge(similarity: caseModel.similarityScore!),
+                ),
+            ],
           ),
           SizedBox(width: 16.w),
           Expanded(
