@@ -46,7 +46,6 @@ class _SearchPageViewState extends State<SearchPageView> {
       canPop: true,
       onPopInvokedWithResult: (didPop, result) {
         if (didPop) {
-          // 🔄 أعد تعيين الـ filtered قبل الخروج
           context.read<AllCasesCubit>().resetSearch();
         }
       },
@@ -79,7 +78,7 @@ class _SearchPageViewState extends State<SearchPageView> {
                 ),
               ),
             ),
-            // النتائج
+
             Expanded(
               child: BlocBuilder<AllCasesCubit, AllCasesState>(
                 builder: (context, state) {

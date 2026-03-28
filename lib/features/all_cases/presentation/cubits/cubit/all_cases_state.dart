@@ -10,15 +10,19 @@ class AllCasesState extends Equatable {
   final List<CaseInfoModel> filtered;
   final AllCasesFilter activeFilter;
   final AllCasesStatus status;
+  final AllCasesStatus imageSearchStatus;
   final CaseInfoModel? selectedCase;
   // final SuccessResponse? success;
   final Failure? failure;
-
   final bool isScroll;
   bool get isInitial => status == AllCasesStatus.initial;
   bool get isLoading => status == AllCasesStatus.loading;
   bool get isSuccess => status == AllCasesStatus.success;
   bool get isError => status == AllCasesStatus.error;
+
+  bool get isImageSearchLoading => imageSearchStatus == AllCasesStatus.loading;
+  bool get isImageSearchSuccess => imageSearchStatus == AllCasesStatus.success;
+  bool get isImageSearchError => imageSearchStatus == AllCasesStatus.error;
 
   const AllCasesState({
     required this.filtered,
@@ -29,6 +33,7 @@ class AllCasesState extends Equatable {
     // this.success,
     this.failure,
     this.allCasesResponse,
+    this.imageSearchStatus = AllCasesStatus.initial,
   });
 
   factory AllCasesState.initial() {
@@ -47,6 +52,7 @@ class AllCasesState extends Equatable {
     // SuccessResponse? success,
     AllCasesResponse? allCasesResponse,
     Failure? failure,
+    AllCasesStatus? imageSearchStatus,
   }) {
     return AllCasesState(
       filtered: filtered ?? this.filtered,
@@ -57,6 +63,7 @@ class AllCasesState extends Equatable {
       // success: success ?? this.success,
       failure: failure ?? this.failure,
       allCasesResponse: allCasesResponse ?? this.allCasesResponse,
+      imageSearchStatus: imageSearchStatus ?? this.imageSearchStatus,
     );
   }
 
@@ -69,5 +76,6 @@ class AllCasesState extends Equatable {
         isScroll,
         allCasesResponse,
         failure,
+        imageSearchStatus,
       ];
 }
