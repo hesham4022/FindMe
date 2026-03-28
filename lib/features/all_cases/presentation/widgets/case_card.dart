@@ -23,49 +23,19 @@ class CaseCard extends StatelessWidget {
       ),
       child: Row(
         children: [
-          // Container(
-          //   width: 90.w,
-          //   height: 90.h,
-          //   decoration: BoxDecoration(
-          //     shape: BoxShape.circle,
-          //     image: DecorationImage(
-          //       image: caseModel.photos.isNotEmpty
-          //           ? CachedNetworkImageProvider(caseModel.photos.first.url!)
-          //           : const AssetImage(
-          //               "assets/images/Portrait_Placeholder.png"),
-          //       fit: BoxFit.cover,
-          //     ),
-          //   ),
-          // ),
-
-          Stack(
-            children: [
-              // صورة الحالة
-              Container(
-                width: 90.w,
-                height: 90.h,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: caseModel.photos.isNotEmpty
-                        ? CachedNetworkImageProvider(
-                            caseModel.photos.first.url!) as ImageProvider
-                        : const AssetImage(
-                            "assets/images/Portrait_Placeholder.png"),
-                    fit: BoxFit.cover,
-                  ),
-                ),
+          Container(
+            width: 90.w,
+            height: 90.h,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              image: DecorationImage(
+                image: caseModel.photos.isNotEmpty
+                    ? CachedNetworkImageProvider(caseModel.photos.first.url!)
+                    : const AssetImage(
+                        "assets/images/Portrait_Placeholder.png"),
+                fit: BoxFit.cover,
               ),
-
-              // similarity badge
-              if (caseModel.similarityScore != null)
-                Positioned(
-                  top: 0,
-                  right: 0,
-                  child:
-                      SimilarityBadge(similarity: caseModel.similarityScore!),
-                ),
-            ],
+            ),
           ),
           SizedBox(width: 16.w),
           Expanded(
@@ -101,6 +71,19 @@ class CaseCard extends StatelessWidget {
                     ),
                   ],
                 ),
+
+                SizedBox(height: 4.h),
+
+                // 🔹 نسبة التشابه
+                if (caseModel.similarityScore != null)
+                  Text(
+                    "Similarity: ${(caseModel.similarityScore! * 100).toStringAsFixed(1)}%",
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.blueAccent,
+                    ),
+                  ),
 
                 SizedBox(height: 12.h),
 
@@ -220,49 +203,6 @@ class ActionIcon extends StatelessWidget {
           shape: BoxShape.circle,
         ),
         child: Center(child: icon),
-      ),
-    );
-  }
-}
-
-class SimilarityBadge extends StatelessWidget {
-  final double similarity;
-
-  const SimilarityBadge({super.key, required this.similarity});
-
-  Color _getColor() {
-    if (similarity >= 0.8) return Colors.green;
-    if (similarity >= 0.6) return Colors.orange;
-    return Colors.red;
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final percent = (similarity * 100).toStringAsFixed(0);
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-      decoration: BoxDecoration(
-        color: _getColor(),
-        borderRadius: const BorderRadius.only(
-          topRight: Radius.circular(16),
-          bottomLeft: Radius.circular(16),
-        ),
-      ),
-      child: Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          const Icon(Icons.auto_awesome, size: 14, color: Colors.white),
-          const SizedBox(width: 4),
-          Text(
-            "$percent% Match",
-            style: const TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-              fontSize: 12,
-            ),
-          ),
-        ],
       ),
     );
   }
