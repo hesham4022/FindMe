@@ -58,6 +58,7 @@ class CaseInfoModel {
   String? createdAt;
   String? updatedAt;
   bool isFavorite;
+  double? similarity_score;
 
   CaseInfoModel({
     this.id,
