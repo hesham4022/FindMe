@@ -29,20 +29,22 @@ class AllCasesRepo {
     );
   }
 
-  Future<Either<Failure, List<CaseInfoModel>>> searchCasesByImage(
+  Future<Either<Failure, SearchByImageResponse>> searchCasesByImage(
     SearchByImageRequest request,
   ) {
     print('📡 [AllCasesRepo] Searching by image: ${request.imagePath}');
 
-    return executeFunctionality<List<CaseInfoModel>>(
+    return executeFunctionality<SearchByImageResponse>(
       function: () async {
         final json = await _allCasesRemote.searchByImage(request);
 
         final response = SearchByImageResponse.fromMap(json);
-        print(
-            '📩 [AllCasesRepo] Search Result: ${response.cases.length} cases found');
 
-        return response.cases;
+        print(
+          '📩 [AllCasesRepo] Search Result: ${response.cases.length} cases found',
+        );
+
+        return response;
       },
     );
   }

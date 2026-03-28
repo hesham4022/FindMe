@@ -194,3 +194,44 @@ class ActionIcon extends StatelessWidget {
     );
   }
 }
+
+class SimilarityBadge extends StatelessWidget {
+  final double similarity;
+
+  const SimilarityBadge({super.key, required this.similarity});
+
+  Color _getColor() {
+    if (similarity >= 0.8) return Colors.green;
+    if (similarity >= 0.6) return Colors.orange;
+    return Colors.red;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final percent = (similarity * 100).toStringAsFixed(0);
+
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+      decoration: BoxDecoration(
+        color: _getColor().withOpacity(.12),
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(color: _getColor()),
+      ),
+      child: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Icon(Icons.auto_awesome, size: 16, color: _getColor()),
+          const SizedBox(width: 4),
+          Text(
+            "$percent% Match",
+            style: TextStyle(
+              color: _getColor(),
+              fontWeight: FontWeight.bold,
+              fontSize: 12,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}

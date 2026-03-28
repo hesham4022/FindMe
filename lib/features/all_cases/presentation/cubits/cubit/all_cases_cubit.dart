@@ -127,9 +127,12 @@ class AllCasesCubit extends Cubit<AllCasesState> {
   }
 
   Future<void> searchByImage(String imagePath) async {
-    emit(state.copyWith(
-      status: AllCasesStatus.loading,
-    ));
+    emit(
+      state.copyWith(
+        status: AllCasesStatus.loading,
+        isImageSearch: true,
+      ),
+    );
 
     try {
       final request = SearchByImageRequest(imagePath: imagePath);
@@ -138,22 +141,29 @@ class AllCasesCubit extends Cubit<AllCasesState> {
 
       result.fold(
         (failure) {
-          emit(state.copyWith(
-            status: AllCasesStatus.error,
-            failure: failure,
-          ));
+          emit(
+            state.copyWith(
+              status: AllCasesStatus.error,
+              failure: failure,
+            ),
+          );
         },
-        (success) {
-          emit(state.copyWith(
-            status: AllCasesStatus.success,
-            filtered: success,
-          ));
+        (response) {
+          emit(
+            state.copyWith(
+              status: AllCasesStatus.success,
+              filtered: response.cases, // ✅ النتائج
+              searchMessage: response.message, // ✅ رسالة السيرفر
+            ),
+          );
         },
       );
     } catch (e) {
-      emit(state.copyWith(
-        status: AllCasesStatus.error,
-      ));
+      emit(
+        state.copyWith(
+          status: AllCasesStatus.error,
+        ),
+      );
     }
   }
 
