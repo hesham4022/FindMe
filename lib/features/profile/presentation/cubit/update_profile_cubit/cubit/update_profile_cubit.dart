@@ -98,6 +98,8 @@ class UpdateProfileCubit extends Cubit<UpdateProfileState> {
   }
 
   Future<void> pickPhoto() async {
+    emit(state.copyWith(photo: null)); // دلوقتي هيشتغل صح
+
     final pickedFile = await _picker.pickImage(source: ImageSource.gallery);
     if (pickedFile == null) return;
 

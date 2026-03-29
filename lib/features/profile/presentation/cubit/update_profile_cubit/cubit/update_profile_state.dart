@@ -42,12 +42,13 @@ class UpdateProfileState extends Equatable {
     this.success,
     this.error,
   });
-
+  static const _sentinel = Object();
   UpdateProfileState copyWith({
+    Object? photo = _sentinel,
     String? fullName,
     String? email,
     String? mobileNumber,
-    String? photo,
+    // String? photo,
     DateTime? dateOfBirth,
     String? fullNameErrorText,
     String? emailErrorText,
@@ -63,7 +64,8 @@ class UpdateProfileState extends Equatable {
       fullName: fullName ?? this.fullName,
       email: email ?? this.email,
       mobileNumber: mobileNumber ?? this.mobileNumber,
-      photo: photo ?? this.photo,
+      // photo: photo ?? this.photo,
+      photo: photo == _sentinel ? this.photo : photo as String?,
       dateOfBirth: dateOfBirth ?? this.dateOfBirth,
       fullNameErrorText: fullNameErrorText ?? this.fullNameErrorText,
       emailErrorText: emailErrorText ?? this.emailErrorText,
