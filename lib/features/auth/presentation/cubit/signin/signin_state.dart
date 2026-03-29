@@ -48,12 +48,12 @@ class SignInState extends Equatable {
       password: '',
     );
   }
-
+  static const _noChange = Object();
   SignInState copyWith({
     String? username,
     String? password,
-    String? usernameErrorText,
-    String? passwordErrorText,
+    Object? usernameErrorText = _noChange,
+    Object? passwordErrorText = _noChange,
     SignInStatus? status,
     SuccessResponse? success,
     Failure? error,
@@ -66,8 +66,12 @@ class SignInState extends Equatable {
     return SignInState(
       username: username ?? this.username,
       password: password ?? this.password,
-      usernameErrorText: usernameErrorText ?? this.usernameErrorText,
-      passwordErrorText: passwordErrorText ?? this.passwordErrorText,
+      usernameErrorText: usernameErrorText == _noChange
+          ? this.usernameErrorText
+          : usernameErrorText as String?,
+      passwordErrorText: passwordErrorText == _noChange
+          ? this.passwordErrorText
+          : passwordErrorText as String?,
       status: status ?? this.status,
       success: success ?? this.success,
       error: error ?? this.error,

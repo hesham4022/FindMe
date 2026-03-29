@@ -346,8 +346,6 @@ class PasswordField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SignInCubit, SignInState>(
-      buildWhen: (previous, current) =>
-          previous.passwordErrorText != current.passwordErrorText,
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -366,14 +364,12 @@ class PasswordField extends StatelessWidget {
                 color: AppColors.saltBox600,
               ),
               onChanged: (value) {
-                context.read<SignInCubit>().passwordChanged(value);
+                final cubit = context.read<SignInCubit>();
+                cubit.passwordChanged(value);
+                cubit.passwordErrorTextChanged("");
               },
               onValidate: (value) {
-                final errorText = AppValidators.validateSignInPassword(value);
-                context
-                    .read<SignInCubit>()
-                    .passwordErrorTextChanged(errorText ?? "");
-                return errorText;
+                return AppValidators.validateSignInPassword(value);
               },
             ),
           ],
