@@ -42,29 +42,19 @@ class HomeHeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
                   child: SizedBox(
                     width: 48,
                     height: 48,
-                    child: ClipOval(
+                    child: CircleAvatar(
+                      backgroundColor: Colors.black12,
                       child: photo != null && photo.isNotEmpty
-                          ? CachedNetworkImage(
-                              imageUrl: photo,
-                              width: 40,
-                              height: 40,
-                              fit: BoxFit.cover,
-                              placeholder: (context, url) => Container(
-                                color: Colors.black12,
-                                child: const Icon(Icons.person,
-                                    color: Colors.white),
-                              ),
-                              errorWidget: (context, url, error) => Container(
-                                color: Colors.black12,
-                                child: const Icon(Icons.person,
-                                    color: Colors.white),
+                          ? ClipOval(
+                              child: CachedNetworkImage(
+                                imageUrl: photo,
+                                cacheKey: photo,
+                                width: 40,
+                                height: 40,
+                                fit: BoxFit.cover,
                               ),
                             )
-                          : CircleAvatar(
-                              backgroundColor: Colors.black12,
-                              child:
-                                  const Icon(Icons.person, color: Colors.white),
-                            ),
+                          : const Icon(Icons.person, color: Colors.white),
                     ),
                   ),
                 ),
