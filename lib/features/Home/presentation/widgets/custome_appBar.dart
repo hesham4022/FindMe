@@ -49,8 +49,8 @@ class HomeHeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
                               child: CachedNetworkImage(
                                 imageUrl: photo,
                                 cacheKey: photo,
-                                width: 40,
-                                height: 40,
+                                width: 48,
+                                height: 48,
                                 fit: BoxFit.cover,
                               ),
                             )

@@ -53,7 +53,7 @@ class HostView extends StatelessWidget {
                 index: state.selectedIndex,
                 children: kUserBottomBarTabs.map((e) => e.screen!).toList(),
               ),
-              //  Center(
+              //     Center(
               //   child: kUserBottomBarTabs[state.selectedIndex].screen,
               // ),
               bottomNavigationBar: CutomBottomNavigationBar(
