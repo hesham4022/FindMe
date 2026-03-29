@@ -31,17 +31,17 @@ class ProfileAvatar extends StatelessWidget {
                 Positioned(
                   bottom: 0,
                   right: 0,
-                  child: InkWell(
-                    onTap: () async => context
-                        .read<UpdateProfileCubit>()
-                        .pickPhoto()
-                        .then((_) {
+                  child: GestureDetector(
+                    onTap: () async {
+                      await context.read<UpdateProfileCubit>().pickPhoto();
+
                       final pickedPhoto =
                           context.read<UpdateProfileCubit>().state.photo;
-                      if (pickedPhoto != null) {
+
+                      if (pickedPhoto != null && pickedPhoto.isNotEmpty) {
                         context.read<UpdateProfileCubit>().updateProfile();
                       }
-                    }),
+                    },
                     child: Container(
                       width: 36,
                       height: 36,
