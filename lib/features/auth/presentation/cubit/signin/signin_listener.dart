@@ -1,4 +1,5 @@
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
+import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/pages/host.dart';
@@ -12,6 +13,7 @@ void signInListener(BuildContext context, SignInState state) async {
       state.error?.msg ?? "Error",
       AlertType.error,
     );
+    context.read<SignInCubit>().resetState();
   }
 
   if (state.isSuccess) {

@@ -50,7 +50,10 @@ class SignInCubit extends Cubit<SignInState> {
   }
 
   void resetState() {
-    emit(SignInState.initial());
+    emit(state.copyWith(
+      status: SignInStatus.initial,
+      error: null,
+    ));
   }
 
   // -------------------- Submit --------------------

@@ -366,6 +366,13 @@ class PasswordField extends StatelessWidget {
               onChanged: (value) {
                 context.read<SignInCubit>().passwordChanged(value);
               },
+              onValidate: (value) {
+                final errorText = AppValidators.validateSignInPassword(value);
+                context
+                    .read<SignInCubit>()
+                    .passwordErrorTextChanged(errorText ?? "");
+                return errorText;
+              },
             ),
           ],
         );
