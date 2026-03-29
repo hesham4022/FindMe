@@ -1,4 +1,4 @@
-import 'package:find_me_app/features/auth/presentation/cubit/auth_cubit/cubit/auth_cubit_cubit.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -45,7 +45,7 @@ class HomeHeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
                     child: CircleAvatar(
                       backgroundColor: Colors.black12,
                       backgroundImage: photo != null && photo.isNotEmpty
-                          ? NetworkImage(photo)
+                          ? CachedNetworkImageProvider(photo)
                           : null,
                       child: photo == null || photo.isEmpty
                           ? const Icon(Icons.person, color: Colors.white)
