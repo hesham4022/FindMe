@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:find_me_app/features/profile/presentation/cubit/update_profile_cubit/cubit/update_profile_cubit.dart';
 import 'package:flutter/material.dart';
@@ -61,24 +62,60 @@ class ProfileAvatar extends StatelessWidget {
       },
     );
   }
+}
 
-  Widget _buildAvatar(String? photo) {
-    if (photo != null && photo.isNotEmpty) {
-      if (photo.startsWith('http')) {
-        return Image.network(
-          photo,
-          fit: BoxFit.cover,
-          errorBuilder: (_, __, ___) =>
-              Icon(Icons.person, size: 60, color: Colors.grey[600]),
-        );
-      }
-      return Image.file(
-        File(photo),
+Widget _buildAvatar(String? photo) {
+  if (photo != null && photo.isNotEmpty) {
+    if (photo.startsWith('http')) {
+      return CachedNetworkImage(
+        imageUrl: photo,
+        cacheKey: photo,
         fit: BoxFit.cover,
-        errorBuilder: (_, __, ___) =>
+
+        /// during laoding
+        placeholder: (context, url) => const Center(
+          child: SizedBox(
+            width: 20,
+            height: 20,
+            child: CircularProgressIndicator(strokeWidth: 2),
+          ),
+        ),
+
+        /// error
+        errorWidget: (context, url, error) =>
             Icon(Icons.person, size: 60, color: Colors.grey[600]),
       );
     }
-    return Icon(Icons.person, size: 60, color: Colors.grey[600]);
+
+    ///   local
+    return Image.file(
+      File(photo),
+      fit: BoxFit.cover,
+      errorBuilder: (_, __, ___) =>
+          Icon(Icons.person, size: 60, color: Colors.grey[600]),
+    );
   }
+
+  return Icon(Icons.person, size: 60, color: Colors.grey[600]);
 }
+
+//   Widget _buildAvatar(String? photo) {
+//     if (photo != null && photo.isNotEmpty) {
+//       if (photo.startsWith('http')) {
+//         return Image.network(
+//           photo,
+//           fit: BoxFit.cover,
+//           errorBuilder: (_, __, ___) =>
+//               Icon(Icons.person, size: 60, color: Colors.grey[600]),
+//         );
+//       }
+//       return Image.file(
+//         File(photo),
+//         fit: BoxFit.cover,
+//         errorBuilder: (_, __, ___) =>
+//             Icon(Icons.person, size: 60, color: Colors.grey[600]),
+//       );
+//     }
+//     return Icon(Icons.person, size: 60, color: Colors.grey[600]);
+//   }
+// }
