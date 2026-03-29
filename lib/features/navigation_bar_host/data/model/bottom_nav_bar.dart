@@ -30,11 +30,11 @@ List<BottomNavBarTab> kUserBottomBarTabs = [
       title: AppStrings.dashboard,
       img: 'assets/icons/home_icon.svg'),
   BottomNavBarTab(
-      screen: AllCasesView(),
+      screen: const AllCasesView(),
       title: "Casses",
       img: 'assets/icons/place_icon.svg'),
   BottomNavBarTab(
-      screen: ProfileView(),
+      screen: const ProfileView(),
       title: "profile",
       img: 'assets/icons/person_icon.svg'),
   BottomNavBarTab(
