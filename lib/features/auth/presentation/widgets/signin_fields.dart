@@ -364,12 +364,14 @@ class PasswordField extends StatelessWidget {
                 color: AppColors.saltBox600,
               ),
               onChanged: (value) {
-                final cubit = context.read<SignInCubit>();
-                cubit.passwordChanged(value);
-                cubit.passwordErrorTextChanged("");
+                context.read<SignInCubit>().passwordChanged(value);
               },
               onValidate: (value) {
-                return AppValidators.validateSignInPassword(value);
+                final errorText = AppValidators.validateSignInPassword(value);
+                context
+                    .read<SignInCubit>()
+                    .passwordErrorTextChanged(errorText ?? "");
+                return errorText;
               },
             ),
           ],
