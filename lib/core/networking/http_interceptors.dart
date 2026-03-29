@@ -135,7 +135,6 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:async';
 import 'package:find_me_app/core/di.dart';
-import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/networking/api_constants.dart';
 import 'package:find_me_app/core/services/location/location_service.dart';
 import 'package:find_me_app/features/app/data/source/app_local.dart';
