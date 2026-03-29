@@ -67,7 +67,12 @@ class SignInState extends Equatable {
       username: username ?? this.username,
       password: password ?? this.password,
       usernameErrorText: usernameErrorText ?? this.usernameErrorText,
-      passwordErrorText: passwordErrorText ?? this.passwordErrorText,
+      // passwordErrorText: passwordErrorText ?? this.passwordErrorText,
+      // في copyWith
+      passwordErrorText:
+          (passwordErrorText != null && passwordErrorText.isEmpty)
+              ? null
+              : passwordErrorText ?? this.passwordErrorText,
       status: status ?? this.status,
       success: success ?? this.success,
       error: error ?? this.error,

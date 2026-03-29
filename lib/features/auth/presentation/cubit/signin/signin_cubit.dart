@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/formfield_validator.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:find_me_app/features/auth/data/model/base_url_response.dart';
 import 'package:find_me_app/features/auth/data/model/signin_user.dart';
@@ -30,7 +31,7 @@ class SignInCubit extends Cubit<SignInState> {
   void passwordChanged(String value) {
     emit(state.copyWith(
       password: value,
-      passwordErrorText: null,
+      passwordErrorText: '',
     ));
   }
 
@@ -55,6 +56,17 @@ class SignInCubit extends Cubit<SignInState> {
   // -------------------- Submit --------------------
   Future<void> submitSignIn() async {
     if (state.isLoading) return;
+    final passwordError = AppValidators.validateSignInPassword(state.password);
+    final usernameError = AppValidators.validateEmail(state.username);
+
+    if (passwordError != null || usernameError != null) {
+      emit(state.copyWith(
+        passwordErrorText: passwordError,
+        usernameErrorText: usernameError,
+        status: SignInStatus.initial,
+      ));
+      return;
+    }
 
     emit(state.copyWith(status: SignInStatus.loading));
 
