@@ -357,7 +357,7 @@ class PasswordField extends StatelessWidget {
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
             const VSpace(10),
-            RPasswordField(
+            CustomTextField(
               errorText: state.passwordErrorText,
               hint: "*********".ts,
               prefixIcon: Icon(
@@ -368,7 +368,7 @@ class PasswordField extends StatelessWidget {
               onChanged: (value) {
                 context.read<SignInCubit>().passwordChanged(value);
               },
-              validate: (value) {
+              onValidate: (value) {
                 final errorText = AppValidators.validateSignInPassword(value);
                 context
                     .read<SignInCubit>()
