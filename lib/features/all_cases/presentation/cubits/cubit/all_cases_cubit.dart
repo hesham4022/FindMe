@@ -56,12 +56,15 @@ class AllCasesCubit extends Cubit<AllCasesState> {
       },
       (success) {
         _allCases = success.allCases;
-
+        _allCases.sort((a, b) {
+          final dateA = DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0);
+          final dateB = DateTime.tryParse(b.createdAt ?? '') ?? DateTime(0);
+          return dateB.compareTo(dateA);
+        });
         emit(state.copyWith(
           status: AllCasesStatus.success,
           allCasesResponse: success,
         ));
-
         applyFilters();
         isSuccess = true;
       },

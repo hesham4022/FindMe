@@ -37,7 +37,7 @@ void main() async {
     di.initSembast(),
   ]);
 
-  await sl<LocationService>().getUserLocationCoordinates();
+  // await sl<LocationService>().getUserLocationCoordinates();
 
   await sl<AppEnvironmentData>().init(kAppEnvironment);
   log('Env.baseDevUrl (raw) = ${Env.baseDevUrl}');
