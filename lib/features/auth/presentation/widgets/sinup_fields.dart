@@ -131,7 +131,7 @@ class FullNameField extends StatelessWidget {
             ),
             const VSpace(10),
             CustomTextField(
-              errorText: state.passwordErrorText,
+              errorText: state.nameErrorText,
               hint: "hintname".ts,
               prefixIcon: Icon(
                 MdiIcons.lockOpenVariantOutline,

@@ -45,47 +45,42 @@ class _SinUpViewBody extends StatelessWidget {
           style: Theme.of(context).textTheme.kHeadingH4SmallBoldBlack,
         ),
       ),
-
-      // 👇 BlocListener هنا فوق BlocBuilder
-      body: BlocListener<SinupCubit, SinupState>(
-        listener: signUpListener, // دي الفنكشن اللي عندك فوق
-        child: BlocBuilder<SinupCubit, SinupState>(
-          builder: (context, state) {
-            return BlurryModalProgressHUD(
-              inAsyncCall: state.status == SinUpStatus.loading,
-              progressIndicator: const CustomLoadingWidget(),
-              child: ListView(
-                padding: EdgeInsets.fromLTRB(20, 20, 20, bottom).r,
-                keyboardDismissBehavior:
-                    ScrollViewKeyboardDismissBehavior.onDrag,
-                children: const [
-                  FullNameField(),
-                  VSpace(20),
-                  SinUpUserNameField(),
-                  VSpace(20),
-                  SignUpPasswordField(),
-                  VSpace(20),
-                  SignUpConfirmPasswordField(),
-                  VSpace(20),
-                  PhoneNumberField(),
-                  VSpace(20),
-                  NationalIdField(),
-                  VSpace(20),
-                  UplaodNationalId(),
-                  VSpace(40),
-                  TermsAndPrivacyText(),
-                  VSpace(10),
-                  SignUpButton(),
-                  VSpace(30),
-                  AlreadyHaveAcountButton(),
-                  VSpace(30),
-                  SwitchLanguage(),
-                  VSpace(20),
-                ],
-              ),
-            );
-          },
-        ),
+      body: BlocConsumer<SinupCubit, SinupState>(
+        listener: signUpListener,
+        builder: (context, state) {
+          return BlurryModalProgressHUD(
+            inAsyncCall: state.status == SinUpStatus.loading,
+            progressIndicator: const CustomLoadingWidget(),
+            child: ListView(
+              padding: EdgeInsets.fromLTRB(20, 20, 20, bottom).r,
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              children: const [
+                FullNameField(),
+                VSpace(20),
+                SinUpUserNameField(),
+                VSpace(20),
+                SignUpPasswordField(),
+                VSpace(20),
+                SignUpConfirmPasswordField(),
+                VSpace(20),
+                PhoneNumberField(),
+                VSpace(20),
+                NationalIdField(),
+                VSpace(20),
+                UplaodNationalId(),
+                VSpace(40),
+                TermsAndPrivacyText(),
+                VSpace(10),
+                SignUpButton(),
+                VSpace(30),
+                AlreadyHaveAcountButton(),
+                VSpace(30),
+                SwitchLanguage(),
+                VSpace(20),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
