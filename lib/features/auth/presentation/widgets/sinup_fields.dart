@@ -113,40 +113,45 @@ class NameField extends StatelessWidget {
   }
 }
 
-class FullNameField extends StatelessWidget {
-  const FullNameField({
-    super.key,
-  });
+class FullNameField extends StatefulWidget {
+  const FullNameField({super.key});
+
+  @override
+  State<FullNameField> createState() => _FullNameFieldState();
+}
+
+class _FullNameFieldState extends State<FullNameField> {
+  final _controller = TextEditingController();
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SinupCubit, SinupState>(
+      buildWhen: (prev, curr) => prev.nameErrorText != curr.nameErrorText,
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              "fullNameLabel".ts,
-              style: Theme.of(context).textTheme.kSubheadingRegular,
-            ),
+            Text("fullNameLabel".ts,
+                style: Theme.of(context).textTheme.kSubheadingRegular),
             const VSpace(10),
             CustomTextField(
+              controller: _controller, // ✅ هنا الحل
               errorText: state.nameErrorText,
               hint: "hintname".ts,
-              prefixIcon: Icon(
-                MdiIcons.lockOpenVariantOutline,
-                size: 20.sp,
-                color: AppColors.saltBox600,
-              ),
-              onChanged: (value) {
-                context.read<SinupCubit>().nameChanged(value);
-              },
+              prefixIcon: Icon(MdiIcons.lockOpenVariantOutline,
+                  size: 20.sp, color: AppColors.saltBox600),
+              onChanged: (value) =>
+                  context.read<SinupCubit>().nameChanged(value),
               onValidate: (value) {
-                final errorText = AppValidators.validateUsername(value);
-                context
-                    .read<SinupCubit>()
-                    .nameErrorTextChanged(errorText ?? "");
-                return errorText;
+                final err = AppValidators.validateUsername(value);
+                context.read<SinupCubit>().nameErrorTextChanged(err ?? "");
+                return err;
               },
             ),
           ],
