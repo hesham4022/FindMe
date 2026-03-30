@@ -13,7 +13,7 @@ class CaseInfoView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(
+      appBar: const CustomAppBar(
         titleText: "Case Info",
       ),
       body: SingleChildScrollView(
@@ -22,17 +22,17 @@ class CaseInfoView extends StatelessWidget {
           child: Column(
             children: [
               CardAllCaseInfo(caseInfo: caseInfo),
-              VSpace(20),
+              const VSpace(20),
               AdditionInfo(
                 title: 'Last seen wearing:',
                 text: caseInfo.lastSeenLocation,
               ),
-              VSpace(20),
+              const VSpace(20),
               AdditionInfo(
                 title: 'Details of the perpetrator:',
                 text: caseInfo.lastSeenLocation,
               ),
-              VSpace(20),
+              const VSpace(20),
               AdditionInfo(
                 title: 'Details of what happened:',
                 text: caseInfo.lastSeenLocation,
