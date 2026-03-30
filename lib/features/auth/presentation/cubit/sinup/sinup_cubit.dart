@@ -1,10 +1,9 @@
 import 'dart:developer';
-
-import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
+import 'package:find_me_app/core/helpers/formfield_validator.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
 import 'package:find_me_app/features/auth/data/model/sinup_user.dart';
@@ -27,6 +26,15 @@ class SinupCubit extends Cubit<SinupState> {
   final AuthRepo _authRepo;
   final AuthLocal _authLocal;
   // final LocationService _locationService;
+
+  bool get isFormValid {
+    return AppValidators.validateUsername(state.fullName) == null &&
+        AppValidators.validateEmail(state.email) == null &&
+        AppValidators.validateEmail(state.password) == null &&
+        AppValidators.validateEmail(state.passwordConfirmation) == null &&
+        AppValidators.validateEmail(state.nationalId) == null &&
+        AppValidators.validatePhoneNumber(state.nationalPhotoPath) == null;
+  }
 
   void nameChanged(String value) {
     emit(state.copyWith(fullName: value, nameErrorText: null));

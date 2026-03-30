@@ -526,6 +526,9 @@ class SignUpButton extends StatelessWidget {
     return BlocBuilder<SinupCubit, SinupState>(
       builder: (context, state) {
         return CustomFilledButton(
+          state: context.read<SinupCubit>().isFormValid
+              ? CustomState.active
+              : CustomState.disabled,
           width: 0.55.sw,
           height: 45.h,
           radius: 30.r,
@@ -536,12 +539,11 @@ class SignUpButton extends StatelessWidget {
                 .kHeadingH4SmallBold
                 .copyWith(fontSize: 22.sp),
           ),
-          state: CustomState.active,
+          color: AppColors.mainColor,
           loading: state.isLoading,
           onPressed: () {
             context.read<SinupCubit>().validateFieldsBeforeSinup(context);
           },
-          // سيب width/height جوّا البتن فاضيين
         );
       },
     );
