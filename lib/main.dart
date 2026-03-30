@@ -7,7 +7,6 @@ import 'package:find_me_app/core/app_secured_data/env.dart';
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/helpers/override_http.dart';
 import 'package:find_me_app/core/resources/languages.dart';
-import 'package:find_me_app/core/services/location/location_service.dart';
 import 'package:find_me_app/features/app/presentation/pages/app.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 // import 'package:firebase_core/firebase_core.dart';
