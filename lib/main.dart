@@ -6,7 +6,6 @@ import 'package:find_me_app/core/helpers/override_http.dart';
 import 'package:find_me_app/core/resources/languages.dart';
 import 'package:find_me_app/features/app/presentation/pages/app.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
-// import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -14,8 +13,6 @@ import 'package:find_me_app/core/di.dart' as di;
 import 'package:sembast/sembast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-//! App Version
-// Change it when you want to switch between App Versions
 const kAppEnvironment = AppEnvironments.dev;
 
 void main() async {
