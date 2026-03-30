@@ -113,6 +113,49 @@ class NameField extends StatelessWidget {
   }
 }
 
+class FullNameField extends StatelessWidget {
+  const FullNameField({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<SinupCubit, SinupState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "fullNameLabel".ts,
+              style: Theme.of(context).textTheme.kSubheadingRegular,
+            ),
+            const VSpace(10),
+            CustomTextField(
+              errorText: state.passwordErrorText,
+              hint: "hintname".ts,
+              prefixIcon: Icon(
+                MdiIcons.lockOpenVariantOutline,
+                size: 20.sp,
+                color: AppColors.saltBox600,
+              ),
+              onChanged: (value) {
+                context.read<SinupCubit>().nameChanged(value);
+              },
+              onValidate: (value) {
+                final errorText = AppValidators.validateUsername(value);
+                context
+                    .read<SinupCubit>()
+                    .nameErrorTextChanged(errorText ?? "");
+                return errorText;
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+}
+
 class SignUpPasswordField extends StatelessWidget {
   const SignUpPasswordField({
     super.key,
@@ -132,7 +175,7 @@ class SignUpPasswordField extends StatelessWidget {
               style: Theme.of(context).textTheme.kSubheadingRegular,
             ),
             const VSpace(10),
-            RPasswordField(
+            CustomTextField(
               errorText: state.passwordErrorText,
               hint: '******',
               prefixIcon: Icon(
@@ -143,7 +186,7 @@ class SignUpPasswordField extends StatelessWidget {
               onChanged: (value) {
                 context.read<SinupCubit>().passwordChanged(value);
               },
-              validate: (value) {
+              onValidate: (value) {
                 final errorText = AppValidators.validateSignInPassword(value);
                 context
                     .read<SinupCubit>()

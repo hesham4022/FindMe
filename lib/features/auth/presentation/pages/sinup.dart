@@ -59,7 +59,7 @@ class _SinUpViewBody extends StatelessWidget {
                 keyboardDismissBehavior:
                     ScrollViewKeyboardDismissBehavior.onDrag,
                 children: const [
-                  NameField(),
+                  FullNameField(),
                   VSpace(20),
                   SinUpUserNameField(),
                   VSpace(20),
