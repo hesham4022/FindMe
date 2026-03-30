@@ -123,14 +123,9 @@ class _AllCasesViewState extends State<AllCasesView> {
                           slidingDirection: index % 2 == 1
                               ? SlidingDirection.fromLeft
                               : SlidingDirection.fromRight,
-                          duration: 2,
-                          child: GestureDetector(
-                            onTap: () => context.toNamed(
-                                AppRoutes.caseInfoRoute,
-                                arguments: state.filtered[index]),
-                            child: CaseCard(
-                              caseModel: state.filtered[index],
-                            ),
+                          duration: 1,
+                          child: CaseCard(
+                            caseModel: state.filtered[index],
                           ),
                         ),
                         separatorBuilder: (context, index) =>

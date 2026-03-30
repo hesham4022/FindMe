@@ -4,6 +4,7 @@ import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
+import 'package:find_me_app/features/all_cases/presentation/widgets/precentage_shape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,89 +16,87 @@ class CaseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(11.w),
-      decoration: BoxDecoration(
-        color: const Color(0xFFE6E6FA),
-        borderRadius: BorderRadius.circular(16.r),
-      ),
-      child: Row(
-        children: [
-          Container(
-            width: 90.w,
-            height: 90.h,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              image: DecorationImage(
-                image: caseModel.photos.isNotEmpty
-                    ? CachedNetworkImageProvider(caseModel.photos.first.url!)
-                    : const AssetImage(
-                        "assets/images/Portrait_Placeholder.png"),
-                fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        context.toNamed(
+          AppRoutes.caseInfoRoute,
+          arguments: caseModel,
+        );
+      },
+      child: Container(
+        padding: EdgeInsets.all(11.w),
+        decoration: BoxDecoration(
+          color: const Color(0xFFE6E6FA),
+          borderRadius: BorderRadius.circular(16.r),
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: 90.w,
+              height: 90.h,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                image: DecorationImage(
+                  image: caseModel.photos.isNotEmpty
+                      ? CachedNetworkImageProvider(caseModel.photos.first.url!)
+                      : const AssetImage(
+                          "assets/images/Portrait_Placeholder.png"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
-          ),
-          SizedBox(width: 16.w),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(height: 16.w),
-                Text(
-                  "${caseModel.firstName} ${caseModel.lastName}",
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-
-                SizedBox(height: 4.h),
-
-                Row(
-                  children: [
-                    Icon(
-                      Icons.location_on,
-                      size: 14.w,
-                      color: Colors.red,
-                    ),
-                    SizedBox(width: 4.w),
-                    Text(
-                      caseModel.address ?? '',
-                      style: TextStyle(
-                        fontSize: 12.sp,
-                        color: Colors.grey[600],
+            SizedBox(width: 16.w),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${caseModel.firstName} ${caseModel.lastName}",
+                              style: TextStyle(
+                                fontSize: 16.sp,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black,
+                              ),
+                            ),
+                            SizedBox(height: 4.h),
+                            Row(
+                              children: [
+                                Icon(Icons.location_on,
+                                    size: 14.w, color: Colors.red),
+                                SizedBox(width: 4.w),
+                                Text(
+                                  caseModel.address ?? '',
+                                  style: TextStyle(
+                                      fontSize: 12.sp, color: Colors.grey[600]),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  ],
-                ),
-
-                SizedBox(height: 4.h),
-
-                // 🔹 نسبة التشابه
-                if (caseModel.similarityScore != null)
-                  Text(
-                    "Similarity: ${(caseModel.similarityScore! * 100).toStringAsFixed(1)}%",
-                    style: TextStyle(
-                      fontSize: 12.sp,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.blueAccent,
-                    ),
+                      if (caseModel.similarityScore != null)
+                        BalanceIndicator(
+                          similarityScore: caseModel.similarityScore!,
+                          desText: null,
+                          radius: 30,
+                          available: "",
+                        ),
+                    ],
                   ),
+                  SizedBox(height: 12.h),
 
-                SizedBox(height: 12.h),
-
-                // Action Buttons
-                Row(
-                  children: [
-                    // Info Button
-                    GestureDetector(
-                      onTap: () {
-                        context.toNamed(
-                          AppRoutes.caseInfoRoute,
-                        );
-                      },
-                      child: GestureDetector(
+                  // Action Buttons
+                  Row(
+                    children: [
+                      // Info Button
+                      GestureDetector(
                         onTap: () {
                           context.toNamed(
                             AppRoutes.caseInfoRoute,
@@ -121,66 +120,66 @@ class CaseCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                    ),
-                    SizedBox(width: 12.w),
+                      SizedBox(width: 12.w),
 
-                    // Action Icons
-                    ActionIcon(
-                      icon: SvgPicture.asset(
-                        'assets/icons/comment_icon.svg',
-                        width: 16,
-                        height: 16,
+                      // Action Icons
+                      ActionIcon(
+                        icon: SvgPicture.asset(
+                          'assets/icons/comment_icon.svg',
+                          width: 16,
+                          height: 16,
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 2.w),
+                      SizedBox(width: 2.w),
 
-                    const ActionIcon(
-                        icon: const Icon(
-                      Icons.info_outline,
-                      color: AppColors.mainColor,
-                      size: 16,
-                    )),
-                    SizedBox(width: 2.w),
+                      const ActionIcon(
+                          icon: const Icon(
+                        Icons.info_outline,
+                        color: AppColors.mainColor,
+                        size: 16,
+                      )),
+                      SizedBox(width: 2.w),
 
-                    const ActionIcon(
-                        icon: const Icon(
-                      Icons.help_outline,
-                      color: AppColors.mainColor,
-                      size: 16,
-                    )),
-                    SizedBox(width: 2.w),
+                      const ActionIcon(
+                          icon: const Icon(
+                        Icons.help_outline,
+                        color: AppColors.mainColor,
+                        size: 16,
+                      )),
+                      SizedBox(width: 2.w),
 
-                    // Favorite Button connected to Cubit
-                    BlocBuilder<AllCasesCubit, AllCasesState>(
-                      builder: (context, state) {
-                        final updatedCase = state.filtered.firstWhere(
-                          (c) => c.id == caseModel.id,
-                          orElse: () => caseModel,
-                        );
+                      // Favorite Button connected to Cubit
+                      BlocBuilder<AllCasesCubit, AllCasesState>(
+                        builder: (context, state) {
+                          final updatedCase = state.filtered.firstWhere(
+                            (c) => c.id == caseModel.id,
+                            orElse: () => caseModel,
+                          );
 
-                        return ActionIcon(
-                          icon: Icon(
-                            updatedCase.isFavorite
-                                ? Icons.favorite
-                                : Icons.favorite_border,
-                            color: AppColors.mainColor,
-                            size: 16,
-                          ),
-                          onTap: () {
-                            context
-                                .read<AllCasesCubit>()
-                                .toggleFavoriteCard(updatedCase.id ?? -1);
-                          },
-                        );
-                      },
-                    ),
-                  ],
-                ),
-                SizedBox(height: 16.w),
-              ],
+                          return ActionIcon(
+                            icon: Icon(
+                              updatedCase.isFavorite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: AppColors.mainColor,
+                              size: 16,
+                            ),
+                            onTap: () {
+                              context
+                                  .read<AllCasesCubit>()
+                                  .toggleFavoriteCard(updatedCase.id ?? -1);
+                            },
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 16.w),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

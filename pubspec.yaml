@@ -9,6 +9,7 @@ environment:
 
 
 dependencies:
+  percent_indicator: ^4.2.2
   cupertino_icons: ^1.0.8
   auto_size_text: ^3.0.0
   blurry_modal_progress_hud: ^1.1.1
