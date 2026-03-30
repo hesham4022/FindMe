@@ -132,7 +132,8 @@ class _FullNameFieldState extends State<FullNameField> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SinupCubit, SinupState>(
-      buildWhen: (prev, curr) => prev.nameErrorText != curr.nameErrorText,
+      buildWhen: (prev, curr) =>
+          prev.nameErrorText != curr.nameErrorText, // ✅ بس لو الخطأ اتغير
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -141,11 +142,9 @@ class _FullNameFieldState extends State<FullNameField> {
                 style: Theme.of(context).textTheme.kSubheadingRegular),
             const VSpace(10),
             CustomTextField(
-              controller: _controller, // ✅ هنا الحل
+              controller: _controller, // ✅ القيمة مش هتتمسح
               errorText: state.nameErrorText,
               hint: "hintname".ts,
-              prefixIcon: Icon(MdiIcons.lockOpenVariantOutline,
-                  size: 20.sp, color: AppColors.saltBox600),
               onChanged: (value) =>
                   context.read<SinupCubit>().nameChanged(value),
               onValidate: (value) {
