@@ -37,13 +37,17 @@ void main() async {
   final sharedPrefs = await SharedPreferences.getInstance();
   final authLocal =
       AuthLocal(StoreRef.main(), sharedPrefs, FlutterSecureStorage());
-
   HttpOverrides.global = MyHttpOverrides();
 
   String cleanedBaseUrl = Env.baseDevUrl.replaceAll(RegExp(r'/api$'), '');
-  await authLocal.cacheBaseUrl(cleanedBaseUrl);
-  di.sl<AppEnvironmentData>().setNewUrl(cleanedBaseUrl);
 
+// ✅ اكتب بس لو الـ URL اتغير
+  final existingUrl = await authLocal.getBaseUrl();
+  if (existingUrl != cleanedBaseUrl) {
+    await authLocal.cacheBaseUrl(cleanedBaseUrl);
+  }
+
+  di.sl<AppEnvironmentData>().setNewUrl(cleanedBaseUrl);
   runApp(
     EasyLocalization(
       path: 'assets/translations',
