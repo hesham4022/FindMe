@@ -76,19 +76,17 @@ class NameField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "fullNameLabel".ts,
-          style: Theme.of(context).textTheme.kSubheadingRegular,
-        ),
-        const VSpace(10),
-        BlocBuilder<SinupCubit, SinupState>(
-          buildWhen: (previous, current) =>
-              previous.nameErrorText != current.nameErrorText,
-          builder: (context, state) {
-            return CustomTextField(
+    return BlocBuilder<SinupCubit, SinupState>(
+      builder: (context, state) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "fullNameLabel".ts,
+              style: Theme.of(context).textTheme.kSubheadingRegular,
+            ),
+            const VSpace(10),
+            CustomTextField(
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
               hint: "hintname".ts,
@@ -107,10 +105,10 @@ class NameField extends StatelessWidget {
                 context.read<SinupCubit>().nameErrorTextChanged(err ?? "");
                 return (err == null || err.trim().isEmpty) ? null : err;
               },
-            );
-          },
-        ),
-      ],
+            ),
+          ],
+        );
+      },
     );
   }
 }
