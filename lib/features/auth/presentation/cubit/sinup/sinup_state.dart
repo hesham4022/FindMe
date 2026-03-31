@@ -26,7 +26,7 @@ class SinupState extends Equatable {
   final SignUpUserResponse? success;
   final Failure? error;
   final String? emailVerification;
-
+  final List<XFile> nationalIdImages;
   const SinupState({
     this.fullName,
     this.password,
@@ -45,6 +45,7 @@ class SinupState extends Equatable {
     this.nationalIdErrorText,
     this.phoneErrorText,
     this.nationalPhotoPathErrorText,
+    required this.nationalIdImages,
     this.emailVerification,
   });
 
@@ -67,6 +68,7 @@ class SinupState extends Equatable {
     SignUpUserResponse? success,
     Failure? error,
     String? emailVerification,
+    final List<XFile>? nationalIdImages,
   }) {
     return SinupState(
       fullName: fullName ?? this.fullName,
@@ -89,6 +91,7 @@ class SinupState extends Equatable {
       success: success ?? this.success,
       error: error ?? this.error,
       emailVerification: emailVerification ?? this.emailVerification,
+      nationalIdImages: nationalIdImages ?? this.nationalIdImages,
     );
   }
 
@@ -105,6 +108,7 @@ class SinupState extends Equatable {
       email: '',
       phone: '',
       nationalId: '',
+      nationalIdImages: [],
       nameErrorText: null,
       passwordErrorText: null,
       emailErrorText: null,
@@ -136,5 +140,6 @@ class SinupState extends Equatable {
         success,
         error,
         emailVerification,
+        nationalIdImages,
       ];
 }

@@ -113,44 +113,40 @@ class NameField extends StatelessWidget {
   }
 }
 
-class FullNameField extends StatefulWidget {
-  const FullNameField({super.key});
-
-  @override
-  State<FullNameField> createState() => _FullNameFieldState();
-}
-
-class _FullNameFieldState extends State<FullNameField> {
-  final _controller = TextEditingController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+class FullNameField extends StatelessWidget {
+  const FullNameField({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SinupCubit, SinupState>(
-      buildWhen: (prev, curr) =>
-          prev.nameErrorText != curr.nameErrorText, // ✅ بس لو الخطأ اتغير
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text("fullNameLabel".ts,
-                style: Theme.of(context).textTheme.kSubheadingRegular),
+            Text(
+              "fullNameLabel".ts,
+              style: Theme.of(context).textTheme.kSubheadingRegular,
+            ),
             const VSpace(10),
             CustomTextField(
-              controller: _controller, // ✅ القيمة مش هتتمسح
               errorText: state.nameErrorText,
               hint: "hintname".ts,
-              onChanged: (value) =>
-                  context.read<SinupCubit>().nameChanged(value),
+              prefixIcon: Icon(
+                MdiIcons.lockOpenVariantOutline,
+                size: 20.sp,
+                color: AppColors.saltBox600,
+              ),
+              onChanged: (value) {
+                context.read<SinupCubit>().nameChanged(value);
+              },
               onValidate: (value) {
-                final err = AppValidators.validateUsername(value);
-                context.read<SinupCubit>().nameErrorTextChanged(err ?? "");
-                return err;
+                final errorText = AppValidators.validateUsername(value);
+                context
+                    .read<SinupCubit>()
+                    .nameErrorTextChanged(errorText ?? "");
+                return errorText;
               },
             ),
           ],
@@ -411,7 +407,7 @@ class UplaodNationalId extends StatelessWidget {
           prev.nationalPhotoPath != curr.nationalPhotoPath ||
           prev.nationalPhotoPathErrorText != curr.nationalPhotoPathErrorText,
       builder: (context, state) {
-        final images = cubit.nationalIdImages;
+        final images = state.nationalIdImages;
 
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

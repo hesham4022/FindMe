@@ -128,7 +128,24 @@ class SinupCubit extends Cubit<SinupState> {
   }
 
 // داخل SinupCubit
-  List<XFile> nationalIdImages = [];
+  // List<XFile> nationalIdImages = [];
+
+  // Future<void> pickNationalIdImages() async {
+  //   final ImagePicker picker = ImagePicker();
+  //   try {
+  //     final List<XFile> picked = await picker.pickMultiImage(imageQuality: 85);
+  //     if (picked.isEmpty) return;
+
+  //     nationalIdImages = [...picked];
+
+  //     emit(state.copyWith(
+  //       nationalPhotoPath: picked.first.path,
+  //       nationalPhotoPathErrorText: null,
+  //     ));
+  //   } catch (e) {
+  //     log('⚠️ pickNationalIdImages error: $e');
+  //   }
+  // }
 
   Future<void> pickNationalIdImages() async {
     final ImagePicker picker = ImagePicker();
@@ -136,9 +153,8 @@ class SinupCubit extends Cubit<SinupState> {
       final List<XFile> picked = await picker.pickMultiImage(imageQuality: 85);
       if (picked.isEmpty) return;
 
-      nationalIdImages = [...picked];
-
       emit(state.copyWith(
+        nationalIdImages: [...picked], // ✅ جوا الـ state
         nationalPhotoPath: picked.first.path,
         nationalPhotoPathErrorText: null,
       ));
@@ -147,26 +163,39 @@ class SinupCubit extends Cubit<SinupState> {
     }
   }
 
+  // void removeNationalIdImageAt(int index) {
+  //   if (index < 0 || index >= nationalIdImages.length) {
+  //     log("⚠️ Tried to remove invalid index: $index");
+  //     return;
+  //   }
+
+  //   nationalIdImages.removeAt(index);
+
+  //   if (nationalIdImages.isEmpty) {
+  //     emit(state.copyWith(
+  //         nationalPhotoPath: '',
+  //         nationalPhotoPathErrorText: "Field is required"));
+  //   } else {
+  //     emit(state.copyWith(
+  //       nationalPhotoPath: nationalIdImages.first.path,
+  //       nationalPhotoPathErrorText: null, // اختفى الخطأ
+  //     ));
+  //   }
+
+  //   log("🗑️ Image removed. Remaining: ${nationalIdImages.length}");
+  // }
   void removeNationalIdImageAt(int index) {
-    if (index < 0 || index >= nationalIdImages.length) {
-      log("⚠️ Tried to remove invalid index: $index");
-      return;
-    }
+    final List<XFile> images = [...(state.nationalIdImages)];
 
-    nationalIdImages.removeAt(index);
+    if (index < 0 || index >= images.length) return;
 
-    if (nationalIdImages.isEmpty) {
-      emit(state.copyWith(
-          nationalPhotoPath: '',
-          nationalPhotoPathErrorText: "Field is required"));
-    } else {
-      emit(state.copyWith(
-        nationalPhotoPath: nationalIdImages.first.path,
-        nationalPhotoPathErrorText: null, // اختفى الخطأ
-      ));
-    }
+    images.removeAt(index);
 
-    log("🗑️ Image removed. Remaining: ${nationalIdImages.length}");
+    emit(state.copyWith(
+      nationalIdImages: images,
+      nationalPhotoPath: images.isEmpty ? '' : images.first.path,
+      nationalPhotoPathErrorText: images.isEmpty ? "Field is required" : null,
+    ));
   }
 
   void reset() {
