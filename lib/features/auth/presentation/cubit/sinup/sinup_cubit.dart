@@ -42,16 +42,48 @@ class SinupCubit extends Cubit<SinupState> {
     emit(state.copyWith(fullName: value, nameErrorText: null));
   }
 
+  // void passwordChanged(String value) {
+  //   emit(state.copyWith(
+  //       password: value, status: SinUpStatus.initial, passwordErrorText: null));
+  // }
+
   void passwordChanged(String value) {
+    String confirmError = state.passwordConfirmationErrorText ?? '';
+
+    if (state.passwordConfirmation?.isNotEmpty ?? false) {
+      if (state.passwordConfirmation != value) {
+        confirmError = "Passwords do not match";
+      } else {
+        confirmError = "";
+      }
+    }
+
     emit(state.copyWith(
-        password: value, status: SinUpStatus.initial, passwordErrorText: null));
+      password: value,
+      passwordConfirmationErrorText: confirmError,
+    ));
   }
 
+  // void passwordConfirmChanged(String value) {
+  //   emit(state.copyWith(
+  //       passwordConfirmation: value,
+  //       status: SinUpStatus.initial,
+  //       passwordConfirmationErrorText: null));
+  // }
+
   void passwordConfirmChanged(String value) {
+    String confirmError = "";
+
+    if (value.isEmpty) {
+      confirmError = "Field is required";
+    } else if (value != state.password) {
+      confirmError = "Passwords do not match";
+    }
+
     emit(state.copyWith(
-        passwordConfirmation: value,
-        status: SinUpStatus.initial,
-        passwordConfirmationErrorText: null));
+      passwordConfirmation: value,
+      passwordConfirmationErrorText: confirmError,
+    ));
   }
 
   void emailChanged(String value) {
