@@ -404,7 +404,7 @@ class UplaodNationalId extends StatelessWidget {
 
     return BlocBuilder<SinupCubit, SinupState>(
       buildWhen: (prev, curr) =>
-          prev.nationalPhotoPath != curr.nationalPhotoPath ||
+          prev.nationalIdImages != curr.nationalIdImages ||
           prev.nationalPhotoPathErrorText != curr.nationalPhotoPathErrorText,
       builder: (context, state) {
         final images = state.nationalIdImages;
