@@ -308,7 +308,6 @@ class SignUpConfirmPasswordField extends StatelessWidget {
                 } else if (value != password) {
                   errorText = "Passwords do not match";
                 }
-
                 context
                     .read<SinupCubit>()
                     .passwordConfirmErrorTextChanged(errorText ?? "");
