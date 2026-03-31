@@ -195,7 +195,7 @@ class SinupCubit extends Cubit<SinupState> {
       emit(state.copyWith(
         nationalIdImages: [...picked], // ✅ جوا الـ state
         nationalPhotoPath: picked.first.path,
-        nationalPhotoPathErrorText: null,
+        nationalPhotoPathErrorText: '',
       ));
     } catch (e) {
       log('⚠️ pickNationalIdImages error: $e');
