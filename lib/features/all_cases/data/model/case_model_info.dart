@@ -94,6 +94,7 @@ class CaseInfoModel {
         lastName: json['last_name'],
         age: json['age'],
         gender: json['gender'],
+        isLiked: json['isLiked'] ?? false,
         weight: json['weight'] != null
             ? double.tryParse(json['weight'].toString())
             : null,

@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:dartz/dartz.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
@@ -64,4 +65,15 @@ class AllCasesRepo {
   //     },
   //   );
   // }
+
+  Future<bool> toggleLike(int reportId) async {
+    try {
+      // يجيب isLiked من الريموت مباشرة
+      final isLiked = await _allCasesRemote.toggleLike(reportId);
+      return isLiked;
+    } catch (e) {
+      log('ToggleLike Error: $e');
+      rethrow;
+    }
+  }
 }

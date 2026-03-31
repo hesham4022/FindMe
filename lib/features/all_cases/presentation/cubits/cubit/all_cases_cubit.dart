@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
@@ -27,28 +28,24 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     ));
   }
 
-  // void updateCaseLike(int id, bool isLiked, int likesCount) {
-  //   final updatedList = state.filtered.map((c) {
-  //     if (c.id == id) {
-  //       return c.copyWith(isLiked: isLiked);
-  //     }
-  //     return c;
-  //   }).toList();
+  void updateCaseLike(int id, bool isLiked) {
+    final updatedList = state.filtered.map((c) {
+      if (c.id == id) {
+        return c.copyWith(isLiked: isLiked);
+      }
+      return c;
+    }).toList();
 
-  //   emit(state.copyWith(filtered: updatedList));
-  // }
+    emit(state.copyWith(filtered: updatedList));
+  }
 
   Future<void> toggleLike(int id) async {
     try {
-      final result = await repository.toggleLike(id);
-
-      final data = jsonDecode(result);
+      final isLiked = await _repo.toggleLike(id);
 
       final updatedList = state.filtered.map((c) {
         if (c.id == id) {
-          return c.copyWith(
-            isLiked: data['isLiked'],
-          );
+          return c.copyWith(isLiked: isLiked);
         }
         return c;
       }).toList();

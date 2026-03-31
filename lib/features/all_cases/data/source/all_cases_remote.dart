@@ -2,11 +2,13 @@ import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/helpers/enums/request_type.dart';
 import 'package:find_me_app/core/networking/api_constants.dart';
 import 'package:find_me_app/core/networking/functions.dart';
 import 'package:find_me_app/core/shared/models/upload_file.dart';
+import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:find_me_app/features/search_case/data/model/search_by_image_model.dart';
 import 'package:path/path.dart';
 
@@ -77,9 +79,12 @@ class AllCasesRemote {
     }
   }
 
-  Future<String> toggleLike(int reportId) async {
+  Future<bool> toggleLike(int reportId) async {
+    final authLocal = sl<AuthLocal>();
+    final token = await authLocal.getAccessToken();
+
     final response = await makeHttpRequest(
-      url: ApiConstants.isLiked + reportId.toString(),
+      url: '${ApiConstants.isLiked}$reportId',
       requestType: HttpRequestType.post,
       requiresAuth: true,
       needParsedResponse: false,
@@ -91,6 +96,10 @@ class AllCasesRemote {
     if (response.statusCode != 200) {
       throw Exception('Failed to toggle like');
     }
-    return utf8.decode(response.bodyBytes);
+
+    final json = jsonDecode(utf8.decode(response.bodyBytes));
+
+    // تحويل القيمة من JSON bool
+    return json['isLiked'] ?? false;
   }
 }

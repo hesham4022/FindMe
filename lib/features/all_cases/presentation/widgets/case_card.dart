@@ -182,6 +182,7 @@ class CaseCard extends StatelessWidget {
                             (c) => c.id == caseModel.id,
                             orElse: () => caseModel,
                           );
+
                           return ActionIcon(
                             icon: Icon(
                               updatedCase.isLiked
@@ -191,31 +192,24 @@ class CaseCard extends StatelessWidget {
                               size: 16,
                             ),
                             onTap: () async {
-                              try {
-                                final response = await http.post(
-                                  Uri.parse(
-                                      'https://web-production-2673c.up.railway.app/api/reports/like/${updatedCase.id}'),
-                                  headers: {
-                                    'Content-Type': 'application/json',
-                                    'Authorization':
-                                        'Bearer YOUR_TOKEN_HERE', // حط التوكن هنا
-                                  },
-                                );
-                                if (response.statusCode == 200) {
-                                  final data = jsonDecode(response.body);
+                              // Optimistic UI: قلب فورًا
+                              final previousValue = updatedCase.isLiked;
+                              context.read<AllCasesCubit>().updateCaseLike(
+                                    updatedCase.id ?? -1,
+                                    !previousValue,
+                                  );
 
-                                  // حدث الـ case في الـ Cubit
-                                  context.read<AllCasesCubit>().updateCaseLike(
-                                        updatedCase.id ?? -1,
-                                        data['isLiked'],
-                                        data['likesCount'],
-                                      );
-                                } else {
-                                  // ممكن تعمل Toast أو SnackBar للخطأ
-                                  print('Error: ${response.body}');
-                                }
+                              try {
+                                // Cubit يتعامل مع request ويرجع isLiked
+                                await context.read<AllCasesCubit>().toggleLike(
+                                      updatedCase.id ?? -1,
+                                    );
                               } catch (e) {
-                                print('Exception: $e');
+                                print('Like toggle failed: $e');
+
+                                // ارجع القيمة القديمة لو فشل
+                                context.read<AllCasesCubit>().updateCaseLike(
+                                    updatedCase.id ?? -1, previousValue);
                               }
                             },
                           );
