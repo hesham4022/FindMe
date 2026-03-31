@@ -48,7 +48,7 @@ class RecentCasesCubit extends Cubit<RecentCasesState> {
   void toggleFavoriteCard(int caseId) {
     allRecentCases = allRecentCases.map((c) {
       if (c.id == caseId) {
-        return c.copyWith(isFavorite: !c.isFavorite);
+        return c.copyWith(isLiked: !c.isLiked);
       }
       return c;
     }).toList();

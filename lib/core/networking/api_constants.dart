@@ -49,6 +49,8 @@ class ApiConstants {
 
   static final String _communityUrl = "$_baseUrl/api/community";
 
+  static final String isLiked = "$_baseUrl/api/reports/like/";
+
   static final String getPostsUrl = "$_communityUrl/post?";
   static final String addPostUrl = "$_communityUrl/post";
   static final String editPostUrl = "$_communityUrl/post";

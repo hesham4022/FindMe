@@ -200,16 +200,16 @@ class CardAllCaseInfo extends StatelessWidget {
 
                   return ActionIcon(
                     icon: Icon(
-                      updatedCase.isFavorite
+                      updatedCase.isLiked
                           ? Icons.favorite
                           : Icons.favorite_border,
                       color: AppColors.mainColor,
                       size: 16,
                     ),
                     onTap: () {
-                      context
-                          .read<AllCasesCubit>()
-                          .toggleFavoriteCard(updatedCase.id ?? -1);
+                      // context
+                      //     .read<AllCasesCubit>()
+                      //     .toggleFavoriteCard(updatedCase.id ?? -1);
                     },
                   );
                 },

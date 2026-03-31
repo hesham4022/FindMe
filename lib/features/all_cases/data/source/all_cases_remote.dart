@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:find_me_app/core/error_management/exception.dart';
@@ -74,5 +75,22 @@ class AllCasesRemote {
       print('[ERROR] searchByImage: $e');
       rethrow;
     }
+  }
+
+  Future<String> toggleLike(int reportId) async {
+    final response = await makeHttpRequest(
+      url: ApiConstants.isLiked + reportId.toString(),
+      requestType: HttpRequestType.post,
+      requiresAuth: true,
+      needParsedResponse: false,
+    );
+
+    log('[❤️ LIKE RESPONSE CODE]: ${response.statusCode}');
+    log('[❤️ LIKE RESPONSE BODY]: ${response.body}');
+
+    if (response.statusCode != 200) {
+      throw Exception('Failed to toggle like');
+    }
+    return utf8.decode(response.bodyBytes);
   }
 }

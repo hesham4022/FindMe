@@ -16,6 +16,8 @@ class CaseCard extends StatelessWidget {
   const CaseCard({super.key, required this.caseModel});
   final CaseInfoModel caseModel;
 
+  get http => null;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -180,7 +182,6 @@ class CaseCard extends StatelessWidget {
                             (c) => c.id == caseModel.id,
                             orElse: () => caseModel,
                           );
-
                           return ActionIcon(
                             icon: Icon(
                               updatedCase.isLiked
@@ -191,7 +192,6 @@ class CaseCard extends StatelessWidget {
                             ),
                             onTap: () async {
                               try {
-                                // اعمل الريكوست للسيرفر
                                 final response = await http.post(
                                   Uri.parse(
                                       'https://web-production-2673c.up.railway.app/api/reports/like/${updatedCase.id}'),
@@ -201,7 +201,6 @@ class CaseCard extends StatelessWidget {
                                         'Bearer YOUR_TOKEN_HERE', // حط التوكن هنا
                                   },
                                 );
-
                                 if (response.statusCode == 200) {
                                   final data = jsonDecode(response.body);
 

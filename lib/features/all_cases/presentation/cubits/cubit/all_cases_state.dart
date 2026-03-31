@@ -14,7 +14,7 @@ class AllCasesState extends Equatable {
   final CaseInfoModel? selectedCase;
   final String? searchMessage;
   final bool isImageSearch;
-  final bool isLiked;
+
   // final SuccessResponse? success;
   final Failure? failure;
   final bool isScroll;
@@ -33,7 +33,6 @@ class AllCasesState extends Equatable {
     required this.status,
     this.selectedCase,
     this.isScroll = false,
-    required this.isLiked,
     // this.success,
     this.failure,
     this.allCasesResponse,

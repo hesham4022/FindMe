@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/data/repo/all_cases_repo.dart';
@@ -25,15 +27,36 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     ));
   }
 
-  void updateCaseLike(int id, bool isLiked, int likesCount) {
-    final updatedList = state.filtered.map((c) {
-      if (c.id == id) {
-        return c.copyWith(isLiked: isLiked, likesCount: likesCount);
-      }
-      return c;
-    }).toList();
+  // void updateCaseLike(int id, bool isLiked, int likesCount) {
+  //   final updatedList = state.filtered.map((c) {
+  //     if (c.id == id) {
+  //       return c.copyWith(isLiked: isLiked);
+  //     }
+  //     return c;
+  //   }).toList();
 
-    emit(state.copyWith(filtered: updatedList));
+  //   emit(state.copyWith(filtered: updatedList));
+  // }
+
+  Future<void> toggleLike(int id) async {
+    try {
+      final result = await repository.toggleLike(id);
+
+      final data = jsonDecode(result);
+
+      final updatedList = state.filtered.map((c) {
+        if (c.id == id) {
+          return c.copyWith(
+            isLiked: data['isLiked'],
+          );
+        }
+        return c;
+      }).toList();
+
+      emit(state.copyWith(filtered: updatedList));
+    } catch (e) {
+      log('LIKE ERROR: $e');
+    }
   }
 
   List<CaseInfoModel> getLatestFiveCases() {
@@ -106,7 +129,7 @@ class AllCasesCubit extends Cubit<AllCasesState> {
             result.where((c) => c.gender?.toLowerCase() == 'female').toList();
         break;
       case AllCasesFilter.favorites:
-        result = result.where((c) => c.isFavorite).toList();
+        result = result.where((c) => c.isLiked).toList();
         break;
       case AllCasesFilter.all:
         break;
@@ -115,16 +138,16 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     emit(state.copyWith(filtered: result));
   }
 
-  void toggleFavoriteCard(int caseId) {
-    _allCases = _allCases.map((c) {
-      if (c.id == caseId) {
-        return c.copyWith(isFavorite: !c.isFavorite);
-      }
-      return c;
-    }).toList();
+  // void toggleFavoriteCard(int caseId) {
+  //   _allCases = _allCases.map((c) {
+  //     if (c.id == caseId) {
+  //       return c.copyWith(isFavorite: !c.isFavorite);
+  //     }
+  //     return c;
+  //   }).toList();
 
-    applyFilters();
-  }
+  //   applyFilters();
+  // }
 
   void searchByName(String query) {
     if (query.isEmpty) {

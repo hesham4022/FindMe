@@ -57,7 +57,7 @@ class CaseInfoModel {
   List<Photo> photos;
   String? createdAt;
   String? updatedAt;
-  bool isFavorite;
+  bool isLiked;
   double? similarityScore;
 
   CaseInfoModel({
@@ -83,7 +83,7 @@ class CaseInfoModel {
     this.photos = const [],
     this.createdAt,
     this.updatedAt,
-    this.isFavorite = false,
+    this.isLiked = false,
     this.similarityScore,
   });
 
@@ -175,7 +175,7 @@ class CaseInfoModel {
     List<Photo>? photos,
     String? createdAt,
     String? updatedAt,
-    bool? isFavorite,
+    bool? isLiked,
   }) =>
       CaseInfoModel(
         id: id ?? this.id,
@@ -200,7 +200,7 @@ class CaseInfoModel {
         photos: photos ?? this.photos,
         createdAt: createdAt ?? this.createdAt,
         updatedAt: updatedAt ?? this.updatedAt,
-        isFavorite: isFavorite ?? this.isFavorite,
+        isLiked: isLiked ?? this.isLiked,
         similarityScore: similarityScore ?? this.similarityScore,
       );
 }
