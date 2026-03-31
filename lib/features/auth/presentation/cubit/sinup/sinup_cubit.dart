@@ -30,10 +30,12 @@ class SinupCubit extends Cubit<SinupState> {
   bool get isFormValid {
     return AppValidators.validateUsername(state.fullName) == null &&
         AppValidators.validateEmail(state.email) == null &&
-        AppValidators.validateEmail(state.password) == null &&
-        AppValidators.validateEmail(state.passwordConfirmation) == null &&
-        AppValidators.validateEmail(state.nationalId) == null &&
-        AppValidators.validatePhoneNumber(state.nationalPhotoPath) == null;
+        AppValidators.validateSignInPassword(state.password) == null &&
+        AppValidators.validateSignInPassword(state.passwordConfirmation) ==
+            null &&
+        AppValidators.validatePhoneNumber(state.phone) == null &&
+        AppValidators.validateNumber(state.nationalId) == null &&
+        state.nationalPhotoPath?.isNotEmpty == true;
   }
 
   void nameChanged(String value) {

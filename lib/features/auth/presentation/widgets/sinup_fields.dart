@@ -113,45 +113,97 @@ class NameField extends StatelessWidget {
   }
 }
 
-class FullNameField extends StatelessWidget {
-  const FullNameField({
-    super.key,
-  });
+// class FullNameField extends StatelessWidget {
+//   const FullNameField({
+//     super.key,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return BlocBuilder<SinupCubit, SinupState>(
+//       builder: (context, state) {
+//         return Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Text(
+//               "fullNameLabel".ts,
+//               style: Theme.of(context).textTheme.kSubheadingRegular,
+//             ),
+//             const VSpace(10),
+//             CustomTextField(
+//               errorText: state.nameErrorText,
+//               hint: "hintname".ts,
+//               prefixIcon: Icon(
+//                 MdiIcons.lockOpenVariantOutline,
+//                 size: 20.sp,
+//                 color: AppColors.saltBox600,
+//               ),
+//               onChanged: (value) {
+//                 context.read<SinupCubit>().nameChanged(value);
+//               },
+//               onValidate: (value) {
+//                 final errorText = AppValidators.validateUsername(value);
+//                 context
+//                     .read<SinupCubit>()
+//                     .nameErrorTextChanged(errorText ?? "");
+//                 return errorText;
+//               },
+//             ),
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }
+class FullNameField extends StatefulWidget {
+  const FullNameField({super.key});
+
+  @override
+  State<FullNameField> createState() => _FullNameFieldState();
+}
+
+class _FullNameFieldState extends State<FullNameField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+
+    final state = context.read<SinupCubit>().state;
+
+    // ✅ يمسك القيمة الحالية من الـ Cubit
+    _controller = TextEditingController(
+      text: state.fullName ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SinupCubit, SinupState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "fullNameLabel".ts,
-              style: Theme.of(context).textTheme.kSubheadingRegular,
-            ),
-            const VSpace(10),
-            CustomTextField(
-              errorText: state.nameErrorText,
-              hint: "hintname".ts,
-              prefixIcon: Icon(
-                MdiIcons.lockOpenVariantOutline,
-                size: 20.sp,
-                color: AppColors.saltBox600,
-              ),
-              onChanged: (value) {
-                context.read<SinupCubit>().nameChanged(value);
-              },
-              onValidate: (value) {
-                final errorText = AppValidators.validateUsername(value);
-                context
-                    .read<SinupCubit>()
-                    .nameErrorTextChanged(errorText ?? "");
-                return errorText;
-              },
-            ),
-          ],
-        );
+    return BlocListener<SinupCubit, SinupState>(
+      listenWhen: (prev, curr) => prev.fullName != curr.fullName,
+      listener: (_, state) {
+        if (_controller.text != state.fullName) {
+          _controller.text = state.fullName ?? '';
+        }
       },
+      child: BlocBuilder<SinupCubit, SinupState>(
+        buildWhen: (prev, curr) => prev.nameErrorText != curr.nameErrorText,
+        builder: (context, state) {
+          return CustomTextField(
+            controller: _controller,
+            textInputAction: TextInputAction.next,
+            onChanged: context.read<SinupCubit>().nameChanged,
+            hint: "Full Name",
+            errorText: state.nameErrorText,
+          );
+        },
+      ),
     );
   }
 }
@@ -583,7 +635,7 @@ class SignUpButton extends StatelessWidget {
           color: AppColors.mainColor,
           loading: state.isLoading,
           onPressed: () {
-            context.read<SinupCubit>().validateFieldsBeforeSinup(context);
+            context.read<SinupCubit>().submitSinUp(context);
           },
         );
       },
