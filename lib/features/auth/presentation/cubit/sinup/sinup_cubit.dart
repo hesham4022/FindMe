@@ -14,7 +14,6 @@ import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-
 part 'sinup_state.dart';
 
 class SinupCubit extends Cubit<SinupState> {
@@ -166,26 +165,6 @@ class SinupCubit extends Cubit<SinupState> {
     ));
   }
 
-// داخل SinupCubit
-  // List<XFile> nationalIdImages = [];
-
-  // Future<void> pickNationalIdImages() async {
-  //   final ImagePicker picker = ImagePicker();
-  //   try {
-  //     final List<XFile> picked = await picker.pickMultiImage(imageQuality: 85);
-  //     if (picked.isEmpty) return;
-
-  //     nationalIdImages = [...picked];
-
-  //     emit(state.copyWith(
-  //       nationalPhotoPath: picked.first.path,
-  //       nationalPhotoPathErrorText: null,
-  //     ));
-  //   } catch (e) {
-  //     log('⚠️ pickNationalIdImages error: $e');
-  //   }
-  // }
-
   Future<void> pickNationalIdImages() async {
     final ImagePicker picker = ImagePicker();
     try {
@@ -202,27 +181,6 @@ class SinupCubit extends Cubit<SinupState> {
     }
   }
 
-  // void removeNationalIdImageAt(int index) {
-  //   if (index < 0 || index >= nationalIdImages.length) {
-  //     log("⚠️ Tried to remove invalid index: $index");
-  //     return;
-  //   }
-
-  //   nationalIdImages.removeAt(index);
-
-  //   if (nationalIdImages.isEmpty) {
-  //     emit(state.copyWith(
-  //         nationalPhotoPath: '',
-  //         nationalPhotoPathErrorText: "Field is required"));
-  //   } else {
-  //     emit(state.copyWith(
-  //       nationalPhotoPath: nationalIdImages.first.path,
-  //       nationalPhotoPathErrorText: null, // اختفى الخطأ
-  //     ));
-  //   }
-
-  //   log("🗑️ Image removed. Remaining: ${nationalIdImages.length}");
-  // }
   void removeNationalIdImageAt(int index) {
     final List<XFile> images = [...(state.nationalIdImages)];
 
@@ -240,127 +198,6 @@ class SinupCubit extends Cubit<SinupState> {
   void reset() {
     emit(SinupState.initial());
   }
-
-  void validateFieldsBeforeSinup(BuildContext context) {
-    bool hasError = false;
-    log("✅ validateFieldsBeforeSinup called");
-
-    // full name
-    if (state.fullName == null || state.fullName!.trim().isEmpty) {
-      emit(state.copyWith(nameErrorText: "Field is required"));
-      hasError = true;
-    } else {
-      emit(state.copyWith(nameErrorText: null));
-    }
-
-    // password
-    if (state.password == null || state.password!.trim().isEmpty) {
-      emit(state.copyWith(passwordErrorText: "Field is required"));
-      hasError = true;
-    } else {
-      emit(state.copyWith(passwordErrorText: null));
-    }
-
-    // email
-    if (state.email == null || state.email!.trim().isEmpty) {
-      emit(state.copyWith(emailErrorText: "Field is required"));
-      hasError = true;
-    } else {
-      emit(state.copyWith(emailErrorText: null));
-    }
-
-    // phone
-    if (state.phone == null || state.phone!.trim().isEmpty) {
-      emit(state.copyWith(phoneErrorText: "Field is required"));
-      hasError = true;
-    } else {
-      emit(state.copyWith(phoneErrorText: null));
-    }
-
-    // national ID
-    if (state.nationalId == null || state.nationalId!.trim().isEmpty) {
-      emit(state.copyWith(nationalIdErrorText: "Field is required"));
-      hasError = true;
-    } else {
-      emit(state.copyWith(nationalIdErrorText: null));
-    }
-
-    // national photo path
-    if (state.nationalPhotoPath == null ||
-        state.nationalPhotoPath!.trim().isEmpty) {
-      emit(state.copyWith(nationalPhotoPathErrorText: "Field is required"));
-      hasError = true;
-    } else {
-      emit(state.copyWith(nationalPhotoPathErrorText: null));
-    }
-
-    if (!hasError) {
-      submitSinUp(context);
-    } else {
-      log("⛔ Some fields have error, signup stopped");
-    }
-  }
-
-  // Future<void> submitSinUp(BuildContext context) async {
-  //   if (state.isLoading) return;
-
-  //   emit(state.copyWith(status: SinUpStatus.loading));
-
-  //   final request = SignUpUserRequest(
-  //     fullName: state.fullName!,
-  //     email: state.email!,
-  //     password: state.password!,
-  //     mobileNumber: state.phone!,
-  //     nationalId: state.nationalId!,
-  //     nationalPhotoPath: state.nationalPhotoPath!,
-  //     passwordConfirmation: state.passwordConfirmation!,
-  //   );
-
-  //   print('📤 Request Body: ${request.toJson()}');
-
-  //   final result = await _authRepo.signup(request);
-
-  //   result.fold(
-  //     (failure) {
-  //       // حالة الخطأ من السيرفر
-  //       emit(state.copyWith(
-  //         status: SinUpStatus.error,
-  //         error: failure,
-  //       ));
-
-  //       WidgetsBinding.instance.addPostFrameCallback((_) {
-  //         showAlertSnackBar(
-  //           context,
-  //           failure.msg, // رسالة الخطأ من السيرفر
-  //           AlertType.error,
-  //         );
-  //       });
-  //     },
-  //     (data) {
-  //       // حفظ حالة emailVerification في الـ state لو تحب تستخدمها في Listener
-  //       emit(state.copyWith(
-  //         status: SinUpStatus.success,
-  //         emailVerification: data.emailVerification,
-  //       ));
-
-  //       WidgetsBinding.instance.addPostFrameCallback((_) {
-  //         if (state.emailVerification != null &&
-  //             state.emailVerification!
-  //                 .toLowerCase()
-  //                 .contains('check your email')) {
-  //           // المستخدم غير مفعل → صفحة OTP
-  //           context.toNamed(
-  //             AppRoutes.verifyOTPRoute,
-  //             arguments: VerifyOTPArgs(username: state.email ?? ''),
-  //           );
-  //         } else {
-  //           // المستخدم مفعل → صفحة Host
-  //           context.toNamed(AppRoutes.hostRoute);
-  //         }
-  //       });
-  //     },
-  //   );
-  // }
 
   Future<void> submitSinUp(BuildContext context) async {
     if (state.isLoading) return;
@@ -381,7 +218,6 @@ class SinupCubit extends Cubit<SinupState> {
     print('📤 Request Body: ${request.toJson()}');
     print("-------------------------------");
     try {
-      // 🧩 استدعاء الريبو
       final result = await _authRepo.signup(request);
 
       result.fold(
@@ -402,9 +238,8 @@ class SinupCubit extends Cubit<SinupState> {
         (data) {
           emit(state.copyWith(status: SinUpStatus.success));
           WidgetsBinding.instance.addPostFrameCallback((_) async {
-            // ✅ حط اليوزر في HostCubit
-            await context.read<HostCubit>().setAuthenticatedUser(data.user);
-            context.toNamed(AppRoutes.hostRoute);
+            // await context.read<HostCubit>().setAuthenticatedUser(data.user);
+            // context.toNamed(AppRoutes.hostRoute);
           });
           // WidgetsBinding.instance.addPostFrameCallback((_) {
           //   context.toNamed(AppRoutes.hostRoute);
