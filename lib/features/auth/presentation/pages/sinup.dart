@@ -36,10 +36,7 @@ class _SinUpViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bottom = MediaQuery.of(context).viewInsets.bottom;
-
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: Text(
           "sinupTitle".ts,
@@ -53,7 +50,7 @@ class _SinUpViewBody extends StatelessWidget {
             inAsyncCall: state.status == SinUpStatus.loading,
             progressIndicator: const CustomLoadingWidget(),
             child: ListView(
-              padding: EdgeInsets.fromLTRB(20, 20, 20, bottom).r,
+              padding: const EdgeInsets.all(20),
               keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
               children: const [
                 FullNameField(),
