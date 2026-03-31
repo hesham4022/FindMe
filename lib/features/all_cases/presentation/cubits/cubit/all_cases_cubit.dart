@@ -68,6 +68,11 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     return cases.take(5).toList();
   }
 
+  // void clearCases() {
+  //   _allCases = [];
+  //   emit(const AllCasesState());
+  // }
+
   Future<bool> getAllCasesResponseData() async {
     emit(state.copyWith(
       status: AllCasesStatus.loading,
