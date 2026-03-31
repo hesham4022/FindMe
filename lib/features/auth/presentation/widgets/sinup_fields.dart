@@ -278,7 +278,8 @@ class SignUpConfirmPasswordField extends StatelessWidget {
     return BlocBuilder<SinupCubit, SinupState>(
       buildWhen: (previous, current) =>
           previous.passwordConfirmationErrorText !=
-          current.passwordConfirmationErrorText,
+              current.passwordConfirmationErrorText ||
+          previous.password != current.password,
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
