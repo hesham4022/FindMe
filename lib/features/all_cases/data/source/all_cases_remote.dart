@@ -20,6 +20,7 @@ class AllCasesRemote {
       url: ApiConstants.allReportsUrl,
       requestType: HttpRequestType.get,
       needParsedResponse: false,
+      requiresAuth: true,
     );
     return utf8.decode(response.bodyBytes);
   }
