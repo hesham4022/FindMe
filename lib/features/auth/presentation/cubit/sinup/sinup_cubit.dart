@@ -238,8 +238,8 @@ class SinupCubit extends Cubit<SinupState> {
         (data) {
           emit(state.copyWith(status: SinUpStatus.success));
           WidgetsBinding.instance.addPostFrameCallback((_) async {
-            // await context.read<HostCubit>().setAuthenticatedUser(data.user);
-            // context.toNamed(AppRoutes.hostRoute);
+            await context.read<HostCubit>().setAuthenticatedUser(data.user);
+            context.toNamed(AppRoutes.hostRoute);
           });
           // WidgetsBinding.instance.addPostFrameCallback((_) {
           //   context.toNamed(AppRoutes.hostRoute);
@@ -268,7 +268,6 @@ class SinupCubit extends Cubit<SinupState> {
       log("Stack: $s");
 
       emit(state.copyWith(status: SinUpStatus.error));
-
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showAlertSnackBar(
           context,
