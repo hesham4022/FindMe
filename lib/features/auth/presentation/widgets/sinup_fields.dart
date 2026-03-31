@@ -302,13 +302,8 @@ class SignUpConfirmPasswordField extends StatelessWidget {
               },
               validate: (value) {
                 final password = context.read<SinupCubit>().state.password;
-                String? errorText;
-
-                if (value == null || value.isEmpty) {
-                  errorText = "Field is required";
-                } else if (value != password) {
-                  errorText = "Passwords do not match";
-                }
+                final errorText =
+                    AppValidators.validateConfirmPassword(value, password);
                 context
                     .read<SinupCubit>()
                     .passwordConfirmErrorTextChanged(errorText ?? "");
@@ -393,7 +388,7 @@ class PhoneNumberField extends StatelessWidget {
                 hint: "hintPhone".ts,
                 errorText: state.phoneErrorText,
                 prefixIcon: Icon(
-                  Icons.account_circle_outlined,
+                  Icons.phone,
                   size: 20.sp,
                   color: AppColors.saltBox600,
                 ),
@@ -425,7 +420,6 @@ class NationalIdField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SinupCubit, SinupState>(
-      // buildWhen: (previous, current) => (previous.usernameErrorText != current.usernameErrorText),
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -438,11 +432,6 @@ class NationalIdField extends StatelessWidget {
             CustomTextField(
                 hint: "hintId".ts,
                 errorText: state.nationalIdErrorText,
-                prefixIcon: Icon(
-                  Icons.account_circle_outlined,
-                  size: 20.sp,
-                  color: AppColors.saltBox600,
-                ),
                 keyboardType: TextInputType.number,
                 onSubmit: onSubmit,
                 onChanged: (value) {

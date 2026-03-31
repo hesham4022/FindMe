@@ -33,6 +33,11 @@ class SinupCubit extends Cubit<SinupState> {
         AppValidators.validateSignInPassword(state.password) == null &&
         AppValidators.validateSignInPassword(state.passwordConfirmation) ==
             null &&
+        AppValidators.validateConfirmPassword(
+              state.passwordConfirmation,
+              state.password,
+            ) ==
+            null &&
         AppValidators.validatePhoneNumber(state.phone) == null &&
         AppValidators.validateNumber(state.nationalId) == null &&
         state.nationalPhotoPath?.isNotEmpty == true;

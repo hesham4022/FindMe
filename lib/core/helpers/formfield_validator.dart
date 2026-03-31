@@ -152,6 +152,30 @@ class AppValidators {
     }
   }
 
+  static String? validateConfirmPassword(
+    String? value,
+    String? password,
+  ) {
+    if (value == null || value.trim().isEmpty) {
+      return "Field is required";
+    }
+
+    final passwordValidation = validateSignInPassword(value);
+    if (passwordValidation != null) {
+      return passwordValidation;
+    }
+
+    if (password == null || password.isEmpty) {
+      return "Enter password first";
+    }
+
+    if (value != password) {
+      return "Passwords do not match";
+    }
+
+    return null;
+  }
+
   static String? validateNewPassword(String? password) {
     if (password == null || password.trim().isEmpty) {
       return AppStrings.passwordIsRequired;
