@@ -155,7 +155,6 @@ class CaseCard extends StatelessWidget {
                             (c) => c.id == caseModel.id,
                             orElse: () => caseModel,
                           );
-
                           return ActionIcon(
                             icon: Icon(
                               updatedCase.isFavorite
