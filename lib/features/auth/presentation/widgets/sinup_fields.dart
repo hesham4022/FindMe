@@ -171,7 +171,6 @@ class _FullNameFieldState extends State<FullNameField> {
 
     final state = context.read<SinupCubit>().state;
 
-    // ✅ يمسك القيمة الحالية من الـ Cubit
     _controller = TextEditingController(
       text: state.fullName ?? '',
     );
@@ -216,8 +215,6 @@ class SignUpPasswordField extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<SinupCubit, SinupState>(
-      buildWhen: (previous, current) =>
-          previous.passwordErrorText != current.passwordErrorText,
       builder: (context, state) {
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,

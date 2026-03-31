@@ -39,6 +39,7 @@ class _SinUpViewBody extends StatelessWidget {
     final bottom = MediaQuery.of(context).viewInsets.bottom;
 
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         title: Text(
           "sinupTitle".ts,
