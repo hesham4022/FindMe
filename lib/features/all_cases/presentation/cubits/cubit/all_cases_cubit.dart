@@ -29,14 +29,14 @@ class AllCasesCubit extends Cubit<AllCasesState> {
   }
 
   void updateCaseLike(int id, bool isLiked) {
-    final updatedList = state.filtered.map((c) {
+    _allCases = _allCases.map((c) {
       if (c.id == id) {
         return c.copyWith(isLiked: isLiked);
       }
       return c;
     }).toList();
 
-    emit(state.copyWith(filtered: updatedList));
+    applyFilters();
   }
 
   Future<void> toggleLike(int id) async {
