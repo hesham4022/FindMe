@@ -25,6 +25,17 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     ));
   }
 
+  void updateCaseLike(int id, bool isLiked, int likesCount) {
+    final updatedList = state.filtered.map((c) {
+      if (c.id == id) {
+        return c.copyWith(isLiked: isLiked, likesCount: likesCount);
+      }
+      return c;
+    }).toList();
+
+    emit(state.copyWith(filtered: updatedList));
+  }
+
   List<CaseInfoModel> getLatestFiveCases() {
     final cases = List<CaseInfoModel>.from(_allCases);
 
