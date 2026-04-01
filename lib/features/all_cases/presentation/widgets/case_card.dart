@@ -1,12 +1,13 @@
-import 'dart:convert';
-
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/precentage_shape.dart';
+import 'package:find_me_app/features/auth/data/model/authed_user.dart';
+import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -65,6 +66,8 @@ class CaseCard extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
+                            if (caseModel.userId == sl<AuthLocal>().getUserId())
+                              Text("True"),
                             SizedBox(height: 4.h),
                             Row(
                               children: [

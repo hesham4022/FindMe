@@ -195,10 +195,13 @@ class AppRoutes {
       //   page: const HostView(currentIndex: 0),
       //   settings: settings,
       // );
-      case addCaseView:
+      case AppRoutes.addCaseView:
+        final args = settings.arguments as Map<String, dynamic>?;
         return MaterialPageRoute(
-          builder: (context) => AddCaseView(),
-          settings: settings,
+          builder: (_) => BlocProvider.value(
+            value: args?['cubit'] as AllCasesCubit,
+            child: const AddCaseView(),
+          ),
         );
       // case addCaseView:
       //   final caseInfo = settings.arguments as CaseInfoModel;

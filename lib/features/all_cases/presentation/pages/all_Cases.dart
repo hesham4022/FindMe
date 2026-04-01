@@ -168,7 +168,12 @@ class _AllCasesViewState extends State<AllCasesView> {
             style: TextStyle(color: Colors.white, fontSize: 16.0),
           ),
           onPress: () {
-            context.toNamed(AppRoutes.addCaseView);
+            context.toNamed(
+              AppRoutes.addCaseView,
+              arguments: {
+                'cubit': context.read<AllCasesCubit>(),
+              },
+            );
           },
           scrollController: _scrollController,
           animateIcon: true,

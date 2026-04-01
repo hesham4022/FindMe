@@ -81,6 +81,9 @@ class AllCasesRemote {
   }
 
   Future<bool> toggleLike(int reportId) async {
+    final authLocal = sl<AuthLocal>();
+    final token = await authLocal.getAccessToken();
+
     final response = await makeHttpRequest(
       url: '${ApiConstants.isLiked}$reportId',
       requestType: HttpRequestType.post,
@@ -97,6 +100,7 @@ class AllCasesRemote {
 
     final json = jsonDecode(utf8.decode(response.bodyBytes));
 
+    // تحويل القيمة من JSON bool
     return json['isLiked'] ?? false;
   }
 }
