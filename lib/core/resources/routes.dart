@@ -142,12 +142,22 @@ class AppRoutes {
           builder: (context) => const NotificationSettingsView(),
           settings: settings,
         );
+      // case AppRoutes.caseInfoRoute:
+      //   final caseInfo = settings.arguments as CaseInfoModel;
+      //   return MaterialPageRoute(
+      //     builder: (_) => CaseInfoView(caseInfo: caseInfo),
+      //     settings: settings,
+      //   );
+
       case AppRoutes.caseInfoRoute:
-        final caseInfo = settings.arguments as CaseInfoModel;
+        final args = settings.arguments as Map<String, dynamic>;
         return MaterialPageRoute(
-          builder: (_) => CaseInfoView(caseInfo: caseInfo),
-          settings: settings,
+          builder: (_) => BlocProvider.value(
+            value: args['cubit'] as AllCasesCubit,
+            child: CaseInfoView(caseInfo: args['case'] as CaseInfoModel),
+          ),
         );
+
       case AppRoutes.searchRoute:
         final allCasesCubit = settings.arguments as AllCasesCubit;
         return MaterialPageRoute(

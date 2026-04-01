@@ -1,3 +1,5 @@
+import 'package:find_me_app/core/helpers/extensions/context.dart';
+import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/features/Home/presentation/widgets/search_textField.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
@@ -126,7 +128,19 @@ class _SearchPageViewState extends State<SearchPageView> {
                     itemBuilder: (context, index) {
                       return Padding(
                         padding: const EdgeInsets.only(bottom: 12),
-                        child: CaseCard(caseModel: state.filtered[index]),
+                        child: CaseCard(
+                          caseModel: state.filtered[index],
+                          onTap: () {
+                            context.toNamed(
+                              AppRoutes.caseInfoRoute,
+                              // arguments: recentCases[index],
+                              arguments: {
+                                'case': state.filtered[index],
+                                'cubit': context.read<AllCasesCubit>(),
+                              },
+                            );
+                          },
+                        ),
                       );
                     },
                   );

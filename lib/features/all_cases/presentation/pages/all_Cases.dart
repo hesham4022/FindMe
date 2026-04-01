@@ -129,6 +129,16 @@ class _AllCasesViewState extends State<AllCasesView> {
                           duration: 1,
                           child: CaseCard(
                             caseModel: state.filtered[index],
+                            onTap: () {
+                              context.toNamed(
+                                AppRoutes.caseInfoRoute,
+                                // arguments: recentCases[index],
+                                arguments: {
+                                  'case': state.filtered[index],
+                                  'cubit': context.read<AllCasesCubit>(),
+                                },
+                              );
+                            },
                           ),
                         ),
                         separatorBuilder: (context, index) =>

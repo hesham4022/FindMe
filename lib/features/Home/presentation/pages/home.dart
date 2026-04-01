@@ -99,7 +99,12 @@ class HomePageNoNavBar extends StatelessWidget {
                                       onTap: () {
                                         context.toNamed(
                                           AppRoutes.caseInfoRoute,
-                                          arguments: recentCases[index],
+                                          // arguments: recentCases[index],
+                                          arguments: {
+                                            'case': recentCases[index],
+                                            'cubit':
+                                                context.read<AllCasesCubit>(),
+                                          },
                                         );
                                       },
                                     ),

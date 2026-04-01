@@ -13,20 +13,16 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
 class CaseCard extends StatelessWidget {
-  const CaseCard({super.key, required this.caseModel});
+  const CaseCard({super.key, required this.caseModel, required this.onTap});
   final CaseInfoModel caseModel;
 
+  final VoidCallback onTap;
   get http => null;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {
-        context.toNamed(
-          AppRoutes.caseInfoRoute,
-          arguments: caseModel,
-        );
-      },
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(11.w),
         decoration: BoxDecoration(
