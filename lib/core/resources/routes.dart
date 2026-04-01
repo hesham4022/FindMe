@@ -1,5 +1,8 @@
+import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/features/add_case/presentation/pages/add_case.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
+import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
+import 'package:find_me_app/features/app/presentation/pages/app.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/reset_password/reset_password_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/pages/forget_password.dart';
 import 'package:find_me_app/features/auth/presentation/pages/sinup.dart';
@@ -23,6 +26,7 @@ import 'package:find_me_app/features/notifications/presentation/pages/notificati
 import 'package:find_me_app/features/profile/data/model/user_profile_model.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/pages/profile_view.dart';
 import 'package:find_me_app/features/settings/presentation/pages/settings_view.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AppRoutes {
   static const String initialRoute = "/";
@@ -144,7 +148,13 @@ class AppRoutes {
           builder: (_) => CaseInfoView(caseInfo: caseInfo),
           settings: settings,
         );
-
+      case AppRoutes.searchRoute:
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider(
+            create: (_) => AllCasesCubit(sl())..onInit(),
+            child: const SearchPageView(),
+          ),
+        );
       // case resetPasswordRoute:
       //   assert(settings.arguments != null);
       //   final args = settings.arguments as ResetPasswordArgs;
@@ -191,11 +201,11 @@ class AppRoutes {
           builder: (context) => const NotificationsView(),
           settings: settings,
         );
-      case searchRoute:
-        return MaterialPageRoute(
-          builder: (context) => const SearchPageView(),
-          settings: settings,
-        );
+      // case searchRoute:
+      //   return MaterialPageRoute(
+      //     builder: (context) => const SearchPageView(),
+      //     settings: settings,
+      //   );
       case helpCenterView:
         return MaterialPageRoute(
           builder: (context) => const HelpCenterView(),
