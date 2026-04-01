@@ -195,8 +195,8 @@ class CardAllCaseInfo extends StatelessWidget {
               BlocBuilder<AllCasesCubit, AllCasesState>(
                 builder: (context, state) {
                   final updatedCase = state.filtered.firstWhere(
-                    (c) => c.id == caseInfo?.id,
-                    orElse: () => caseInfo!,
+                    (c) => c.id == caseInfo.id,
+                    orElse: () => caseInfo,
                   );
 
                   return ActionIcon(
@@ -207,10 +207,26 @@ class CardAllCaseInfo extends StatelessWidget {
                       color: AppColors.mainColor,
                       size: 16,
                     ),
-                    onTap: () {
-                      // context
-                      //     .read<AllCasesCubit>()
-                      //     .toggleFavoriteCard(updatedCase.id ?? -1);
+                    onTap: () async {
+                      // Optimistic UI: قلب فورًا
+                      final previousValue = updatedCase.isLiked;
+                      context.read<AllCasesCubit>().updateCaseLike(
+                            updatedCase.id ?? -1,
+                            !previousValue,
+                          );
+
+                      try {
+                        // Cubit يتعامل مع request ويرجع isLiked
+                        await context.read<AllCasesCubit>().toggleLike(
+                              updatedCase.id ?? -1,
+                            );
+                      } catch (e) {
+                        print('Like toggle failed: $e');
+
+                        // ارجع القيمة القديمة لو فشل
+                        context.read<AllCasesCubit>().updateCaseLike(
+                            updatedCase.id ?? -1, previousValue);
+                      }
                     },
                   );
                 },
