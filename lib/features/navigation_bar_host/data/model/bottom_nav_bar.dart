@@ -6,15 +6,15 @@ import 'package:flutter/material.dart';
 import 'package:find_me_app/core/resources/strings.dart';
 
 class BottomNavBarTab {
-  final Widget Function() builder;
-  final String title;
-  final IconData? icon;
-  final String? img;
-  final String? activeImg;
-  final GlobalKey<NavigatorState>? navigatorKey;
+  Widget? screen;
+  String title;
+  IconData? icon;
+  String? img;
+  String? activeImg;
+  GlobalKey<NavigatorState>? navigatorKey;
 
   BottomNavBarTab({
-    required this.builder,
+    this.screen,
     required this.title,
     this.icon,
     this.img,
@@ -25,23 +25,19 @@ class BottomNavBarTab {
 
 List<BottomNavBarTab> kUserBottomBarTabs = [
   BottomNavBarTab(
-    builder: () => HomePageNoNavBar(),
-    title: AppStrings.dashboard,
-    img: 'assets/icons/home_icon.svg',
-  ),
+      screen: HomePageNoNavBar(),
+      title: AppStrings.dashboard,
+      img: 'assets/icons/home_icon.svg'),
   BottomNavBarTab(
-    builder: () => const AllCasesView(),
-    title: "Casses",
-    img: 'assets/icons/place_icon.svg',
-  ),
+      screen: const AllCasesView(),
+      title: "Casses",
+      img: 'assets/icons/place_icon.svg'),
   BottomNavBarTab(
-    builder: () => const ProfileView(),
-    title: "profile",
-    img: 'assets/icons/person_icon.svg',
-  ),
+      screen: const ProfileView(),
+      title: "profile",
+      img: 'assets/icons/person_icon.svg'),
   BottomNavBarTab(
-    builder: () => const SettingsView(),
-    title: "settings",
-    img: 'assets/icons/settingss.svg',
-  ),
+      screen: const SettingsView(),
+      title: "settings",
+      img: 'assets/icons/settingss.svg'),
 ];

@@ -34,9 +34,9 @@ class MainApp extends StatelessWidget {
                 create: (_) => AppCubit(sl())..onInit(),
                 lazy: false,
               ),
-              // BlocProvider(
-              //   create: (_) => AllCasesCubit(sl())..onInit(),
-              // ),
+              BlocProvider(
+                create: (_) => AllCasesCubit(sl())..onInit(),
+              ),
 
               // BlocProvider(
               //   create: (_) => AuthCubit(sl())..loadCachedUser(),

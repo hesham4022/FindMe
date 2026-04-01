@@ -51,7 +51,7 @@ class HostView extends StatelessWidget {
             child: Scaffold(
               body: IndexedStack(
                 index: state.selectedIndex,
-                children: kUserBottomBarTabs.map((e) => e.builder()).toList(),
+                children: kUserBottomBarTabs.map((e) => e.screen!).toList(),
               ),
               //     Center(
               //   child: kUserBottomBarTabs[state.selectedIndex].screen,
