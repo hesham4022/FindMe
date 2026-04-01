@@ -15,7 +15,7 @@ class CardAllCaseInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 22, vertical: 18),
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
       decoration: BoxDecoration(
         color: AppColors.secondColor,
         borderRadius: BorderRadius.circular(12),
@@ -74,7 +74,7 @@ class CardAllCaseInfo extends StatelessWidget {
                       ],
                     ),
                   ),
-                  VSpace(3),
+                  const VSpace(3),
                   Container(
                     width: 120,
                     padding: EdgeInsets.only(top: 10, bottom: 10, right: 5),
@@ -82,10 +82,10 @@ class CardAllCaseInfo extends StatelessWidget {
                       color: Color(0xFF1D4ED8), // الأزرق
                       borderRadius: BorderRadius.circular(18),
                     ),
-                    child: Column(
+                    child: const Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Padding(
+                        Padding(
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
                             "Features:",
@@ -140,10 +140,10 @@ class CardAllCaseInfo extends StatelessWidget {
               ),
             ],
           ),
-          VSpace(10),
+          const VSpace(10),
           Container(
             width: double.infinity,
-            padding: EdgeInsets.only(bottom: 2, top: 1),
+            padding: const EdgeInsets.only(bottom: 2, top: 1),
             decoration: BoxDecoration(
                 color: Colors.white, borderRadius: BorderRadius.circular(12)),
             child: Column(
@@ -173,7 +173,8 @@ class CardAllCaseInfo extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                 decoration: BoxDecoration(
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(16),
