@@ -40,12 +40,12 @@ class CardAllCaseInfo extends StatelessWidget {
                   ),
                 ),
               ),
-              HSpace(12),
+              const HSpace(12),
               Column(
                 children: [
                   Container(
                     width: 120,
-                    padding: EdgeInsets.only(top: 5, bottom: 5, left: 5),
+                    padding: const EdgeInsets.only(top: 5, bottom: 5, left: 5),
                     decoration: BoxDecoration(
                       color: AppColors.mainColor,
                       borderRadius: BorderRadius.circular(18),
@@ -68,7 +68,8 @@ class CardAllCaseInfo extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(horizontal: 5),
                           child: Text(
                             "${caseInfo?.age} years old",
-                            style: TextStyle(color: Colors.white, fontSize: 12),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 12),
                           ),
                         ),
                       ],
@@ -77,9 +78,10 @@ class CardAllCaseInfo extends StatelessWidget {
                   const VSpace(3),
                   Container(
                     width: 120,
-                    padding: EdgeInsets.only(top: 10, bottom: 10, right: 5),
+                    padding:
+                        const EdgeInsets.only(top: 10, bottom: 10, right: 5),
                     decoration: BoxDecoration(
-                      color: Color(0xFF1D4ED8), // الأزرق
+                      color: const Color(0xFF1D4ED8), // الأزرق
                       borderRadius: BorderRadius.circular(18),
                     ),
                     child: const Column(
@@ -195,8 +197,8 @@ class CardAllCaseInfo extends StatelessWidget {
               BlocBuilder<AllCasesCubit, AllCasesState>(
                 builder: (context, state) {
                   final updatedCase = state.filtered.firstWhere(
-                    (c) => c.id == caseInfo.id,
-                    orElse: () => caseInfo,
+                    (c) => c.id == caseInfo?.id,
+                    orElse: () => caseInfo!,
                   );
 
                   return ActionIcon(
