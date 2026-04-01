@@ -71,7 +71,45 @@ class CaseCard extends StatelessWidget {
                                 ),
                                 if (caseModel.userId.toString() ==
                                     sl<AuthLocal>().getUserId())
-                                  const Icon(Icons.more_vert),
+                                  IconButton(
+                                    onPressed: () {
+                                      showModalBottomSheet(
+                                        context: context,
+                                        builder: (_) => Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            ListTile(
+                                              leading: const Icon(Icons.edit),
+                                              title: const Text('Edit'),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                // كود الـ edit
+                                                context.toNamed(
+                                                    AppRoutes.addCaseView,
+                                                    arguments: {
+                                                      'case': caseModel,
+                                                      'cubit': context.read<
+                                                          AllCasesCubit>(),
+                                                    });
+                                              },
+                                            ),
+                                            ListTile(
+                                              leading: const Icon(Icons.delete,
+                                                  color: Colors.red),
+                                              title: const Text('Delete',
+                                                  style: TextStyle(
+                                                      color: Colors.red)),
+                                              onTap: () {
+                                                Navigator.pop(context);
+                                                // كود الـ delete
+                                              },
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                    icon: Icon(Icons.more_vert),
+                                  ),
                               ],
                             ),
                             SizedBox(height: 4.h),
