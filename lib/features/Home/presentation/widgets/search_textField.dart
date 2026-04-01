@@ -1,7 +1,9 @@
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
+import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 
@@ -25,7 +27,10 @@ class SearchTextfield extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        context.toNamed(AppRoutes.searchRoute);
+        context.toNamed(
+          AppRoutes.searchRoute,
+          arguments: context.read<AllCasesCubit>(),
+        );
       },
       child: TextField(
         onChanged: onChanged,

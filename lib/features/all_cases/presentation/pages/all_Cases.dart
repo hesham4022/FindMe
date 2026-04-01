@@ -37,7 +37,10 @@ class _AllCasesViewState extends State<AllCasesView> {
             child: CircleIconAppbar(
               asset: 'assets/icons/searchIcon.svg',
               onTap: () {
-                context.toNamed(AppRoutes.searchRoute);
+                context.toNamed(
+                  AppRoutes.searchRoute,
+                  arguments: context.read<AllCasesCubit>(),
+                );
               },
             ),
           ),

@@ -149,9 +149,10 @@ class AppRoutes {
           settings: settings,
         );
       case AppRoutes.searchRoute:
+        final allCasesCubit = settings.arguments as AllCasesCubit;
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => AllCasesCubit(sl())..onInit(),
+          builder: (_) => BlocProvider.value(
+            value: allCasesCubit,
             child: const SearchPageView(),
           ),
         );
