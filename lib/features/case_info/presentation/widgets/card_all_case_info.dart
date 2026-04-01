@@ -224,8 +224,6 @@ class CardAllCaseInfo extends StatelessWidget {
                             );
                       } catch (e) {
                         print('Like toggle failed: $e');
-
-                        // ارجع القيمة القديمة لو فشل
                         context.read<AllCasesCubit>().updateCaseLike(
                             updatedCase.id ?? -1, previousValue);
                       }

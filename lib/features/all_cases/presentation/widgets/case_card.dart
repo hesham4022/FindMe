@@ -100,7 +100,10 @@ class CaseCard extends StatelessWidget {
                         onTap: () {
                           context.toNamed(
                             AppRoutes.caseInfoRoute,
-                            arguments: caseModel,
+                            arguments: {
+                              'case': caseModel,
+                              'cubit': context.read<AllCasesCubit>(),
+                            },
                           );
                         },
                         child: Container(
