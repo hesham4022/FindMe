@@ -17,6 +17,7 @@ import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.da
 
 class AllCasesView extends StatefulWidget {
   const AllCasesView({super.key});
+  final CaseInfoModel? caseToEdit;
 
   @override
   State<AllCasesView> createState() => _AllCasesViewState();
@@ -24,6 +25,7 @@ class AllCasesView extends StatefulWidget {
 
 class _AllCasesViewState extends State<AllCasesView> {
   final ScrollController _scrollController = ScrollController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
