@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'dart:io';
-
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/helpers/enums/request_type.dart';
