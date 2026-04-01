@@ -1,3 +1,4 @@
+import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/profile/presentation/cubit/profile_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -19,53 +20,56 @@ class HostView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ProfileCubit(sl()),
-      child: BlocConsumer<HostCubit, HostState>(
-        listener: hostListener,
-        buildWhen: (p, c) => p.selectedIndex != c.selectedIndex,
-        builder: (context, state) {
-          return PopScope(
-            canPop: false,
-            onPopInvoked: (didPop) {
-              if (!didPop) {
-                final hostCubit = context.read<HostCubit>();
-                final history = hostCubit.tabHistory;
+      create: (context) => AllCasesCubit(sl())..onInit(),
+      child: BlocProvider(
+        create: (_) => ProfileCubit(sl()),
+        child: BlocConsumer<HostCubit, HostState>(
+          listener: hostListener,
+          buildWhen: (p, c) => p.selectedIndex != c.selectedIndex,
+          builder: (context, state) {
+            return PopScope(
+              canPop: false,
+              onPopInvoked: (didPop) {
+                if (!didPop) {
+                  final hostCubit = context.read<HostCubit>();
+                  final history = hostCubit.tabHistory;
 
-                final currentIndex = hostCubit.state.selectedIndex;
+                  final currentIndex = hostCubit.state.selectedIndex;
 
-                if (currentIndex == 0) {
-                  SystemNavigator.pop();
-                  return;
+                  if (currentIndex == 0) {
+                    SystemNavigator.pop();
+                    return;
+                  }
+
+                  if (history.length > 1) {
+                    history.removeLast();
+                    final previousIndex = history.last;
+                    hostCubit.emit(
+                        hostCubit.state.copyWith(selectedIndex: previousIndex));
+                  } else {
+                    SystemNavigator.pop();
+                  }
                 }
-
-                if (history.length > 1) {
-                  history.removeLast();
-                  final previousIndex = history.last;
-                  hostCubit.emit(
-                      hostCubit.state.copyWith(selectedIndex: previousIndex));
-                } else {
-                  SystemNavigator.pop();
-                }
-              }
-            },
-            child: Scaffold(
-              body: IndexedStack(
-                index: state.selectedIndex,
-                children: kUserBottomBarTabs.map((e) => e.screen!).toList(),
+              },
+              child: Scaffold(
+                body: IndexedStack(
+                  index: state.selectedIndex,
+                  children: kUserBottomBarTabs.map((e) => e.screen!).toList(),
+                ),
+                //     Center(
+                //   child: kUserBottomBarTabs[state.selectedIndex].screen,
+                // ),
+                bottomNavigationBar: CutomBottomNavigationBar(
+                  selectedIndex: state.selectedIndex,
+                  tabs: kUserBottomBarTabs,
+                  onTap: (index) {
+                    context.read<HostCubit>().changeIndex(index);
+                  },
+                ),
               ),
-              //     Center(
-              //   child: kUserBottomBarTabs[state.selectedIndex].screen,
-              // ),
-              bottomNavigationBar: CutomBottomNavigationBar(
-                selectedIndex: state.selectedIndex,
-                tabs: kUserBottomBarTabs,
-                onTap: (index) {
-                  context.read<HostCubit>().changeIndex(index);
-                },
-              ),
-            ),
-          );
-        },
+            );
+          },
+        ),
       ),
     );
   }
