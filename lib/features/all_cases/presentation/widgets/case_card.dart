@@ -58,17 +58,22 @@ class CaseCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "${caseModel.firstName} ${caseModel.lastName}",
-                              style: TextStyle(
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.black,
-                              ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${caseModel.firstName} ${caseModel.lastName}",
+                                  style: TextStyle(
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                if (caseModel.userId.toString() ==
+                                    sl<AuthLocal>().getUserId())
+                                  const Icon(Icons.more_vert),
+                              ],
                             ),
-                            if (caseModel.userId.toString() ==
-                                sl<AuthLocal>().getUserId())
-                              const Text("True"),
                             SizedBox(height: 4.h),
                             Row(
                               children: [
