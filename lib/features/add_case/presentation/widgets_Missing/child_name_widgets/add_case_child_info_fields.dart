@@ -7,13 +7,30 @@ import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class ChildFirstNameField extends StatelessWidget {
+class ChildFirstNameField extends StatefulWidget {
   const ChildFirstNameField({
     super.key,
-    this.onSubmit,
   });
 
-  final Function(String)? onSubmit;
+  @override
+  State<ChildFirstNameField> createState() => _ChildFirstNameFieldState();
+}
+
+class _ChildFirstNameFieldState extends State<ChildFirstNameField> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: context.read<AddCaseCubit>().state.firstName ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,12 +38,12 @@ class ChildFirstNameField extends StatelessWidget {
       // buildWhen: (previous, current) => (previous.usernameErrorText != current.usernameErrorText),
       builder: (context, state) {
         return CustomTextField(
+            controller: _controller,
             radius: 30,
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
             hint: "First name".ts,
             errorText: state.firstNameErrorText,
-            onSubmit: onSubmit,
             onChanged: (value) {
               context.read<AddCaseCubit>().firstNameChanged(value);
             },

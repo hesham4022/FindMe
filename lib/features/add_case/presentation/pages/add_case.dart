@@ -11,31 +11,34 @@ import 'package:find_me_app/features/add_case/presentation/widgets_Missing/child
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/incident_details_container.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/consent_verification_section.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/reporterinformation.dart';
+import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AddCaseView extends StatelessWidget {
-  const AddCaseView({super.key});
-
+  const AddCaseView({super.key, this.caseToEdit});
+  final CaseInfoModel? caseToEdit;
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) => AddCaseCubit(sl()),
-      child: const _AddCaseViewBody(),
+      child: _AddCaseViewBody(caseToEdit: caseToEdit),
     );
   }
 }
 
 class _AddCaseViewBody extends StatelessWidget {
-  const _AddCaseViewBody();
-
+  const _AddCaseViewBody({this.caseToEdit});
+  final CaseInfoModel? caseToEdit;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         title: Text(
-          "Report a Missing or Abducted Child",
-          style: TextStyle(fontSize: 16),
+          caseToEdit == null
+              ? "Report a Missing or Abducted Child"
+              : "Edit Report",
+          style: const TextStyle(fontSize: 16),
         ),
       ),
       body: BlocBuilder<AddCaseCubit, AddCaseState>(
@@ -115,7 +118,9 @@ class _AddCaseViewBody extends StatelessWidget {
                                           .submitReport(context);
                                     },
                               title: Text(
-                                "Send alert now",
+                                caseToEdit == null
+                                    ? "Send alert now"
+                                    : "Edit Report",
                                 style: Theme.of(context)
                                     .textTheme
                                     .kDisplay02ExtraBold

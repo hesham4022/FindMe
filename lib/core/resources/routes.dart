@@ -200,7 +200,9 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
             value: args?['cubit'] as AllCasesCubit,
-            child: const AddCaseView(),
+            child: AddCaseView(
+              caseToEdit: args?['case'] as CaseInfoModel?,
+            ),
           ),
         );
       // case addCaseView:
