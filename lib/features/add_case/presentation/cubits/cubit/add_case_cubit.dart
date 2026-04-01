@@ -205,7 +205,13 @@ class AddCaseCubit extends Cubit<AddCaseState> {
     emit(state.copyWith(
       firstName: caseModel.firstName,
       lastName: caseModel.lastName,
-      // باقي الـ fields
+      address: caseModel.address,
+      age: caseModel.age,
+      gender: caseModel.gender,
+      weight: caseModel.weight,
+      height: caseModel.height,
+      description: caseModel.description,
+      photos: caseModel.photos.map((e) => e.url ?? '').toList(),
     ));
   }
 

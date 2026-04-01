@@ -58,7 +58,7 @@ class _ChildFirstNameFieldState extends State<ChildFirstNameField> {
   }
 }
 
-class ChildLastNameField extends StatelessWidget {
+class ChildLastNameField extends StatefulWidget {
   const ChildLastNameField({
     super.key,
     this.onSubmit,
@@ -67,17 +67,37 @@ class ChildLastNameField extends StatelessWidget {
   final Function(String)? onSubmit;
 
   @override
+  State<ChildLastNameField> createState() => _ChildLastNameFieldState();
+}
+
+class _ChildLastNameFieldState extends State<ChildLastNameField> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: context.read<AddCaseCubit>().state.firstName ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddCaseCubit, AddCaseState>(
-      // buildWhen: (previous, current) => (previous.usernameErrorText != current.usernameErrorText),
       builder: (context, state) {
         return CustomTextField(
+            controller: _controller,
             radius: 30,
             contentPadding:
                 const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
             hint: "lastname".ts,
             errorText: state.lastNameErrorText,
-            onSubmit: onSubmit,
+            onSubmit: widget.onSubmit,
             onChanged: (value) {
               context.read<AddCaseCubit>().lastNameChanged(value);
             },
@@ -92,13 +112,33 @@ class ChildLastNameField extends StatelessWidget {
   }
 }
 
-class AgeField extends StatelessWidget {
+class AgeField extends StatefulWidget {
   const AgeField({
     super.key,
     this.onSubmit,
   });
 
   final Function(String)? onSubmit;
+
+  @override
+  State<AgeField> createState() => _AgeFieldState();
+}
+
+class _AgeFieldState extends State<AgeField> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: context.read<AddCaseCubit>().state.firstName ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -117,8 +157,9 @@ class AgeField extends StatelessWidget {
                     ),
               ),
             ),
-            VSpace(5),
+            const VSpace(5),
             CustomTextField(
+              controller: _controller,
               keyboardType: TextInputType.number,
               radius: 30,
               contentPadding:
@@ -126,7 +167,7 @@ class AgeField extends StatelessWidget {
               hint: "Age".ts,
               errorText: state.ageErrorText,
               // errorText: "Feild is required",
-              onSubmit: onSubmit,
+              onSubmit: widget.onSubmit,
               onChanged: (value) {
                 context.read<AddCaseCubit>().ageChanged(value);
               },
@@ -143,13 +184,33 @@ class AgeField extends StatelessWidget {
   }
 }
 
-class AddressOfChild extends StatelessWidget {
+class AddressOfChild extends StatefulWidget {
   const AddressOfChild({
     super.key,
     this.onSubmit,
   });
 
   final Function(String)? onSubmit;
+
+  @override
+  State<AddressOfChild> createState() => _AddressOfChildState();
+}
+
+class _AddressOfChildState extends State<AddressOfChild> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: context.read<AddCaseCubit>().state.firstName ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -170,13 +231,14 @@ class AddressOfChild extends StatelessWidget {
             ),
             const VSpace(5),
             CustomTextField(
+              controller: _controller,
               radius: 30,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
               hint: "Cairo , Giza".ts,
               errorText: state.addressErrorText,
               // errorText: "Feild is required",
-              onSubmit: onSubmit,
+              onSubmit: widget.onSubmit,
               onChanged: (value) {
                 context.read<AddCaseCubit>().addressChanged(value);
               },
@@ -194,7 +256,7 @@ class AddressOfChild extends StatelessWidget {
   }
 }
 
-class WeightField extends StatelessWidget {
+class WeightField extends StatefulWidget {
   const WeightField({
     super.key,
     this.onSubmit,
@@ -203,17 +265,38 @@ class WeightField extends StatelessWidget {
   final Function(String)? onSubmit;
 
   @override
+  State<WeightField> createState() => _WeightFieldState();
+}
+
+class _WeightFieldState extends State<WeightField> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: context.read<AddCaseCubit>().state.firstName ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddCaseCubit, AddCaseState>(
       builder: (context, state) {
         return CustomTextField(
+          controller: _controller,
           keyboardType: TextInputType.number,
           radius: 30,
           contentPadding:
               const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
           hint: "Weight in kg".ts,
           errorText: state.weightErrorText,
-          onSubmit: onSubmit,
+          onSubmit: widget.onSubmit,
           onChanged: (value) {
             context.read<AddCaseCubit>().weightChanged(value);
           },
@@ -228,7 +311,7 @@ class WeightField extends StatelessWidget {
   }
 }
 
-class HeightField extends StatelessWidget {
+class HeightField extends StatefulWidget {
   const HeightField({
     super.key,
     this.onSubmit,
@@ -237,10 +320,31 @@ class HeightField extends StatelessWidget {
   final Function(String)? onSubmit;
 
   @override
+  State<HeightField> createState() => _HeightFieldState();
+}
+
+class _HeightFieldState extends State<HeightField> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: context.read<AddCaseCubit>().state.firstName ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddCaseCubit, AddCaseState>(
       builder: (context, state) {
         return CustomTextField(
+          controller: _controller,
           keyboardType: TextInputType.number,
           radius: 30,
           contentPadding:
@@ -248,7 +352,7 @@ class HeightField extends StatelessWidget {
           hint: "Height in cm".ts,
           errorText: state.heightErrorText,
           // errorText: "Feild is required",
-          onSubmit: onSubmit,
+          onSubmit: widget.onSubmit,
           onChanged: (value) {
             context.read<AddCaseCubit>().heightChanged(value);
           },
@@ -263,13 +367,34 @@ class HeightField extends StatelessWidget {
   }
 }
 
-class ClothingDescroptionField extends StatelessWidget {
+class ClothingDescroptionField extends StatefulWidget {
   const ClothingDescroptionField({
     super.key,
     this.onSubmit,
   });
 
   final Function(String)? onSubmit;
+
+  @override
+  State<ClothingDescroptionField> createState() =>
+      _ClothingDescroptionFieldState();
+}
+
+class _ClothingDescroptionFieldState extends State<ClothingDescroptionField> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: context.read<AddCaseCubit>().state.firstName ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -290,13 +415,14 @@ class ClothingDescroptionField extends StatelessWidget {
             ),
             const VSpace(5),
             CustomTextField(
+              controller: _controller,
               maxLines: 3,
               radius: 13,
               contentPadding:
                   const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
               hint: "what they were last seen wearing".ts,
               errorText: state.clothingDescriptionErrorText,
-              onSubmit: onSubmit,
+              onSubmit: widget.onSubmit,
               onChanged: (value) {
                 context.read<AddCaseCubit>().clothingDescriptionChanged(value);
               },
@@ -316,13 +442,35 @@ class ClothingDescroptionField extends StatelessWidget {
   }
 }
 
-class OtherIdentifyingDetailsField extends StatelessWidget {
+class OtherIdentifyingDetailsField extends StatefulWidget {
   const OtherIdentifyingDetailsField({
     super.key,
     this.onSubmit,
   });
 
   final Function(String)? onSubmit;
+
+  @override
+  State<OtherIdentifyingDetailsField> createState() =>
+      _OtherIdentifyingDetailsFieldState();
+}
+
+class _OtherIdentifyingDetailsFieldState
+    extends State<OtherIdentifyingDetailsField> {
+  late final TextEditingController _controller;
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(
+      text: context.read<AddCaseCubit>().state.firstName ?? '',
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -343,6 +491,7 @@ class OtherIdentifyingDetailsField extends StatelessWidget {
             ),
             const VSpace(5),
             CustomTextField(
+              controller: _controller,
               maxLines: 3,
               radius: 13,
               contentPadding:
@@ -350,7 +499,7 @@ class OtherIdentifyingDetailsField extends StatelessWidget {
               hint: "birthmarks, scars, accessories, hairstyle".ts,
               errorText: state.descriptionErrorText,
               // errorText: "Feild is required",
-              onSubmit: onSubmit,
+              onSubmit: widget.onSubmit,
               onChanged: (value) {
                 context.read<AddCaseCubit>().descriptionChanged(value);
               },
