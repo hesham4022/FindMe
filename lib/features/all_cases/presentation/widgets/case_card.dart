@@ -66,8 +66,9 @@ class CaseCard extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            if (caseModel.userId == sl<AuthLocal>().getUserId())
-                              Text("True"),
+                            if (caseModel.userId.toString() ==
+                                sl<AuthLocal>().getUserId())
+                              const Text("True"),
                             SizedBox(height: 4.h),
                             Row(
                               children: [
