@@ -76,7 +76,7 @@ class _ChildLastNameFieldState extends State<ChildLastNameField> {
   void initState() {
     super.initState();
     _controller = TextEditingController(
-      text: context.read<AddCaseCubit>().state.firstName ?? '',
+      text: context.read<AddCaseCubit>().state.lastName ?? '',
     );
   }
 
@@ -130,7 +130,7 @@ class _AgeFieldState extends State<AgeField> {
   void initState() {
     super.initState();
     _controller = TextEditingController(
-      text: context.read<AddCaseCubit>().state.firstName ?? '',
+      text: context.read<AddCaseCubit>().state.age?.toString() ?? '',
     );
   }
 
@@ -202,7 +202,7 @@ class _AddressOfChildState extends State<AddressOfChild> {
   void initState() {
     super.initState();
     _controller = TextEditingController(
-      text: context.read<AddCaseCubit>().state.firstName ?? '',
+      text: context.read<AddCaseCubit>().state.address ?? '',
     );
   }
 
@@ -274,7 +274,7 @@ class _WeightFieldState extends State<WeightField> {
   void initState() {
     super.initState();
     _controller = TextEditingController(
-      text: context.read<AddCaseCubit>().state.firstName ?? '',
+      text: context.read<AddCaseCubit>().state.weight?.toString() ?? '',
     );
   }
 
@@ -329,7 +329,7 @@ class _HeightFieldState extends State<HeightField> {
   void initState() {
     super.initState();
     _controller = TextEditingController(
-      text: context.read<AddCaseCubit>().state.firstName ?? '',
+      text: context.read<AddCaseCubit>().state.height?.toString() ?? '',
     );
   }
 
@@ -386,7 +386,7 @@ class _ClothingDescroptionFieldState extends State<ClothingDescroptionField> {
   void initState() {
     super.initState();
     _controller = TextEditingController(
-      text: context.read<AddCaseCubit>().state.firstName ?? '',
+      text: context.read<AddCaseCubit>().state.clothingDescription ?? '',
     );
   }
 
@@ -462,7 +462,7 @@ class _OtherIdentifyingDetailsFieldState
   void initState() {
     super.initState();
     _controller = TextEditingController(
-      text: context.read<AddCaseCubit>().state.firstName ?? '',
+      text: context.read<AddCaseCubit>().state.description ?? '',
     );
   }
 

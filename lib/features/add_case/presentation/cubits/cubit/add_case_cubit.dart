@@ -212,6 +212,8 @@ class AddCaseCubit extends Cubit<AddCaseState> {
       height: caseModel.height,
       description: caseModel.description,
       photos: caseModel.photos.map((e) => e.url ?? '').toList(),
+      confirmInformation: caseModel.confirmInformation,
+      consentToShare: caseModel.consentToShare,
     ));
   }
 

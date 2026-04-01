@@ -46,7 +46,7 @@ class HeaderOfChildInfo extends StatelessWidget {
               ),
             ),
 
-            HSpace(20),
+            const HSpace(20),
 
             // ✅ الصور
             Expanded(
@@ -65,12 +65,19 @@ class HeaderOfChildInfo extends StatelessWidget {
                           children: [
                             ClipRRect(
                               borderRadius: BorderRadius.circular(10),
-                              child: Image.file(
-                                File(photo),
-                                width: 80,
-                                height: 80,
-                                fit: BoxFit.cover,
-                              ),
+                              child: photo.startsWith('http')
+                                  ? Image.network(
+                                      photo,
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                    )
+                                  : Image.file(
+                                      File(photo),
+                                      width: 80,
+                                      height: 80,
+                                      fit: BoxFit.cover,
+                                    ),
                             ),
                             // ❌ زر الحذف
                             Positioned(

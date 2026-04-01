@@ -247,7 +247,7 @@ class AddCaseState extends Equatable {
       firstName: '',
       lastName: '',
       gender: '',
-      age: 0,
+      age: null,
       hasVehicle: false,
       confirmInformation: false,
       consentToShare: false,
