@@ -1,4 +1,5 @@
 import 'package:find_me_app/features/Home/presentation/pages/home_scope.dart';
+import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/pages/sinup_or_login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,12 +38,13 @@ class MiddlewarePage extends StatelessWidget {
     // HostView
     else {
       // return const HostView(currentIndex: 0);
-      return const HomeScope();
+      return BlocProvider(
+        create: (_) => AllCasesCubit(sl())..onInit(),
+        child: const HostView(currentIndex: 0),
+      );
     }
   }
 }
-
-
 
 
 // import 'package:flutter/material.dart';
