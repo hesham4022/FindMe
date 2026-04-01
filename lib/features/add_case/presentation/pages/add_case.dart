@@ -21,7 +21,7 @@ class AddCaseView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AddCaseCubit(sl()),
+      create: (_) => AddCaseCubit(sl())..fillWithCase(caseToEdit),
       child: _AddCaseViewBody(caseToEdit: caseToEdit),
     );
   }

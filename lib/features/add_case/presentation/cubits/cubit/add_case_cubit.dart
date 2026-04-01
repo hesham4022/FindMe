@@ -200,6 +200,15 @@ class AddCaseCubit extends Cubit<AddCaseState> {
         state.consentToShare;
   }
 
+  void fillWithCase(CaseInfoModel? caseModel) {
+    if (caseModel == null) return; // ← لو null مش هيعمل حاجة
+    emit(state.copyWith(
+      firstName: caseModel.firstName,
+      lastName: caseModel.lastName,
+      // باقي الـ fields
+    ));
+  }
+
   Future<void> submitReport(BuildContext context) async {
     if (state.isLoading) return;
     emit(state.copyWith(status: AddCaseStatus.loading));
