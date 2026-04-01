@@ -1,26 +1,27 @@
-// import 'package:dartz/dartz.dart';
-// import 'package:find_me_app/core/error_management/failure.dart';
-// import 'package:find_me_app/core/networking/functions.dart';
-// import 'package:find_me_app/features/add_case/data/model/create_report.dart';
-// import 'package:find_me_app/features/add_case/data/model/update_report.dart';
-// import 'package:find_me_app/features/add_case/data/source/update_case_remote.dart';
+import 'package:dartz/dartz.dart';
+import 'package:find_me_app/core/error_management/failure.dart';
+import 'package:find_me_app/core/networking/functions.dart';
+import 'package:find_me_app/features/add_case/data/model/create_report.dart';
 
-// class UpdateReportRepo {
-//   final UpdateReportRemote _updateReportRemote;
-//   UpdateReportRepo(this._updateReportRemote);
+import 'package:find_me_app/features/add_case/data/source/update_case_remote.dart';
 
-//   Future<Either<Failure, UpdateReportResponse>> updateReport(
-//     String id,
-//     CreateReportRequest request,
-//   ) {
-//     print('📡 [UpdateReportRepo] Sending update request: ${request.toJson()}');
-//     return executeFunctionality<UpdateReportResponse>(
-//       function: () async {
-//         final json = await _updateReportRemote.updateReport(id, request);
-//         final response = UpdateReportResponse.fromMap(json);
-//         print('📩 [UpdateReportRepo] Update Response: ${response}');
-//         return response;
-//       },
-//     );
-//   }
-// }
+class UpdateCaseRepo {
+  final UpdateCaseRemote _updateCasesRemote;
+  UpdateCaseRepo(this._updateCasesRemote);
+
+  Future<Either<Failure, CreateReportResponse>> updateCase(
+    CreateReportRequest request,
+    int id,
+  ) {
+    print('📡 [AuthRepo] Sending signup request again: ${request.toJson()}');
+    return executeFunctionality<CreateReportResponse>(
+      function: () async {
+        final json = await _updateCasesRemote.updateCase(request, id);
+        final response = CreateReportResponse.fromMap(json);
+        print('📩 [AuthRepo] Signup Response: ${response}');
+
+        return response;
+      },
+    );
+  }
+}

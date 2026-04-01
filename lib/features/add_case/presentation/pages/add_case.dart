@@ -21,7 +21,7 @@ class AddCaseView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => AddCaseCubit(sl())..fillWithCase(caseToEdit),
+      create: (_) => AddCaseCubit(sl(), sl())..fillWithCase(caseToEdit),
       child: _AddCaseViewBody(caseToEdit: caseToEdit),
     );
   }
@@ -113,9 +113,16 @@ class _AddCaseViewBody extends StatelessWidget {
                               onPressed: state.isLoading
                                   ? null
                                   : () {
-                                      context
-                                          .read<AddCaseCubit>()
-                                          .submitReport(context);
+                                      if (caseToEdit == null) {
+                                        context
+                                            .read<AddCaseCubit>()
+                                            .submitReport(context);
+                                      } else {
+                                        context
+                                            .read<AddCaseCubit>()
+                                            .updateReport(
+                                                context, caseToEdit!.id!);
+                                      }
                                     },
                               title: Text(
                                 caseToEdit == null

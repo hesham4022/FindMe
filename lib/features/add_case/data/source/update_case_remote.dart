@@ -12,7 +12,8 @@ import 'package:path/path.dart';
 
 class UpdateCaseRemote {
   UpdateCaseRemote();
-  Future<Map<String, dynamic>> updateCase(CreateReportRequest data) async {
+  Future<Map<String, dynamic>> updateCase(
+      CreateReportRequest data, int id) async {
     // final client = sl<AppHttpClient>().client;
     try {
       final fields = {
@@ -36,17 +37,15 @@ class UpdateCaseRemote {
       };
 
       final files = <UploadFile>[];
-      if (data.photos.isNotEmpty) {
-        for (final photoPath in data.photos) {
-          if (photoPath.isNotEmpty) {
-            files.add(
-              UploadFile(
-                file: File(photoPath),
-                fieldName: 'photos[]',
-                name: basename(photoPath),
-              ),
-            );
-          }
+      for (final photoPath in data.photos) {
+        if (photoPath.isNotEmpty && !photoPath.startsWith('http')) {
+          files.add(
+            UploadFile(
+              file: File(photoPath),
+              fieldName: 'photos[]',
+              name: basename(photoPath),
+            ),
+          );
         }
       }
 
@@ -60,8 +59,8 @@ class UpdateCaseRemote {
       };
 
       final response = await makeMultipartRequest(
-        url: ApiConstants.createReportURL,
-        requestType: HttpRequestType.post,
+        url: '${ApiConstants.updateReportURL}/$id',
+        requestType: HttpRequestType.put,
         // client: client,
         fields: fields,
         files: files,

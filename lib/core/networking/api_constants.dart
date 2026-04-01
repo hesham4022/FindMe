@@ -46,6 +46,7 @@ class ApiConstants {
   //! Community Endpoints ------------------------------------------------------
 
   static final String createReportURL = "$_baseUrl/api/reports";
+  static final String updateReportURL = "$_baseUrl/api/reports";
 
   static final String _communityUrl = "$_baseUrl/api/community";
 

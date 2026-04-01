@@ -7,6 +7,7 @@ import 'package:find_me_app/core/helpers/enums/report_type.dart';
 import 'package:find_me_app/core/helpers/formfield_validator.dart';
 import 'package:find_me_app/features/add_case/data/model/create_report.dart';
 import 'package:find_me_app/features/add_case/data/repo/add_case_repo.dart';
+import 'package:find_me_app/features/add_case/data/repo/update_case_repo.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,9 @@ part 'add_case_state.dart';
 
 class AddCaseCubit extends Cubit<AddCaseState> {
   final AddCasesRepo _repo;
+  final UpdateCaseRepo _updateRepo;
 
-  AddCaseCubit(this._repo) : super(AddCaseState.initial());
+  AddCaseCubit(this._repo, this._updateRepo) : super(AddCaseState.initial());
 
   // 🔹 Field changes
 
@@ -252,6 +254,49 @@ class AddCaseCubit extends Cubit<AddCaseState> {
         emit(state.copyWith(status: AddCaseStatus.success, success: response));
         CaseInfoModel? caseInfoModel = response.data;
         context.read<AllCasesCubit>().addNewCase(caseInfoModel);
+      },
+    );
+  }
+
+  Future<void> updateReport(BuildContext context, int id) async {
+    if (state.isLoading) return;
+    emit(state.copyWith(status: AddCaseStatus.loading));
+
+    final request = CreateReportRequest(
+      firstName: state.firstName ?? '',
+      lastName: state.lastName ?? '',
+      address: state.address ?? '',
+      age: state.age ?? 0,
+      gender: state.gender ?? '',
+      weight: state.weight,
+      height: state.height,
+      description: state.description,
+      dateLastSeen: state.dateLastSeen,
+      lastSeenLocation: state.lastSeenLocation,
+      fullBreakdownDetails: state.fullBreakdownDetails,
+      vehicleDetails: state.vehicleDetails,
+      hasVehicle: false,
+      confirmInformation: state.confirmInformation,
+      consentToShare: state.consentToShare,
+      photos: state.photos,
+    );
+
+    log("📤 Sending Update Request: ${request.toJson()}");
+
+    final result = await _updateRepo.updateCase(request, id);
+
+    result.fold(
+      (failure) {
+        emit(state.copyWith(status: AddCaseStatus.error, error: failure));
+      },
+      (response) {
+        emit(state.copyWith(status: AddCaseStatus.success, success: response));
+        CaseInfoModel? caseInfoModel = response.data;
+        if (caseInfoModel != null) {
+          context
+              .read<AllCasesCubit>()
+              .updateCaseLike(id, caseInfoModel.isLiked);
+        }
       },
     );
   }
