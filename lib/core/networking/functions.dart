@@ -393,7 +393,8 @@ Future<http.Response> makeMultipartRequest({
   // ✅ لو 401 و محتاج Auth → نجرب Refresh
   if (requiresAuth && response.statusCode == 451) {
     log("⚠️ Multipart token expired, trying to refresh...");
-    final newToken = await ensureValidAccessToken();
+    // final newToken = await ensureValidAccessToken();
+    final newToken = await refreshAccessToken();
 
     if (newToken != null) {
       log("✅ Multipart token refreshed, retrying upload...");

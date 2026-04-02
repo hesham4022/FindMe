@@ -52,13 +52,9 @@ class AddCaseRemote {
         }
       }
 
-      final authLocal = sl<AuthLocal>();
-      final token = await authLocal.getAccessToken();
-      print("token = $token");
       final headers = {
         'Accept': 'application/json',
         'lang': 'EN',
-        if (token != null && token.isNotEmpty) 'Authorization': 'Bearer $token',
       };
 
       final response = await makeMultipartRequest(
