@@ -18,6 +18,14 @@ class AllCasesCubit extends Cubit<AllCasesState> {
 
   List<CaseInfoModel> _allCases = [];
 
+  void updateCaseInList(CaseInfoModel updatedCase) {
+    _allCases = _allCases.map((c) {
+      if (c.id == updatedCase.id) return updatedCase;
+      return c;
+    }).toList();
+    applyFilters();
+  }
+
   void addNewCase(CaseInfoModel newCase) {
     _allCases.insert(0, newCase);
 
