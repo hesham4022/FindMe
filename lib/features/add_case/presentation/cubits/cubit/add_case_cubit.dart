@@ -219,6 +219,10 @@ class AddCaseCubit extends Cubit<AddCaseState> {
     ));
   }
 
+  void resetStatus() {
+    emit(state.copyWith(status: AddCaseStatus.initial));
+  }
+
   Future<void> submitReport(BuildContext context) async {
     if (state.isLoading) return;
     emit(state.copyWith(status: AddCaseStatus.loading));
@@ -291,8 +295,8 @@ class AddCaseCubit extends Cubit<AddCaseState> {
       },
       (response) {
         emit(state.copyWith(status: AddCaseStatus.success, success: response));
-        CaseInfoModel? caseInfoModel = response.data;
-        context.read<AllCasesCubit>().updateCaseInList(caseInfoModel);
+        // CaseInfoModel? caseInfoModel = response.data;
+        // context.read<AllCasesCubit>().updateCaseInList(caseInfoModel);
       },
     );
   }
