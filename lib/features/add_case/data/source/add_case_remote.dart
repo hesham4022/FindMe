@@ -65,6 +65,7 @@ class AddCaseRemote {
         url: ApiConstants.createReportURL,
         requestType: HttpRequestType.post,
         // client: client,
+        requiresAuth: true,
         fields: fields,
         files: files,
         headers: headers,
