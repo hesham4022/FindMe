@@ -58,7 +58,6 @@ class UpdateCaseRemote {
       if (response.statusCode >= 400) {
         throw ServerException(json['message'] ?? 'Server error');
       }
-
       return json;
     } finally {}
   }
