@@ -11,7 +11,7 @@ void addCaseListener(BuildContext context, AddCaseState state) {
       showAlertSnackBar(
           context, state.success?.message ?? "", AlertType.success);
       context.read<AddCaseCubit>().resetStatus();
-      context.toNamed(AppRoutes.hostRoute);
+      // context.toNamed(AppRoutes.hostRoute);
     });
   }
 

@@ -61,12 +61,15 @@ class CaseCard extends StatelessWidget {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "${caseModel.firstName} ${caseModel.lastName}",
-                                  style: TextStyle(
-                                    fontSize: 16.sp,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
+                                Flexible(
+                                  child: Text(
+                                    "${caseModel.firstName} ${caseModel.lastName}",
+                                    style: TextStyle(
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.black,
+                                    ),
+                                    softWrap: true,
                                   ),
                                 ),
                                 if (caseModel.userId.toString() ==
