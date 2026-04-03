@@ -46,7 +46,15 @@ Future<void> init() async {
   //! external packages
   final sharedPrefs = await SharedPreferences.getInstance();
   sl.registerLazySingleton(() => sharedPrefs);
-  sl.registerLazySingleton(() => InternetConnectionChecker.instance);
+  // sl.registerLazySingleton(() => InternetConnectionChecker.instance);
+  sl.registerLazySingleton(
+    () => InternetConnectionChecker.createInstance(
+      addresses: [
+        AddressCheckOption(uri: Uri.parse('https://google.com')),
+        AddressCheckOption(uri: Uri.parse('https://one.one.one.one')),
+      ],
+    ),
+  );
   sl.registerLazySingleton(() => AppHttpClient().client);
   sl.registerLazySingleton(() => const FlutterSecureStorage());
   // sl.registerLazySingleton(() => AppFunctions());
