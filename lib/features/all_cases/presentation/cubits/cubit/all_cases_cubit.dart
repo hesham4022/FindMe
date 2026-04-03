@@ -99,6 +99,7 @@ class AllCasesCubit extends Cubit<AllCasesState> {
         isSuccess = false;
       },
       (success) {
+        if (isClosed) return;
         _allCases = success.allCases;
         _allCases.sort((a, b) {
           final dateA = DateTime.tryParse(a.createdAt ?? '') ?? DateTime(0);
