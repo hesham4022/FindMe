@@ -22,10 +22,6 @@ class MiddlewarePage extends StatelessWidget {
         print("NetworkState: $state"); // ← ضيف ده
         if (state is NetworkDisconnected) {
           return const NoConnectionPage();
-        } else if (state is NetworkInitial) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
-          );
         } else {
           return _getScreen(context);
         }

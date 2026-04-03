@@ -18,7 +18,7 @@ class NetworkInfo extends Cubit<NetworkState> {
 
   NetworkInfo(
     this._connectionChecker,
-  ) : super(NetworkInitial());
+  ) : super(NetworkConnected());
 
   listenToConnection() async {
     final connected = await _connectionChecker.hasConnection;
