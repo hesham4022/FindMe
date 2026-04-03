@@ -73,6 +73,7 @@ class MainApp extends StatelessWidget {
               ),
             ],
             child: MaterialApp(
+              navigatorKey: MainApp.navigatorKey,
               debugShowCheckedModeBanner: false,
               scrollBehavior: CustomBehavior(),
               theme: AppThemes.lightTheme(context),
