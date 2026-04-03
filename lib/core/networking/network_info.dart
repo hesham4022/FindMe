@@ -18,27 +18,27 @@ class NetworkInfo extends Cubit<NetworkState> {
 
   NetworkInfo(
     this._connectionChecker,
-  ) : super(NetworkConnected());
+  ) : super(NetworkInitial());
 
   listenToConnection() async {
-    final connected = await _connectionChecker.hasConnection;
-    if (!isClosed) {
-      emit(connected ? NetworkConnected() : NetworkDisconnected());
-    }
-    _listener = _connectionChecker.onStatusChange.listen((status) {
-      if (isClosed) return;
-      switch (status) {
-        case InternetConnectionStatus.connected:
-          emit(NetworkConnected());
+    // final connected = await _connectionChecker.hasConnection;
+    // if (!isClosed) {
+    //   emit(connected ? NetworkConnected() : NetworkDisconnected());
+    // }
+    // _listener = _connectionChecker.onStatusChange.listen((status) {
+    //   if (isClosed) return;
+    //   switch (status) {
+    //     case InternetConnectionStatus.connected:
+    //       emit(NetworkConnected());
 
-          break;
-        case InternetConnectionStatus.disconnected:
-          emit(NetworkDisconnected());
-          break;
-        default:
-          break;
-      }
-    });
+    //       break;
+    //     case InternetConnectionStatus.disconnected:
+    //       emit(NetworkDisconnected());
+    //       break;
+    //     default:
+    //       break;
+    //   }
+    // });
   }
 
   Future<bool> get isConnected => _connectionChecker.hasConnection;

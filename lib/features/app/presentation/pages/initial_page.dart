@@ -19,7 +19,6 @@ class MiddlewarePage extends StatelessWidget {
     return BlocBuilder<NetworkInfo, NetworkState>(
       buildWhen: (previous, current) => previous != current,
       builder: (context, state) {
-        print("NetworkState: $state"); // ← ضيف ده
         if (state is NetworkDisconnected) {
           return const NoConnectionPage();
         } else {

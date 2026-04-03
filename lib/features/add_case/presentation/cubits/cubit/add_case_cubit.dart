@@ -203,7 +203,7 @@ class AddCaseCubit extends Cubit<AddCaseState> {
   }
 
   void fillWithCase(CaseInfoModel? caseModel) {
-    if (caseModel == null) return; // ← لو null مش هيعمل حاجة
+    if (caseModel == null) return;
     emit(state.copyWith(
       firstName: caseModel.firstName,
       lastName: caseModel.lastName,
