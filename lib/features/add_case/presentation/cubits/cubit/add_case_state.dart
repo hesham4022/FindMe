@@ -69,6 +69,8 @@ class AddCaseState extends Equatable {
   final String? consentErrorText;
   final CreateReportRequest? createReportRequest;
   final AddCaseStatus status;
+  // في الـ State
+  final CaseInfoModel? originalCase;
 
   ///////
   final CreateReportResponse? success;
@@ -121,6 +123,7 @@ class AddCaseState extends Equatable {
     this.emailOfReporterError,
     this.phoneOfReporterError,
     this.relationShipToChildError,
+    this.originalCase,
   });
 
   AddCaseState copyWith({
@@ -174,6 +177,9 @@ class AddCaseState extends Equatable {
     String? relationShipToChildError,
     String? phoneOfReporterError,
     String? emailOfReporterError,
+
+    // في الـ State
+    final CaseInfoModel? originalCase,
   }) {
     return AddCaseState(
       firstName: firstName ?? this.firstName,
@@ -233,6 +239,7 @@ class AddCaseState extends Equatable {
           relationShipToChildError ?? this.relationShipToChildError,
       phoneOfReporterError: phoneOfReporterError ?? this.phoneOfReporterError,
       emailOfReporterError: emailOfReporterError ?? this.emailOfReporterError,
+      originalCase: originalCase ?? this.originalCase,
     );
   }
 
@@ -304,5 +311,6 @@ class AddCaseState extends Equatable {
         phoneOfReporterError,
         relationShipToChild,
         relationShipToChildError,
+        originalCase,
       ];
 }
