@@ -215,6 +215,19 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     }
   }
 
+//   void removeCaseFromList(int caseId) {
+//   final updatedAll = List<CaseInfoModel>.from(state.filtered)
+//     ..removeWhere((c) => c.id == caseId);
+
+//   final updatedFiltered = List<CaseInfoModel>.from(state.filtered)
+//     ..removeWhere((c) => c.id == caseId);
+
+//   emit(state.copyWith(
+
+//     filtered: updatedFiltered,
+//   ));
+// }
+
   void resetSearch() {
     emit(state.copyWith(filtered: _allCases));
   }

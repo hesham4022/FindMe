@@ -5,6 +5,10 @@ import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/buttons/custom_btn.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
+import 'package:find_me_app/features/add_case/data/repo/add_case_repo.dart';
+import 'package:find_me_app/features/add_case/data/repo/update_case_repo.dart';
+import 'package:find_me_app/features/add_case/presentation/cubits/case_action/cubit/case_action_cubit.dart';
+import 'package:find_me_app/features/add_case/presentation/cubits/case_form/cubit/case_form_cubit.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_listener.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/child_info.dart';
@@ -20,10 +24,22 @@ class AddCaseView extends StatelessWidget {
   final CaseInfoModel? caseToEdit;
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => AddCaseCubit(sl(), sl())..fillWithCase(caseToEdit),
-      child: _AddCaseViewBody(caseToEdit: caseToEdit),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => CaseFormCubit(),
+        ),
+        BlocProvider(
+          create: (_) =>
+              CaseActionCubit(sl<AddCasesRepo>(), sl<UpdateCaseRepo>()),
+        ),
+      ],
+      child: const _AddCaseViewBody(),
     );
+    // BlocProvider(
+    //   create: (_) => AddCaseCubit(sl(), sl())..fillWithCase(caseToEdit),
+    //   child: _AddCaseViewBody(caseToEdit: caseToEdit),
+    // );
   }
 }
 
