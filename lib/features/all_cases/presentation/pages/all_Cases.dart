@@ -6,7 +6,6 @@ import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/animated_transition_widget/animated_transition_widget.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/case_card.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/circle_icon_appBar.dart';

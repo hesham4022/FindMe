@@ -25,255 +25,265 @@ class CaseCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: onTap,
-      child: Container(
-        padding: EdgeInsets.all(11.w),
-        decoration: BoxDecoration(
-          color: const Color(0xFFE6E6FA),
-          borderRadius: BorderRadius.circular(16.r),
-        ),
-        child: Row(
-          children: [
-            Container(
-              width: 90.w,
-              height: 90.h,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                image: DecorationImage(
-                  image: caseModel.photos.isNotEmpty
-                      ? CachedNetworkImageProvider(caseModel.photos.first.url!)
-                      : const AssetImage(
-                          "assets/images/Portrait_Placeholder.png"),
-                  fit: BoxFit.cover,
+      child: BlocProvider(
+        create: (context) => AddCaseCubit(sl(), sl()),
+        child: Container(
+          padding: EdgeInsets.all(11.w),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE6E6FA),
+            borderRadius: BorderRadius.circular(16.r),
+          ),
+          child: Row(
+            children: [
+              Container(
+                width: 90.w,
+                height: 90.h,
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  image: DecorationImage(
+                    image: caseModel.photos.isNotEmpty
+                        ? CachedNetworkImageProvider(
+                            caseModel.photos.first.url!)
+                        : const AssetImage(
+                            "assets/images/Portrait_Placeholder.png"),
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
-            ),
-            SizedBox(width: 16.w),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Flexible(
-                                  child: Text(
-                                    "${caseModel.firstName} ${caseModel.lastName}",
-                                    style: TextStyle(
-                                      fontSize: 16.sp,
-                                      fontWeight: FontWeight.bold,
-                                      color: Colors.black,
+              SizedBox(width: 16.w),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Expanded(
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(
+                                    child: Text(
+                                      "${caseModel.firstName} ${caseModel.lastName}",
+                                      style: TextStyle(
+                                        fontSize: 16.sp,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                      softWrap: true,
                                     ),
-                                    softWrap: true,
                                   ),
-                                ),
-                                if (caseModel.userId.toString() ==
-                                    sl<AuthLocal>().getUserId())
-                                  IconButton(
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        builder: (_) => Column(
-                                          mainAxisSize: MainAxisSize.min,
-                                          children: [
-                                            ListTile(
-                                              leading: const Icon(Icons.edit),
-                                              title: const Text('Edit'),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                // كود الـ edit
-                                                context.toNamed(
-                                                    AppRoutes.addCaseView,
-                                                    arguments: {
-                                                      'case': caseModel,
-                                                      'cubit': context.read<
-                                                          AllCasesCubit>(),
-                                                    });
-                                              },
-                                            ),
-                                            ListTile(
-                                              leading: const Icon(Icons.delete,
-                                                  color: Colors.red),
-                                              title: const Text('Delete',
-                                                  style: TextStyle(
-                                                      color: Colors.red)),
-                                              onTap: () {
-                                                Navigator.pop(context);
-                                                context
-                                                    .read<AddCaseCubit>()
-                                                    .deleteCase(caseModel.id!);
-                                              },
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                    icon: Icon(Icons.more_vert),
+                                  if (caseModel.userId.toString() ==
+                                      sl<AuthLocal>().getUserId())
+                                    IconButton(
+                                      onPressed: () {
+                                        showModalBottomSheet(
+                                          context: context,
+                                          builder: (_) => Column(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              ListTile(
+                                                leading: const Icon(Icons.edit),
+                                                title: const Text('Edit'),
+                                                onTap: () {
+                                                  Navigator.pop(context);
+                                                  // كود الـ edit
+                                                  context.toNamed(
+                                                      AppRoutes.addCaseView,
+                                                      arguments: {
+                                                        'case': caseModel,
+                                                        'cubit': context.read<
+                                                            AllCasesCubit>(),
+                                                      });
+                                                },
+                                              ),
+                                              ListTile(
+                                                leading: const Icon(
+                                                    Icons.delete,
+                                                    color: Colors.red),
+                                                title: const Text('Delete',
+                                                    style: TextStyle(
+                                                        color: Colors.red)),
+                                                onTap: () {
+                                                  final addCaseCubit = context
+                                                      .read<AddCaseCubit>();
+                                                  Navigator.pop(context);
+                                                  addCaseCubit.deleteCase(
+                                                      caseModel.id!);
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      icon: Icon(Icons.more_vert),
+                                    ),
+                                ],
+                              ),
+                              SizedBox(height: 4.h),
+                              Row(
+                                children: [
+                                  Icon(Icons.location_on,
+                                      size: 14.w, color: Colors.red),
+                                  SizedBox(width: 4.w),
+                                  Text(
+                                    caseModel.address ?? '',
+                                    style: TextStyle(
+                                        fontSize: 12.sp,
+                                        color: Colors.grey[600]),
                                   ),
-                              ],
-                            ),
-                            SizedBox(height: 4.h),
-                            Row(
-                              children: [
-                                Icon(Icons.location_on,
-                                    size: 14.w, color: Colors.red),
-                                SizedBox(width: 4.w),
-                                Text(
-                                  caseModel.address ?? '',
-                                  style: TextStyle(
-                                      fontSize: 12.sp, color: Colors.grey[600]),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      if (caseModel.similarityScore != null)
-                        BalanceIndicator(
-                          similarityScore: caseModel.similarityScore!,
-                          desText: null,
-                          radius: 30,
-                          available: "",
-                        ),
-                    ],
-                  ),
-                  SizedBox(height: 12.h),
-
-                  // Action Buttons
-                  Row(
-                    children: [
-                      // Info Button
-                      GestureDetector(
-                        onTap: () {
-                          context.toNamed(
-                            AppRoutes.caseInfoRoute,
-                            arguments: {
-                              'case': caseModel,
-                              'cubit': context.read<AllCasesCubit>(),
-                            },
-                          );
-                        },
-                        child: Container(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 16.w, vertical: 6.h),
-                          decoration: BoxDecoration(
-                            color: AppColors.mainColor,
-                            borderRadius: BorderRadius.circular(16.r),
-                          ),
-                          child: Text(
-                            "Info",
-                            style: TextStyle(
-                              fontSize: 12.sp,
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      ),
-                      SizedBox(width: 12.w),
+                        if (caseModel.similarityScore != null)
+                          BalanceIndicator(
+                            similarityScore: caseModel.similarityScore!,
+                            desText: null,
+                            radius: 30,
+                            available: "",
+                          ),
+                      ],
+                    ),
+                    SizedBox(height: 12.h),
 
-                      // Action Icons
-                      ActionIcon(
-                        icon: SvgPicture.asset(
-                          'assets/icons/comment_icon.svg',
-                          width: 16,
-                          height: 16,
-                        ),
-                      ),
-                      SizedBox(width: 2.w),
-
-                      const ActionIcon(
-                          icon: const Icon(
-                        Icons.info_outline,
-                        color: AppColors.mainColor,
-                        size: 16,
-                      )),
-                      SizedBox(width: 2.w),
-
-                      const ActionIcon(
-                          icon: const Icon(
-                        Icons.help_outline,
-                        color: AppColors.mainColor,
-                        size: 16,
-                      )),
-                      SizedBox(width: 2.w),
-
-                      // Favorite Button connected to Cubit
-                      // BlocBuilder<AllCasesCubit, AllCasesState>(
-                      //   builder: (context, state) {
-                      //     final updatedCase = state.filtered.firstWhere(
-                      //       (c) => c.id == caseModel.id,
-                      //       orElse: () => caseModel,
-                      //     );
-                      //     return ActionIcon(
-                      //       icon: Icon(
-                      //         updatedCase.isFavorite
-                      //             ? Icons.favorite
-                      //             : Icons.favorite_border,
-                      //         color: AppColors.mainColor,
-                      //         size: 16,
-                      //       ),
-                      //       onTap: () {
-                      //         context
-                      //             .read<AllCasesCubit>()
-                      //             .toggleFavoriteCard(updatedCase.id ?? -1);
-                      //       },
-                      //     );
-                      //   },
-                      // ),
-
-                      BlocBuilder<AllCasesCubit, AllCasesState>(
-                        builder: (context, state) {
-                          final updatedCase = state.filtered.firstWhere(
-                            (c) => c.id == caseModel.id,
-                            orElse: () => caseModel,
-                          );
-
-                          return ActionIcon(
-                            icon: Icon(
-                              updatedCase.isLiked
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
+                    // Action Buttons
+                    Row(
+                      children: [
+                        // Info Button
+                        GestureDetector(
+                          onTap: () {
+                            context.toNamed(
+                              AppRoutes.caseInfoRoute,
+                              arguments: {
+                                'case': caseModel,
+                                'cubit': context.read<AllCasesCubit>(),
+                              },
+                            );
+                          },
+                          child: Container(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 16.w, vertical: 6.h),
+                            decoration: BoxDecoration(
                               color: AppColors.mainColor,
-                              size: 16,
+                              borderRadius: BorderRadius.circular(16.r),
                             ),
-                            onTap: () async {
-                              // Optimistic UI: قلب فورًا
-                              final previousValue = updatedCase.isLiked;
-                              context.read<AllCasesCubit>().updateCaseLike(
-                                    updatedCase.id ?? -1,
-                                    !previousValue,
-                                  );
+                            child: Text(
+                              "Info",
+                              style: TextStyle(
+                                fontSize: 12.sp,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 12.w),
 
-                              try {
-                                // Cubit يتعامل مع request ويرجع isLiked
-                                await context.read<AllCasesCubit>().toggleLike(
-                                      updatedCase.id ?? -1,
-                                    );
-                              } catch (e) {
-                                print('Like toggle failed: $e');
+                        // Action Icons
+                        ActionIcon(
+                          icon: SvgPicture.asset(
+                            'assets/icons/comment_icon.svg',
+                            width: 16,
+                            height: 16,
+                          ),
+                        ),
+                        SizedBox(width: 2.w),
 
-                                // ارجع القيمة القديمة لو فشل
+                        const ActionIcon(
+                            icon: const Icon(
+                          Icons.info_outline,
+                          color: AppColors.mainColor,
+                          size: 16,
+                        )),
+                        SizedBox(width: 2.w),
+
+                        const ActionIcon(
+                            icon: const Icon(
+                          Icons.help_outline,
+                          color: AppColors.mainColor,
+                          size: 16,
+                        )),
+                        SizedBox(width: 2.w),
+
+                        // Favorite Button connected to Cubit
+                        // BlocBuilder<AllCasesCubit, AllCasesState>(
+                        //   builder: (context, state) {
+                        //     final updatedCase = state.filtered.firstWhere(
+                        //       (c) => c.id == caseModel.id,
+                        //       orElse: () => caseModel,
+                        //     );
+                        //     return ActionIcon(
+                        //       icon: Icon(
+                        //         updatedCase.isFavorite
+                        //             ? Icons.favorite
+                        //             : Icons.favorite_border,
+                        //         color: AppColors.mainColor,
+                        //         size: 16,
+                        //       ),
+                        //       onTap: () {
+                        //         context
+                        //             .read<AllCasesCubit>()
+                        //             .toggleFavoriteCard(updatedCase.id ?? -1);
+                        //       },
+                        //     );
+                        //   },
+                        // ),
+
+                        BlocBuilder<AllCasesCubit, AllCasesState>(
+                          builder: (context, state) {
+                            final updatedCase = state.filtered.firstWhere(
+                              (c) => c.id == caseModel.id,
+                              orElse: () => caseModel,
+                            );
+
+                            return ActionIcon(
+                              icon: Icon(
+                                updatedCase.isLiked
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: AppColors.mainColor,
+                                size: 16,
+                              ),
+                              onTap: () async {
+                                // Optimistic UI: قلب فورًا
+                                final previousValue = updatedCase.isLiked;
                                 context.read<AllCasesCubit>().updateCaseLike(
-                                    updatedCase.id ?? -1, previousValue);
-                              }
-                            },
-                          );
-                        },
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 16.w),
-                ],
+                                      updatedCase.id ?? -1,
+                                      !previousValue,
+                                    );
+
+                                try {
+                                  // Cubit يتعامل مع request ويرجع isLiked
+                                  await context
+                                      .read<AllCasesCubit>()
+                                      .toggleLike(
+                                        updatedCase.id ?? -1,
+                                      );
+                                } catch (e) {
+                                  print('Like toggle failed: $e');
+
+                                  // ارجع القيمة القديمة لو فشل
+                                  context.read<AllCasesCubit>().updateCaseLike(
+                                      updatedCase.id ?? -1, previousValue);
+                                }
+                              },
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 16.w),
+                  ],
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
