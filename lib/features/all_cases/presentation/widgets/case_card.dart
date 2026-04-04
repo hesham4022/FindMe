@@ -3,6 +3,7 @@ import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
+import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/precentage_shape.dart';
@@ -104,7 +105,9 @@ class CaseCard extends StatelessWidget {
                                                       color: Colors.red)),
                                               onTap: () {
                                                 Navigator.pop(context);
-                                                // كود الـ delete
+                                                context
+                                                    .read<AddCaseCubit>()
+                                                    .deleteCase(caseModel.id);
                                               },
                                             ),
                                           ],
