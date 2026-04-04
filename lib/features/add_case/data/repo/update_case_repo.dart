@@ -24,4 +24,16 @@ class UpdateCaseRepo {
       },
     );
   }
+
+  Future<Either<Failure, String>> deleteCase(int caseId) {
+    print('🗑️ [AuthRepo] Sending delete account request');
+
+    return executeFunctionality<String>(
+      function: () async {
+        final result = await _updateCasesRemote.deleteCase(caseId);
+        print('✅ [AuthRepo] Delete Account Response: $result');
+        return result;
+      },
+    );
+  }
 }

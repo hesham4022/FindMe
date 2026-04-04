@@ -2,7 +2,9 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/exception.dart';
+import 'package:find_me_app/core/helpers/enums/request_type.dart';
 import 'package:find_me_app/core/networking/api_constants.dart';
+import 'package:find_me_app/core/networking/functions.dart';
 import 'package:find_me_app/features/add_case/data/model/create_report.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:http/http.dart' as http;
@@ -60,5 +62,17 @@ class UpdateCaseRemote {
       }
       return json;
     } finally {}
+  }
+
+  Future<String> deleteCase(int CaseId) async {
+    final response = await makeHttpRequest(
+      url: ('${ApiConstants.updateReportURL}/$CaseId'),
+      requestType: HttpRequestType.delete,
+      requiresAuth: true,
+      needParsedResponse: false,
+    );
+    final responseString = utf8.decode(response.bodyBytes);
+    final jsonData = jsonDecode(responseString);
+    return jsonData['message'] ?? "error try again";
   }
 }
