@@ -47,7 +47,7 @@ class _PersonalInfoBody extends StatelessWidget {
       child: ListView(
         // padding: const EdgeInsets.only(top: 8, bottom: 20).h,
         children: [
-          VSpace(30),
+          const VSpace(30),
           MenuItemWidget(
             isContainer: false,
             icon: Icons.lightbulb_outlined,
@@ -56,7 +56,7 @@ class _PersonalInfoBody extends StatelessWidget {
               context.toNamed(AppRoutes.notificationSettingRoute);
             },
           ),
-          VSpace(10),
+          const VSpace(10),
           MenuItemWidget(
             isContainer: false,
             icon: Icons.key,
@@ -65,7 +65,7 @@ class _PersonalInfoBody extends StatelessWidget {
               context.toNamed(AppRoutes.changePasswordRoute);
             },
           ),
-          VSpace(10),
+          const VSpace(10),
           MenuItemWidget(
             isContainer: false,
             icon: Icons.person_outlined,
