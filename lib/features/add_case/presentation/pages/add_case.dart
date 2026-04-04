@@ -8,7 +8,9 @@ import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/add_case/data/repo/add_case_repo.dart';
 import 'package:find_me_app/features/add_case/data/repo/update_case_repo.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/case_action/cubit/case_action_cubit.dart';
+import 'package:find_me_app/features/add_case/presentation/cubits/case_action/cubit/case_action_state.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/case_form/cubit/case_form_cubit.dart';
+import 'package:find_me_app/features/add_case/presentation/cubits/case_form/cubit/case_form_state.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_listener.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/child_info.dart';
@@ -57,7 +59,7 @@ class _AddCaseViewBody extends StatelessWidget {
           style: const TextStyle(fontSize: 16),
         ),
       ),
-      body: BlocBuilder<AddCaseCubit, AddCaseState>(
+      body: BlocBuilder<CaseFormCubit, CaseFormState>(
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -117,29 +119,36 @@ class _AddCaseViewBody extends StatelessWidget {
                       const VSpace(35),
                       const ConsentVerificationSection(),
                       const VSpace(40),
-                      BlocListener<AddCaseCubit, AddCaseState>(
+                      BlocListener<CaseActionCubit, CaseActionState>(
                         listener: addCaseListener,
-                        child: BlocBuilder<AddCaseCubit, AddCaseState>(
-                          builder: (context, state) {
+                        child: BlocBuilder<CaseFormCubit, CaseFormState>(
+                          builder: (context, formState) {
+                            final formCubit = context.read<CaseFormCubit>();
+                            final actionState =
+                                context.watch<CaseActionCubit>().state;
+
+                            final isEnabled = caseToEdit == null
+                                ? formCubit.isFormValid
+                                : formCubit.canUpdate;
+
                             return CustomFilledButton(
-                              state: (caseToEdit == null
-                                      ? context.read<AddCaseCubit>().isFormValid
-                                      : context.read<AddCaseCubit>().canUpdate)
+                              state: isEnabled
                                   ? CustomState.active
                                   : CustomState.disabled,
                               color: Colors.red,
-                              onPressed: state.isLoading
+                              onPressed: actionState.isLoading
                                   ? null
                                   : () {
+                                      if (!formCubit.validateForm()) return;
+
+                                      final actionCubit =
+                                          context.read<CaseActionCubit>();
+
                                       if (caseToEdit == null) {
-                                        context
-                                            .read<AddCaseCubit>()
-                                            .submitReport(context);
+                                        actionCubit.addCase(formCubit.state);
                                       } else {
-                                        context
-                                            .read<AddCaseCubit>()
-                                            .updateReport(
-                                                context, caseToEdit!.id!);
+                                        actionCubit.updateCase(
+                                            formCubit.state, caseToEdit!.id!);
                                       }
                                     },
                               title: Text(
@@ -155,7 +164,7 @@ class _AddCaseViewBody extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                               ),
-                              loading: state.isLoading,
+                              loading: actionState.isLoading,
                               width: 200,
                               radius: 20,
                             );
