@@ -106,7 +106,9 @@ class _AddCaseViewBody extends StatelessWidget {
                         child: BlocBuilder<AddCaseCubit, AddCaseState>(
                           builder: (context, state) {
                             return CustomFilledButton(
-                              state: context.read<AddCaseCubit>().isFormValid
+                              state: (caseToEdit == null
+                                      ? context.read<AddCaseCubit>().isFormValid
+                                      : context.read<AddCaseCubit>().canUpdate)
                                   ? CustomState.active
                                   : CustomState.disabled,
                               color: Colors.red,

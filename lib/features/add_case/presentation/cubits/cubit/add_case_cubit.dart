@@ -1,6 +1,7 @@
 import 'dart:developer';
 import 'dart:io';
 
+import 'package:collection/collection.dart';
 import 'package:equatable/equatable.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/helpers/enums/report_type.dart';
@@ -219,6 +220,38 @@ class AddCaseCubit extends Cubit<AddCaseState> {
       consentToShare: caseModel.consentToShare,
     ));
   }
+
+  bool get isFormUpdateChanged {
+    final caseModel = state.originalCase;
+    if (caseModel == null) return false;
+
+    final originalPhotos = caseModel.photos.map((e) => e.url ?? '').toList();
+
+    return state.firstName != caseModel.firstName ||
+        state.lastName != caseModel.lastName ||
+        state.address != caseModel.address ||
+        state.age != caseModel.age ||
+        state.gender != caseModel.gender ||
+        state.weight != caseModel.weight ||
+        state.height != caseModel.height ||
+        state.description != caseModel.description ||
+        state.confirmInformation != caseModel.confirmInformation ||
+        state.consentToShare != caseModel.consentToShare ||
+        !const ListEquality().equals(state.photos, originalPhotos);
+  }
+
+  bool get isFormUpdateValid {
+    return AppValidators.validateUsername(state.firstName) == null &&
+        AppValidators.validateLastName(state.lastName) == null &&
+        AppValidators.validateAddress(state.address) == null &&
+        AppValidators.validateAge(state.age?.toString()) == null &&
+        state.gender != null &&
+        state.gender!.isNotEmpty &&
+        state.confirmInformation &&
+        state.consentToShare;
+  }
+
+  bool get canUpdate => isFormUpdateChanged && isFormUpdateValid;
 
   void resetStatus() {
     emit(state.copyWith(status: AddCaseStatus.initial));
