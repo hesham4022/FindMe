@@ -107,7 +107,7 @@ class CaseCard extends StatelessWidget {
                                                 Navigator.pop(context);
                                                 context
                                                     .read<AddCaseCubit>()
-                                                    .deleteCase(caseModel.id);
+                                                    .deleteCase(caseModel.id!);
                                               },
                                             ),
                                           ],
