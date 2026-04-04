@@ -5,13 +5,6 @@ import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/buttons/custom_btn.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/add_case/data/repo/add_case_repo.dart';
-import 'package:find_me_app/features/add_case/data/repo/update_case_repo.dart';
-import 'package:find_me_app/features/add_case/presentation/cubits/case_action/cubit/case_action_cubit.dart';
-import 'package:find_me_app/features/add_case/presentation/cubits/case_action/cubit/case_action_listener.dart';
-import 'package:find_me_app/features/add_case/presentation/cubits/case_action/cubit/case_action_state.dart';
-import 'package:find_me_app/features/add_case/presentation/cubits/case_form/cubit/case_form_cubit.dart';
-import 'package:find_me_app/features/add_case/presentation/cubits/case_form/cubit/case_form_state.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_listener.dart';
 import 'package:find_me_app/features/add_case/presentation/widgets_Missing/child_info.dart';
@@ -27,22 +20,10 @@ class AddCaseView extends StatelessWidget {
   final CaseInfoModel? caseToEdit;
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => CaseFormCubit(),
-        ),
-        BlocProvider(
-          create: (_) =>
-              CaseActionCubit(sl<AddCasesRepo>(), sl<UpdateCaseRepo>()),
-        ),
-      ],
-      child: const _AddCaseViewBody(),
+    return BlocProvider(
+      create: (_) => AddCaseCubit(sl(), sl())..fillWithCase(caseToEdit),
+      child: _AddCaseViewBody(caseToEdit: caseToEdit),
     );
-    // BlocProvider(
-    //   create: (_) => AddCaseCubit(sl(), sl())..fillWithCase(caseToEdit),
-    //   child: _AddCaseViewBody(caseToEdit: caseToEdit),
-    // );
   }
 }
 
@@ -60,7 +41,7 @@ class _AddCaseViewBody extends StatelessWidget {
           style: const TextStyle(fontSize: 16),
         ),
       ),
-      body: BlocBuilder<CaseFormCubit, CaseFormState>(
+      body: BlocBuilder<AddCaseCubit, AddCaseState>(
         builder: (context, state) {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -120,36 +101,29 @@ class _AddCaseViewBody extends StatelessWidget {
                       const VSpace(35),
                       const ConsentVerificationSection(),
                       const VSpace(40),
-                      BlocListener<CaseActionCubit, CaseActionState>(
+                      BlocListener<AddCaseCubit, AddCaseState>(
                         listener: addCaseListener,
-                        child: BlocBuilder<CaseFormCubit, CaseFormState>(
-                          builder: (context, formState) {
-                            final formCubit = context.read<CaseFormCubit>();
-                            final actionState =
-                                context.watch<CaseActionCubit>().state;
-
-                            final isEnabled = caseToEdit == null
-                                ? formCubit.isFormValid
-                                : formCubit.canUpdate;
-
+                        child: BlocBuilder<AddCaseCubit, AddCaseState>(
+                          builder: (context, state) {
                             return CustomFilledButton(
-                              state: isEnabled
+                              state: (caseToEdit == null
+                                      ? context.read<AddCaseCubit>().isFormValid
+                                      : context.read<AddCaseCubit>().canUpdate)
                                   ? CustomState.active
                                   : CustomState.disabled,
                               color: Colors.red,
-                              onPressed: actionState.isLoading
+                              onPressed: state.isLoading
                                   ? null
                                   : () {
-                                      if (!formCubit.validateForm()) return;
-
-                                      final actionCubit =
-                                          context.read<CaseActionCubit>();
-
                                       if (caseToEdit == null) {
-                                        actionCubit.addCase(formCubit.state);
+                                        context
+                                            .read<AddCaseCubit>()
+                                            .submitReport(context);
                                       } else {
-                                        actionCubit.updateCase(
-                                            formCubit.state, caseToEdit!.id!);
+                                        context
+                                            .read<AddCaseCubit>()
+                                            .updateReport(
+                                                context, caseToEdit!.id!);
                                       }
                                     },
                               title: Text(
@@ -165,7 +139,7 @@ class _AddCaseViewBody extends StatelessWidget {
                                       color: Colors.white,
                                     ),
                               ),
-                              loading: actionState.isLoading,
+                              loading: state.isLoading,
                               width: 200,
                               radius: 20,
                             );
