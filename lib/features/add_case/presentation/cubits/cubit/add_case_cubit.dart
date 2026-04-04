@@ -337,32 +337,32 @@ class AddCaseCubit extends Cubit<AddCaseState> {
     );
   }
 
-  Future<void> deleteCase(int caseId) async {
-    if (state.isLoading) return;
+  // Future<void> deleteCase(int caseId) async {
+  //   if (state.isLoading) return;
 
-    emit(state.copyWith(status: AddCaseStatus.loading));
+  //   emit(state.copyWith(status: AddCaseStatus.loading));
 
-    try {
-      final result = await _updateRepo.deleteCase(caseId);
+  //   try {
+  //     final result = await _updateRepo.deleteCase(caseId);
 
-      result.fold(
-        (error) {
-          emit(state.copyWith(
-            status: AddCaseStatus.error,
-            error: error,
-          ));
-        },
-        (response) {
-          emit(state.copyWith(
-            status: AddCaseStatus.success,
-            success: response,
-          ));
-        },
-      );
-    } catch (e, s) {
-      log('❌ deleteAccount error: $e');
-      log(s.toString());
-      emit(state.copyWith(status: DeleteAccountStatus.error));
-    }
-  }
+  //     result.fold(
+  //       (error) {
+  //         emit(state.copyWith(
+  //           status: AddCaseStatus.error,
+  //           error: error,
+  //         ));
+  //       },
+  //       (response) {
+  //         emit(state.copyWith(
+  //           status: AddCaseStatus.success,
+  //           success: response,
+  //         ));
+  //       },
+  //     );
+  //   } catch (e, s) {
+  //     log('❌ deleteAccount error: $e');
+  //     log(s.toString());
+  //     emit(state.copyWith(status: DeleteAccountStatus.error));
+  //   }
+  // }
 }
