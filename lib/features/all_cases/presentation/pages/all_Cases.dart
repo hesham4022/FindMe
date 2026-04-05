@@ -133,32 +133,25 @@ class _AllCasesViewState extends State<AllCasesView> {
                                 opacity: animation,
                                 child: SizeTransition(
                                   sizeFactor: animation,
-                                  child: SlideTransition(
-                                    position: Tween<Offset>(
-                                      begin: const Offset(0, 0),
-                                      end: const Offset(1, 0),
-                                    ).animate(animation),
-                                    child: child,
-                                  ),
+                                  child: child,
                                 ),
                               );
                             },
-                            child: state.filtered[index].isDeleting
-                                ? const SizedBox() // بيختفي بانميشن
-                                : CaseCard(
-                                    caseModel: state.filtered[index],
-                                    onTap: () {
-                                      context.toNamed(
-                                        AppRoutes.caseInfoRoute,
-                                        // arguments: recentCases[index],
-                                        arguments: {
-                                          'case': state.filtered[index],
-                                          'cubit':
-                                              context.read<AllCasesCubit>(),
-                                        },
-                                      );
-                                    },
-                                  ),
+                            child: CaseCard(
+                              key: ValueKey(
+                                "${state.filtered[index].id}-${state.filtered[index].isDeleting}",
+                              ), // 👈 مهم
+                              caseModel: state.filtered[index],
+                              onTap: () {
+                                context.toNamed(
+                                  AppRoutes.caseInfoRoute,
+                                  arguments: {
+                                    'case': state.filtered[index],
+                                    'cubit': context.read<AllCasesCubit>(),
+                                  },
+                                );
+                              },
+                            ),
                           ),
                         ),
                         separatorBuilder: (context, index) =>

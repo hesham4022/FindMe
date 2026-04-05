@@ -124,6 +124,7 @@ class CaseInfoModel {
                 (json['photos'] as List).map((x) => Photo.fromMap(x))),
         createdAt: json['created_at'],
         updatedAt: json['updated_at'],
+        isDeleting: false,
       );
 
   Map<String, dynamic> toMap() => {

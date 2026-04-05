@@ -135,14 +135,14 @@ class AllCasesCubit extends Cubit<AllCasesState> {
   }
 
   void markDeleting(int id) {
-    final newList = state.filtered.map((c) {
+    _allCases = _allCases.map((c) {
       if (c.id == id) {
         return c.copyWith(isDeleting: true);
       }
       return c;
     }).toList();
 
-    emit(state.copyWith(filtered: newList));
+    applyFilters(); // 👈 أهم سطر
   }
 
   Future<void> deleteWithAnimation({
@@ -151,29 +151,24 @@ class AllCasesCubit extends Cubit<AllCasesState> {
   }) async {
     final id = caseModel.id!;
 
-    // شغل الانميشن
     markDeleting(id);
 
     await Future.delayed(const Duration(milliseconds: 300));
 
-    // احذف من UI
-    final oldList = List<CaseInfoModel>.from(state.filtered);
+    final oldList = List<CaseInfoModel>.from(_allCases);
     final index = oldList.indexWhere((c) => c.id == id);
 
-    final newList = List<CaseInfoModel>.from(oldList)
-      ..removeWhere((c) => c.id == id);
-
-    emit(state.copyWith(filtered: newList));
+    // احذف من المصدر الأساسي
+    _allCases = _allCases.where((c) => c.id != id).toList();
+    applyFilters();
 
     final result = await sl<DeleteCaseRepo>().deleteCase(id);
 
     result.fold(
       (error) {
-        // رجّعه
-        final rollback = List<CaseInfoModel>.from(state.filtered)
-          ..insert(index, caseModel.copyWith(isDeleting: false));
-
-        emit(state.copyWith(filtered: rollback));
+        // rollback
+        _allCases.insert(index, caseModel.copyWith(isDeleting: false));
+        applyFilters();
 
         showAlertSnackBar(context, error.msg, AlertType.error);
       },
@@ -182,7 +177,6 @@ class AllCasesCubit extends Cubit<AllCasesState> {
       },
     );
   }
-
   // Future<void> deleteCaseOptimistic({
   //   required BuildContext context,
   //   required CaseInfoModel caseModel,
