@@ -100,41 +100,22 @@ class CaseCard extends StatelessWidget {
                                               },
                                             ),
                                             ListTile(
-                                                leading: const Icon(
-                                                    Icons.delete,
-                                                    color: Colors.red),
-                                                title: const Text('Delete',
-                                                    style: TextStyle(
-                                                        color: Colors.red)),
-                                                onTap: () async {
-                                                  Navigator.pop(context);
+                                              leading: const Icon(Icons.delete,
+                                                  color: Colors.red),
+                                              title: const Text('Delete',
+                                                  style: TextStyle(
+                                                      color: Colors.red)),
+                                              onTap: () async {
+                                                Navigator.pop(context);
 
-                                                  final repo = sl<
-                                                      DeleteCaseRepo>(); // أو من constructor
-
-                                                  final result =
-                                                      await repo.deleteCase(
-                                                          caseModel.id!);
-
-                                                  result.fold(
-                                                    (error) {
-                                                      showAlertSnackBar(
-                                                          context,
-                                                          error.msg,
-                                                          AlertType.error);
-                                                    },
-                                                    (message) {
-                                                      showAlertSnackBar(
-                                                          context,
-                                                          message,
-                                                          AlertType.success);
-                                                      context
-                                                          .read<AllCasesCubit>()
-                                                          .deleteCaseFromList(
-                                                              caseModel.id!);
-                                                    },
-                                                  );
-                                                }),
+                                                await context
+                                                    .read<AllCasesCubit>()
+                                                    .deleteCaseOptimistic(
+                                                      context: context,
+                                                      caseModel: caseModel,
+                                                    );
+                                              },
+                                            ),
                                           ],
                                         ),
                                       );

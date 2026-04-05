@@ -1,10 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
+import 'package:find_me_app/core/shared/widgets/alerts.dart';
+import 'package:find_me_app/features/add_case/data/repo/delete_case_repo.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/data/repo/all_cases_repo.dart';
 import 'package:find_me_app/features/search_case/data/model/search_by_image_model.dart';
+import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
@@ -128,6 +132,70 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     );
 
     return isSuccess;
+  }
+
+  Future<void> deleteCaseOptimistic({
+    required BuildContext context,
+    required CaseInfoModel caseModel,
+  }) async {
+    final currentState = state;
+    final id = caseModel.id;
+    if (id == null) return;
+
+    // old data
+    final oldAllCases =
+        List<CaseInfoModel>.from(state.allCasesResponse?.allCases ?? []);
+    final oldFiltered = List<CaseInfoModel>.from(state.filtered);
+
+    final indexAll = oldAllCases.indexWhere((c) => c.id == id);
+    final indexFiltered = oldFiltered.indexWhere((c) => c.id == id);
+
+    // remove instantly (optimistic)
+    final newAllCases = List<CaseInfoModel>.from(oldAllCases)
+      ..removeWhere((c) => c.id == id);
+
+    final newFiltered = List<CaseInfoModel>.from(oldFiltered)
+      ..removeWhere((c) => c.id == id);
+
+    emit(currentState.copyWith(
+      allCasesResponse: state.allCasesResponse?.copyWith(allCases: newAllCases),
+      filtered: newFiltered,
+    ));
+
+    final repo = sl<DeleteCaseRepo>();
+    final result = await repo.deleteCase(id);
+
+    result.fold(
+      (error) {
+        // rollback
+        final rollbackAll =
+            List<CaseInfoModel>.from(state.allCasesResponse?.allCases ?? []);
+        final rollbackFiltered = List<CaseInfoModel>.from(state.filtered);
+
+        if (indexAll >= 0 && indexAll <= rollbackAll.length) {
+          rollbackAll.insert(indexAll, caseModel);
+        } else {
+          rollbackAll.add(caseModel);
+        }
+
+        if (indexFiltered >= 0 && indexFiltered <= rollbackFiltered.length) {
+          rollbackFiltered.insert(indexFiltered, caseModel);
+        } else {
+          rollbackFiltered.add(caseModel);
+        }
+
+        emit(state.copyWith(
+          allCasesResponse:
+              state.allCasesResponse?.copyWith(allCases: rollbackAll),
+          filtered: rollbackFiltered,
+        ));
+
+        showAlertSnackBar(context, error.msg, AlertType.error);
+      },
+      (message) {
+        showAlertSnackBar(context, message, AlertType.success);
+      },
+    );
   }
 
   void toggleFilter(AllCasesFilter filter) {
