@@ -126,32 +126,18 @@ class _AllCasesViewState extends State<AllCasesView> {
                               ? SlidingDirection.fromLeft
                               : SlidingDirection.fromRight,
                           duration: 1,
-                          child: AnimatedSwitcher(
-                            duration: const Duration(milliseconds: 300),
-                            transitionBuilder: (child, animation) {
-                              return FadeTransition(
-                                opacity: animation,
-                                child: SizeTransition(
-                                  sizeFactor: animation,
-                                  child: child,
-                                ),
+                          child: CaseCard(
+                            caseModel: state.filtered[index],
+                            onTap: () {
+                              context.toNamed(
+                                AppRoutes.caseInfoRoute,
+                                // arguments: recentCases[index],
+                                arguments: {
+                                  'case': state.filtered[index],
+                                  'cubit': context.read<AllCasesCubit>(),
+                                },
                               );
                             },
-                            child: CaseCard(
-                              key: ValueKey(
-                                "${state.filtered[index].id}-${state.filtered[index].isDeleting}",
-                              ), // 👈 مهم
-                              caseModel: state.filtered[index],
-                              onTap: () {
-                                context.toNamed(
-                                  AppRoutes.caseInfoRoute,
-                                  arguments: {
-                                    'case': state.filtered[index],
-                                    'cubit': context.read<AllCasesCubit>(),
-                                  },
-                                );
-                              },
-                            ),
                           ),
                         ),
                         separatorBuilder: (context, index) =>

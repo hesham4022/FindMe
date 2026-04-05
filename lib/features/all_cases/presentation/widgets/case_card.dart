@@ -110,7 +110,7 @@ class CaseCard extends StatelessWidget {
 
                                                 await context
                                                     .read<AllCasesCubit>()
-                                                    .deleteWithAnimation(
+                                                    .deleteCaseOptimistic(
                                                       context: context,
                                                       caseModel: caseModel,
                                                     );
