@@ -125,33 +125,19 @@ class HomePageNoNavBar extends StatelessWidget {
                                     .read<AllCasesCubit>()
                                     .getAllCasesResponseData();
                               },
-                              child: recentCases.isNotEmpty
-                                  ? ListView.builder(
-                                      itemCount: recentCases.length < 5
-                                          ? recentCases.length
-                                          : 5,
-                                      itemBuilder: (context, index) =>
-                                          TransitionSlidingWidget(
-                                        slidingDirection: index % 2 == 1
-                                            ? SlidingDirection.fromLeft
-                                            : SlidingDirection.fromRight,
-                                        duration: 2,
-                                        child: CaseCard(
-                                          caseModel: recentCases[index],
-                                          onTap: () {
-                                            context.toNamed(
-                                              AppRoutes.caseInfoRoute,
-                                              arguments: {
-                                                'case': recentCases[index],
-                                                'cubit': context
-                                                    .read<AllCasesCubit>(),
-                                              },
-                                            );
-                                          },
-                                        ),
-                                      ),
-                                    )
-                                  : ListView(
+                              child: Builder(
+                                builder: (context) {
+                                  final state =
+                                      context.watch<AllCasesCubit>().state;
+
+                                  if (state.isLoading == true) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
+
+                                  if (recentCases.isEmpty) {
+                                    return ListView(
                                       physics:
                                           const AlwaysScrollableScrollPhysics(),
                                       children: const [
@@ -164,7 +150,38 @@ class HomePageNoNavBar extends StatelessWidget {
                                           ),
                                         ),
                                       ],
+                                    );
+                                  }
+
+                                  return ListView.builder(
+                                    physics:
+                                        const AlwaysScrollableScrollPhysics(),
+                                    itemCount: recentCases.length < 5
+                                        ? recentCases.length
+                                        : 5,
+                                    itemBuilder: (context, index) =>
+                                        TransitionSlidingWidget(
+                                      slidingDirection: index % 2 == 1
+                                          ? SlidingDirection.fromLeft
+                                          : SlidingDirection.fromRight,
+                                      duration: 2,
+                                      child: CaseCard(
+                                        caseModel: recentCases[index],
+                                        onTap: () {
+                                          context.toNamed(
+                                            AppRoutes.caseInfoRoute,
+                                            arguments: {
+                                              'case': recentCases[index],
+                                              'cubit':
+                                                  context.read<AllCasesCubit>(),
+                                            },
+                                          );
+                                        },
+                                      ),
                                     ),
+                                  );
+                                },
+                              ),
                             ),
                           ),
                           const SizedBox(height: 12),
