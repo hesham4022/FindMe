@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:find_me_app/core/di.dart';
+import 'package:find_me_app/core/networking/network_info.dart';
 import 'package:find_me_app/core/networking/token_utils.dart';
 import 'package:find_me_app/core/shared/models/upload_file.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
@@ -39,42 +40,72 @@ typedef CustomFunctionality<T> = Future<T> Function();
 
 /// Used in Repo Implementations.
 /// Takes the logic to implement and returns failure if throwed error or [T] if success
+// Future<Either<Failure, T>> executeFunctionality<T>({
+//   required CustomFunctionality<T> function,
+// }) async {
+//   // check internet connection
+//   try {
+//     // final bool isConnected = await networkInfo.isConnected;
+//     return Right(await function());
+//   }
+//   // User Token Exception
+//   // on UserTokenException catch (error) {
+//   //   return Left(UserTokenFailure(error.msg));
+//   // }
+//   // Cache Exception
+//   on CacheException catch (error) {
+//     return Left(CacheFailure(error.msg));
+
+//     ///NavigateToVerifyEmail
+//   } on NavigateToVerifyEmailException {
+//     rethrow; // خليه يطلع للـ Cubit زي ما هو
+//   }
+//   // Server Exception
+//   on ServerException catch (error) {
+//     return Left(ServerFailure(error.msg));
+//   }
+//   // User Cancellation Exception
+//   on UserCancellationException catch (error) {
+//     return Left(UserCancellationFailure(error.msg));
+//   }
+//   // Format Exception
+//   on FormatException catch (_) {
+//     return const Left(FormatFailure());
+//   } on InternetException catch (_) {
+//     return const Left(InternetFailure());
+//   }
+//   // Unknown exception
+//   catch (_) {
+//     return const Left(UnknownFailure());
+//   }
+// }
+
 Future<Either<Failure, T>> executeFunctionality<T>({
   required CustomFunctionality<T> function,
 }) async {
-  // check internet connection
   try {
-    // final bool isConnected = await networkInfo.isConnected;
-    return Right(await function());
-  }
-  // User Token Exception
-  // on UserTokenException catch (error) {
-  //   return Left(UserTokenFailure(error.msg));
-  // }
-  // Cache Exception
-  on CacheException catch (error) {
-    return Left(CacheFailure(error.msg));
+    final bool isConnected = await NetworkInfo.isConnected;
+    if (!isConnected) {
+      return const Left(InternetFailure());
+    }
 
-    ///NavigateToVerifyEmail
+    return Right(await function());
+  } on CacheException catch (error) {
+    return Left(CacheFailure(error.msg));
   } on NavigateToVerifyEmailException {
-    rethrow; // خليه يطلع للـ Cubit زي ما هو
-  }
-  // Server Exception
-  on ServerException catch (error) {
+    rethrow;
+  } on ServerException catch (error) {
     return Left(ServerFailure(error.msg));
-  }
-  // User Cancellation Exception
-  on UserCancellationException catch (error) {
+  } on UserCancellationException catch (error) {
     return Left(UserCancellationFailure(error.msg));
-  }
-  // Format Exception
-  on FormatException catch (_) {
+  } on FormatException catch (_) {
     return const Left(FormatFailure());
   } on InternetException catch (_) {
     return const Left(InternetFailure());
-  }
-  // Unknown exception
-  catch (_) {
+  } on SocketException catch (_) {
+    return const Left(InternetFailure());
+  } catch (e) {
+    print('❌ Unknown exception: $e');
     return const Left(UnknownFailure());
   }
 }
