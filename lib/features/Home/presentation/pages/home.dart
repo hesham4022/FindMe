@@ -130,9 +130,13 @@ class HomePageNoNavBar extends StatelessWidget {
                                   final state =
                                       context.watch<AllCasesCubit>().state;
 
-                                  if (state.isLoading == true) {
-                                    return const Center(
-                                      child: CircularProgressIndicator(),
+                                  if (state.isLoading && recentCases.isEmpty) {
+                                    return ListView(
+                                      physics:
+                                          const AlwaysScrollableScrollPhysics(),
+                                      children: const [
+                                        SizedBox(height: 1),
+                                      ],
                                     );
                                   }
 
