@@ -21,10 +21,10 @@ class NetworkInfo extends Cubit<NetworkState> {
   ) : super(NetworkInitial());
 
   listenToConnection() async {
-    final connected = await _connectionChecker.hasConnection;
-    if (!isClosed) {
-      emit(connected ? NetworkConnected() : NetworkDisconnected());
-    }
+    // final connected = await _connectionChecker.hasConnection;
+    // if (!isClosed) {
+    //   emit(connected ? NetworkConnected() : NetworkDisconnected());
+    // }
     _listener = _connectionChecker.onStatusChange.listen((status) {
       if (isClosed) return;
       switch (status) {

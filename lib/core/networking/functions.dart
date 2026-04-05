@@ -84,11 +84,11 @@ Future<Either<Failure, T>> executeFunctionality<T>({
   required CustomFunctionality<T> function,
 }) async {
   try {
-    final networkInfo = sl<NetworkInfo>();
-    final isConnected = await networkInfo.isConnected;
-    if (!isConnected) {
-      return const Left(InternetFailure());
-    }
+    // final networkInfo = sl<NetworkInfo>();
+    // final isConnected = await networkInfo.isConnected;
+    // if (!isConnected) {
+    //   return const Left(InternetFailure());
+    // }
 
     return Right(await function());
   } on CacheException catch (error) {
