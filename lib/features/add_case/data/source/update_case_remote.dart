@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/helpers/enums/request_type.dart';
@@ -45,7 +44,7 @@ class UpdateCaseRemote {
         'consent_to_share': data.consentToShare,
       });
 
-      final response = await http.put(
+      final response = await http.post(
         Uri.parse('${ApiConstants.updateReportURL}/$id'),
         headers: headers,
         body: body,
