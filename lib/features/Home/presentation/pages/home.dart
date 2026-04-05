@@ -75,6 +75,49 @@ class HomePageNoNavBar extends StatelessWidget {
                             ),
                           ),
                           const SizedBox(height: 12),
+                          // if (recentCases.isNotEmpty)
+                          //   Expanded(
+                          //     child: RefreshIndicator(
+                          //       onRefresh: () async {
+                          //         await context
+                          //             .read<AllCasesCubit>()
+                          //             .getAllCasesResponseData();
+                          //       },
+                          //       child: ListView.builder(
+                          //         shrinkWrap: true,
+                          //         itemCount: recentCases.length < 5
+                          //             ? recentCases.length
+                          //             : 5,
+                          //         itemBuilder: (context, index) =>
+                          //             TransitionSlidingWidget(
+                          //           slidingDirection: index % 2 == 1
+                          //               ? SlidingDirection.fromLeft
+                          //               : SlidingDirection.fromRight,
+                          //           duration: 2,
+                          //           child: CaseCard(
+                          //             caseModel: recentCases[index],
+                          //             onTap: () {
+                          //               context.toNamed(
+                          //                 AppRoutes.caseInfoRoute,
+                          //                 // arguments: recentCases[index],
+                          //                 arguments: {
+                          //                   'case': recentCases[index],
+                          //                   'cubit':
+                          //                       context.read<AllCasesCubit>(),
+                          //                 },
+                          //               );
+                          //             },
+                          //           ),
+                          //         ),
+                          //       ),
+                          //     ),
+                          //   )
+                          // else if (!state.isLoading)
+                          //   const Text(
+                          //     "No recent cases found",
+                          //     style: TextStyle(color: Colors.grey),
+                          //   ),
+
                           Expanded(
                             child: RefreshIndicator(
                               onRefresh: () async {

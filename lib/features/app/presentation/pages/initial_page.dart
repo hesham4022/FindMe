@@ -16,16 +16,17 @@ class MiddlewarePage extends StatelessWidget {
     print(
         "sl<AuthLocal>().isUserLoggedIn() : ${sl<AuthLocal>().isUserLoggedIn()}");
 
-    return BlocBuilder<NetworkInfo, NetworkState>(
-      buildWhen: (previous, current) => previous != current,
-      builder: (context, state) {
-        if (state is NetworkDisconnected) {
-          return const NoConnectionPage();
-        } else {
-          return _getScreen(context);
-        }
-      },
-    );
+    // return BlocBuilder<NetworkInfo, NetworkState>(
+    //   buildWhen: (previous, current) => previous != current,
+    //   builder: (context, state) {
+    //     if (state is NetworkDisconnected) {
+    //       return const NoConnectionPage();
+    //     } else {
+    //       return _getScreen(context);
+    //     }
+    //   },
+    // );
+    return _getScreen(context);
   }
 
   Widget _getScreen(BuildContext context) {

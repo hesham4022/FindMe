@@ -84,7 +84,8 @@ Future<Either<Failure, T>> executeFunctionality<T>({
   required CustomFunctionality<T> function,
 }) async {
   try {
-    final bool isConnected = await NetworkInfo.isConnected;
+    final networkInfo = sl<NetworkInfo>();
+    final isConnected = await networkInfo.isConnected;
     if (!isConnected) {
       return const Left(InternetFailure());
     }
