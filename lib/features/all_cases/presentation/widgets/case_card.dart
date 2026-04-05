@@ -139,7 +139,7 @@ class CaseCard extends StatelessWidget {
                                         ),
                                       );
                                     },
-                                    icon: Icon(Icons.more_vert),
+                                    icon: const Icon(Icons.more_vert),
                                   ),
                               ],
                             ),
@@ -228,30 +228,6 @@ class CaseCard extends StatelessWidget {
                         size: 16,
                       )),
                       SizedBox(width: 2.w),
-
-                      // Favorite Button connected to Cubit
-                      // BlocBuilder<AllCasesCubit, AllCasesState>(
-                      //   builder: (context, state) {
-                      //     final updatedCase = state.filtered.firstWhere(
-                      //       (c) => c.id == caseModel.id,
-                      //       orElse: () => caseModel,
-                      //     );
-                      //     return ActionIcon(
-                      //       icon: Icon(
-                      //         updatedCase.isFavorite
-                      //             ? Icons.favorite
-                      //             : Icons.favorite_border,
-                      //         color: AppColors.mainColor,
-                      //         size: 16,
-                      //       ),
-                      //       onTap: () {
-                      //         context
-                      //             .read<AllCasesCubit>()
-                      //             .toggleFavoriteCard(updatedCase.id ?? -1);
-                      //       },
-                      //     );
-                      //   },
-                      // ),
 
                       BlocBuilder<AllCasesCubit, AllCasesState>(
                         builder: (context, state) {

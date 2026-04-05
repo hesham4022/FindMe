@@ -1,12 +1,9 @@
-// ignore_for_file: dead_code
-
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/animated_transition_widget/animated_transition_widget.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/case_card.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/circle_icon_appBar.dart';
@@ -83,8 +80,8 @@ class _AllCasesViewState extends State<AllCasesView> {
 
                 // فلتر Favorites
                 const FilterCases(
-                  iconOn: Icons.star,
-                  iconOff: Icons.star_border,
+                  iconOn: Icons.favorite,
+                  iconOff: Icons.favorite_border,
                   filter: AllCasesFilter.favorites,
                 ),
 
