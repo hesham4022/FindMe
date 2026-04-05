@@ -13,7 +13,7 @@ class DeleteCaseRepo {
     return executeFunctionality<String>(
       function: () async {
         final result = await _deleteCasesRemote.deleteCase(caseId);
-        print('✅ [AuthRepo] Delete Account Response: $result');
+        print('✅ [AuthRepo] Delete Report Response: $result');
         return result;
       },
     );
