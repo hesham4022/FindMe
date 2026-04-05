@@ -59,6 +59,7 @@ class CaseInfoModel {
   String? updatedAt;
   bool isLiked;
   double? similarityScore;
+  bool isDeleting;
 
   CaseInfoModel({
     this.id,
@@ -85,6 +86,7 @@ class CaseInfoModel {
     this.updatedAt,
     this.isLiked = false,
     this.similarityScore,
+    this.isDeleting = false,
   });
 
   factory CaseInfoModel.fromMap(Map<String, dynamic> json) => CaseInfoModel(
@@ -177,6 +179,7 @@ class CaseInfoModel {
     String? createdAt,
     String? updatedAt,
     bool? isLiked,
+    bool? isDeleting,
   }) =>
       CaseInfoModel(
         id: id ?? this.id,
@@ -203,6 +206,7 @@ class CaseInfoModel {
         updatedAt: updatedAt ?? this.updatedAt,
         isLiked: isLiked ?? this.isLiked,
         similarityScore: similarityScore ?? this.similarityScore,
+        isDeleting: isDeleting ?? this.isDeleting,
       );
 }
 

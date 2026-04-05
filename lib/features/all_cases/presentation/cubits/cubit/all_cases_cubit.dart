@@ -134,69 +134,118 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     return isSuccess;
   }
 
-  Future<void> deleteCaseOptimistic({
+  void markDeleting(int id) {
+    final newList = state.filtered.map((c) {
+      if (c.id == id) {
+        return c.copyWith(isDeleting: true);
+      }
+      return c;
+    }).toList();
+
+    emit(state.copyWith(filtered: newList));
+  }
+
+  Future<void> deleteWithAnimation({
     required BuildContext context,
     required CaseInfoModel caseModel,
   }) async {
-    final currentState = state;
-    final id = caseModel.id;
-    if (id == null) return;
+    final id = caseModel.id!;
 
-    // old data
-    final oldAllCases =
-        List<CaseInfoModel>.from(state.allCasesResponse?.allCases ?? []);
-    final oldFiltered = List<CaseInfoModel>.from(state.filtered);
+    // شغل الانميشن
+    markDeleting(id);
 
-    final indexAll = oldAllCases.indexWhere((c) => c.id == id);
-    final indexFiltered = oldFiltered.indexWhere((c) => c.id == id);
+    await Future.delayed(const Duration(milliseconds: 300));
 
-    // remove instantly (optimistic)
-    final newAllCases = List<CaseInfoModel>.from(oldAllCases)
+    // احذف من UI
+    final oldList = List<CaseInfoModel>.from(state.filtered);
+    final index = oldList.indexWhere((c) => c.id == id);
+
+    final newList = List<CaseInfoModel>.from(oldList)
       ..removeWhere((c) => c.id == id);
 
-    final newFiltered = List<CaseInfoModel>.from(oldFiltered)
-      ..removeWhere((c) => c.id == id);
+    emit(state.copyWith(filtered: newList));
 
-    emit(currentState.copyWith(
-      allCasesResponse: state.allCasesResponse?.copyWith(allCases: newAllCases),
-      filtered: newFiltered,
-    ));
-
-    final repo = sl<DeleteCaseRepo>();
-    final result = await repo.deleteCase(id);
+    final result = await sl<DeleteCaseRepo>().deleteCase(id);
 
     result.fold(
       (error) {
-        // rollback
-        final rollbackAll =
-            List<CaseInfoModel>.from(state.allCasesResponse?.allCases ?? []);
-        final rollbackFiltered = List<CaseInfoModel>.from(state.filtered);
+        // رجّعه
+        final rollback = List<CaseInfoModel>.from(state.filtered)
+          ..insert(index, caseModel.copyWith(isDeleting: false));
 
-        if (indexAll >= 0 && indexAll <= rollbackAll.length) {
-          rollbackAll.insert(indexAll, caseModel);
-        } else {
-          rollbackAll.add(caseModel);
-        }
-
-        if (indexFiltered >= 0 && indexFiltered <= rollbackFiltered.length) {
-          rollbackFiltered.insert(indexFiltered, caseModel);
-        } else {
-          rollbackFiltered.add(caseModel);
-        }
-
-        emit(state.copyWith(
-          allCasesResponse:
-              state.allCasesResponse?.copyWith(allCases: rollbackAll),
-          filtered: rollbackFiltered,
-        ));
+        emit(state.copyWith(filtered: rollback));
 
         showAlertSnackBar(context, error.msg, AlertType.error);
       },
-      (message) {
-        showAlertSnackBar(context, message, AlertType.success);
+      (_) {
+        showAlertSnackBar(context, "Deleted", AlertType.success);
       },
     );
   }
+
+  // Future<void> deleteCaseOptimistic({
+  //   required BuildContext context,
+  //   required CaseInfoModel caseModel,
+  // }) async {
+  //   final currentState = state;
+  //   final id = caseModel.id;
+  //   if (id == null) return;
+
+  //   // old data
+  //   final oldAllCases =
+  //       List<CaseInfoModel>.from(state.allCasesResponse?.allCases ?? []);
+  //   final oldFiltered = List<CaseInfoModel>.from(state.filtered);
+
+  //   final indexAll = oldAllCases.indexWhere((c) => c.id == id);
+  //   final indexFiltered = oldFiltered.indexWhere((c) => c.id == id);
+
+  //   // remove instantly (optimistic)
+  //   final newAllCases = List<CaseInfoModel>.from(oldAllCases)
+  //     ..removeWhere((c) => c.id == id);
+
+  //   final newFiltered = List<CaseInfoModel>.from(oldFiltered)
+  //     ..removeWhere((c) => c.id == id);
+
+  //   emit(currentState.copyWith(
+  //     allCasesResponse: state.allCasesResponse?.copyWith(allCases: newAllCases),
+  //     filtered: newFiltered,
+  //   ));
+
+  //   final repo = sl<DeleteCaseRepo>();
+  //   final result = await repo.deleteCase(id);
+
+  //   result.fold(
+  //     (error) {
+  //       // rollback
+  //       final rollbackAll =
+  //           List<CaseInfoModel>.from(state.allCasesResponse?.allCases ?? []);
+  //       final rollbackFiltered = List<CaseInfoModel>.from(state.filtered);
+
+  //       if (indexAll >= 0 && indexAll <= rollbackAll.length) {
+  //         rollbackAll.insert(indexAll, caseModel);
+  //       } else {
+  //         rollbackAll.add(caseModel);
+  //       }
+
+  //       if (indexFiltered >= 0 && indexFiltered <= rollbackFiltered.length) {
+  //         rollbackFiltered.insert(indexFiltered, caseModel);
+  //       } else {
+  //         rollbackFiltered.add(caseModel);
+  //       }
+
+  //       emit(state.copyWith(
+  //         allCasesResponse:
+  //             state.allCasesResponse?.copyWith(allCases: rollbackAll),
+  //         filtered: rollbackFiltered,
+  //       ));
+
+  //       showAlertSnackBar(context, error.msg, AlertType.error);
+  //     },
+  //     (message) {
+  //       showAlertSnackBar(context, message, AlertType.success);
+  //     },
+  //   );
+  // }
 
   void toggleFilter(AllCasesFilter filter) {
     if (state.activeFilter == filter) {

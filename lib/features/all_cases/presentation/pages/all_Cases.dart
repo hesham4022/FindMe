@@ -126,18 +126,39 @@ class _AllCasesViewState extends State<AllCasesView> {
                               ? SlidingDirection.fromLeft
                               : SlidingDirection.fromRight,
                           duration: 1,
-                          child: CaseCard(
-                            caseModel: state.filtered[index],
-                            onTap: () {
-                              context.toNamed(
-                                AppRoutes.caseInfoRoute,
-                                // arguments: recentCases[index],
-                                arguments: {
-                                  'case': state.filtered[index],
-                                  'cubit': context.read<AllCasesCubit>(),
-                                },
+                          child: AnimatedSwitcher(
+                            duration: const Duration(milliseconds: 300),
+                            transitionBuilder: (child, animation) {
+                              return FadeTransition(
+                                opacity: animation,
+                                child: SizeTransition(
+                                  sizeFactor: animation,
+                                  child: SlideTransition(
+                                    position: Tween<Offset>(
+                                      begin: const Offset(0, 0),
+                                      end: const Offset(1, 0),
+                                    ).animate(animation),
+                                    child: child,
+                                  ),
+                                ),
                               );
                             },
+                            child: state.filtered[index].isDeleting
+                                ? const SizedBox() // بيختفي بانميشن
+                                : CaseCard(
+                                    caseModel: state.filtered[index],
+                                    onTap: () {
+                                      context.toNamed(
+                                        AppRoutes.caseInfoRoute,
+                                        // arguments: recentCases[index],
+                                        arguments: {
+                                          'case': state.filtered[index],
+                                          'cubit':
+                                              context.read<AllCasesCubit>(),
+                                        },
+                                      );
+                                    },
+                                  ),
                           ),
                         ),
                         separatorBuilder: (context, index) =>
