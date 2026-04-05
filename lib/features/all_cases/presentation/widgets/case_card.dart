@@ -3,6 +3,8 @@ import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
+import 'package:find_me_app/core/shared/widgets/alerts.dart';
+import 'package:find_me_app/features/add_case/data/repo/delete_case_repo.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
@@ -98,19 +100,41 @@ class CaseCard extends StatelessWidget {
                                               },
                                             ),
                                             ListTile(
-                                              leading: const Icon(Icons.delete,
-                                                  color: Colors.red),
-                                              title: const Text('Delete',
-                                                  style: TextStyle(
-                                                      color: Colors.red)),
-                                              onTap: () {
-                                                final addCaseCubit = context
-                                                    .read<AddCaseCubit>();
-                                                Navigator.pop(context);
-                                                addCaseCubit
-                                                    .deleteCase(caseModel.id!);
-                                              },
-                                            ),
+                                                leading: const Icon(
+                                                    Icons.delete,
+                                                    color: Colors.red),
+                                                title: const Text('Delete',
+                                                    style: TextStyle(
+                                                        color: Colors.red)),
+                                                onTap: () async {
+                                                  Navigator.pop(context);
+
+                                                  final repo = sl<
+                                                      DeleteCaseRepo>(); // أو من constructor
+
+                                                  final result =
+                                                      await repo.deleteCase(
+                                                          caseModel.id!);
+
+                                                  result.fold(
+                                                    (error) {
+                                                      showAlertSnackBar(
+                                                          context,
+                                                          error.msg,
+                                                          AlertType.error);
+                                                    },
+                                                    (message) {
+                                                      showAlertSnackBar(
+                                                          context,
+                                                          message,
+                                                          AlertType.success);
+                                                      context
+                                                          .read<AllCasesCubit>()
+                                                          .deleteCaseFromList(
+                                                              caseModel.id!);
+                                                    },
+                                                  );
+                                                }),
                                           ],
                                         ),
                                       );

@@ -26,6 +26,23 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     applyFilters();
   }
 
+  void deleteCaseFromList(int caseId) {
+    _allCases = _allCases.where((c) => c.id != caseId).toList();
+
+    final filtered = _allCases.where((c) {
+      return true;
+    }).toList();
+
+    emit(state.copyWith(
+      filtered: filtered,
+    ));
+  }
+
+//   void deleteCaseFromList(int caseId) {
+//   _allCases.removeWhere((c) => c.id == caseId);
+//   applyFilters();
+// }
+
   void addNewCase(CaseInfoModel newCase) {
     _allCases.insert(0, newCase);
 
@@ -75,11 +92,6 @@ class AllCasesCubit extends Cubit<AllCasesState> {
 
     return cases.take(5).toList();
   }
-
-  // void clearCases() {
-  //   _allCases = [];
-  //   emit(const AllCasesState());
-  // }
 
   Future<bool> getAllCasesResponseData() async {
     emit(state.copyWith(
@@ -149,17 +161,6 @@ class AllCasesCubit extends Cubit<AllCasesState> {
     emit(state.copyWith(filtered: result));
   }
 
-  // void toggleFavoriteCard(int caseId) {
-  //   _allCases = _allCases.map((c) {
-  //     if (c.id == caseId) {
-  //       return c.copyWith(isFavorite: !c.isFavorite);
-  //     }
-  //     return c;
-  //   }).toList();
-
-  //   applyFilters();
-  // }
-
   void searchByName(String query) {
     if (query.isEmpty) {
       emit(state.copyWith(filtered: _allCases));
@@ -214,19 +215,6 @@ class AllCasesCubit extends Cubit<AllCasesState> {
       );
     }
   }
-
-//   void removeCaseFromList(int caseId) {
-//   final updatedAll = List<CaseInfoModel>.from(state.filtered)
-//     ..removeWhere((c) => c.id == caseId);
-
-//   final updatedFiltered = List<CaseInfoModel>.from(state.filtered)
-//     ..removeWhere((c) => c.id == caseId);
-
-//   emit(state.copyWith(
-
-//     filtered: updatedFiltered,
-//   ));
-// }
 
   void resetSearch() {
     emit(state.copyWith(filtered: _allCases));

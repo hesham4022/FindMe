@@ -14,6 +14,7 @@ import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cas
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
+import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -335,33 +336,5 @@ class AddCaseCubit extends Cubit<AddCaseState> {
         Navigator.pop(context);
       },
     );
-  }
-
-  Future<void> deleteCase(int caseId) async {
-    if (state.isLoading) return;
-
-    emit(state.copyWith(status: AddCaseStatus.loading));
-
-    try {
-      final result = await _updateRepo.deleteCase(caseId);
-
-      result.fold(
-        (error) {
-          emit(state.copyWith(
-            status: AddCaseStatus.error,
-            error: error,
-          ));
-        },
-        (response) {
-          emit(state.copyWith(
-            status: AddCaseStatus.success,
-          ));
-        },
-      );
-    } catch (e, s) {
-      log('❌ deleteAccount error: $e');
-      log(s.toString());
-      emit(state.copyWith(status: AddCaseStatus.error));
-    }
   }
 }

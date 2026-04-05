@@ -5,8 +5,10 @@ import 'package:find_me_app/core/networking/network_info.dart';
 import 'package:find_me_app/core/services/local_notifications/notifications_service_cubit.dart';
 import 'package:find_me_app/core/services/location/location_service.dart';
 import 'package:find_me_app/features/add_case/data/repo/add_case_repo.dart';
+import 'package:find_me_app/features/add_case/data/repo/delete_case_repo.dart';
 import 'package:find_me_app/features/add_case/data/repo/update_case_repo.dart';
 import 'package:find_me_app/features/add_case/data/source/add_case_remote.dart';
+import 'package:find_me_app/features/add_case/data/source/delete_case_remote.dart';
 import 'package:find_me_app/features/add_case/data/source/update_case_remote.dart';
 import 'package:find_me_app/features/all_cases/data/repo/all_cases_repo.dart';
 import 'package:find_me_app/features/all_cases/data/source/all_cases_remote.dart';
@@ -85,6 +87,9 @@ Future<void> init() async {
   sl.registerLazySingleton<NotificationsRemote>(
       () => NotificationsRemote(sl()));
   sl.registerLazySingleton<NotificationRepo>(() => NotificationRepo(sl()));
+
+  sl.registerLazySingleton<DeleteCaseRepo>(() => DeleteCaseRepo(sl()));
+  sl.registerLazySingleton<DeleteCaseRemote>(() => DeleteCaseRemote());
 
   //! Profile
   sl.registerLazySingleton<UpdateProfileRepo>(() => UpdateProfileRepo(sl()));
