@@ -158,65 +158,98 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
     return isSuccess;
   }
 
+  // Future<void> deleteCaseOptimistic({
+  //   required BuildContext context,
+  //   required CaseInfoModel caseModel,
+  // }) async {
+  //   final currentState = state;
+  //   final id = caseModel.id;
+  //   if (id == null) return;
+
+  //   // old data
+  //   // final oldAllCases =
+  //   //     List<CaseInfoModel>.from(state.allCasesResponse?.allCases ?? []);
+  //   final oldAllCases = List<CaseInfoModel>.from(_allCases);
+  //   final oldFiltered = List<CaseInfoModel>.from(state.filtered);
+
+  //   final indexAll = oldAllCases.indexWhere((c) => c.id == id);
+  //   final indexFiltered = oldFiltered.indexWhere((c) => c.id == id);
+
+  //   // remove instantly (optimistic)
+  //   final newAllCases = List<CaseInfoModel>.from(oldAllCases)
+  //     ..removeWhere((c) => c.id == id);
+
+  //   final newFiltered = List<CaseInfoModel>.from(oldFiltered)
+  //     ..removeWhere((c) => c.id == id);
+
+  //   emit(currentState.copyWith(
+  //     allCasesResponse: state.allCasesResponse?.copyWith(allCases: newAllCases),
+  //     filtered: newFiltered,
+  //   ));
+
+  //   final repo = sl<DeleteCaseRepo>();
+  //   final result = await repo.deleteCase(id);
+
+  //   result.fold(
+  //     (error) {
+  //       // rollback
+  //       final rollbackAll =
+  //           List<CaseInfoModel>.from(state.allCasesResponse?.allCases ?? []);
+  //       final rollbackFiltered = List<CaseInfoModel>.from(state.filtered);
+
+  //       if (indexAll >= 0 && indexAll <= rollbackAll.length) {
+  //         rollbackAll.insert(indexAll, caseModel);
+  //       } else {
+  //         rollbackAll.add(caseModel);
+  //       }
+
+  //       if (indexFiltered >= 0 && indexFiltered <= rollbackFiltered.length) {
+  //         rollbackFiltered.insert(indexFiltered, caseModel);
+  //       } else {
+  //         rollbackFiltered.add(caseModel);
+  //       }
+
+  //       emit(state.copyWith(
+  //         allCasesResponse:
+  //             state.allCasesResponse?.copyWith(allCases: rollbackAll),
+  //         filtered: rollbackFiltered,
+  //       ));
+
+  //       showAlertSnackBar(context, error.msg, AlertType.error);
+  //     },
+  //     (message) {
+  //       showAlertSnackBar(context, message, AlertType.success);
+  //     },
+  //   );
+  // }
+
   Future<void> deleteCaseOptimistic({
     required BuildContext context,
     required CaseInfoModel caseModel,
   }) async {
-    final currentState = state;
     final id = caseModel.id;
     if (id == null) return;
 
-    // old data
-    final oldAllCases =
-        List<CaseInfoModel>.from(state.allCasesResponse?.allCases ?? []);
-    final oldFiltered = List<CaseInfoModel>.from(state.filtered);
-
+    // old data for rollback
+    final oldAllCases = List<CaseInfoModel>.from(_allCases);
     final indexAll = oldAllCases.indexWhere((c) => c.id == id);
-    final indexFiltered = oldFiltered.indexWhere((c) => c.id == id);
 
-    // remove instantly (optimistic)
-    final newAllCases = List<CaseInfoModel>.from(oldAllCases)
-      ..removeWhere((c) => c.id == id);
-
-    final newFiltered = List<CaseInfoModel>.from(oldFiltered)
-      ..removeWhere((c) => c.id == id);
-
-    emit(currentState.copyWith(
-      allCasesResponse: state.allCasesResponse?.copyWith(allCases: newAllCases),
-      filtered: newFiltered,
-    ));
+    // ✅ احذف من _allCases فوراً وحدّث الكاش
+    _allCases.removeWhere((c) => c.id == id);
+    applyFilters();
 
     final repo = sl<DeleteCaseRepo>();
     final result = await repo.deleteCase(id);
 
     result.fold(
       (error) {
-        // rollback
-        final rollbackAll =
-            List<CaseInfoModel>.from(state.allCasesResponse?.allCases ?? []);
-        final rollbackFiltered = List<CaseInfoModel>.from(state.filtered);
-
-        if (indexAll >= 0 && indexAll <= rollbackAll.length) {
-          rollbackAll.insert(indexAll, caseModel);
-        } else {
-          rollbackAll.add(caseModel);
-        }
-
-        if (indexFiltered >= 0 && indexFiltered <= rollbackFiltered.length) {
-          rollbackFiltered.insert(indexFiltered, caseModel);
-        } else {
-          rollbackFiltered.add(caseModel);
-        }
-
-        emit(state.copyWith(
-          allCasesResponse:
-              state.allCasesResponse?.copyWith(allCases: rollbackAll),
-          filtered: rollbackFiltered,
-        ));
-
+        // ✅ rollback
+        _allCases = oldAllCases;
+        applyFilters();
         showAlertSnackBar(context, error.msg, AlertType.error);
       },
       (message) {
+        // ✅ الكاش اتحدث بالفعل عن طريق applyFilters
         showAlertSnackBar(context, message, AlertType.success);
       },
     );
