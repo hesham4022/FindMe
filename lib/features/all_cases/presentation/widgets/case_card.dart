@@ -57,6 +57,7 @@ class CaseCard extends StatelessWidget {
                         ? CachedNetworkImage(
                             imageUrl: caseModel.photos.first.url!,
                             fit: BoxFit.cover,
+                            alignment: Alignment.topCenter,
                           )
                         : Image.asset(
                             "assets/images/Portrait_Placeholder.png",
