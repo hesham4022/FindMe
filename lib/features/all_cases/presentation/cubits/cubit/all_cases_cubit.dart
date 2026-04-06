@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'dart:developer';
-
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
@@ -9,11 +7,8 @@ import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/data/repo/all_cases_repo.dart';
 import 'package:find_me_app/features/search_case/data/model/search_by_image_model.dart';
 import 'package:flutter/material.dart';
-
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
-
 part 'all_cases_state.dart';
 
 class AllCasesCubit extends HydratedCubit<AllCasesState> {
@@ -75,23 +70,6 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
     applyFilters();
   }
 
-  // void deleteCaseFromList(int caseId) {
-  //   _allCases = _allCases.where((c) => c.id != caseId).toList();
-
-  //   final filtered = _allCases.where((c) {
-  //     return true;
-  //   }).toList();
-
-  //   emit(state.copyWith(
-  //     filtered: filtered,
-  //   ));
-  // }
-
-//   void deleteCaseFromList(int caseId) {
-//   _allCases.removeWhere((c) => c.id == caseId);
-//   applyFilters();
-// }
-
   void addNewCase(CaseInfoModel newCase) {
     _allCases.insert(0, newCase);
     applyFilters();
@@ -113,23 +91,6 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
 
     applyFilters();
   }
-
-  // Future<void> toggleLike(int id) async {
-  //   try {
-  //     final isLiked = await _repo.toggleLike(id);
-
-  //     final updatedList = state.filtered.map((c) {
-  //       if (c.id == id) {
-  //         return c.copyWith(isLiked: isLiked);
-  //       }
-  //       return c;
-  //     }).toList();
-
-  //     emit(state.copyWith(filtered: updatedList));
-  //   } catch (e) {
-  //     log('LIKE ERROR: $e');
-  //   }
-  // }
 
   Future<void> toggleLike(int id) async {
     try {
