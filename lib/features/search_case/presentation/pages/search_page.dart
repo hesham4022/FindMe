@@ -66,7 +66,6 @@ class _SearchPageViewState extends State<SearchPageView> {
         ),
         body: Column(
           children: [
-            // search by image button
             Padding(
               padding: const EdgeInsets.all(16),
               child: ElevatedButton.icon(
@@ -80,48 +79,33 @@ class _SearchPageViewState extends State<SearchPageView> {
                 ),
               ),
             ),
-
             Expanded(
               child: BlocBuilder<AllCasesCubit, AllCasesState>(
                 builder: (context, state) {
-                  // التحميل
-                  if (state.status == AllCasesStatus.loading) {
-                    return const Center(
-                      child: CircularProgressIndicator(),
-                    );
+                  if (state.imageSearchStatus == AllCasesStatus.loading) {
+                    return const Center(child: CircularProgressIndicator());
                   }
 
-                  // error
-                  if (state.status == AllCasesStatus.error) {
+                  if (state.imageSearchStatus == AllCasesStatus.error) {
                     return Center(
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          const Icon(
-                            Icons.error_outline,
-                            size: 48,
-                            color: Colors.red,
-                          ),
+                          const Icon(Icons.error_outline,
+                              size: 48, color: Colors.red),
                           const SizedBox(height: 16),
-                          Text(
-                            state.failure?.msg ?? 'error',
-                            textAlign: TextAlign.center,
-                          ),
+                          Text(state.failure?.msg ?? 'error',
+                              textAlign: TextAlign.center),
                         ],
                       ),
                     );
                   }
-
-                  if (state.filtered == null || state.filtered!.isEmpty) {
+                  if (state.filtered.isEmpty) {
                     return const Center(
-                      child: Text(
-                        'No Results match',
-                        style: TextStyle(color: Colors.grey),
-                      ),
+                      child: Text('No Results match',
+                          style: TextStyle(color: Colors.grey)),
                     );
                   }
-
-                  // display result
                   return ListView.builder(
                     padding: const EdgeInsets.all(16),
                     itemCount: state.filtered.length,
@@ -133,7 +117,6 @@ class _SearchPageViewState extends State<SearchPageView> {
                           onTap: () {
                             context.toNamed(
                               AppRoutes.caseInfoRoute,
-                              // arguments: recentCases[index],
                               arguments: {
                                 'case': state.filtered[index],
                                 'cubit': context.read<AllCasesCubit>(),
