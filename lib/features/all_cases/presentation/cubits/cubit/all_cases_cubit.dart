@@ -21,6 +21,48 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
     _allCases = List<CaseInfoModel>.from(state.cachedAllCases);
   }
 
+  @override
+  AllCasesState? fromJson(Map<String, dynamic> json) {
+    try {
+      final cachedAllCases = (json['cachedAllCases'] as List<dynamic>? ?? [])
+          .map((e) => CaseInfoModel.fromJson(Map<String, dynamic>.from(e)))
+          .toList();
+
+      final filtered = (json['filtered'] as List<dynamic>? ?? [])
+          .map((e) => CaseInfoModel.fromJson(Map<String, dynamic>.from(e)))
+          .toList();
+
+      return AllCasesState(
+        status: AllCasesStatus.success,
+        imageSearchStatus: AllCasesStatus.initial,
+        filtered: filtered.isNotEmpty ? filtered : cachedAllCases,
+        cachedAllCases: cachedAllCases,
+        activeFilter: AllCasesFilter.values[json['activeFilter'] as int? ?? 0],
+        isScroll: json['isScroll'] as bool? ?? false,
+        searchMessage: json['searchMessage'] as String?,
+        isImageSearch: json['isImageSearch'] as bool? ?? false,
+      );
+    } catch (_) {
+      return AllCasesState.initial();
+    }
+  }
+
+  @override
+  Map<String, dynamic>? toJson(AllCasesState state) {
+    try {
+      return {
+        'cachedAllCases': state.cachedAllCases.map((e) => e.toJson()).toList(),
+        'filtered': state.filtered.map((e) => e.toJson()).toList(),
+        'activeFilter': state.activeFilter.index,
+        'isScroll': state.isScroll,
+        'searchMessage': state.searchMessage,
+        'isImageSearch': state.isImageSearch,
+      };
+    } catch (_) {
+      return null;
+    }
+  }
+
   final AllCasesRepo _repo;
 
   List<CaseInfoModel> _allCases = [];
@@ -33,17 +75,17 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
     applyFilters();
   }
 
-  void deleteCaseFromList(int caseId) {
-    _allCases = _allCases.where((c) => c.id != caseId).toList();
+  // void deleteCaseFromList(int caseId) {
+  //   _allCases = _allCases.where((c) => c.id != caseId).toList();
 
-    final filtered = _allCases.where((c) {
-      return true;
-    }).toList();
+  //   final filtered = _allCases.where((c) {
+  //     return true;
+  //   }).toList();
 
-    emit(state.copyWith(
-      filtered: filtered,
-    ));
-  }
+  //   emit(state.copyWith(
+  //     filtered: filtered,
+  //   ));
+  // }
 
 //   void deleteCaseFromList(int caseId) {
 //   _allCases.removeWhere((c) => c.id == caseId);
@@ -52,12 +94,13 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
 
   void addNewCase(CaseInfoModel newCase) {
     _allCases.insert(0, newCase);
+    applyFilters();
 
-    emit(state.copyWith(
-      allCasesResponse: state.allCasesResponse?.copyWith(
-        allCases: List.from(_allCases),
-      ),
-    ));
+    // emit(state.copyWith(
+    //   allCasesResponse: state.allCasesResponse?.copyWith(
+    //     allCases: List.from(_allCases),
+    //   ),
+    // ));
   }
 
   void updateCaseLike(int id, bool isLiked) {
@@ -71,18 +114,35 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
     applyFilters();
   }
 
+  // Future<void> toggleLike(int id) async {
+  //   try {
+  //     final isLiked = await _repo.toggleLike(id);
+
+  //     final updatedList = state.filtered.map((c) {
+  //       if (c.id == id) {
+  //         return c.copyWith(isLiked: isLiked);
+  //       }
+  //       return c;
+  //     }).toList();
+
+  //     emit(state.copyWith(filtered: updatedList));
+  //   } catch (e) {
+  //     log('LIKE ERROR: $e');
+  //   }
+  // }
+
   Future<void> toggleLike(int id) async {
     try {
       final isLiked = await _repo.toggleLike(id);
 
-      final updatedList = state.filtered.map((c) {
+      _allCases = _allCases.map((c) {
         if (c.id == id) {
           return c.copyWith(isLiked: isLiked);
         }
         return c;
       }).toList();
 
-      emit(state.copyWith(filtered: updatedList));
+      applyFilters();
     } catch (e) {
       log('LIKE ERROR: $e');
     }
@@ -229,7 +289,10 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
         break;
     }
 
-    emit(state.copyWith(filtered: result));
+    emit(state.copyWith(
+      filtered: result,
+      cachedAllCases: List<CaseInfoModel>.from(_allCases),
+    ));
   }
 
   void searchByName(String query) {
@@ -307,7 +370,16 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
     }
   }
 
-  onInit() async {
-    getAllCasesResponseData();
+  // onInit() async {
+  //   getAllCasesResponseData();
+  // }
+
+  Future<void> onInit() async {
+    if (state.cachedAllCases.isNotEmpty) {
+      _allCases = List<CaseInfoModel>.from(state.cachedAllCases);
+      applyFilters();
+    }
+
+    await getAllCasesResponseData();
   }
 }

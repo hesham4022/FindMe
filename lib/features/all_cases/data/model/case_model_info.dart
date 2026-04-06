@@ -153,6 +153,8 @@ class CaseInfoModel {
             : List<dynamic>.from(photos!.map((x) => x.toMap())),
         "created_at": createdAt,
         "updated_at": updatedAt,
+        "isLiked": isLiked,
+        "isDeleting": isDeleting,
       };
 
   CaseInfoModel copyWith({
@@ -209,6 +211,14 @@ class CaseInfoModel {
         similarityScore: similarityScore ?? this.similarityScore,
         isDeleting: isDeleting ?? this.isDeleting,
       );
+
+  factory CaseInfoModel.fromJson(Map<String, dynamic> json) {
+    return CaseInfoModel.fromMap(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return toMap();
+  }
 }
 
 class Photo {
@@ -251,4 +261,12 @@ class Photo {
         url: url ?? this.url,
         createdAt: createdAt ?? this.createdAt,
       );
+
+  factory Photo.fromJson(Map<String, dynamic> json) {
+    return Photo.fromMap(json);
+  }
+
+  Map<String, dynamic> toJson() {
+    return toMap();
+  }
 }

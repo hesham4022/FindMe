@@ -14,6 +14,7 @@ class AllCasesState extends Equatable {
   final CaseInfoModel? selectedCase;
   final String? searchMessage;
   final bool isImageSearch;
+  final List<CaseInfoModel> cachedAllCases;
 
   // final SuccessResponse? success;
   final Failure? failure;
@@ -39,12 +40,14 @@ class AllCasesState extends Equatable {
     this.searchMessage,
     this.isImageSearch = false,
     this.imageSearchStatus = AllCasesStatus.initial,
+    required this.cachedAllCases,
   });
 
   factory AllCasesState.initial() {
     return const AllCasesState(
       status: AllCasesStatus.initial,
       filtered: [],
+      cachedAllCases: [],
     );
   }
 
@@ -60,6 +63,7 @@ class AllCasesState extends Equatable {
     AllCasesStatus? imageSearchStatus,
     String? searchMessage,
     bool? isImageSearch,
+    List<CaseInfoModel>? cachedAllCases,
   }) {
     return AllCasesState(
       filtered: filtered ?? this.filtered,
@@ -73,6 +77,7 @@ class AllCasesState extends Equatable {
       imageSearchStatus: imageSearchStatus ?? this.imageSearchStatus,
       searchMessage: searchMessage ?? this.searchMessage,
       isImageSearch: isImageSearch ?? this.isImageSearch,
+      cachedAllCases: cachedAllCases ?? this.cachedAllCases,
     );
   }
 
@@ -88,5 +93,6 @@ class AllCasesState extends Equatable {
         imageSearchStatus,
         searchMessage,
         isImageSearch,
+        cachedAllCases,
       ];
 }
