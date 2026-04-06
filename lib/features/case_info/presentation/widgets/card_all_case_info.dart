@@ -15,21 +15,19 @@ class CardAllCaseInfo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.all(16.w),
+      padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
       decoration: BoxDecoration(
         color: AppColors.secondColor,
-        borderRadius: BorderRadius.circular(20.r),
+        borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
         children: [
-          /// 🔥 IMAGE + OVERLAY
-          Stack(
-            alignment: Alignment.center,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              /// الصورة
               Container(
-                width: 140.w,
-                height: 140.w,
+                width: 150.w,
+                height: 150.h,
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   image: DecorationImage(
@@ -42,133 +40,160 @@ class CardAllCaseInfo extends StatelessWidget {
                   ),
                 ),
               ),
+              const HSpace(12),
+              Column(
+                children: [
+                  Container(
+                    width: 120,
+                    padding: const EdgeInsets.only(top: 5, bottom: 5, left: 5),
+                    decoration: BoxDecoration(
+                      color: AppColors.mainColor,
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          width: 18,
+                          height: 18,
+                          decoration: const BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(
+                            Icons.person,
+                            size: 16,
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 5),
+                          child: Text(
+                            "${caseInfo?.age} years old",
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 12),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const VSpace(3),
+                  Container(
+                    width: 120,
+                    padding:
+                        const EdgeInsets.only(top: 10, bottom: 10, right: 5),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF1D4ED8), // الأزرق
+                      borderRadius: BorderRadius.circular(18),
+                    ),
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.only(left: 10),
+                          child: Text(
+                            "Features:",
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
 
-              /// Age badge (يمين فوق)
-              Positioned(
-                top: 0,
-                right: 0,
-                child: Container(
-                  padding:
-                      EdgeInsets.symmetric(horizontal: 10.w, vertical: 5.h),
-                  decoration: BoxDecoration(
-                    color: AppColors.mainColor,
-                    borderRadius: BorderRadius.circular(20.r),
+                        // هنا بنحط Padding حوالين كل العناصر
+                        // Padding(
+                        //   padding: const EdgeInsets.only(left: 15, right: 5),
+                        //   child: Column(
+                        //     crossAxisAlignment: CrossAxisAlignment.start,
+                        //     children: [
+                        //       CustomFeature(text: caseInfo?.height.toString() ?? ''),
+                        //       CustomFeature(text: caseInfo?.eyeColor ?? ''),
+                        //       CustomFeature(text: caseInfo?.skinColor ?? ''),
+                        //       CustomFeature(text: caseInfo?.hairColor ?? ''),
+                        //       Row(
+                        //         crossAxisAlignment: CrossAxisAlignment.start,
+                        //         children: [
+                        //           const Text(
+                        //             "• ",
+                        //             style: TextStyle(
+                        //               color: Colors.white,
+                        //               fontSize: 11,
+                        //               height: 1.2,
+                        //             ),
+                        //           ),
+                        //           Expanded(
+                        //             child: Text(
+                        //               " ${caseInfo?.birthMark} ",
+                        //               style: const TextStyle(
+                        //                 color: Colors.white,
+                        //                 fontSize: 11,
+                        //                 height: 1.2,
+                        //               ),
+                        //             ),
+                        //           ),
+                        //         ],
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
-                  child: Row(
-                    children: [
-                      const Icon(Icons.person, color: Colors.white, size: 14),
-                      SizedBox(width: 4.w),
-                      Text(
-                        "${caseInfo?.age} years old",
-                        style: TextStyle(color: Colors.white, fontSize: 11.sp),
-                      ),
-                    ],
-                  ),
-                ),
+                ],
               ),
             ],
           ),
-
           const VSpace(10),
-
-          /// 🔹 NAME + LOCATION
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
+            width: double.infinity,
+            padding: const EdgeInsets.only(bottom: 2, top: 1),
             decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(12.r),
-            ),
+                color: Colors.white, borderRadius: BorderRadius.circular(12)),
             child: Column(
               children: [
-                Text(
-                  "${caseInfo?.firstName} ${caseInfo?.lastName}",
-                  style:
-                      TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold),
-                ),
+                Text("${caseInfo?.firstName} ${caseInfo?.lastName}" ?? '',
+                    style: const TextStyle(
+                      fontSize: 15,
+                      fontWeight: FontWeight.w500,
+                    )),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Icon(Icons.location_on, size: 14, color: Colors.red),
-                    SizedBox(width: 4.w),
-                    Text(
-                      caseInfo?.address ?? '',
-                      style: TextStyle(fontSize: 11.sp),
+                    const Icon(
+                      Icons.location_on,
+                      color: Colors.red,
+                      size: 16,
                     ),
+                    const HSpace(4),
+                    Text(caseInfo?.address ?? ''),
                   ],
                 ),
               ],
             ),
           ),
-
-          const VSpace(10),
-
-          /// 🔹 FEATURES BOX (زي الصورة)
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.all(10.w),
-            decoration: BoxDecoration(
-              color: const Color(0xFF1D4ED8),
-              borderRadius: BorderRadius.circular(16.r),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "Features:",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const VSpace(5),
-                CustomFeature(text: "${caseInfo?.height ?? ''} cm"),
-                CustomFeature(text: caseInfo?.gender ?? ''),
-                CustomFeature(text: caseInfo?.description ?? ''),
-              ],
-            ),
-          ),
-
-          const VSpace(10),
-
-          /// 🔹 LOST INFO
-          Container(
-            padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 6.h),
-            decoration: BoxDecoration(
-              color: AppColors.mainColor,
-              borderRadius: BorderRadius.circular(16.r),
-            ),
-            child: Text(
-              "Lost on: ${caseInfo?.dateLastSeen ?? ''}",
-              style: TextStyle(color: Colors.white, fontSize: 11.sp),
-            ),
-          ),
-
-          const VSpace(12),
-
-          /// 🔹 ACTIONS
+          const VSpace(20),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 6.h),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 3),
                 decoration: BoxDecoration(
                   color: Colors.red,
-                  borderRadius: BorderRadius.circular(20.r),
+                  borderRadius: BorderRadius.circular(16),
                 ),
-                child: Row(
+                child: const Row(
                   children: [
-                    const Icon(Icons.phone, color: Colors.white, size: 16),
-                    SizedBox(width: 6.w),
+                    Icon(
+                      Icons.phone,
+                      color: Colors.white,
+                    ),
                     Text(
                       "Contact",
-                      style: TextStyle(color: Colors.white, fontSize: 12.sp),
+                      style: TextStyle(color: Colors.white),
                     ),
                   ],
                 ),
               ),
-
-              /// ❤️ LIKE
               BlocBuilder<AllCasesCubit, AllCasesState>(
                 builder: (context, state) {
                   final updatedCase = state.filtered.firstWhere(
@@ -176,31 +201,33 @@ class CardAllCaseInfo extends StatelessWidget {
                     orElse: () => caseInfo!,
                   );
 
-                  return GestureDetector(
-                    onTap: () async {
-                      final prev = updatedCase.isLiked;
-
-                      context.read<AllCasesCubit>().updateCaseLike(
-                            updatedCase.id ?? -1,
-                            !prev,
-                          );
-
-                      try {
-                        await context
-                            .read<AllCasesCubit>()
-                            .toggleLike(updatedCase.id ?? -1);
-                      } catch (_) {
-                        context
-                            .read<AllCasesCubit>()
-                            .updateCaseLike(updatedCase.id ?? -1, prev);
-                      }
-                    },
-                    child: Icon(
+                  return ActionIcon(
+                    icon: Icon(
                       updatedCase.isLiked
                           ? Icons.favorite
                           : Icons.favorite_border,
                       color: AppColors.mainColor,
+                      size: 16,
                     ),
+                    onTap: () async {
+                      // Optimistic UI: قلب فورًا
+                      final previousValue = updatedCase.isLiked;
+                      context.read<AllCasesCubit>().updateCaseLike(
+                            updatedCase.id ?? -1,
+                            !previousValue,
+                          );
+
+                      try {
+                        // Cubit يتعامل مع request ويرجع isLiked
+                        await context.read<AllCasesCubit>().toggleLike(
+                              updatedCase.id ?? -1,
+                            );
+                      } catch (e) {
+                        print('Like toggle failed: $e');
+                        context.read<AllCasesCubit>().updateCaseLike(
+                            updatedCase.id ?? -1, previousValue);
+                      }
+                    },
                   );
                 },
               ),

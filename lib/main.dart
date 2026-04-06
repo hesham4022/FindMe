@@ -21,6 +21,10 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
+  HydratedBloc.storage = await HydratedStorage.build(
+    storageDirectory: await getApplicationDocumentsDirectory(),
+  );
+
   await Future.wait([
     di.init(),
     EasyLocalization.ensureInitialized(),
