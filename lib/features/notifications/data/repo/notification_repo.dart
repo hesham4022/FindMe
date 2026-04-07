@@ -41,7 +41,7 @@ class NotificationRepo {
     );
   }
 
-  Future<Either<Failure, Unit>> markNotificationsAsRead(num id) {
+  Future<Either<Failure, Unit>> markNotificationsAsRead(String id) {
     return executeFunctionality<Unit>(
       function: () async {
         await remoteSource.markNotificationsAsRead(id);

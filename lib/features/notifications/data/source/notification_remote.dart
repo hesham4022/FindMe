@@ -47,7 +47,7 @@ class NotificationsRemote {
   }
 
   // ✅ mark as read
-  Future<void> markNotificationsAsRead(num id) async {
+  Future<void> markNotificationsAsRead(String id) async {
     await makeHttpRequest(
       url: ApiConstants.markNotificationsAsReadUrl(id),
       requestType: HttpRequestType.put,

@@ -3,7 +3,7 @@ part of 'notifications_cubit.dart';
 enum NotificationStatus { initial, loading, success, failed }
 
 class NotificationsState extends Equatable {
-  final List<NotificationResponseModel> notifications;
+  final List<AppNotificationModel> notifications;
   final String? tappedNotificationID;
   final NotificationStatus status;
   final SuccessResponse? success;
@@ -51,7 +51,7 @@ class NotificationsState extends Equatable {
   bool get isError => status == NotificationStatus.failed;
 
   NotificationsState copyWith({
-    List<NotificationResponseModel>? notifications,
+    List<AppNotificationModel>? notifications,
     String? tappedNotificationID,
     NotificationStatus? status,
     Failure? failure,

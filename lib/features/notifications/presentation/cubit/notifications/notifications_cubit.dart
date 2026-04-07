@@ -1,5 +1,4 @@
 // ignore_for_file: always_put_control_body_on_new_line
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,66 +10,89 @@ import 'package:find_me_app/features/notifications/data/repo/notification_repo.d
 part 'notifications_state.dart';
 
 class NotificationsCubit extends Cubit<NotificationsState> {
-  NotificationsCubit(
-    this._repo,
-  ) : super(NotificationsState.initial());
+  NotificationsCubit(this._repo) : super(NotificationsState.initial());
 
   final NotificationRepo _repo;
+
   late final ScrollController scrollCtrl = ScrollController();
+
   final int limit = 11;
 
-  void markNotificationAsRead(num id, int index) async {
-    if (state.notifications[index].read == true) return;
+  // 🔥 MARK AS READ
+  void markNotificationAsRead(String id, int index) async {
+    if (state.notifications[index].isRead) return;
 
-    // Get Notifications From Api
     final result = await _repo.markNotificationsAsRead(id);
+
     if (isClosed) return;
+
     result.fold(
       (error) => emit(state.copyWith(
         failure: error,
         status: NotificationStatus.failed,
       )),
-      (_) => emit(state.copyWith(
-        editedIndex: index,
-        notifications: state.notifications.map((e) {
-          if (e.id == id) {
-            return e.copyWith(read: true);
-          }
-          return e;
-        }).toList(),
-        status: NotificationStatus.success,
-      )),
-    );
-  }
+      (_) {
+        final updated = List<AppNotificationModel>.from(state.notifications);
 
-  void _getNotifications() async {
-    if (isClosed) return;
+        final item = updated[index];
 
-    // Set Loading State
-    emit(state.copyWith(status: NotificationStatus.loading));
-    // Get Notifications From Api
-    final result = await _repo.getNotifications(page: 0, size: limit);
-    if (isClosed) return;
-    result.fold(
-      (error) => emit(state.copyWith(
-        failure: error,
-        status: NotificationStatus.failed,
-      )),
-      (result) {
-        final notif = result.notifications;
+        updated[index] = AppNotificationModel(
+          id: item.id,
+          type: item.type,
+          notifiableType: item.notifiableType,
+          notifiableId: item.notifiableId,
+          data: item.data,
+          readAt: DateTime.now().toIso8601String(), // ✔️ نخليه read
+          createdAt: item.createdAt,
+          updatedAt: item.updatedAt,
+        );
+
         emit(state.copyWith(
-          notifications: notif,
-          hasReachedMax: notif.isEmpty || notif.length < limit,
+          notifications: updated,
+          editedIndex: index,
           status: NotificationStatus.success,
         ));
       },
     );
   }
 
-  void _paginateNotif() async {
-    // 1. check fetching data
-    if (state.isFetchingData) return;
+  // 🔥 GET FIRST PAGE
+  void _getNotifications() async {
     if (isClosed) return;
+
+    emit(state.copyWith(status: NotificationStatus.loading));
+
+    final result = await _repo.getNotifications(
+      page: 1,
+      size: limit,
+    );
+
+    if (isClosed) return;
+
+    result.fold(
+      (error) => emit(state.copyWith(
+        failure: error,
+        status: NotificationStatus.failed,
+      )),
+      (response) {
+        final notif = response.notifications;
+
+        emit(state.copyWith(
+          notifications: notif,
+          total: response.total,
+          hasReachedMax: notif.length < limit,
+          selectedPage: 2, // الصفحة اللي بعدها
+          status: NotificationStatus.success,
+        ));
+      },
+    );
+  }
+
+  // 🔥 PAGINATION
+  void _paginateNotif() async {
+    if (state.isFetchingData || state.hasReachedMax) return;
+    if (isClosed) return;
+
     emit(state.copyWith(isFetchingData: true));
 
     final result = await _repo.getNotifications(
@@ -86,48 +108,47 @@ class NotificationsCubit extends Cubit<NotificationsState> {
         failure: failure,
         isFetchingData: false,
       )),
-      (success) {
-        final allNotif = List<NotificationModel>.from(state.notifications);
-        final newNotif = success.notifications;
-        late bool hasReachedMax = false;
-        int page = state.selectedPage;
+      (response) {
+        final newNotif = response.notifications;
 
-        if (newNotif.isEmpty || newNotif.length < limit) {
-          hasReachedMax = true;
-        } else {
-          page++;
-        }
+        final allNotif = List<AppNotificationModel>.from(state.notifications)
+          ..addAll(newNotif);
 
-        allNotif.addAll(newNotif);
+        final hasReachedMax = newNotif.length < limit;
 
         emit(state.copyWith(
           status: NotificationStatus.success,
-          hasReachedMax: hasReachedMax,
-          selectedPage: page,
           notifications: allNotif,
+          selectedPage: state.selectedPage + 1,
+          hasReachedMax: hasReachedMax,
           isFetchingData: false,
         ));
       },
     );
   }
 
+  // 🔥 SCROLL
   void _onScroll() {
     final maxScroll = scrollCtrl.position.maxScrollExtent;
     final currentScroll = scrollCtrl.offset;
-    if (currentScroll >= (maxScroll * 0.9) && !state.hasReachedMax) {
+
+    if (currentScroll >= (maxScroll * 0.9)) {
       _paginateNotif();
     }
   }
 
+  // 🔥 REFRESH
   void refresh() {
     emit(state.copyWith(
-      selectedPage: 0,
+      selectedPage: 1,
       hasReachedMax: false,
       notifications: [],
     ));
+
     _getNotifications();
   }
 
+  // 🔥 INIT
   void onInit() {
     _getNotifications();
     scrollCtrl.addListener(_onScroll);
