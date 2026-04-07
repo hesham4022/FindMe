@@ -29,17 +29,17 @@ class NotificationRepo {
     );
   }
 
-  Future<Either<Failure, int>> getNotificationsCount() {
-    return executeFunctionality<int>(
-      function: () async {
-        final count = await remoteSource.getNotificationsCount();
+  // Future<Either<Failure, int>> getNotificationsCount() {
+  //   return executeFunctionality<int>(
+  //     function: () async {
+  //       final count = await remoteSource.getNotificationsCount();
 
-        log("getNotificationsCount: $count");
+  //       log("getNotificationsCount: $count");
 
-        return count;
-      },
-    );
-  }
+  //       return count;
+  //     },
+  //   );
+  // }
 
   Future<Either<Failure, Unit>> markNotificationsAsRead(String id) {
     return executeFunctionality<Unit>(

@@ -15,15 +15,15 @@ class AppCubit extends Cubit<AppState> {
 
   final NotificationRepo _notificationRepo;
 
-  void getNotificationsUnReadedCount() async {
-    final result = await _notificationRepo.getNotificationsCount();
-    result.fold(
-      (error) => log('Getting notifications count error: $error'),
-      (count) {
-        unReadedNotifsCount = count;
-      },
-    );
-  }
+  // void getNotificationsUnReadedCount() async {
+  //   final result = await _notificationRepo.getNotificationsCount();
+  //   result.fold(
+  //     (error) => log('Getting notifications count error: $error'),
+  //     (count) {
+  //       unReadedNotifsCount = count;
+  //     },
+  //   );
+  // }
 
   // void _cacheUnReadedNotifsCount(int value) async {
   //   await _sharedPreferences.setInt(

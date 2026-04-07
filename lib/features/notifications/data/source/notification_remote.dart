@@ -33,18 +33,18 @@ class NotificationsRemote {
     return NotificationResponseModel.fromJson(decoded);
   }
 
-  // ✅ count
-  Future<int> getNotificationsCount() async {
-    final response = await makeHttpRequest(
-      url: ApiConstants.getNotificationsCountUrl,
-      requestType: HttpRequestType.get,
-      needParsedResponse: true,
-    );
+  // // ✅ count
+  // Future<int> getNotificationsCount() async {
+  //   final response = await makeHttpRequest(
+  //     url: ApiConstants.getNotificationsCountUrl,
+  //     requestType: HttpRequestType.get,
+  //     needParsedResponse: true,
+  //   );
 
-    final decoded = jsonDecode(utf8.decode(response.bodyBytes));
+  //   final decoded = jsonDecode(utf8.decode(response.bodyBytes));
 
-    return decoded['total'] ?? 0;
-  }
+  //   return decoded['total'] ?? 0;
+  // }
 
   // ✅ mark as read
   Future<void> markNotificationsAsRead(String id) async {
