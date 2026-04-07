@@ -52,6 +52,7 @@ class NotificationsRemote {
       url: ApiConstants.markNotificationsAsReadUrl(id),
       requestType: HttpRequestType.put,
       needParsedResponse: false,
+      requiresAuth: true,
     );
   }
 }
