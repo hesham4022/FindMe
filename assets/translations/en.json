@@ -1,7 +1,6 @@
 {
   "hi":"hi",
   "poweredBy":"Powered By",
-
   "sinupTitle":"New Account",
    "hintname":"name",
    "hintPhone":"Phone",
@@ -15,7 +14,7 @@
    "nationalidLabel":"National ID",
   "textFieldIsRequired" : "the field is required.",
   "upLaodNationalId":"Photo of the front and back of the ID",
-  "forgotPasswordTitle" : "Forgot password",
+  "forgotPasswordTitle" : "Forgot password?",
   "welcomeMessage" : "Hello!",
   "createNewPassword":"Create new password",
   "emailOrMobileNumber":"Email or Mobile Number",

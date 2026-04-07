@@ -3,7 +3,6 @@ import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/case_info/presentation/widgets/addition_info.dart';
 import 'package:find_me_app/features/case_info/presentation/widgets/card_all_case_info.dart';
-
 import 'package:flutter/material.dart';
 
 class CaseInfoView extends StatelessWidget {

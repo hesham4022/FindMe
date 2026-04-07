@@ -1,4 +1,5 @@
 import 'package:find_me_app/core/helpers/extensions/context.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/resources/strings.dart';
@@ -43,7 +44,7 @@ class SinupOrLogin extends StatelessWidget {
             children: [
               CustomFilledButton(
                 title: Text(
-                  AppStrings.login,
+                  "login".ts,
                   style: Theme.of(context)
                       .textTheme
                       .kHeadingH4SmallBold
@@ -62,7 +63,7 @@ class SinupOrLogin extends StatelessWidget {
               const VSpace(20),
               CustomFilledButton(
                 title: Text(
-                  AppStrings.sinup,
+                  "SignUp".ts,
                   style: Theme.of(context)
                       .textTheme
                       .kHeadingH4SmallBold

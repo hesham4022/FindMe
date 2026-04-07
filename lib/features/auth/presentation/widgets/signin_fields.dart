@@ -394,7 +394,7 @@ class ForgotPasswordBtn extends StatelessWidget {
             AppRoutes.forgotPasswordRoute,
           ),
           child: Text(
-            AppStrings.forgotPassword.ts,
+            "forgotPasswordTitle".ts,
             style: Theme.of(context)
                 .textTheme
                 .kParagraph01SemiBold
