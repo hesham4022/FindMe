@@ -100,8 +100,7 @@ class ApiConstants {
   static final String _notificationsUrl = "$_baseUrl/notifications";
   static final String getNotificationsUrl = "$_notificationsUrl?";
   static final String getNotificationsCountUrl = "$_notificationsUrl/count";
-  static String markNotificationsAsReadUrl(String id) =>
-      "$_notificationsUrl/$id";
+  static String markNotificationsAsReadUrl(String id) => "$_baseUrl/$id";
 
   //! Evaluation Endpoints ----------------------------------------------------
   static final String _evaluationUrl = "$_baseUrl/api/appraisal";

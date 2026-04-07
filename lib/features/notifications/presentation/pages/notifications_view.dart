@@ -27,7 +27,7 @@ class NotificationsView extends StatelessWidget {
           background: Colors.white,
           elevation: 0.3,
         ),
-        body: _Body(),
+        body: const _Body(),
       ),
     );
   }
@@ -41,67 +41,81 @@ class _Body extends StatelessWidget {
     return BlocConsumer<NotificationsCubit, NotificationsState>(
       listener: notificationsListener,
       builder: (context, state) {
-        // Loading State
-        if (state.status == NotificationStatus.loading) {
+        // ✅ Loading لأول مرة فقط
+        if (state.isLoading && state.notifications.isEmpty) {
           return const _LoadingState();
         }
-        // Success State
-        else if (state.status == NotificationStatus.success) {
-          context
-              .read<NotificationBtnCubit>()
-              .cacheUnReadedNotifsCount(state.notifications.length);
-          return state.notifications.isNotEmpty
-              ? _SuccessState(state)
-              : NoDataWidget(
-                  title: AppStrings.noNotif,
-                  icon: Icons.notifications_rounded,
-                );
-        }
-        // Initial State
-        else {
+
+        // ❌ Error
+        if (state.isError) {
           return NoDataWidget(
             title: AppStrings.noNotif,
             icon: Icons.notifications_rounded,
           );
         }
+
+        // ✅ Success
+        if (state.notifications.isNotEmpty) {
+          final unread = state.notifications.where((e) => !e.isRead).length;
+
+          context.read<NotificationBtnCubit>().cacheUnReadedNotifsCount(unread);
+
+          return _SuccessState(state);
+        }
+
+        // 💤 Empty
+        return NoDataWidget(
+          title: AppStrings.noNotif,
+          icon: Icons.notifications_rounded,
+        );
       },
     );
   }
 }
 
 //------------------------------------------------------------------------------
+// ✅ Success State
 class _SuccessState extends StatelessWidget {
-  const _SuccessState(
-    this.state,
-  );
+  const _SuccessState(this.state);
 
   final NotificationsState state;
 
   @override
   Widget build(BuildContext context) {
     final notifications = state.notifications;
-    return ListView.builder(
-      controller: context.read<NotificationsCubit>().scrollCtrl,
-      padding: const EdgeInsets.symmetric(vertical: 8).h,
-      itemCount: notifications.length + 1,
-      itemBuilder: (_, i) {
-        if (i < notifications.length) {
-          return NotificationCell(notifications[i], i);
-        }
-        // Pagination Loader
-        else {
-          return Center(
-            child: state.hasReachedMax
-                ? const SizedBox.shrink()
-                : CustomLoadingWidget(height: 75, width: 75),
-          );
-        }
+
+    return RefreshIndicator(
+      onRefresh: () async {
+        context.read<NotificationsCubit>().refresh();
       },
+      child: ListView.builder(
+        controller: context.read<NotificationsCubit>().scrollCtrl,
+        padding: const EdgeInsets.symmetric(vertical: 8).h,
+        itemCount: notifications.length + 1,
+        itemBuilder: (_, i) {
+          if (i < notifications.length) {
+            return NotificationCell(notifications[i], i);
+          } else {
+            // 🔥 Pagination loader
+            if (state.hasReachedMax) {
+              return const SizedBox.shrink();
+            }
+
+            return const Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Center(
+                child: CustomLoadingWidget(height: 40, width: 40),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }
 
-// Loading State
+//------------------------------------------------------------------------------
+// 🔄 Loading State
 class _LoadingState extends StatelessWidget {
   const _LoadingState();
 

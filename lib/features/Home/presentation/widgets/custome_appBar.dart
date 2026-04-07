@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:find_me_app/core/helpers/extensions/context.dart';
+import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -84,7 +86,9 @@ class HomeHeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
                   ),
                 ),
                 InkWell(
-                  onTap: onBellTap,
+                  onTap: () {
+                    context.toNamed(AppRoutes.notificationsRoute);
+                  },
                   borderRadius: BorderRadius.circular(18),
                   child: Container(
                     width: 36,
