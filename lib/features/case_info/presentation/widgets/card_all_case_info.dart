@@ -81,13 +81,13 @@ class CardAllCaseInfo extends StatelessWidget {
                     padding:
                         const EdgeInsets.only(top: 10, bottom: 10, right: 5),
                     decoration: BoxDecoration(
-                      color: const Color(0xFF1D4ED8), // الأزرق
+                      color: const Color(0xFF1D4ED8),
                       borderRadius: BorderRadius.circular(18),
                     ),
-                    child: const Column(
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Padding(
+                        const Padding(
                           padding: EdgeInsets.only(left: 10),
                           child: Text(
                             "Features:",
@@ -98,43 +98,55 @@ class CardAllCaseInfo extends StatelessWidget {
                             ),
                           ),
                         ),
-
-                        // هنا بنحط Padding حوالين كل العناصر
-                        // Padding(
-                        //   padding: const EdgeInsets.only(left: 15, right: 5),
-                        //   child: Column(
-                        //     crossAxisAlignment: CrossAxisAlignment.start,
-                        //     children: [
-                        //       CustomFeature(text: caseInfo?.height.toString() ?? ''),
-                        //       CustomFeature(text: caseInfo?.eyeColor ?? ''),
-                        //       CustomFeature(text: caseInfo?.skinColor ?? ''),
-                        //       CustomFeature(text: caseInfo?.hairColor ?? ''),
-                        //       Row(
-                        //         crossAxisAlignment: CrossAxisAlignment.start,
-                        //         children: [
-                        //           const Text(
-                        //             "• ",
-                        //             style: TextStyle(
-                        //               color: Colors.white,
-                        //               fontSize: 11,
-                        //               height: 1.2,
-                        //             ),
-                        //           ),
-                        //           Expanded(
-                        //             child: Text(
-                        //               " ${caseInfo?.birthMark} ",
-                        //               style: const TextStyle(
-                        //                 color: Colors.white,
-                        //                 fontSize: 11,
-                        //                 height: 1.2,
-                        //               ),
-                        //             ),
-                        //           ),
-                        //         ],
-                        //       )
-                        //     ],
-                        //   ),
-                        // ),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 15, right: 5),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  CustomFeature(
+                                      text: caseInfo?.height
+                                              ?.toInt()
+                                              .toString() ??
+                                          ''),
+                                  const Text("cm",
+                                      style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 11,
+                                        height: 1.2,
+                                      )),
+                                ],
+                              ),
+                              // CustomFeature(text: caseInfo?.eyeColor ?? ''),
+                              // CustomFeature(text: caseInfo?.skinColor ?? ''),
+                              // CustomFeature(text: caseInfo?.hairColor ?? ''),
+                              const Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "• ",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 11,
+                                      height: 1.2,
+                                    ),
+                                  ),
+                                  // Expanded(
+                                  //   child: Text(
+                                  //     " ${caseInfo?.birthMark} ",
+                                  //     style: const TextStyle(
+                                  //       color: Colors.white,
+                                  //       fontSize: 11,
+                                  //       height: 1.2,
+                                  //     ),
+                                  //   ),
+                                  // ),
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
                       ],
                     ),
                   ),

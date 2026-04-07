@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
@@ -22,6 +24,64 @@ class CaseInfoView extends StatelessWidget {
             children: [
               CardAllCaseInfo(caseInfo: caseInfo),
               const VSpace(20),
+              Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  color: AppColors.secondColor,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      Text("More Photos"),
+                      VSpace(10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            width: 90,
+                            height: 70,
+                            color: Colors.white,
+                            child: CachedNetworkImage(
+                              imageUrl: caseInfo.photos.length > 1
+                                  ? (caseInfo.photos[1].url ??
+                                      "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png")
+                                  : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Container(
+                            width: 90,
+                            height: 70,
+                            color: Colors.white,
+                            child: CachedNetworkImage(
+                              imageUrl: caseInfo.photos.length > 2
+                                  ? (caseInfo.photos[1].url ??
+                                      "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png")
+                                  : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Container(
+                            width: 90,
+                            height: 70,
+                            color: Colors.white,
+                            child: CachedNetworkImage(
+                              imageUrl: caseInfo.photos.length > 3
+                                  ? (caseInfo.photos[3].url ??
+                                      "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png")
+                                  : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                        ],
+                      ),
+                      VSpace(10),
+                    ],
+                  ),
+                ),
+              ),
               AdditionInfo(
                 title: 'Last seen wearing:',
                 text: caseInfo.lastSeenLocation,
