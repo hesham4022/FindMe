@@ -441,16 +441,27 @@ class CaseCard extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const HSpace(80),
-                      if (caseModel.similarityScore != null)
-                        BalanceIndicator(
-                          similarityScore: caseModel.similarityScore!,
-                          desText: null,
-                          radius: 30,
-                          available: "",
-                        ),
 
-                      const Spacer(),
+                      if (caseModel.similarityScore != null)
+                        Expanded(
+                          child: Center(
+                            child: BalanceIndicator(
+                              similarityScore: caseModel.similarityScore!,
+                              desText: null,
+                              radius: 30,
+                              available: "",
+                            ),
+                          ),
+                        ),
+                      // if (caseModel.similarityScore != null)
+                      //   BalanceIndicator(
+                      //     similarityScore: caseModel.similarityScore!,
+                      //     desText: null,
+                      //     radius: 30,
+                      //     available: "",
+                      //   ),
+
+                      // const Spacer(),
 
                       /// icons
                       ActionIcon(
