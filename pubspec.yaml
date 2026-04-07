@@ -61,6 +61,7 @@ dependencies:
   flutter_image_compress: ^2.4.0
   flutter_launcher_icons: ^0.14.4
   hydrated_bloc: ^11.0.0
+  pusher_channels_flutter: ^2.4.0
  
   
 

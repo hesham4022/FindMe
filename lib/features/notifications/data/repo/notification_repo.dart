@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/networking/functions.dart';
@@ -9,34 +8,45 @@ import 'package:find_me_app/features/notifications/data/source/notification_remo
 class NotificationRepo {
   final NotificationsRemote remoteSource;
 
-  NotificationRepo(
-    this.remoteSource,
-  );
+  NotificationRepo(this.remoteSource);
 
-  Future<Either<Failure, NotificationsResponse>> getNotifications({
+  Future<Either<Failure, NotificationResponseModel>> getNotifications({
     required int page,
     required int size,
   }) {
-    return executeFunctionality<NotificationsResponse>(function: () async {
-      final json = await remoteSource.getNotifications(page: page, size: size);
+    return executeFunctionality<NotificationResponseModel>(
+      function: () async {
+        final response = await remoteSource.getNotifications(
+          page: page,
+          size: size,
+        );
 
-      log("getNotifications: $json");
-      return NotificationsResponse.fromJson(json);
-    });
+        log("getNotifications total: ${response.total}");
+        log("getNotifications count: ${response.notifications.length}");
+
+        return response;
+      },
+    );
   }
 
   Future<Either<Failure, int>> getNotificationsCount() {
-    return executeFunctionality<int>(function: () async {
-      final json = await remoteSource.getNotificationsCount();
-      log("getNotificationsCount: $json");
-      return 0;
-    });
+    return executeFunctionality<int>(
+      function: () async {
+        final count = await remoteSource.getNotificationsCount();
+
+        log("getNotificationsCount: $count");
+
+        return count;
+      },
+    );
   }
 
   Future<Either<Failure, Unit>> markNotificationsAsRead(num id) {
-    return executeFunctionality<Unit>(function: () async {
-      await remoteSource.markNotificationsAsRead(id);
-      return unit;
-    });
+    return executeFunctionality<Unit>(
+      function: () async {
+        await remoteSource.markNotificationsAsRead(id);
+        return unit;
+      },
+    );
   }
 }
