@@ -4,6 +4,7 @@ import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
+import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/add_case/data/repo/delete_case_repo.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
@@ -440,6 +441,14 @@ class CaseCard extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const HSpace(80),
+                      if (caseModel.similarityScore != null)
+                        BalanceIndicator(
+                          similarityScore: caseModel.similarityScore!,
+                          desText: null,
+                          radius: 30,
+                          available: "",
+                        ),
 
                       const Spacer(),
 
