@@ -29,13 +29,20 @@ void main() async {
     cluster: "mt1",
     authEndpoint: "https://your-domain.com/broadcasting/auth",
     onConnectionStateChange: (currentState, previousState) {
-      print("🟢 STATE: $currentState");
+      print("STATE: $currentState");
     },
-    onError: (message, code, e) {
-      print("❌ ERROR: $message - $code - $e");
+    onSubscriptionSucceeded: (channelName, data) {
+      print("SUBSCRIBED: $channelName");
+    },
+    onSubscriptionError: (message, e) {
+      print("SUB ERROR: $message , $e");
     },
     onEvent: (event) {
-      print("🔥 EVENT: ${event.data}");
+      print("EVENT: ${event.eventName}");
+      print("DATA: ${event.data}");
+    },
+    onError: (message, code, e) {
+      print("ERROR: $message | $code | $e");
     },
   );
 
