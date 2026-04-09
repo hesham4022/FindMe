@@ -101,9 +101,27 @@ class PusherService {
       onSubscriptionError: (message, e) {
         print("SUB ERROR: $message , $e");
       },
+      // onEvent: (event) {
+      //   print("EVENT: ${event.eventName}");
+      //   print("DATA: ${event.data}");
+      // },
       onEvent: (event) {
-        print("EVENT: ${event.eventName}");
-        print("DATA: ${event.data}");
+        // تجاهل system events
+        if (event.eventName.startsWith('pusher:')) return;
+
+        print("EVENT NAME: ${event.eventName}");
+        print("RAW DATA: ${event.data}");
+
+        // ✅ الاسم الصح
+        if (event.eventName ==
+            "Illuminate\\Notifications\\Events\\BroadcastNotificationCreated") {
+          final data = jsonDecode(event.data);
+
+          print("REPORT ID: ${data['report_id']}");
+          print("MESSAGE: ${data['message']}");
+
+          // هنا تعمل الـ notification في Flutter
+        }
       },
       onError: (message, code, e) {
         print("ERROR: $message | $code | $e");
