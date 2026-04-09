@@ -24,26 +24,6 @@ void main() async {
     DeviceOrientation.portraitDown,
   ]);
 
-  await pusher.init(
-    apiKey: "a118360ad1a87f1ee1ae",
-    cluster: "mt1",
-    onConnectionStateChange: (currentState, previousState) {
-      print("STATE: $currentState");
-    },
-    onSubscriptionSucceeded: (channelName, data) {
-      print("SUBSCRIBED: $channelName");
-    },
-    onEvent: (event) {
-      print("EVENT: ${event.eventName}");
-      print("DATA: ${event.data}");
-    },
-    onError: (message, code, e) {
-      print("ERROR: $message");
-    },
-  );
-  await pusher.subscribe(channelName: "test");
-  await pusher.connect();
-
   final dir = await getApplicationDocumentsDirectory();
 
   HydratedBloc.storage = await HydratedStorage.build(

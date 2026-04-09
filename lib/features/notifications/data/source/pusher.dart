@@ -11,6 +11,6 @@ Future<void> initPusher() async {
     },
   );
 
-  await pusher.subscribe(channelName: "private-user-1"); // id المستخدم
+  await pusher.subscribe(channelName: "private-user-1");
   await pusher.connect();
 }
