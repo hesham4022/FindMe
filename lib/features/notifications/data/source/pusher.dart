@@ -13,7 +13,7 @@ class PusherService {
       cluster: "mt1",
 
       authEndpoint:
-          "https://web-production-2673c.up.railway.app/broadcasting/auth",
+          "https://web-production-2673c.up.railway.app/api/broadcasting/auth",
 
       // ✅ أهم تعديل هنا
       authParams: {
