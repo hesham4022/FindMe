@@ -1,5 +1,6 @@
 // ignore_for_file: always_put_control_body_on_new_line
 import 'package:equatable/equatable.dart';
+import 'package:find_me_app/features/notifications/data/source/pusher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:find_me_app/core/error_management/failure.dart';

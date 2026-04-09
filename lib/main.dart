@@ -6,6 +6,7 @@ import 'package:find_me_app/core/helpers/override_http.dart';
 import 'package:find_me_app/core/resources/languages.dart';
 import 'package:find_me_app/features/app/presentation/pages/app.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
+import 'package:find_me_app/features/notifications/data/source/pusher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -22,6 +23,24 @@ void main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  await pusher.init(
+    apiKey: "KEY",
+    cluster: "mt1",
+    authEndpoint: "https://your-domain.com/broadcasting/auth",
+    onConnectionStateChange: (currentState, previousState) {
+      print("🟢 STATE: $currentState");
+    },
+    onError: (message, code, e) {
+      print("❌ ERROR: $message - $code");
+    },
+    onEvent: (event) {
+      print("🔥 EVENT: ${event.data}");
+    },
+  );
+
+  await pusher.subscribe(channelName: "private-user-1");
+  await pusher.connect();
 
   final dir = await getApplicationDocumentsDirectory();
 
