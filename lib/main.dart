@@ -27,26 +27,21 @@ void main() async {
   await pusher.init(
     apiKey: "a118360ad1a87f1ee1ae",
     cluster: "mt1",
-    authEndpoint: "https://your-domain.com/broadcasting/auth",
     onConnectionStateChange: (currentState, previousState) {
       print("STATE: $currentState");
     },
     onSubscriptionSucceeded: (channelName, data) {
       print("SUBSCRIBED: $channelName");
     },
-    onSubscriptionError: (message, e) {
-      print("SUB ERROR: $message , $e");
-    },
     onEvent: (event) {
       print("EVENT: ${event.eventName}");
       print("DATA: ${event.data}");
     },
     onError: (message, code, e) {
-      print("ERROR: $message | $code | $e");
+      print("ERROR: $message");
     },
   );
-
-  await pusher.subscribe(channelName: "private-user-1");
+  await pusher.subscribe(channelName: "test");
   await pusher.connect();
 
   final dir = await getApplicationDocumentsDirectory();
