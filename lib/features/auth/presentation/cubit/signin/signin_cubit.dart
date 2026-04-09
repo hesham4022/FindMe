@@ -1,4 +1,5 @@
 import 'package:find_me_app/core/helpers/formfield_validator.dart';
+import 'package:find_me_app/features/notifications/data/source/pusher.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:find_me_app/features/auth/data/model/base_url_response.dart';
 import 'package:find_me_app/features/auth/data/model/signin_user.dart';
@@ -90,6 +91,11 @@ class SignInCubit extends Cubit<SignInState> {
       (data) async {
         await _authLocal.saveAccessToken(data.accessToken);
         await _authLocal.saveRefreshToken(data.refreshToken);
+
+        await PusherService.init(
+          userId: data.user.id,
+          token: data.accessToken,
+        );
 
         emit(state.copyWith(
           status: SignInStatus.success,
