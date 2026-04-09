@@ -60,9 +60,6 @@ class PusherService {
     await _pusher.init(
       apiKey: "a118360ad1a87f1ee1ae",
       cluster: "mt1",
-
-      // ❌ امسح authEndpoint و authParams
-      // ✅ استخدم onAuthorizer بدلهم
       onAuthorizer: (channelName, socketId, options) async {
         try {
           final response = await http.post(
@@ -91,7 +88,6 @@ class PusherService {
           return null;
         }
       },
-
       onConnectionStateChange: (currentState, previousState) {
         print("STATE: $currentState");
       },
@@ -101,27 +97,9 @@ class PusherService {
       onSubscriptionError: (message, e) {
         print("SUB ERROR: $message , $e");
       },
-      // onEvent: (event) {
-      //   print("EVENT: ${event.eventName}");
-      //   print("DATA: ${event.data}");
-      // },
       onEvent: (event) {
-        // تجاهل system events
-        if (event.eventName.startsWith('pusher:')) return;
-
-        print("EVENT NAME: ${event.eventName}");
-        print("RAW DATA: ${event.data}");
-
-        // ✅ الاسم الصح
-        if (event.eventName ==
-            "Illuminate\\Notifications\\Events\\BroadcastNotificationCreated") {
-          final data = jsonDecode(event.data);
-
-          print("REPORT ID: ${data['report_id']}");
-          print("MESSAGE: ${data['message']}");
-
-          // هنا تعمل الـ notification في Flutter
-        }
+        print("EVENT: ${event.eventName}");
+        print("DATA: ${event.data}");
       },
       onError: (message, code, e) {
         print("ERROR: $message | $code | $e");
