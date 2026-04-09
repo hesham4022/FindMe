@@ -25,14 +25,14 @@ void main() async {
   ]);
 
   await pusher.init(
-    apiKey: "KEY",
+    apiKey: "a118360ad1a87f1ee1ae",
     cluster: "mt1",
     authEndpoint: "https://your-domain.com/broadcasting/auth",
     onConnectionStateChange: (currentState, previousState) {
       print("🟢 STATE: $currentState");
     },
     onError: (message, code, e) {
-      print("❌ ERROR: $message - $code");
+      print("❌ ERROR: $message - $code - $e");
     },
     onEvent: (event) {
       print("🔥 EVENT: ${event.data}");
