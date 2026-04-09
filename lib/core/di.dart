@@ -84,8 +84,7 @@ Future<void> init() async {
   sl.registerLazySingleton<LocalNotificationsService>(
       () => LocalNotificationsService());
 
-  sl.registerLazySingleton<NotificationsRemote>(
-      () => NotificationsRemote(sl()));
+  sl.registerLazySingleton<NotificationsRemote>(() => NotificationsRemote());
   sl.registerLazySingleton<NotificationRepo>(() => NotificationRepo(sl()));
 
   sl.registerLazySingleton<DeleteCaseRepo>(() => DeleteCaseRepo(sl()));

@@ -461,7 +461,8 @@ class CaseCard extends StatelessWidget {
                       //     available: "",
                       //   ),
 
-                      // const Spacer(),
+            if (caseModel.similarityScore == null)
+                      const Spacer(),
 
                       /// icons
                       ActionIcon(

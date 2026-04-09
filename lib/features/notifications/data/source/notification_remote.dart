@@ -7,9 +7,7 @@ import 'package:find_me_app/features/notifications/data/model/notification.dart'
 import 'package:http/http.dart' as http;
 
 class NotificationsRemote {
-  NotificationsRemote(this._client);
-
-  final http.Client _client;
+  NotificationsRemote();
 
   // ✅ get notifications
   Future<NotificationResponseModel> getNotifications({
