@@ -110,7 +110,7 @@ class PusherService {
     await _pusher.connect();
 
     await _pusher.subscribe(
-      channelName: "private-App.Models.User.$userId",
+      channelName: "private-users.$userId",
     );
   }
 }
