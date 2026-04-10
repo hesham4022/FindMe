@@ -191,6 +191,7 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
   // 🔥 استقبال إشعار جديد من Pusher
   void addNotificationFromPusher(AppNotificationModel notification) {
+    print('BEFORE unreadCount = ${state.unreadCount}');
     final alreadyExists =
         state.notifications.any((e) => e.id == notification.id);
 

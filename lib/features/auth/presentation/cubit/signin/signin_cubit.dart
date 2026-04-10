@@ -100,6 +100,7 @@ class SignInCubit extends Cubit<SignInState> {
           userId: data.user.id,
           token: data.accessToken,
           onNotificationReceived: (eventData) {
+            print('PUSHER CALLBACK HIT: $eventData');
             final notification = AppNotificationModel.fromPusherJson(
               eventData,
               userId: data.user.id,
