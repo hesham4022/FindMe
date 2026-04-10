@@ -98,8 +98,9 @@ class PusherService {
         print("SUB ERROR: $message , $e");
       },
       onEvent: (event) {
-        print("EVENT: ${event.eventName}");
-        print("DATA: ${event.data}");
+        print("EVENT NAME: ${event.eventName}");
+        print("EVENT CHANNEL: ${event.channelName}");
+        print("EVENT DATA: ${event.data}");
       },
       onError: (message, code, e) {
         print("ERROR: $message | $code | $e");
