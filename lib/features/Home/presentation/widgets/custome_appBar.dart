@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
+import 'package:find_me_app/features/notifications/presentation/cubit/notifications/notifications_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -85,20 +86,64 @@ class HomeHeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
                     ],
                   ),
                 ),
-                InkWell(
-                  onTap: () {
-                    context.toNamed(AppRoutes.notificationsRoute);
+                BlocBuilder<NotificationsCubit, NotificationsState>(
+                  buildWhen: (prev, curr) =>
+                      prev.unreadCount != curr.unreadCount,
+                  builder: (context, state) {
+                    return Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        InkWell(
+                          onTap: () {
+                            context.toNamed(AppRoutes.notificationsRoute);
+                          },
+                          borderRadius: BorderRadius.circular(18),
+                          child: Container(
+                            width: 36,
+                            height: 36,
+                            decoration: const BoxDecoration(
+                              color: chipBg,
+                              shape: BoxShape.circle,
+                            ),
+                            child:
+                                const Icon(Icons.notifications_none, size: 20),
+                          ),
+                        ),
+
+                        // 🔴 Badge
+                        if (state.unreadCount > 0)
+                          Positioned(
+                            right: -2,
+                            top: -2,
+                            child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 5,
+                                vertical: 2,
+                              ),
+                              decoration: BoxDecoration(
+                                color: Colors.red,
+                                borderRadius: BorderRadius.circular(12),
+                              ),
+                              constraints: const BoxConstraints(
+                                minWidth: 16,
+                                minHeight: 16,
+                              ),
+                              child: Text(
+                                state.unreadCount > 99
+                                    ? '99+'
+                                    : '${state.unreadCount}',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 9,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          ),
+                      ],
+                    );
                   },
-                  borderRadius: BorderRadius.circular(18),
-                  child: Container(
-                    width: 36,
-                    height: 36,
-                    decoration: const BoxDecoration(
-                      color: chipBg,
-                      shape: BoxShape.circle,
-                    ),
-                    child: const Icon(Icons.notifications_none, size: 20),
-                  ),
                 ),
               ],
             ),
