@@ -101,6 +101,12 @@ class PusherService {
         print("EVENT NAME: ${event.eventName}");
         print("EVENT CHANNEL: ${event.channelName}");
         print("EVENT DATA: ${event.data}");
+
+        if (event.channelName == "private-App.Models.User.30" &&
+            event.eventName ==
+                "Illuminate\\Notifications\\Events\\BroadcastNotificationCreated") {
+          print("✅ Laravel notification received");
+        }
       },
       onError: (message, code, e) {
         print("ERROR: $message | $code | $e");
