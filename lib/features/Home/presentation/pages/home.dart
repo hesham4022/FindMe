@@ -21,8 +21,8 @@ class HomePageNoNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => NotificationsCubit(sl()),
+    return BlocProvider.value(
+      value: sl<NotificationsCubit>(),
       child: Scaffold(
         resizeToAvoidBottomInset: false,
         appBar: HomeHeaderAppBar(onBellTap: () {}),
