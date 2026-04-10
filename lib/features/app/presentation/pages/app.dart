@@ -63,6 +63,7 @@ class MainApp extends StatelessWidget {
                 create: (_) => SignInCubit(
                   sl(),
                   sl(),
+                  sl(),
                 ),
                 lazy: false,
               ),

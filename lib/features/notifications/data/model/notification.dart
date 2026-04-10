@@ -52,6 +52,25 @@ class AppNotificationModel {
       updatedAt: json['updated_at'] ?? '',
     );
   }
+
+  factory AppNotificationModel.fromPusherJson(
+    Map<String, dynamic> json, {
+    required int userId,
+  }) {
+    return AppNotificationModel(
+      id: json['id'] ?? '',
+      type: json['type'] ?? '',
+      notifiableType: 'App\\Models\\User',
+      notifiableId: userId,
+      data: NotificationDataModel.fromJson({
+        "message": json['message'],
+        "report_id": json['report_id'],
+      }),
+      readAt: null, // جديد → unread
+      createdAt: DateTime.now().toIso8601String(),
+      updatedAt: DateTime.now().toIso8601String(),
+    );
+  }
 }
 
 class NotificationDataModel {

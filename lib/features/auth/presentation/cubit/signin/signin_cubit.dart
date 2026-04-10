@@ -1,5 +1,7 @@
 import 'package:find_me_app/core/helpers/formfield_validator.dart';
+import 'package:find_me_app/features/notifications/data/model/notification.dart';
 import 'package:find_me_app/features/notifications/data/source/pusher.dart';
+import 'package:find_me_app/features/notifications/presentation/cubit/notifications/notifications_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:find_me_app/features/auth/data/model/base_url_response.dart';
 import 'package:find_me_app/features/auth/data/model/signin_user.dart';
@@ -11,10 +13,12 @@ class SignInCubit extends Cubit<SignInState> {
   SignInCubit(
     this._authRepo,
     this._authLocal,
+    this.notificationsCubit,
   ) : super(SignInState.initial());
 
   final AuthRepo _authRepo;
   final AuthLocal _authLocal;
+  final NotificationsCubit notificationsCubit;
 
   BaseUrlResponse? baseUrlInstance;
 
@@ -95,6 +99,14 @@ class SignInCubit extends Cubit<SignInState> {
         await PusherService.init(
           userId: data.user.id,
           token: data.accessToken,
+          onNotificationReceived: (eventData) {
+            final notification = AppNotificationModel.fromPusherJson(
+              eventData,
+              userId: data.user.id,
+            );
+
+            notificationsCubit.addNotificationFromPusher(notification);
+          },
         );
         print("user id${data.user.id}");
 
