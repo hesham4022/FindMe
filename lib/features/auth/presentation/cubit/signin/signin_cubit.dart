@@ -96,6 +96,7 @@ class SignInCubit extends Cubit<SignInState> {
           userId: data.user.id,
           token: data.accessToken,
         );
+        print("user id${data.user.id}");
 
         emit(state.copyWith(
           status: SignInStatus.success,
