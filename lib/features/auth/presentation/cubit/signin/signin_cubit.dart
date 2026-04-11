@@ -96,21 +96,6 @@ class SignInCubit extends Cubit<SignInState> {
         await _authLocal.saveAccessToken(data.accessToken);
         await _authLocal.saveRefreshToken(data.refreshToken);
 
-        await PusherService.init(
-          userId: data.user.id,
-          token: data.accessToken,
-          onNotificationReceived: (eventData) {
-            print('PUSHER CALLBACK HIT: $eventData');
-            final notification = AppNotificationModel.fromPusherJson(
-              eventData,
-              userId: data.user.id,
-            );
-
-            notificationsCubit.addNotificationFromPusher(notification);
-          },
-        );
-        print("user id${data.user.id}");
-
         emit(state.copyWith(
           status: SignInStatus.success,
           isActivated: true,

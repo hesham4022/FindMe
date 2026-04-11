@@ -1,4 +1,7 @@
 import 'package:equatable/equatable.dart';
+import 'package:find_me_app/features/notifications/data/model/notification.dart';
+import 'package:find_me_app/features/notifications/data/source/pusher.dart';
+import 'package:find_me_app/features/notifications/presentation/cubit/notifications/notifications_cubit.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
@@ -11,8 +14,9 @@ class HostCubit extends Cubit<HostState> {
   HostCubit(
     int initialIndex,
     this._authLocal,
+    this._notificationsCubit,
   ) : super(HostState.initial(initialIndex));
-
+  final NotificationsCubit _notificationsCubit;
   final AuthLocal _authLocal;
   List<int> tabHistory = [0];
 
@@ -34,6 +38,24 @@ class HostCubit extends Cubit<HostState> {
       }
 
       final user = await _authLocal.getCachedAuthedUser();
+
+      _notificationsCubit.onInit();
+
+      // ✅ ابدأ الـ Pusher بالـ token المحفوظ
+      final token = await _authLocal.getAccessToken();
+      if (token != null && user != null) {
+        await PusherService.init(
+          userId: user.id,
+          token: token,
+          onNotificationReceived: (eventData) {
+            final notification = AppNotificationModel.fromPusherJson(
+              eventData,
+              userId: user.id,
+            );
+            _notificationsCubit.addNotificationFromPusher(notification);
+          },
+        );
+      }
 
       emit(
         state.copyWith(

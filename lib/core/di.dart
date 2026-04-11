@@ -22,6 +22,7 @@ import 'package:find_me_app/features/case_info/data/repo/single_case_repo.dart';
 import 'package:find_me_app/features/case_info/data/source/single_case_remote.dart';
 import 'package:find_me_app/features/likes/data/repo/like_repo.dart';
 import 'package:find_me_app/features/likes/data/source/like_remote.dart';
+import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:find_me_app/features/notifications/data/repo/notification_repo.dart';
 import 'package:find_me_app/features/notifications/data/source/notification_remote.dart';
 import 'package:find_me_app/features/notifications/presentation/cubit/notifications/notifications_cubit.dart';
@@ -118,6 +119,12 @@ Future<void> init() async {
   sl.registerLazySingleton<LikeRepo>(() => LikeRepo(sl()));
 
   sl.registerLazySingleton<NotificationsCubit>(() => NotificationsCubit(sl()));
+
+  sl.registerFactory(() => HostCubit(
+        0,
+        sl<AuthLocal>(),
+        sl<NotificationsCubit>(), // ✅
+      ));
 }
 
 //! Sembast Local DB

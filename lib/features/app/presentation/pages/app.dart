@@ -47,7 +47,7 @@ class MainApp extends StatelessWidget {
               //   // create: (_) => HostCubit(0, sl()),
               // ),
               BlocProvider(
-                create: (_) => HostCubit(0, sl())..loadCachedUser(),
+                create: (_) => HostCubit(0, sl(), sl())..loadCachedUser(),
               ),
               BlocProvider(
                 create: (_) => NetworkInfo(sl())..listenToConnection(),
