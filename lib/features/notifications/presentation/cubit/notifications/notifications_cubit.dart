@@ -261,8 +261,42 @@ class NotificationsCubit extends Cubit<NotificationsState> {
     );
   }
 
+// في NotificationsCubit
+  void markAllAsRead() async {
+    final unreadNotifications = state.notifications
+        .asMap()
+        .entries
+        .where((e) => !e.value.isRead)
+        .toList();
+
+    for (final entry in unreadNotifications) {
+      await _repo.markNotificationsAsRead(entry.value.id);
+    }
+
+    final updated = state.notifications.map((n) {
+      if (!n.isRead) {
+        return AppNotificationModel(
+          id: n.id,
+          type: n.type,
+          notifiableType: n.notifiableType,
+          notifiableId: n.notifiableId,
+          data: n.data,
+          readAt: DateTime.now().toIso8601String(),
+          createdAt: n.createdAt,
+          updatedAt: n.updatedAt,
+        );
+      }
+      return n;
+    }).toList();
+
+    emit(state.copyWith(
+      notifications: updated,
+      unreadCount: 0,
+    ));
+  }
+
   // 🔥 GET FIRST PAGE
-  void _getNotifications() async {
+  void _getNotifications({bool markAllRead = false}) async {
     if (isClosed) return;
 
     emit(state.copyWith(status: NotificationStatus.loading));
@@ -290,6 +324,10 @@ class NotificationsCubit extends Cubit<NotificationsState> {
           selectedPage: 2,
           status: NotificationStatus.success,
         ));
+
+        if (markAllRead) {
+          markAllAsRead();
+        }
       },
     );
   }
@@ -353,6 +391,17 @@ class NotificationsCubit extends Cubit<NotificationsState> {
       unreadCount: 0,
     ));
     _getNotifications();
+  }
+
+// ✅ للصفحة الإشعارات
+  void refreshAndMarkAllRead() {
+    emit(state.copyWith(
+      selectedPage: 1,
+      hasReachedMax: false,
+      notifications: [],
+      unreadCount: 0,
+    ));
+    _getNotifications(markAllRead: true);
   }
 
   // 🔥 INIT

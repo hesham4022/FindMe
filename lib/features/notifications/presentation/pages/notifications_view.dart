@@ -20,7 +20,7 @@ class NotificationsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: sl<NotificationsCubit>()
-        ..refresh()
+        ..refreshAndMarkAllRead()
         ..attachScrollListener(),
       child: const Scaffold(
         backgroundColor: AppColors.saltBox50,
