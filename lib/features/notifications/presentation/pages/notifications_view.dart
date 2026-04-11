@@ -22,14 +22,14 @@ class NotificationsView extends StatelessWidget {
       value: sl<NotificationsCubit>()
         ..refresh()
         ..attachScrollListener(),
-      child: Scaffold(
+      child: const Scaffold(
         backgroundColor: AppColors.saltBox50,
         appBar: CustomAppBar(
           titleText: AppStrings.notifications,
           background: Colors.white,
           elevation: 0.3,
         ),
-        body: const _Body(),
+        body: _Body(),
       ),
     );
   }
