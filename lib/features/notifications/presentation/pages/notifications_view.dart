@@ -18,8 +18,10 @@ class NotificationsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<NotificationsCubit>()..onInit(),
+    return BlocProvider.value(
+      value: sl<NotificationsCubit>()
+        ..refresh()
+        ..attachScrollListener(),
       child: Scaffold(
         backgroundColor: AppColors.saltBox50,
         appBar: CustomAppBar(

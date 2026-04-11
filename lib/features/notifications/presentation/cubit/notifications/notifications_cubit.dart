@@ -181,9 +181,21 @@ class NotificationsCubit extends Cubit<NotificationsState> {
 
   final NotificationRepo _repo;
 
-  late final ScrollController scrollCtrl = ScrollController();
+  ScrollController _scrollCtrl = ScrollController();
+  ScrollController get scrollCtrl => _scrollCtrl;
 
   final int limit = 11;
+
+  void attachScrollListener() {
+    if (!_scrollCtrl.hasClients) {
+      try {
+        _scrollCtrl.dispose();
+      } catch (_) {}
+      _scrollCtrl = ScrollController();
+    }
+    _scrollCtrl.removeListener(_onScroll);
+    _scrollCtrl.addListener(_onScroll);
+  }
 
   int _calculateUnreadCount(List<AppNotificationModel> notifications) {
     return notifications.where((e) => !e.isRead).length;
@@ -340,14 +352,14 @@ class NotificationsCubit extends Cubit<NotificationsState> {
       notifications: [],
       unreadCount: 0,
     ));
-
     _getNotifications();
   }
 
   // 🔥 INIT
   void onInit() {
     _getNotifications();
-    scrollCtrl.addListener(_onScroll);
+    // scrollCtrl.addListener(_onScroll);
+    attachScrollListener();
   }
 
   @override
