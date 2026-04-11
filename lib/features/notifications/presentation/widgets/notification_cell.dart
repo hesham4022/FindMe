@@ -50,7 +50,6 @@ class NotificationCell extends StatelessWidget {
               context
                   .read<NotificationsCubit>()
                   .markNotificationAsRead(notification.id, index);
-
               // kNavigateToPage(context, notification);
             },
             contentPadding: EdgeInsets.zero,
