@@ -38,9 +38,19 @@ class HomePageNoNavBar extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                    child: SearchTextfield(
-                      controller: controller,
-                      enabled: false,
+                    child: GestureDetector(
+                      onTap: () {
+                        context.toNamed(
+                          AppRoutes.searchRoute,
+                          arguments: context.read<AllCasesCubit>(),
+                        );
+                      },
+                      child: AbsorbPointer(
+                        child: SearchTextfield(
+                          controller: controller,
+                          enabled: false,
+                        ),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 14),

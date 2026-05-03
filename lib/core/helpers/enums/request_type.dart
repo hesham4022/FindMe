@@ -1,4 +1,4 @@
-enum HttpRequestType { get, post, put, delete }
+enum HttpRequestType { get, post, put, delete, patch }
 
 extension RequestTypeExtension on HttpRequestType {
   String get value {
@@ -9,6 +9,8 @@ extension RequestTypeExtension on HttpRequestType {
         return 'POST';
       case HttpRequestType.put:
         return 'PUT';
+      case HttpRequestType.patch:
+        return 'PATCH';
       case HttpRequestType.delete:
         return 'DELETE';
     }

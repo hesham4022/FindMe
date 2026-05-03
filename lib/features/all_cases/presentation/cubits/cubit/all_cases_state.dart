@@ -15,6 +15,8 @@ class AllCasesState extends Equatable {
   final String? searchMessage;
   final bool isImageSearch;
   final List<CaseInfoModel> cachedAllCases;
+  final String? selectedImagePath;
+  final String? selectedImageName;
 
   // final SuccessResponse? success;
   final Failure? failure;
@@ -41,6 +43,8 @@ class AllCasesState extends Equatable {
     this.isImageSearch = false,
     this.imageSearchStatus = AllCasesStatus.initial,
     required this.cachedAllCases,
+    this.selectedImagePath,
+    this.selectedImageName,
   });
 
   factory AllCasesState.initial() {
@@ -48,6 +52,8 @@ class AllCasesState extends Equatable {
       status: AllCasesStatus.initial,
       filtered: [],
       cachedAllCases: [],
+      selectedImagePath: null,
+      selectedImageName: null,
     );
   }
 
@@ -64,6 +70,11 @@ class AllCasesState extends Equatable {
     String? searchMessage,
     bool? isImageSearch,
     List<CaseInfoModel>? cachedAllCases,
+    String? selectedImagePath,
+    String? selectedImageName,
+    bool clearFailure = false,
+    bool clearSearchMessage = false,
+    bool clearSelectedImage = false,
   }) {
     return AllCasesState(
       filtered: filtered ?? this.filtered,
@@ -78,6 +89,12 @@ class AllCasesState extends Equatable {
       searchMessage: searchMessage ?? this.searchMessage,
       isImageSearch: isImageSearch ?? this.isImageSearch,
       cachedAllCases: cachedAllCases ?? this.cachedAllCases,
+      selectedImagePath: clearSelectedImage
+          ? null
+          : (selectedImagePath ?? this.selectedImagePath),
+      selectedImageName: clearSelectedImage
+          ? null
+          : (selectedImageName ?? this.selectedImageName),
     );
   }
 
@@ -94,5 +111,7 @@ class AllCasesState extends Equatable {
         searchMessage,
         isImageSearch,
         cachedAllCases,
+        selectedImagePath,
+        selectedImageName,
       ];
 }

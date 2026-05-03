@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/date_time_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,10 +9,29 @@ import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/features/notifications/data/model/notification.dart';
 import 'package:find_me_app/features/notifications/presentation/cubit/notifications/notifications_cubit.dart';
 
+// void kNavigateToPage(BuildContext context, AppNotificationModel data) {
+//   context.toNamed(
+//     AppRoutes.profileRoute,
+//     arguments: false,
+//     callback: (value) {
+//       final refresh = value as bool?;
+//       if (refresh == true) {
+//         context.read<NotificationsCubit>().refresh();
+//       }
+//     },
+//   );
+// }
+
 void kNavigateToPage(BuildContext context, AppNotificationModel data) {
+  final reportId = data.data.reportId;
+
+  if (reportId == null) return;
+
   context.toNamed(
-    AppRoutes.profileRoute,
-    arguments: false,
+    AppRoutes.caseInfoRoute,
+    arguments: {
+      'caseId': reportId.toString(),
+    },
     callback: (value) {
       final refresh = value as bool?;
       if (refresh == true) {
@@ -50,17 +70,17 @@ class NotificationCell extends StatelessWidget {
               context
                   .read<NotificationsCubit>()
                   .markNotificationAsRead(notification.id, index);
-              // kNavigateToPage(context, notification);
+              kNavigateToPage(context, notification);
             },
             contentPadding: EdgeInsets.zero,
             minLeadingWidth: 0,
             horizontalTitleGap: 12.w,
             dense: true,
             leading: Container(
-              padding: EdgeInsets.all(10).r,
+              padding: const EdgeInsets.all(10).r,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: Color(0xff3C3A40).withAlpha((0.12 * 255).toInt()),
+                color: const Color(0xff3C3A40).withAlpha((0.12 * 255).toInt()),
               ),
               child: Icon(
                 Icons.notifications_active_rounded,
@@ -85,7 +105,8 @@ class NotificationCell extends StatelessWidget {
                 ),
                 SizedBox(height: 4.h),
                 Text(
-                  notification.createdAt,
+                  DateTimeHelper.formatNotificationDateTime(
+                      notification.createdAt),
                   style: Theme.of(context)
                       .textTheme
                       .kCaptionRegular

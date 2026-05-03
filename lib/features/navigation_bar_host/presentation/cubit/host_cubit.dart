@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:find_me_app/core/services/notificatin/notification_sound.dart';
 import 'package:find_me_app/features/notifications/data/model/notification.dart';
 import 'package:find_me_app/features/notifications/data/source/pusher.dart';
 import 'package:find_me_app/features/notifications/presentation/cubit/notifications/notifications_cubit.dart';
@@ -41,7 +42,6 @@ class HostCubit extends Cubit<HostState> {
 
       _notificationsCubit.onInit();
 
-      // ✅ ابدأ الـ Pusher بالـ token المحفوظ
       final token = await _authLocal.getAccessToken();
       if (token != null && user != null) {
         await PusherService.init(
@@ -53,6 +53,7 @@ class HostCubit extends Cubit<HostState> {
               userId: user.id,
             );
             _notificationsCubit.addNotificationFromPusher(notification);
+            SoundService.playNotificationSound();
           },
         );
       }

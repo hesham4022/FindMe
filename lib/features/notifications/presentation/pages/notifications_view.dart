@@ -20,7 +20,7 @@ class NotificationsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: sl<NotificationsCubit>()
-        ..refreshAndMarkAllRead()
+        ..refresh()
         ..attachScrollListener(),
       child: const Scaffold(
         backgroundColor: AppColors.saltBox50,
@@ -35,22 +35,39 @@ class NotificationsView extends StatelessWidget {
   }
 }
 
-class _Body extends StatelessWidget {
+class _Body extends StatefulWidget {
   const _Body();
+
+  @override
+  State<_Body> createState() => _BodyState();
+}
+
+class _BodyState extends State<_Body> {
+  late NotificationsCubit _cubit;
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _cubit = context.read<NotificationsCubit>();
+  }
+
+  @override
+  void dispose() {
+    _cubit.markAllAsRead();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<NotificationsCubit, NotificationsState>(
       listener: notificationsListener,
       builder: (context, state) {
-        // ✅ Loading لأول مرة فقط
         if (state.isLoading && state.notifications.isEmpty) {
           return const _LoadingState();
         }
 
         // ❌ Error
         if (state.isError) {
-          return NoDataWidget(
+          return const NoDataWidget(
             title: AppStrings.noNotif,
             icon: Icons.notifications_rounded,
           );

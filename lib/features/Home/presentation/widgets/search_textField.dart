@@ -10,90 +10,151 @@ import 'package:flutter_svg/svg.dart';
 class SearchTextfield extends StatelessWidget {
   const SearchTextfield({
     super.key,
-    this.onFilterTap,
-    this.onSearchTap,
-    this.onSubmitted,
     required this.controller,
     required this.enabled,
     this.onChanged,
+    this.onSubmitted,
+    this.onFilterTap,
+    this.onSearchTap,
+    this.hintText = 'Search by name',
+    this.autofocus = false,
+    // this.readOnly = false,
+    // this.openSearchPageOnTap = false,
   });
-  final VoidCallback? onFilterTap;
-  final VoidCallback? onSearchTap;
-  final ValueChanged<String>? onSubmitted;
+
   final TextEditingController controller;
   final bool enabled;
-  final void Function(String)? onChanged;
+  final ValueChanged<String>? onChanged;
+  final ValueChanged<String>? onSubmitted;
+  final VoidCallback? onFilterTap;
+  final VoidCallback? onSearchTap;
+  final String hintText;
+  final bool autofocus;
+  // final bool readOnly;
+  // final bool openSearchPageOnTap;
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        context.toNamed(
-          AppRoutes.searchRoute,
-          arguments: context.read<AllCasesCubit>(),
+    return ValueListenableBuilder<TextEditingValue>(
+      valueListenable: controller,
+      builder: (context, value, _) {
+        final hasText = value.text.trim().isNotEmpty;
+
+        return TextField(
+          // focusNode: focusNode,
+          // readOnly: readOnly,
+
+          controller: controller,
+          enabled: enabled,
+          autofocus: autofocus,
+          // onTap: () => _handleTap(context),
+          onChanged: onChanged,
+          onSubmitted: onSubmitted,
+          onTapOutside: (_) => FocusScope.of(context).unfocus(),
+          textInputAction: TextInputAction.search,
+          style: TextStyle(
+            fontSize: 14.sp,
+            fontWeight: FontWeight.w500,
+            color: Colors.black87,
+          ),
+          decoration: InputDecoration(
+            hintText: hintText,
+            hintStyle: TextStyle(
+              fontSize: 14.sp,
+              color: Colors.grey.shade500,
+              fontWeight: FontWeight.w400,
+            ),
+            filled: true,
+            fillColor: Colors.white,
+            isDense: true,
+            contentPadding: EdgeInsets.symmetric(
+              horizontal: 14.w,
+              vertical: 14.h,
+            ),
+            prefixIcon: Padding(
+              padding: EdgeInsetsDirectional.only(start: 12.w, end: 8.w),
+              child: Icon(
+                Icons.search_rounded,
+                color: AppColors.mainColor,
+                size: 22.sp,
+              ),
+            ),
+            prefixIconConstraints: BoxConstraints(
+              minWidth: 44.w,
+              minHeight: 44.h,
+            ),
+            suffixIcon: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                if (hasText)
+                  IconButton(
+                    onPressed: () {
+                      controller.clear();
+                      onChanged?.call('');
+                    },
+                    icon: Icon(
+                      Icons.close_rounded,
+                      color: Colors.grey.shade500,
+                      size: 20.sp,
+                    ),
+                  ),
+                if (onFilterTap != null)
+                  Padding(
+                    padding: EdgeInsetsDirectional.only(end: 8.w),
+                    child: InkWell(
+                      onTap: onFilterTap,
+                      borderRadius: BorderRadius.circular(20.r),
+                      child: Container(
+                        width: 34.w,
+                        height: 34.w,
+                        decoration: BoxDecoration(
+                          color: AppColors.secondColor,
+                          shape: BoxShape.circle,
+                        ),
+                        child: Center(
+                          child: SvgPicture.asset(
+                            'assets/icons/Vectorss (1).svg',
+                            width: 14.w,
+                            height: 10.h,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ),
+              ],
+            ),
+            suffixIconConstraints: BoxConstraints(
+              minHeight: 44.h,
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18.r),
+              borderSide: BorderSide(
+                color: Colors.grey.shade200,
+              ),
+            ),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18.r),
+              borderSide: BorderSide(
+                color: Colors.grey.shade200,
+              ),
+            ),
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18.r),
+              borderSide: BorderSide(
+                color: AppColors.mainColor,
+                width: 1.3,
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(18.r),
+              borderSide: BorderSide(
+                color: Colors.grey.shade200,
+              ),
+            ),
+          ),
         );
       },
-      child: TextField(
-        onChanged: onChanged,
-        autofocus: true,
-        enabled: enabled,
-        controller: controller,
-        textInputAction: TextInputAction.search,
-        onSubmitted: onSubmitted,
-        decoration: InputDecoration(
-          hintText: 'Search for cases in your area',
-          filled: true,
-          fillColor: AppColors.secondColor,
-          contentPadding: const EdgeInsets.symmetric(vertical: 12),
-          prefixIcon: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: InkWell(
-              onTap: onFilterTap,
-              borderRadius: BorderRadius.circular(16),
-              child: Container(
-                width: 32,
-                height: 32,
-                decoration: const BoxDecoration(
-                  color: Colors.white,
-                  shape: BoxShape.circle,
-                ),
-                child: Center(
-                  child: SvgPicture.asset(
-                    'assets/icons/Vectorss (1).svg',
-                    width: 14,
-                    height: 9,
-                    fit: BoxFit.scaleDown,
-                  ),
-                ),
-              ),
-            ),
-          ),
-          suffixIcon: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            child: InkWell(
-              onTap: onSearchTap,
-              child: SvgPicture.asset(
-                'assets/icons/searchIcon.svg',
-                width: 15.w,
-                height: 18.h,
-              ),
-            ),
-          ),
-          suffixIconConstraints:
-              const BoxConstraints(minWidth: 15, minHeight: 18),
-          disabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24),
-            borderSide: const BorderSide(color: Colors.transparent),
-          ),
-          enabledBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24),
-            borderSide: const BorderSide(color: Colors.transparent),
-          ),
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(24),
-            borderSide: const BorderSide(color: Color(0xFF3F51F7), width: 1.2),
-          ),
-        ),
-      ),
     );
   }
 }

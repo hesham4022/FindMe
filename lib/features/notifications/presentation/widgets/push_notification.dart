@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:find_me_app/core/resources/colors.dart';
-import 'package:find_me_app/core/resources/images.dart';
 import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:top_snackbar_flutter/top_snack_bar.dart';

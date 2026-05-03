@@ -49,4 +49,13 @@ class NotificationRepo {
       },
     );
   }
+
+  Future<Either<Failure, Unit>> markAllNotificationsAsRead() {
+    return executeFunctionality<Unit>(
+      function: () async {
+        await remoteSource.markAllNotificationsAsRead();
+        return unit;
+      },
+    );
+  }
 }

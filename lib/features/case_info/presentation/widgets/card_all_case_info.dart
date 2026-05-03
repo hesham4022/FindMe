@@ -2,18 +2,27 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
-import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/case_card.dart';
+import 'package:find_me_app/features/case_info/presentation/widgets/full_screan_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CardAllCaseInfo extends StatelessWidget {
   final CaseInfoModel? caseInfo;
-  const CardAllCaseInfo({super.key, this.caseInfo});
+  final VoidCallback? onLikeTap;
+  final bool isLiked;
+  const CardAllCaseInfo({
+    super.key,
+    this.caseInfo,
+    this.onLikeTap,
+    required this.isLiked,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final imageUrl = caseInfo!.photos.isNotEmpty
+        ? caseInfo!.photos.first.url!
+        : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png";
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 18),
       decoration: BoxDecoration(
@@ -23,20 +32,33 @@ class CardAllCaseInfo extends StatelessWidget {
       child: Column(
         children: [
           Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Container(
-                width: 150.w,
-                height: 150.h,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: CachedNetworkImageProvider(
-                      caseInfo!.photos.isNotEmpty
-                          ? caseInfo!.photos.first.url!
-                          : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => FullScreenImage(imageUrl: imageUrl),
                     ),
-                    fit: BoxFit.cover,
+                  );
+                },
+                child: Hero(
+                  tag: imageUrl,
+                  child: Container(
+                    width: 150.w,
+                    height: 150.h,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: CachedNetworkImageProvider(
+                          caseInfo!.photos.isNotEmpty
+                              ? caseInfo!.photos.first.url!
+                              : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
+                        ),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -162,7 +184,7 @@ class CardAllCaseInfo extends StatelessWidget {
                 color: Colors.white, borderRadius: BorderRadius.circular(12)),
             child: Column(
               children: [
-                Text("${caseInfo?.firstName} ${caseInfo?.lastName}" ?? '',
+                Text("${caseInfo?.firstName} ${caseInfo?.lastName}",
                     style: const TextStyle(
                       fontSize: 15,
                       fontWeight: FontWeight.w500,
@@ -206,42 +228,51 @@ class CardAllCaseInfo extends StatelessWidget {
                   ],
                 ),
               ),
-              BlocBuilder<AllCasesCubit, AllCasesState>(
-                builder: (context, state) {
-                  final updatedCase = state.filtered.firstWhere(
-                    (c) => c.id == caseInfo?.id,
-                    orElse: () => caseInfo!,
-                  );
+              // BlocBuilder<AllCasesCubit, AllCasesState>(
+              //   builder: (context, state) {
+              //     final updatedCase = state.filtered.firstWhere(
+              //       (c) => c.id == caseInfo?.id,
+              //       orElse: () => caseInfo!,
+              //     );
 
-                  return ActionIcon(
-                    icon: Icon(
-                      updatedCase.isLiked
-                          ? Icons.favorite
-                          : Icons.favorite_border,
-                      color: AppColors.mainColor,
-                      size: 16,
-                    ),
-                    onTap: () async {
-                      // Optimistic UI: قلب فورًا
-                      final previousValue = updatedCase.isLiked;
-                      context.read<AllCasesCubit>().updateCaseLike(
-                            updatedCase.id ?? -1,
-                            !previousValue,
-                          );
+              //     return ActionIcon(
+              //       icon: Icon(
+              //         updatedCase.isLiked
+              //             ? Icons.favorite
+              //             : Icons.favorite_border,
+              //         color: AppColors.mainColor,
+              //         size: 16,
+              //       ),
+              //       onTap: () async {
+              //         // Optimistic UI: قلب فورًا
+              //         final previousValue = updatedCase.isLiked;
+              //         context.read<AllCasesCubit>().updateCaseLike(
+              //               updatedCase.id ?? -1,
+              //               !previousValue,
+              //             );
 
-                      try {
-                        // Cubit يتعامل مع request ويرجع isLiked
-                        await context.read<AllCasesCubit>().toggleLike(
-                              updatedCase.id ?? -1,
-                            );
-                      } catch (e) {
-                        print('Like toggle failed: $e');
-                        context.read<AllCasesCubit>().updateCaseLike(
-                            updatedCase.id ?? -1, previousValue);
-                      }
-                    },
-                  );
-                },
+              //         try {
+              //           // Cubit يتعامل مع request ويرجع isLiked
+              //           await context.read<AllCasesCubit>().toggleLike(
+              //                 updatedCase.id ?? -1,
+              //               );
+              //         } catch (e) {
+              //           print('Like toggle failed: $e');
+              //           context.read<AllCasesCubit>().updateCaseLike(
+              //               updatedCase.id ?? -1, previousValue);
+              //         }
+              //       },
+              //     );
+              //   },
+              // ),
+
+              ActionIcon(
+                icon: Icon(
+                  isLiked ? Icons.favorite : Icons.favorite_border,
+                  color: AppColors.mainColor,
+                  size: 16,
+                ),
+                onTap: onLikeTap,
               ),
             ],
           ),

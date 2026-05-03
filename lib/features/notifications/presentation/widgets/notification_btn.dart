@@ -59,7 +59,7 @@ class NotificationBtn extends StatelessWidget {
                       padding:
                           const EdgeInsets.symmetric(vertical: 1, horizontal: 2)
                               .r,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.red,
                         shape: BoxShape.circle,
                       ),

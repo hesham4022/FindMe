@@ -14,17 +14,17 @@ class AdditionInfo extends StatelessWidget {
         VSpace(5),
         Text(
           title ?? '',
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 14,
             height: 1.2,
             color: AppColors.mainColor,
             fontWeight: FontWeight.w500,
           ),
         ),
-        VSpace(2),
+        const VSpace(2),
         Text(
           text ?? '',
-          style: TextStyle(
+          style: const TextStyle(
             fontSize: 12,
             height: 1.2,
           ),

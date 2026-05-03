@@ -9,6 +9,7 @@ import 'package:find_me_app/features/search_case/data/model/search_by_image_mode
 import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 part 'all_cases_state.dart';
 
 class AllCasesCubit extends HydratedCubit<AllCasesState> {
@@ -36,6 +37,8 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
         isScroll: json['isScroll'] as bool? ?? false,
         searchMessage: json['searchMessage'] as String?,
         isImageSearch: json['isImageSearch'] as bool? ?? false,
+        selectedImagePath: json['selectedImagePath'] as String?,
+        selectedImageName: json['selectedImageName'] as String?,
       );
     } catch (_) {
       return AllCasesState.initial();
@@ -52,6 +55,8 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
         'isScroll': state.isScroll,
         'searchMessage': state.searchMessage,
         'isImageSearch': state.isImageSearch,
+        'selectedImagePath': state.selectedImagePath,
+        'selectedImageName': state.selectedImageName,
       };
     } catch (_) {
       return null;
@@ -273,9 +278,114 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
     }
   }
 
-  void resetSearch() {
-    emit(state.copyWith(filtered: _allCases));
+////////////////////////////////
+
+  final ImagePicker _imagePicker = ImagePicker();
+  Future<void> selectImage() async {
+    try {
+      final XFile? image = await _imagePicker.pickImage(
+        source: ImageSource.gallery,
+        imageQuality: 80,
+      );
+
+      if (image == null) return;
+
+      emit(
+        state.copyWith(
+          selectedImagePath: image.path,
+          selectedImageName: image.name,
+          imageSearchStatus: AllCasesStatus.initial,
+          isImageSearch: false,
+          clearFailure: true,
+          clearSearchMessage: true,
+        ),
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          imageSearchStatus: AllCasesStatus.error,
+          failure: Failure(e.toString()),
+        ),
+      );
+    }
   }
+
+  Future<void> submitImageSearch() async {
+    final imagePath = state.selectedImagePath;
+    if (imagePath == null || imagePath.isEmpty) return;
+
+    emit(
+      state.copyWith(
+        imageSearchStatus: AllCasesStatus.loading,
+        isImageSearch: true,
+        clearFailure: true,
+        clearSearchMessage: true,
+      ),
+    );
+
+    try {
+      final request = SearchByImageRequest(imagePath: imagePath);
+      final result = await _repo.searchCasesByImage(request);
+
+      result.fold(
+        (failure) {
+          emit(
+            state.copyWith(
+              imageSearchStatus: AllCasesStatus.error,
+              failure: failure,
+            ),
+          );
+        },
+        (response) {
+          emit(
+            state.copyWith(
+              imageSearchStatus: AllCasesStatus.success,
+              filtered: response.cases,
+              searchMessage: response.message,
+              isImageSearch: true,
+            ),
+          );
+        },
+      );
+    } catch (e) {
+      emit(
+        state.copyWith(
+          imageSearchStatus: AllCasesStatus.error,
+          failure: Failure(e.toString()),
+        ),
+      );
+    }
+  }
+
+  void clearSelectedImage() {
+    emit(
+      state.copyWith(
+        clearSelectedImage: true,
+        imageSearchStatus: AllCasesStatus.initial,
+        isImageSearch: false,
+        clearFailure: true,
+        clearSearchMessage: true,
+        filtered: _allCases,
+      ),
+    );
+  }
+
+  void resetSearch() {
+    emit(
+      state.copyWith(
+        filtered: _allCases,
+        imageSearchStatus: AllCasesStatus.initial,
+        isImageSearch: false,
+        clearFailure: true,
+        clearSearchMessage: true,
+        clearSelectedImage: true,
+      ),
+    );
+  }
+
+  // void resetSearch() {
+  //   emit(state.copyWith(filtered: _allCases));
+  // }
 
   void clearFilter() {
     final allCases = state.allCasesResponse?.allCases ?? [];

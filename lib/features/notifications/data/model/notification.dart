@@ -71,6 +71,21 @@ class AppNotificationModel {
       updatedAt: DateTime.now().toIso8601String(),
     );
   }
+
+  AppNotificationModel copyWith({
+    String? readAt,
+  }) {
+    return AppNotificationModel(
+      id: id,
+      type: type,
+      notifiableType: notifiableType,
+      notifiableId: notifiableId,
+      data: data,
+      readAt: readAt ?? this.readAt,
+      createdAt: createdAt,
+      updatedAt: updatedAt,
+    );
+  }
 }
 
 class NotificationDataModel {

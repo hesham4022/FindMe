@@ -48,7 +48,16 @@ class NotificationsRemote {
   Future<void> markNotificationsAsRead(String id) async {
     await makeHttpRequest(
       url: ApiConstants.markNotificationsAsReadUrl(id),
-      requestType: HttpRequestType.post,
+      requestType: HttpRequestType.patch,
+      needParsedResponse: false,
+      requiresAuth: true,
+    );
+  }
+
+  Future<void> markAllNotificationsAsRead() async {
+    await makeHttpRequest(
+      url: ApiConstants.markAllNotificationsAsReadUrl,
+      requestType: HttpRequestType.patch,
       needParsedResponse: false,
       requiresAuth: true,
     );

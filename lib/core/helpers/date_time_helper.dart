@@ -7,8 +7,8 @@ class DateTimeHelper {
       DateFormat('MMM dd, yyyy', sl<AppLocal>().getCachedLanguage());
   static get formatterCustom =>
       DateFormat('yyyy MMM dd', sl<AppLocal>().getCachedLanguage());
-  static get formatterCustom2 => DateFormat(
-      'dd MMM yyyy', sl<AppLocal>().getCachedLanguage() == "en" ? "en_US" : "ar_SA");
+  static get formatterCustom2 => DateFormat('dd MMM yyyy',
+      sl<AppLocal>().getCachedLanguage() == "en" ? "en_US" : "ar_SA");
   static get dayMonthFormat =>
       DateFormat('dd MMM', sl<AppLocal>().getCachedLanguage());
   static get formatterCustom3 =>
@@ -77,9 +77,8 @@ class DateTimeHelper {
     }
   }
 
-
-
-  static String getTimeZone(DateTime dateTime) => DateFormat.jm().format(dateTime);
+  static String getTimeZone(DateTime dateTime) =>
+      DateFormat.jm().format(dateTime);
 
   static String? convertTimeTo12Hours(String? timeString) {
     if (timeString == null) {
@@ -94,5 +93,20 @@ class DateTimeHelper {
     } catch (e) {
       return null; // Return null for invalid input
     }
+  }
+
+  static String formatNotificationDateTime(String value) {
+    final parsed = DateTime.parse(value).toLocal();
+
+    final lang = sl<AppLocal>().getCachedLanguage();
+
+    if (lang == 'ar') {
+      return DateFormat('dd MMM yyyy - hh:mm a', 'ar_SA')
+          .format(parsed)
+          .replaceAll('AM', 'ص')
+          .replaceAll('PM', 'م');
+    }
+
+    return DateFormat('dd MMM yyyy - hh:mm a', 'en_US').format(parsed);
   }
 }

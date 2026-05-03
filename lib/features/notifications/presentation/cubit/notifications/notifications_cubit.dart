@@ -166,7 +166,6 @@
 
 // ignore_for_file: always_put_control_body_on_new_line
 import 'package:equatable/equatable.dart';
-import 'package:find_me_app/features/notifications/data/source/pusher.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
@@ -262,37 +261,46 @@ class NotificationsCubit extends Cubit<NotificationsState> {
   }
 
 // في NotificationsCubit
-  void markAllAsRead() async {
-    final unreadNotifications = state.notifications
-        .asMap()
-        .entries
-        .where((e) => !e.value.isRead)
-        .toList();
+  Future<void> markAllAsRead() async {
+    if (state.unreadCount == 0) return;
 
-    for (final entry in unreadNotifications) {
-      await _repo.markNotificationsAsRead(entry.value.id);
-    }
+    // 🟡 خزن الحالة القديمة
+    final oldNotifications = state.notifications;
+    final oldUnreadCount = state.unreadCount;
 
+    // 🟢 optimistic update (UI فورًا)
     final updated = state.notifications.map((n) {
-      if (!n.isRead) {
-        return AppNotificationModel(
-          id: n.id,
-          type: n.type,
-          notifiableType: n.notifiableType,
-          notifiableId: n.notifiableId,
-          data: n.data,
-          readAt: DateTime.now().toIso8601String(),
-          createdAt: n.createdAt,
-          updatedAt: n.updatedAt,
-        );
-      }
-      return n;
+      return n.isRead
+          ? n
+          : n.copyWith(
+              readAt: DateTime.now().toIso8601String(),
+            );
     }).toList();
 
     emit(state.copyWith(
       notifications: updated,
       unreadCount: 0,
     ));
+
+    final result = await _repo.markAllNotificationsAsRead();
+
+    if (isClosed) return;
+
+    result.fold(
+      (error) {
+        emit(state.copyWith(
+          notifications: oldNotifications,
+          unreadCount: oldUnreadCount,
+          failure: error,
+          status: NotificationStatus.failed,
+        ));
+      },
+      (_) {
+        emit(state.copyWith(
+          status: NotificationStatus.success,
+        ));
+      },
+    );
   }
 
   // 🔥 GET FIRST PAGE

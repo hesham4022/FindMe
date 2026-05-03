@@ -189,6 +189,9 @@ Future<http.Response> makeHttpRequest({
     case HttpRequestType.put:
       response = await http.put(uri, headers: headers, body: requestBody);
       break;
+    case HttpRequestType.patch:
+      response = await http.patch(uri, headers: headers, body: requestBody);
+      break;
     case HttpRequestType.delete:
       response = await http.delete(uri, headers: headers, body: requestBody);
       break;
@@ -214,6 +217,9 @@ Future<http.Response> makeHttpRequest({
           break;
         case HttpRequestType.put:
           response = await http.put(uri, headers: headers, body: requestBody);
+          break;
+        case HttpRequestType.patch:
+          response = await http.patch(uri, headers: headers, body: requestBody);
           break;
         case HttpRequestType.delete:
           response =
@@ -328,6 +334,14 @@ Future<http.Response> makeHttpRequest2({
         body: requestBody,
       );
 
+      break;
+
+    case HttpRequestType.patch:
+      response = await client.patch(
+        uri,
+        headers: headers,
+        body: requestBody,
+      );
       break;
 
     case HttpRequestType.delete:

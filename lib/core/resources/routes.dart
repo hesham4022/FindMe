@@ -149,12 +149,42 @@ class AppRoutes {
       //     settings: settings,
       //   );
 
+      // case AppRoutes.caseInfoRoute:
+      //   final args = settings.arguments as Map<String, dynamic>;
+      //   return MaterialPageRoute(
+      //     builder: (_) => BlocProvider.value(
+      //       value: args['cubit'] as AllCasesCubit,
+      //       child: CaseInfoView(caseInfo: args['case'] as CaseInfoModel),
+      //     ),
+      //   );
+
       case AppRoutes.caseInfoRoute:
-        final args = settings.arguments as Map<String, dynamic>;
+        final args = settings.arguments;
+
+        if (args is Map<String, dynamic> && args.containsKey('caseId')) {
+          return MaterialPageRoute(
+            builder: (_) => CaseInfoView(
+              caseId: args['caseId'] as String,
+            ),
+          );
+        }
+
+        if (args is Map<String, dynamic> &&
+            args.containsKey('case') &&
+            args.containsKey('cubit')) {
+          return MaterialPageRoute(
+            builder: (_) => BlocProvider<AllCasesCubit>.value(
+              value: args['cubit'] as AllCasesCubit,
+              child: CaseInfoView(
+                caseInfo: args['case'] as CaseInfoModel,
+              ),
+            ),
+          );
+        }
+
         return MaterialPageRoute(
-          builder: (_) => BlocProvider.value(
-            value: args['cubit'] as AllCasesCubit,
-            child: CaseInfoView(caseInfo: args['case'] as CaseInfoModel),
+          builder: (_) => const Scaffold(
+            body: Center(child: Text("Invalid navigation data")),
           ),
         );
 
@@ -163,7 +193,7 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => BlocProvider.value(
             value: allCasesCubit,
-            child: const SearchPageView(),
+            child: SearchPageView(),
           ),
         );
       // case resetPasswordRoute:

@@ -22,7 +22,7 @@ class PusherService {
         try {
           final response = await http.post(
             Uri.parse(
-              "https://web-production-2673c.up.railway.app/api/broadcasting/auth",
+              "https://web-production-25022.up.railway.app/api/broadcasting/auth",
             ),
             headers: {
               "Authorization": "Bearer $token",
