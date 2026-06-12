@@ -1,5 +1,6 @@
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/features/add_case/presentation/pages/add_case.dart';
+import 'package:find_me_app/features/age_filter/presentation/pages/age_filter.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/app/presentation/pages/app.dart';
@@ -12,6 +13,7 @@ import 'package:find_me_app/features/notifications/presentation/pages/notificati
 import 'package:find_me_app/features/profile/presentation/profile_view/pages/help_center_view.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/pages/privacy_policy_view.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/pages/update_profile.dart';
+import 'package:find_me_app/features/search_case/presentation/pages/search_by_Image.dart';
 import 'package:find_me_app/features/search_case/presentation/pages/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
@@ -41,6 +43,9 @@ class AppRoutes {
   // static const String changePasswordRoute = '/changePassword';
   static const String hostRoute = '/host';
   static const String searchRoute = '/searchRoute';
+  static const String searchByImageRoute = '/searchByImageRoute';
+  static const String ageFilterRoute = '/ageFilterRoute';
+
   static const String helpCenterView = '/HelpCenterView';
   static const String addCaseView = '/addCaseView';
 
@@ -195,6 +200,21 @@ class AppRoutes {
             value: allCasesCubit,
             child: SearchPageView(),
           ),
+        );
+
+      case AppRoutes.searchByImageRoute:
+        final allCasesCubit = settings.arguments as AllCasesCubit;
+        return MaterialPageRoute(
+          builder: (_) => BlocProvider.value(
+            value: allCasesCubit,
+            child: SearchByImage(),
+          ),
+        );
+
+      case ageFilterRoute:
+        return MaterialPageRoute(
+          builder: (context) => const AgeFilter(),
+          settings: settings,
         );
       // case resetPasswordRoute:
       //   assert(settings.arguments != null);

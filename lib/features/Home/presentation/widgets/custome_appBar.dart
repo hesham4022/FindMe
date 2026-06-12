@@ -75,7 +75,7 @@ class HomeHeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
                         ),
                       ),
                       Text(
-                        user?.fullName ?? "",
+                        (user?.fullName ?? "").split(' ').first,
                         style: const TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 16,

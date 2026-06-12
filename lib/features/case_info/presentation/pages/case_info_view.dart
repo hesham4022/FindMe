@@ -7,6 +7,7 @@ import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/case_info/presentation/cubits/cubit/case_info_cubit.dart';
 import 'package:find_me_app/features/case_info/presentation/widgets/card_all_case_info.dart';
+import 'package:find_me_app/features/case_info/presentation/widgets/comment.dart';
 import 'package:find_me_app/features/case_info/presentation/widgets/more_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -137,6 +138,8 @@ class CaseInfoView extends StatelessWidget {
                 //   title: 'Details of what happened:',
                 //   text: caseInfo!.lastSeenLocation,
                 // ),
+
+                // CommentsPage(),
               ],
             ),
           ),

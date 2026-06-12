@@ -24,7 +24,7 @@ class FilterCases extends StatelessWidget {
         final isActive = state.activeFilter == filter;
 
         return Padding(
-          padding: const EdgeInsets.only(left: 8.0),
+          padding: const EdgeInsets.only(left: 2.0),
           child: CircleIconBody(
             icon: isActive ? iconOn : iconOff,
             iconColor: isActive ? Colors.white : AppColors.mainColor,

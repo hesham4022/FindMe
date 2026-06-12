@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:find_me_app/core/shared/widgets/shimmer_skeleton.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-
 import 'package:find_me_app/core/resources/colors.dart';
 
 class NotificationsListShimmerEffect extends StatelessWidget {

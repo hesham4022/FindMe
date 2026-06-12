@@ -198,7 +198,14 @@ class CardAllCaseInfo extends StatelessWidget {
                       size: 16,
                     ),
                     const HSpace(4),
-                    Text(caseInfo?.address ?? ''),
+                    Flexible(
+                      
+                      child: Text(
+                        caseInfo?.address ?? '',
+                        softWrap: true, 
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   ],
                 ),
               ],

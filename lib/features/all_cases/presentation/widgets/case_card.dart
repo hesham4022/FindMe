@@ -3,14 +3,9 @@ import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
-import 'package:find_me_app/core/shared/widgets/alerts.dart';
-import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/add_case/data/repo/delete_case_repo.dart';
-import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/precentage_shape.dart';
-import 'package:find_me_app/features/auth/data/model/authed_user.dart';
 import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -296,7 +291,7 @@ class CaseCard extends StatelessWidget {
                     child: caseModel.photos.isNotEmpty
                         ? CachedNetworkImage(
                             imageUrl: caseModel.photos.first.url!,
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                             alignment: Alignment.topCenter,
                           )
                         : Image.asset(
@@ -461,8 +456,7 @@ class CaseCard extends StatelessWidget {
                       //     available: "",
                       //   ),
 
-            if (caseModel.similarityScore == null)
-                      const Spacer(),
+                      if (caseModel.similarityScore == null) const Spacer(),
 
                       /// icons
                       ActionIcon(

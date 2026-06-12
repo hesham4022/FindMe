@@ -70,7 +70,7 @@ class BalanceIndicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final percent = similarityScore.clamp(0.0, 1.0);
+    final percent = similarityScore.clamp(0.7, 1.0);
     final displayPercent = (percent * 100).round();
 
     return CircularPercentIndicator(

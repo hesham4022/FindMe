@@ -83,7 +83,7 @@ class AllCasesState extends Equatable {
       selectedCase: selectedCase ?? this.selectedCase,
       isScroll: isScroll ?? this.isScroll,
       // success: success ?? this.success,
-      failure: failure ?? this.failure,
+      // failure: failure ?? this.failure,
       allCasesResponse: allCasesResponse ?? this.allCasesResponse,
       imageSearchStatus: imageSearchStatus ?? this.imageSearchStatus,
       searchMessage: searchMessage ?? this.searchMessage,
@@ -95,6 +95,7 @@ class AllCasesState extends Equatable {
       selectedImageName: clearSelectedImage
           ? null
           : (selectedImageName ?? this.selectedImageName),
+      failure: clearFailure ? null : (failure ?? this.failure),
     );
   }
 

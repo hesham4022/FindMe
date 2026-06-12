@@ -8,6 +8,7 @@ import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cas
 import 'package:find_me_app/features/all_cases/presentation/widgets/case_card.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/circle_icon_appBar.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/filter_cases.dart';
+import 'package:find_me_app/features/cases_map/presentation/pages/cases_map_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -45,11 +46,11 @@ class _AllCasesViewState extends State<AllCasesView> {
           ),
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          children: [
-            Row(
+      body: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: Row(
               children: [
                 const Text("Sort By"),
                 const HSpace(5),
@@ -98,10 +99,36 @@ class _AllCasesViewState extends State<AllCasesView> {
                   iconOff: Icons.male,
                   filter: AllCasesFilter.male,
                 ),
+                Spacer(),
+                MaterialButton(
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(21),
+                  ),
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => BlocProvider.value(
+                          value: context.read<AllCasesCubit>(),
+                          child: const CasesMapView(),
+                        ),
+                      ),
+                    );
+                  },
+                  color: AppColors.mainColor,
+                  child: const Text(
+                    "Cases map",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                const HSpace(5)
               ],
             ),
-            const VSpace(15),
-            Expanded(
+          ),
+          const VSpace(15),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 15),
               child: BlocBuilder<AllCasesCubit, AllCasesState>(
                 builder: (context, state) {
                   return NotificationListener<ScrollNotification>(
@@ -148,8 +175,8 @@ class _AllCasesViewState extends State<AllCasesView> {
                 },
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
       floatingActionButton: Padding(
         padding: const EdgeInsets.only(right: 10),

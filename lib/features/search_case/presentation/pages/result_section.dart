@@ -1,5 +1,7 @@
+import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/routes.dart';
+import 'package:find_me_app/core/shared/widgets/no_internet_widgit.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/all_cases/presentation/widgets/case_card.dart';
 import 'package:flutter/material.dart';
@@ -14,11 +16,19 @@ class ResultsSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isNoInternet = state.failure is InternetFailure;
+
     if (state.imageSearchStatus == AllCasesStatus.loading) {
       return Container(
         height: 260,
         alignment: Alignment.center,
         child: const CircularProgressIndicator(),
+      );
+    }
+
+    if (isNoInternet) {
+      return NoInternetWidget(
+        onRetry: () => context.read<AllCasesCubit>().submitImageSearch(),
       );
     }
 

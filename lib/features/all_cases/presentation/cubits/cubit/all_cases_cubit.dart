@@ -1,5 +1,8 @@
 import 'dart:developer';
+import 'dart:io';
 import 'package:find_me_app/core/di.dart';
+import 'package:find_me_app/core/networking/network_info.dart';
+import 'package:http/http.dart' as http;
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
 import 'package:find_me_app/features/add_case/data/repo/delete_case_repo.dart';
@@ -10,10 +13,12 @@ import 'package:flutter/material.dart';
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:path_provider/path_provider.dart';
 part 'all_cases_state.dart';
 
 class AllCasesCubit extends HydratedCubit<AllCasesState> {
-  AllCasesCubit(this._repo) : super(AllCasesState.initial()) {
+  AllCasesCubit(this._repo, this._networkInfo)
+      : super(AllCasesState.initial()) {
     _allCases = List<CaseInfoModel>.from(state.cachedAllCases);
   }
 
@@ -66,6 +71,7 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
   final AllCasesRepo _repo;
 
   List<CaseInfoModel> _allCases = [];
+  final NetworkInfo _networkInfo;
 
   void updateCaseInList(CaseInfoModel updatedCase) {
     _allCases = _allCases.map((c) {
@@ -243,6 +249,15 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
   }
 
   Future<void> searchByImage(String imagePath) async {
+    final hasInternet = await _networkInfo.isConnected;
+    print('hasInternet: $hasInternet');
+    if (!hasInternet) {
+      emit(state.copyWith(
+        imageSearchStatus: AllCasesStatus.error,
+        failure: const InternetFailure(),
+      ));
+      return;
+    }
     emit(
       state.copyWith(
         imageSearchStatus: AllCasesStatus.loading,
@@ -269,12 +284,16 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
               imageSearchStatus: AllCasesStatus.success,
               filtered: response.cases,
               searchMessage: response.message,
+              clearFailure: true,
             ),
           );
         },
       );
     } catch (e) {
-      emit(state.copyWith(imageSearchStatus: AllCasesStatus.error));
+      emit(state.copyWith(
+        imageSearchStatus: AllCasesStatus.error,
+        failure: const UnknownFailure(),
+      ));
     }
   }
 
@@ -285,6 +304,8 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
     try {
       final XFile? image = await _imagePicker.pickImage(
         source: ImageSource.gallery,
+        maxWidth: 1080,
+        maxHeight: 1080,
         imageQuality: 80,
       );
 
@@ -370,6 +391,19 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
     );
   }
 
+  Future<void> setImageFromUrl(String imageUrl) async {
+    final response = await http.get(Uri.parse(imageUrl));
+    final tempDir = await getTemporaryDirectory();
+    final file = File('${tempDir.path}/age_filter_result.jpg');
+    await file.writeAsBytes(response.bodyBytes);
+
+    emit(state.copyWith(selectedImagePath: file.path));
+  }
+
+  void setLocalImage(String path) {
+    emit(state.copyWith(selectedImagePath: path));
+  }
+
   void resetSearch() {
     emit(
       state.copyWith(
@@ -412,7 +446,6 @@ class AllCasesCubit extends HydratedCubit<AllCasesState> {
       _allCases = List<CaseInfoModel>.from(state.cachedAllCases);
       applyFilters();
     }
-
     await getAllCasesResponseData();
   }
 }

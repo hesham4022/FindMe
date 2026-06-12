@@ -58,6 +58,15 @@ class AddCaseCubit extends Cubit<AddCaseState> {
   void addressChanged(String value) =>
       emit(state.copyWith(address: value, addressErrorText: null));
 
+  void locationChanged(String address, double lat, double lon) {
+    emit(state.copyWith(
+      address: address,
+      latitude: lat,
+      longitude: lon,
+      addressErrorText: null,
+    ));
+  }
+
   void addressErrorChanged(String value) =>
       emit(state.copyWith(addressErrorText: value));
 
@@ -266,6 +275,8 @@ class AddCaseCubit extends Cubit<AddCaseState> {
       firstName: state.firstName ?? '',
       lastName: state.lastName ?? '',
       address: state.address ?? '',
+      latitude: state.latitude,
+      longitude: state.longitude,
       age: state.age ?? 0,
       gender: state.gender ?? '',
       weight: state.weight,
@@ -306,6 +317,8 @@ class AddCaseCubit extends Cubit<AddCaseState> {
       firstName: state.firstName ?? '',
       lastName: state.lastName ?? '',
       address: state.address ?? '',
+      latitude: state.latitude,
+      longitude: state.longitude,
       age: state.age ?? 0,
       gender: state.gender ?? '',
       weight: state.weight,

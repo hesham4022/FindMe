@@ -75,6 +75,9 @@ class AddCaseState extends Equatable {
   ///////
   final CreateReportResponse? success;
   final Failure? error;
+  // بعد longitude في الـ fields
+  final double? latitude;
+  final double? longitude;
 
   const AddCaseState({
     this.firstName,
@@ -124,6 +127,8 @@ class AddCaseState extends Equatable {
     this.phoneOfReporterError,
     this.relationShipToChildError,
     this.originalCase,
+    this.latitude,
+    this.longitude,
   });
 
   AddCaseState copyWith({
@@ -180,6 +185,8 @@ class AddCaseState extends Equatable {
 
     // في الـ State
     final CaseInfoModel? originalCase,
+    double? latitude,
+    double? longitude,
   }) {
     return AddCaseState(
       firstName: firstName ?? this.firstName,
@@ -240,6 +247,8 @@ class AddCaseState extends Equatable {
       phoneOfReporterError: phoneOfReporterError ?? this.phoneOfReporterError,
       emailOfReporterError: emailOfReporterError ?? this.emailOfReporterError,
       originalCase: originalCase ?? this.originalCase,
+      latitude: latitude ?? this.latitude,
+      longitude: longitude ?? this.longitude,
     );
   }
 
@@ -312,5 +321,7 @@ class AddCaseState extends Equatable {
         relationShipToChild,
         relationShipToChildError,
         originalCase,
+        latitude,
+        longitude,
       ];
 }

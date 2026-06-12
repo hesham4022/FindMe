@@ -63,6 +63,8 @@ dependencies:
   hydrated_bloc: ^11.0.0
   pusher_channels_flutter: ^2.4.0
   audioplayers: ^6.6.0
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
  
   
 
@@ -70,34 +72,27 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^5.0.0
   flutter_native_splash: ^2.4.4
   envied_generator: ^1.1.1
   build_runner: ^2.4.15
+  
 
 flutter_native_splash:
   color: "#1D4ED8"
-  image: assets\images\splash_logo.png
+  image: assets/images/splash_logo.png
   android: true
   ios: true
-
-  # محاذاة (اختياري)
   android_gravity: center
   ios_content_mode: center
-
-  # أندرويد 12+
   android_12:
     color: "#1D4ED8"
-    image: assets\images\splash_logo.png
+    image: assets/images/splash_logo.png
 
-  flutter_launcher_icons: ^0.14.4
-
-flutter_icons:
+flutter_launcher_icons:
   android: true
   ios: true
-  image_path: "assets/images/Logo-image.png" 
-
+  image_path: "assets/icons/AppIcon.png"
     
 
 

@@ -114,7 +114,7 @@ class ImageSearchCard extends StatelessWidget {
                   File(state.selectedImagePath!),
                   height: 210,
                   width: double.infinity,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.contain,
                 ),
               ),
             ),

@@ -27,13 +27,14 @@ class ChildInfo extends StatelessWidget {
           VSpace(10),
           FirstAndLastNameFeilds(),
           VSpace(10),
-          Row(
-            children: [
-              Expanded(child: AddressOfChild()),
-              HSpace(5),
-              Expanded(child: SizedBox()),
-            ],
-          ),
+          // Row(
+          //   children: [
+          //     Expanded(child: AddressOfChild()),
+          //     HSpace(5),
+          //     Expanded(child: SizedBox()),
+          //   ],
+          // ),
+          AddressOfChild(),
           VSpace(10),
           Row(
             children: [

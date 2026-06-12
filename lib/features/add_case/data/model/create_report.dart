@@ -20,7 +20,7 @@ class CreateReportRequest extends Equatable {
   final double? longitude;
   final bool confirmInformation;
   final bool consentToShare;
-  final List<String> photos; // مسارات الصور في الجهاز
+  final List<String> photos;
 
   const CreateReportRequest({
     required this.firstName,

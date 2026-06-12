@@ -20,7 +20,7 @@ class HostView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AllCasesCubit(sl())..onInit(),
+      create: (context) => AllCasesCubit(sl(), sl())..onInit(),
       child: BlocProvider(
         create: (_) => ProfileCubit(sl()),
         child: BlocConsumer<HostCubit, HostState>(

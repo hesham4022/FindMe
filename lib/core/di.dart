@@ -10,6 +10,8 @@ import 'package:find_me_app/features/add_case/data/repo/update_case_repo.dart';
 import 'package:find_me_app/features/add_case/data/source/add_case_remote.dart';
 import 'package:find_me_app/features/add_case/data/source/delete_case_remote.dart';
 import 'package:find_me_app/features/add_case/data/source/update_case_remote.dart';
+import 'package:find_me_app/features/age_filter/data/repo/age_filter_repo.dart';
+import 'package:find_me_app/features/age_filter/data/source/age_filter_remote.dart';
 import 'package:find_me_app/features/all_cases/data/repo/all_cases_repo.dart';
 import 'package:find_me_app/features/all_cases/data/source/all_cases_remote.dart';
 import 'package:find_me_app/features/app/data/repo/app_repo.dart';
@@ -111,6 +113,9 @@ Future<void> init() async {
 
   sl.registerLazySingleton<UpdateCaseRemote>(() => UpdateCaseRemote());
   sl.registerLazySingleton<UpdateCaseRepo>(() => UpdateCaseRepo(sl()));
+
+  sl.registerLazySingleton<AgeFilterRemote>(() => AgeFilterRemote());
+  sl.registerLazySingleton<AgeFilterRepo>(() => AgeFilterRepo(sl()));
 
   // sl.registerLazySingleton<UpdateReportRemote>(() => UpdateReportRemote());
   // sl.registerLazySingleton<UpdateReportRepo>(() => UpdateReportRepo(sl()));

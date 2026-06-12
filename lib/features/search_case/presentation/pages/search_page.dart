@@ -3,7 +3,6 @@ import 'package:find_me_app/features/Home/presentation/widgets/search_textField.
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:find_me_app/features/search_case/presentation/pages/result_section.dart';
 import 'package:find_me_app/features/search_case/presentation/pages/section_header.dart';
-import 'package:find_me_app/features/search_case/presentation/widgets/image_search_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -43,19 +42,6 @@ class SearchPageView extends StatelessWidget {
                   child: ListView(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 16),
                     children: [
-                      ImageSearchCard(
-                        state: state,
-                        onChooseImage: () {
-                          controller.clear();
-                          context.read<AllCasesCubit>().selectImage();
-                        },
-                        onStartSearch: () {
-                          context.read<AllCasesCubit>().submitImageSearch();
-                        },
-                        onRemoveImage: () {
-                          context.read<AllCasesCubit>().clearSelectedImage();
-                        },
-                      ),
                       const SizedBox(height: 20),
                       SectionHeader(
                         title: state.isImageSearch
