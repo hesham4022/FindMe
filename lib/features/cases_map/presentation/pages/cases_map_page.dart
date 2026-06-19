@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class CasesMapView extends StatelessWidget {
   const CasesMapView({super.key});
@@ -89,8 +90,14 @@ class CasesMapView extends StatelessWidget {
                               caseItem.longitude!,
                             ),
                             child: GestureDetector(
-                              onTap: () {
-                                _showCaseBottomSheet(context, caseItem);
+                              onTap: () async {
+                                // _showCaseBottomSheet(context, caseItem); // Commented out old behavior
+                                final lat = caseItem.latitude!;
+                                final lng = caseItem.longitude!;
+                                final uri = Uri.parse('https://www.google.com/maps/search/?api=1&query=$lat,$lng');
+                                if (await canLaunchUrl(uri)) {
+                                  await launchUrl(uri, mode: LaunchMode.externalApplication);
+                                }
                               },
                               child: const Icon(
                                 Icons.location_on,
