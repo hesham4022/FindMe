@@ -1,0 +1,51 @@
+d:\Flutter Projects\find_me_app\lib\core\helpers\date_time_helper.dart|106|ص
+d:\Flutter Projects\find_me_app\lib\core\helpers\date_time_helper.dart|107|م
+d:\Flutter Projects\find_me_app\lib\core\helpers\date_time_helper.dart|39|ص
+d:\Flutter Projects\find_me_app\lib\core\helpers\date_time_helper.dart|39|م
+d:\Flutter Projects\find_me_app\lib\core\helpers\date_time_helper.dart|43|(\d{1,2}):(\d{2})\s*([ص|م])
+d:\Flutter Projects\find_me_app\lib\core\helpers\date_time_helper.dart|53|ص
+d:\Flutter Projects\find_me_app\lib\core\helpers\date_time_helper.dart|55|م
+d:\Flutter Projects\find_me_app\lib\core\resources\languages.dart|20|العربية
+d:\Flutter Projects\find_me_app\lib\core\resources\routes.dart|192|Invalid navigation data
+d:\Flutter Projects\find_me_app\lib\example.dart|12|Flutter Demo
+d:\Flutter Projects\find_me_app\lib\example.dart|58|Flutter Scrolling Fab Animated Demo
+d:\Flutter Projects\find_me_app\lib\features\Home\presentation\pages\home.dart|51|Name
+d:\Flutter Projects\find_me_app\lib\features\Home\presentation\pages\home.dart|62|Image
+d:\Flutter Projects\find_me_app\lib\features\Home\presentation\pages\home.dart|73|Age Filter
+d:\Flutter Projects\find_me_app\lib\features\Home\presentation\widgets\case_item.dart|86|${timeAgo(caseModel.createdAt)}
+d:\Flutter Projects\find_me_app\lib\features\Home\presentation\widgets\case_item.dart|95|${caseModel.age}
+d:\Flutter Projects\find_me_app\lib\features\age_filter\presentation\pages\age_filter.dart|204|Current Age
+d:\Flutter Projects\find_me_app\lib\features\age_filter\presentation\pages\age_filter.dart|217|Target Age
+d:\Flutter Projects\find_me_app\lib\features\all_cases\data\repo\all_cases_repo.dart|25|عدد الحالات = ${result.allCases.length}
+d:\Flutter Projects\find_me_app\lib\features\all_cases\data\repo\all_cases_repo.dart|26|أول اسم = ${result.allCases.first.firstName}
+d:\Flutter Projects\find_me_app\lib\features\auth\data\source\auth_remote.dart|174|كود التفعيل غير صحيح
+d:\Flutter Projects\find_me_app\lib\features\auth\presentation\cubit\forgot_password\forgot_password_cubit.dart|40|البريد الإلكتروني مطلوب
+d:\Flutter Projects\find_me_app\lib\features\auth\presentation\cubit\forgot_password\forgot_password_listener.dart|12|تم إرسال رمز التحقق إلى بريدك الإلكتروني ✅
+d:\Flutter Projects\find_me_app\lib\features\auth\presentation\cubit\reset_password\reset_password_cubit.dart|101|كلمتا المرور غير متطابقتين
+d:\Flutter Projects\find_me_app\lib\features\auth\presentation\cubit\reset_password\reset_password_cubit.dart|83|رمز التحقق مطلوب
+d:\Flutter Projects\find_me_app\lib\features\auth\presentation\cubit\reset_password\reset_password_cubit.dart|88|كلمة المرور مطلوبة
+d:\Flutter Projects\find_me_app\lib\features\auth\presentation\cubit\reset_password\reset_password_cubit.dart|93|تأكيد كلمة المرور مطلوب
+d:\Flutter Projects\find_me_app\lib\features\auth\presentation\cubit\reset_password\reset_password_listener.dart|12|تم تغيير كلمة المرور بنجاح ✅
+d:\Flutter Projects\find_me_app\lib\features\auth\presentation\cubit\reset_password\reset_password_listener.dart|21|حدث خطأ أثناء إعادة تعيين كلمة المرور
+d:\Flutter Projects\find_me_app\lib\features\auth\presentation\cubit\verify_email\verify_otp_listener.dart|14|تم تفعيل الحساب بنجاح ✅
+d:\Flutter Projects\find_me_app\lib\features\auth\presentation\pages\verify_otp.dart|52|Verify Email
+d:\Flutter Projects\find_me_app\lib\features\case_info\presentation\widgets\comment.dart|26|Comments (12)
+d:\Flutter Projects\find_me_app\lib\features\navigation_bar_host\data\model\bottom_nav_bar.dart|33|Casses
+d:\Flutter Projects\find_me_app\lib\features\navigation_bar_host\data\model\bottom_nav_bar.dart|37|profile
+d:\Flutter Projects\find_me_app\lib\features\navigation_bar_host\data\model\bottom_nav_bar.dart|41|settings
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\profile_view\pages\help_center_view.dart|103|FaceBooK
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\profile_view\pages\help_center_view.dart|109|Instagram
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\profile_view\pages\help_center_view.dart|85|Customer Service
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\profile_view\pages\help_center_view.dart|91|Website
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\profile_view\pages\help_center_view.dart|97|Whatsapp
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\profile_view\pages\profile_view.dart|61|profile
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\profile_view\pages\profile_view.dart|69|favorite
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\profile_view\pages\profile_view.dart|75|privacyPolicy
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\profile_view\pages\profile_view.dart|83|settings
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\profile_view\pages\profile_view.dart|91|help
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\profile_view\pages\profile_view.dart|99|logout
+d:\Flutter Projects\find_me_app\lib\features\profile\presentation\widgets\change_language_widget.dart|187|العربية
+d:\Flutter Projects\find_me_app\lib\features\settings\presentation\pages\settings_view.dart|54|Notification Setting
+d:\Flutter Projects\find_me_app\lib\features\settings\presentation\pages\settings_view.dart|63|Password Manager
+d:\Flutter Projects\find_me_app\lib\features\settings\presentation\pages\settings_view.dart|72|Delete Account
+d:\Flutter Projects\find_me_app\lib\features\settings\presentation\pages\settings_view.dart|86|Change Language

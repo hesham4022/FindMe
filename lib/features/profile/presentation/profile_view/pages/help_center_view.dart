@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/menu_Item_widget.dart';
@@ -82,31 +83,31 @@ class _HelpCenterViewState extends State<HelpCenterView> {
                       children: [
                         MenuItemWidget(
                           isContainer: true,
-                          title: "Customer Service",
+                          title: "customerService".ts,
                           icon: Icons.headphones,
                           onTap: () {},
                         ),
                         MenuItemWidget(
                           isContainer: true,
-                          title: "Website",
+                          title: "website".ts,
                           icon: Icons.headphones,
                           onTap: () {},
                         ),
                         MenuItemWidget(
                           isContainer: true,
-                          title: "Whatsapp",
+                          title: "whatsapp".ts,
                           icon: Icons.headphones,
                           onTap: () {},
                         ),
                         MenuItemWidget(
                           isContainer: true,
-                          title: "FaceBooK",
+                          title: "facebook".ts,
                           icon: Icons.headphones,
                           onTap: () {},
                         ),
                         MenuItemWidget(
                           isContainer: true,
-                          title: "Instagram",
+                          title: "instagram".ts,
                           icon: Icons.headphones,
                           onTap: () {},
                         ),

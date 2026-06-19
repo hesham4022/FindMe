@@ -1,6 +1,8 @@
+import 'dart:convert';
 import 'dart:developer';
+import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
 import 'package:equatable/equatable.dart';
-import 'package:find_me_app/core/error_management/exception.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/helpers/formfield_validator.dart';
@@ -19,12 +21,10 @@ part 'sinup_state.dart';
 class SinupCubit extends Cubit<SinupState> {
   SinupCubit(
     this._authRepo,
-    this._authLocal,
+
     // this._locationService,
   ) : super(SinupState.initial());
   final AuthRepo _authRepo;
-  final AuthLocal _authLocal;
-  // final LocationService _locationService;
 
   bool get isFormValid {
     return AppValidators.validateUsername(state.fullName) == null &&
@@ -175,9 +175,85 @@ class SinupCubit extends Cubit<SinupState> {
         nationalIdImages: [...picked], // ✅ جوا الـ state
         nationalPhotoPath: picked.first.path,
         nationalPhotoPathErrorText: '',
+        isOcrLoading: true,
       ));
+
+      // OCR Request
+      try {
+        print('🚀 Starting OCR Request...');
+        var request = http.MultipartRequest(
+          'POST',
+          Uri.parse('https://ahmed-sayed404-egyptian-national-id-ocr.hf.space/extract?file'),
+        );
+        
+        String filePath = picked.first.path;
+        String extension = filePath.split('.').last.toLowerCase();
+        String mimeType = extension == 'png' ? 'png' : 'jpeg';
+
+        request.files.add(await http.MultipartFile.fromPath(
+          'file', 
+          filePath,
+          contentType: MediaType('image', mimeType),
+        ));
+        
+        print('📡 Sending request to: ${request.url}');
+        var streamedResponse = await request.send();
+        var response = await http.Response.fromStream(streamedResponse);
+        
+        print('📩 OCR Status Code: ${response.statusCode}');
+        print('📩 OCR Response Body: ${response.body}');
+        
+        try {
+          var jsonResponse = jsonDecode(response.body);
+          if (response.statusCode == 200 || response.statusCode == 201) {
+            if (jsonResponse['success'] == true && jsonResponse['is_card'] == true) {
+              String extractedId = jsonResponse['data']['national_id'];
+              print('✅ Extracted ID: $extractedId');
+              emit(state.copyWith(
+                nationalId: extractedId,
+                nationalIdErrorText: null,
+                nationalPhotoPathErrorText: null,
+              ));
+            } else {
+              String errorMsg = jsonResponse['message'] ?? 'Invalid ID card';
+              print('⚠️ OCR Returned success false: $errorMsg');
+              emit(state.copyWith(
+                nationalPhotoPathErrorText: errorMsg,
+              ));
+            }
+          } else {
+             String errorMsg = jsonResponse['message'] ?? 'Failed to extract ID. Status: ${response.statusCode}';
+             print('⚠️ OCR Request Failed with status: ${response.statusCode}, message: $errorMsg');
+             emit(state.copyWith(
+               nationalPhotoPathErrorText: errorMsg,
+             ));
+          }
+        } catch (_) {
+          // If response body is not JSON
+          if (response.statusCode == 307 || response.statusCode == 308) {
+               print('⚠️ OCR Request Redirected to: ${response.headers['location']}');
+               emit(state.copyWith(
+                 nationalPhotoPathErrorText: 'Connection redirected. Please try again.',
+               ));
+          } else {
+               print('⚠️ OCR Request Failed with status: ${response.statusCode}');
+               emit(state.copyWith(
+                 nationalPhotoPathErrorText: 'Failed to extract ID. Status: ${response.statusCode}',
+               ));
+          }
+        }
+      } catch (e) {
+        print('⚠️ OCR Exception: $e');
+        emit(state.copyWith(
+          nationalPhotoPathErrorText: 'Connection error while extracting ID.',
+        ));
+      } finally {
+        emit(state.copyWith(isOcrLoading: false));
+      }
+
     } catch (e) {
       log('⚠️ pickNationalIdImages error: $e');
+      emit(state.copyWith(isOcrLoading: false));
     }
   }
 
@@ -214,14 +290,35 @@ class SinupCubit extends Cubit<SinupState> {
       passwordConfirmation: state.passwordConfirmation!,
     );
 
-    print("-------------------------------");
-    print('📤 Request Body: ${request.toJson()}');
-    print("-------------------------------");
     try {
       final result = await _authRepo.signup(request);
 
       result.fold(
         (failure) {
+          if (failure is NavigateToVerifyEmailFailure) {
+            emit(state.copyWith(
+              status: SinUpStatus.success,
+              error: failure,
+            ));
+
+            WidgetsBinding.instance.addPostFrameCallback((_) {
+              context.toNamed(
+                AppRoutes.verifyOTPRoute,
+                arguments: VerifyOTPArgs(
+                  username: state.email ?? '',
+                ),
+              );
+
+              showAlertSnackBar(
+                context,
+                failure.msg,
+                AlertType.normal,
+              );
+            });
+
+            return;
+          }
+
           emit(state.copyWith(
             status: SinUpStatus.error,
             error: failure,
@@ -237,37 +334,19 @@ class SinupCubit extends Cubit<SinupState> {
         },
         (data) {
           emit(state.copyWith(status: SinUpStatus.success));
+
           WidgetsBinding.instance.addPostFrameCallback((_) async {
             await context.read<HostCubit>().setAuthenticatedUser(data.user);
             context.toNamed(AppRoutes.hostRoute);
           });
-          // WidgetsBinding.instance.addPostFrameCallback((_) {
-          //   context.toNamed(AppRoutes.hostRoute);
-          // });
         },
       );
-    } on NavigateToVerifyEmailException catch (e) {
-      // ⚠️ حالة الكود 409 → الحساب محتاج تفعيل بالإيميل
-      emit(state.copyWith(status: SinUpStatus.success));
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        context.toNamed(
-          AppRoutes.verifyOTPRoute,
-          arguments: VerifyOTPArgs(username: state.email ?? ''),
-        );
-
-        showAlertSnackBar(
-          context,
-          e.message ?? "Please check your email to verify your account.",
-          AlertType.normal,
-        );
-      });
     } catch (e, s) {
-      // 🔥 أي خطأ غير متوقع
       log("❌ submitSinUp error: $e");
       log("Stack: $s");
 
       emit(state.copyWith(status: SinUpStatus.error));
+
       WidgetsBinding.instance.addPostFrameCallback((_) {
         showAlertSnackBar(
           context,

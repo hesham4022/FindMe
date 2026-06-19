@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/features/auth/data/model/forget_password.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:find_me_app/core/error_management/failure.dart';
@@ -37,7 +38,7 @@ class ForgotPasswordCubit extends Cubit<ForgotPasswordState> {
 
     // تحقق بسيط قبل الإرسال
     if (state.email == null || state.email!.isEmpty) {
-      emit(state.copyWith(emailErrorText: "البريد الإلكتروني مطلوب"));
+      emit(state.copyWith(emailErrorText: "emailRequired".ts));
       return;
     }
 

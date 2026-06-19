@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class NoInternetWidget extends StatelessWidget {
   const NoInternetWidget({
@@ -25,16 +26,16 @@ class NoInternetWidget extends StatelessWidget {
             size: 42,
           ),
           const SizedBox(height: 12),
-          const Text(
-            'لا يوجد اتصال بالإنترنت',
+          Text(
+            'noInternetConnection'.ts,
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
+            style: const TextStyle(fontSize: 15, fontWeight: FontWeight.w600),
           ),
           const SizedBox(height: 16),
           ElevatedButton.icon(
             onPressed: onRetry,
             icon: const Icon(Icons.refresh_rounded),
-            label: const Text('إعادة المحاولة'),
+            label: Text('retry'.ts),
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.orange,
               foregroundColor: Colors.white,

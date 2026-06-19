@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:find_me_app/features/auth/data/model/reset_password.dart';
@@ -80,17 +81,17 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
     bool hasError = false;
 
     if (state.otp == null || state.otp!.isEmpty) {
-      emit(state.copyWith(otpErrorText: "رمز التحقق مطلوب"));
+      emit(state.copyWith(otpErrorText: "verificationCodeRequired".ts));
       hasError = true;
     }
 
     if (state.password == null || state.password!.isEmpty) {
-      emit(state.copyWith(passwordErrorText: "كلمة المرور مطلوبة"));
+      emit(state.copyWith(passwordErrorText: "passwordRequired".ts));
       hasError = true;
     }
 
     if (state.confirmPassword == null || state.confirmPassword!.isEmpty) {
-      emit(state.copyWith(confirmPasswordErrorText: "تأكيد كلمة المرور مطلوب"));
+      emit(state.copyWith(confirmPasswordErrorText: "passwordConfirmRequired".ts));
       hasError = true;
     }
 
@@ -98,7 +99,7 @@ class ResetPasswordCubit extends Cubit<ResetPasswordState> {
         state.confirmPassword != null &&
         state.password != state.confirmPassword) {
       emit(state.copyWith(
-        confirmPasswordErrorText: "كلمتا المرور غير متطابقتين",
+        confirmPasswordErrorText: "passwordsNotMatch".ts,
       ));
       hasError = true;
     }

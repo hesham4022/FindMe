@@ -15,7 +15,6 @@ import 'package:find_me_app/core/shared/widgets/password_field.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 // class TokenIDField extends StatefulWidget {
 //   const TokenIDField({super.key});
@@ -85,7 +84,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 //           errorText: state.tokenIDErrorText,
 //           hint: AppStrings.tokenID,
 //           prefixIcon: Icon(
-//             MdiIcons.cardAccountDetailsOutline,
+//             Icons.badge_outlined,
 //             size: 20.sp,
 //             color: AppColors.saltBox600,
 //           ),
@@ -175,7 +174,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 //           errorText: state.tokenIDErrorText,
 //           hint: AppStrings.tokenID,
 //           prefixIcon: Icon(
-//             MdiIcons.cardAccountDetailsOutline,
+//             Icons.badge_outlined,
 //             size: 20.sp,
 //             color: AppColors.saltBox600,
 //           ),
@@ -263,7 +262,7 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 //           errorText: state.tokenIDErrorText,
 //           hint: AppStrings.tokenID,
 //           prefixIcon: Icon(
-//             MdiIcons.cardAccountDetailsOutline,
+//             Icons.badge_outlined,
 //             size: 20.sp,
 //             color: AppColors.saltBox600,
 //           ),
@@ -359,7 +358,7 @@ class PasswordField extends StatelessWidget {
               errorText: state.passwordErrorText,
               hint: "*********".ts,
               prefixIcon: Icon(
-                MdiIcons.lockOpenVariantOutline,
+                Icons.lock_open_outlined,
                 size: 20.sp,
                 color: AppColors.saltBox600,
               ),

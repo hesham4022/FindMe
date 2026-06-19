@@ -36,7 +36,7 @@ class DateTimeHelper {
     final formattedTime = DateFormat("hh:mm a", "ar").format(parsedTime);
 
     // Replace "AM/PM" with Arabic equivalents
-    return formattedTime.replaceAll("AM", "ص").replaceAll("PM", "م");
+    return formattedTime.replaceAll("AM", "am".tr()).replaceAll("PM", "pm".tr());
   }
 
   static String convertAndFormatTime(String timeString) {
@@ -103,8 +103,8 @@ class DateTimeHelper {
     if (lang == 'ar') {
       return DateFormat('dd MMM yyyy - hh:mm a', 'ar_SA')
           .format(parsed)
-          .replaceAll('AM', 'ص')
-          .replaceAll('PM', 'م');
+          .replaceAll('AM', 'am'.tr())
+          .replaceAll('PM', 'pm'.tr());
     }
 
     return DateFormat('dd MMM yyyy - hh:mm a', 'en_US').format(parsed);

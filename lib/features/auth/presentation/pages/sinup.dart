@@ -6,15 +6,12 @@ import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/core/shared/widgets/custom_loader_widget.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
 import 'package:find_me_app/features/auth/data/repo/auth_repo.dart';
-import 'package:find_me_app/features/auth/data/source/auth_local.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/sinup/signup_listener.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/sinup/sinup_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/widgets/signin_fields.dart';
 import 'package:find_me_app/features/auth/presentation/widgets/sinup_fields.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SinUpView extends StatelessWidget {
   const SinUpView({super.key});
@@ -24,7 +21,6 @@ class SinUpView extends StatelessWidget {
     return BlocProvider(
       create: (_) => SinupCubit(
         sl<AuthRepo>(),
-        sl<AuthLocal>(),
       ),
       child: const _SinUpViewBody(),
     );
@@ -44,6 +40,9 @@ class _SinUpViewBody extends StatelessWidget {
         ),
       ),
       body: BlocConsumer<SinupCubit, SinupState>(
+        listenWhen: (previous, current) =>
+            previous.status != current.status ||
+            previous.error != current.error,
         listener: signUpListener,
         builder: (context, state) {
           return BlurryModalProgressHUD(
@@ -63,9 +62,9 @@ class _SinUpViewBody extends StatelessWidget {
                 VSpace(20),
                 PhoneNumberField(),
                 VSpace(20),
-                NationalIdField(),
-                VSpace(20),
                 UplaodNationalId(),
+                VSpace(20),
+                NationalIdField(),
                 VSpace(40),
                 TermsAndPrivacyText(),
                 VSpace(10),

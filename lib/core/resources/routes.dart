@@ -1,4 +1,5 @@
 import 'package:find_me_app/core/di.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/features/add_case/presentation/pages/add_case.dart';
 import 'package:find_me_app/features/age_filter/presentation/pages/age_filter.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
@@ -188,8 +189,8 @@ class AppRoutes {
         }
 
         return MaterialPageRoute(
-          builder: (_) => const Scaffold(
-            body: Center(child: Text("Invalid navigation data")),
+          builder: (_) => Scaffold(
+            body: Center(child: Text("invalidNavigationData".ts)),
           ),
         );
 

@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/features/all_cases/presentation/cubits/cubit/all_cases_cubit.dart';
 import 'package:flutter/material.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class ImageSearchCard extends StatelessWidget {
   const ImageSearchCard({
@@ -90,7 +91,7 @@ class ImageSearchCard extends StatelessWidget {
             OutlinedButton.icon(
               onPressed: onChooseImage,
               icon: const Icon(Icons.upload_rounded),
-              label: const Text('Choose Image'),
+              label: Text('chooseImage'.ts),
               style: OutlinedButton.styleFrom(
                 foregroundColor: Colors.white,
                 side: const BorderSide(color: Colors.white38),
@@ -148,7 +149,7 @@ class ImageSearchCard extends StatelessWidget {
                   child: OutlinedButton.icon(
                     onPressed: isLoading ? null : onRemoveImage,
                     icon: const Icon(Icons.delete_outline_rounded),
-                    label: const Text('Remove'),
+                    label: Text('remove'.ts),
                     style: OutlinedButton.styleFrom(
                       foregroundColor: Colors.white,
                       side: const BorderSide(color: Colors.white38),

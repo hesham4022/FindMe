@@ -27,6 +27,7 @@ class SinupState extends Equatable {
   final Failure? error;
   final String? emailVerification;
   final List<XFile> nationalIdImages;
+  final bool isOcrLoading;
   const SinupState({
     this.fullName,
     this.password,
@@ -47,6 +48,7 @@ class SinupState extends Equatable {
     this.nationalPhotoPathErrorText,
     required this.nationalIdImages,
     this.emailVerification,
+    this.isOcrLoading = false,
   });
 
   SinupState copyWith({
@@ -69,6 +71,7 @@ class SinupState extends Equatable {
     Failure? error,
     String? emailVerification,
     final List<XFile>? nationalIdImages,
+    bool? isOcrLoading,
   }) {
     return SinupState(
       fullName: fullName ?? this.fullName,
@@ -92,6 +95,7 @@ class SinupState extends Equatable {
       error: error ?? this.error,
       emailVerification: emailVerification ?? this.emailVerification,
       nationalIdImages: nationalIdImages ?? this.nationalIdImages,
+      isOcrLoading: isOcrLoading ?? this.isOcrLoading,
     );
   }
 
@@ -117,6 +121,7 @@ class SinupState extends Equatable {
       nationalPhotoPathErrorText: null,
       success: null,
       error: null,
+      isOcrLoading: false,
     );
   }
 
@@ -141,5 +146,6 @@ class SinupState extends Equatable {
         error,
         emailVerification,
         nationalIdImages,
+        isOcrLoading,
       ];
 }

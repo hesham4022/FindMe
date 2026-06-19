@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:flutter/material.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/routes.dart';
@@ -9,7 +10,7 @@ void resetPasswordListener(BuildContext context, ResetPasswordState state) {
     // ✅ نجاح
     showAlertSnackBar(
       context,
-      state.success?.message ?? 'تم تغيير كلمة المرور بنجاح ✅',
+      state.success?.message ?? 'passwordChangedSuccess'.ts,
       AlertType.success,
     );
 
@@ -18,7 +19,7 @@ void resetPasswordListener(BuildContext context, ResetPasswordState state) {
     });
   } else if (state.isError) {
     final errorMsg =
-        state.error?.msg ?? 'حدث خطأ أثناء إعادة تعيين كلمة المرور';
+        state.error?.msg ?? 'resetPasswordError'.ts;
     showAlertSnackBar(
       context,
       errorMsg,

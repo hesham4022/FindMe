@@ -11,6 +11,7 @@ import 'package:find_me_app/features/case_info/presentation/widgets/comment.dart
 import 'package:find_me_app/features/case_info/presentation/widgets/more_photo.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class CaseInfoView extends StatelessWidget {
   final CaseInfoModel? caseInfo;
@@ -160,12 +161,12 @@ class CaseInfoView extends StatelessWidget {
             }
 
             if (state.status == CaseInfoStatus.error) {
-              return const Center(child: Text("try again"));
+              return Center(child: Text("tryAgain".ts));
             }
 
             final selectedCase = state.selectedCase;
             if (selectedCase == null) {
-              return const Center(child: Text("no data"));
+              return Center(child: Text("noData".ts));
             }
 
             return SingleChildScrollView(
@@ -190,7 +191,7 @@ class CaseInfoView extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          const Text("More Photos"),
+                          Text("morePhotos".ts),
                           const VSpace(10),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -79,6 +79,9 @@ class AddCaseState extends Equatable {
   final double? latitude;
   final double? longitude;
 
+  final String? governorate;
+  final String? governorateErrorText;
+
   const AddCaseState({
     this.firstName,
     this.lastName,
@@ -116,6 +119,8 @@ class AddCaseState extends Equatable {
     this.error,
     this.createReportRequest,
     this.reportType,
+    this.governorate,
+    this.governorateErrorText,
     this.policeStation,
     this.policeStationErrorText,
     this.fullNameOfReporter,
@@ -168,6 +173,8 @@ class AddCaseState extends Equatable {
     Failure? error,
     CreateReportRequest? createReportRequest,
     ReportType? reportType,
+    String? governorate,
+    String? governorateErrorText,
     String? policeStation,
     String? policeStationErrorText,
 
@@ -228,6 +235,8 @@ class AddCaseState extends Equatable {
       error: error ?? this.error,
       createReportRequest: createReportRequest ?? this.createReportRequest,
       reportType: reportType ?? this.reportType,
+      governorate: governorate ?? this.governorate,
+      governorateErrorText: governorateErrorText ?? this.governorateErrorText,
       policeStation: policeStation ?? this.policeStation,
       policeStationErrorText:
           policeStationErrorText ?? this.policeStationErrorText,
@@ -310,6 +319,8 @@ class AddCaseState extends Equatable {
         error,
         createReportRequest,
         reportType,
+        governorate,
+        governorateErrorText,
         policeStation,
         policeStationErrorText,
         fullNameOfReporter,

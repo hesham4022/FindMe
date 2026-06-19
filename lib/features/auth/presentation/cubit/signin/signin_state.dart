@@ -9,6 +9,7 @@ enum SignInStatus {
   loading,
   success,
   error,
+  needVerifyEmail,
 }
 
 class SignInState extends Equatable {

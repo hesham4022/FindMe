@@ -16,6 +16,8 @@ import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host
 import 'package:find_me_app/features/notifications/presentation/cubit/notifications_button/notification_btn_cubit.dart';
 import 'package:find_me_app/features/profile/presentation/cubit/profile_cubit.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+
 class MainApp extends StatelessWidget {
   const MainApp({super.key});
   static GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
@@ -77,7 +79,12 @@ class MainApp extends StatelessWidget {
               debugShowCheckedModeBanner: false,
               scrollBehavior: CustomBehavior(),
               theme: AppThemes.lightTheme(context),
-              localizationsDelegates: context.localizationDelegates,
+              localizationsDelegates: [
+                ...context.localizationDelegates,
+                GlobalMaterialLocalizations.delegate,
+                GlobalWidgetsLocalizations.delegate,
+                GlobalCupertinoLocalizations.delegate,
+              ],
               supportedLocales: context.supportedLocales,
               locale: context.locale,
               onGenerateRoute: AppRoutes.routeGenerator,

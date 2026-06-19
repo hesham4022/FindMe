@@ -11,7 +11,6 @@ import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/buttons/custom_btn.dart';
 import 'package:find_me_app/core/shared/widgets/custom_textfield.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class OTPField extends StatelessWidget {
   const OTPField({
@@ -87,7 +86,7 @@ class NewPasswordField extends StatelessWidget {
               errorText: state.passwordErrorText,
               hint: '******',
               prefixIcon: Icon(
-                MdiIcons.lockOpenVariantOutline,
+                Icons.lock_open_outlined,
                 size: 20.sp,
                 color: AppColors.saltBox600,
               ),
@@ -132,7 +131,7 @@ class ConfirmNewPasswordField extends StatelessWidget {
               errorText: state.confirmPasswordErrorText,
               hint: "******",
               prefixIcon: Icon(
-                MdiIcons.lockOpenVariantOutline,
+                Icons.lock_open_outlined,
                 size: 20.sp,
                 color: AppColors.saltBox600,
               ),

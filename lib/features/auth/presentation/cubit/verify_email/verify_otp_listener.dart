@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
@@ -11,7 +12,7 @@ void verifyOTPListener(BuildContext context, VerifyOTPState state) {
     if (state.isVerifyOTPSuccess) {
       showAlertSnackBar(
         context,
-        state.success?.msg ?? "تم تفعيل الحساب بنجاح ✅",
+        state.success?.msg ?? "accountActivatedSuccess".ts,
         AlertType.success,
       );
       await context.read<HostCubit>().setAuthenticatedUser(state.user!);
@@ -32,7 +33,7 @@ void verifyOTPListener(BuildContext context, VerifyOTPState state) {
 //     if (state.isVerifyOTPSuccess && state.error == null) {
 //       showAlertSnackBar(
 //         context,
-//         "تم تفعيل الحساب بنجاح ✅",
+//         "accountActivatedSuccess".ts,
 //         AlertType.success,
 //       );
 

@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'dart:convert';
 import 'dart:developer';
 import 'dart:io';
@@ -171,7 +172,7 @@ class AuthRemote {
       // تحقق من النجاح
       if (response.statusCode != 200) {
         throw ServerException(
-          jsonMap['message'] ?? "كود التفعيل غير صحيح",
+          jsonMap['message'] ?? "invalidActivationCode".tr(),
         );
       }
 

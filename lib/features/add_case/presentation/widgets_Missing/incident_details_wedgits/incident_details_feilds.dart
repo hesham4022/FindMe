@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/egypt_locations.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/helpers/formfield_validator.dart';
@@ -244,18 +245,83 @@ class VehicleDetailsField extends StatelessWidget {
 class CurrentChildLocationField extends StatelessWidget {
   const CurrentChildLocationField({
     super.key,
-    this.onSubmit,
   });
-
-  final Function(String)? onSubmit;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<AddCaseCubit, AddCaseState>(
       builder: (context, state) {
+        final governorates = EgyptLocations.governorates.keys.toList();
+        final policeStations = state.governorate != null
+            ? EgyptLocations.governorates[state.governorate] ?? []
+            : <String>[];
+
         return Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 8),
+              child: Text(
+                "Governorate:".ts,
+                style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
+                      fontSize: 13,
+                      fontWeight: FontWeight.w400,
+                    ),
+              ),
+            ),
+            VSpace(5),
+            DropdownButtonFormField<String>(
+              isExpanded: true,
+              value: state.governorate,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(13),
+                  borderSide: BorderSide(color: Colors.grey, width: 0.8),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(13),
+                  borderSide: BorderSide(color: Colors.grey, width: 0.8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(13),
+                  borderSide:
+                      BorderSide(color: AppColors.mainColor, width: 1.5),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(13),
+                  borderSide: BorderSide(color: Colors.red, width: 1.5),
+                ),
+                errorText: state.governorateErrorText,
+              ),
+              hint: Text(
+                "Select Governorate".ts,
+                style: Theme.of(context).textTheme.kSubheadingRegular.copyWith(
+                      color: Colors.grey,
+                    ),
+              ),
+              items: governorates.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (newValue) {
+                if (newValue != null) {
+                  context.read<AddCaseCubit>().governorateChanged(newValue);
+                }
+              },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Governorate is required".ts;
+                }
+                return null;
+              },
+            ),
+            VSpace(10),
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Text(
@@ -267,25 +333,59 @@ class CurrentChildLocationField extends StatelessWidget {
               ),
             ),
             VSpace(5),
-            CustomTextField(
-              maxLines: 2,
-              radius: 13,
-              contentPadding:
-                  const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
-              hint: "Which police station did you drop the child off to?".ts,
-              errorText: state.policeStationErrorText,
-              // errorText: "Feild is required",
-              onSubmit: onSubmit,
-              onChanged: (value) {
-                context.read<AddCaseCubit>().policeStationChanged(value);
-              },
-              onValidate: (value) {
-                final err = AppValidators.validateUsername(value);
-                context
-                    .read<AddCaseCubit>()
-                    .policeStationErrorChanged(err ?? "");
-
-                return (err == null || err.trim().isEmpty) ? null : err;
+            DropdownButtonFormField<String>(
+              isExpanded: true,
+              value: state.policeStation,
+              decoration: InputDecoration(
+                filled: true,
+                fillColor: Colors.white,
+                contentPadding:
+                    const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(13),
+                  borderSide: BorderSide(color: Colors.grey, width: 0.8),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(13),
+                  borderSide: BorderSide(color: Colors.grey, width: 0.8),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(13),
+                  borderSide:
+                      BorderSide(color: AppColors.mainColor, width: 1.5),
+                ),
+                errorBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(13),
+                  borderSide: BorderSide(color: Colors.red, width: 1.5),
+                ),
+                errorText: state.policeStationErrorText,
+              ),
+              hint: Text(
+                "Select Police Station".ts,
+                style: Theme.of(context).textTheme.kSubheadingRegular.copyWith(
+                      color: Colors.grey,
+                    ),
+              ),
+              items: policeStations.map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: state.governorate == null
+                  ? null
+                  : (newValue) {
+                      if (newValue != null) {
+                        context
+                            .read<AddCaseCubit>()
+                            .policeStationChanged(newValue);
+                      }
+                    },
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return "Police Station is required".ts;
+                }
+                return null;
               },
             ),
           ],

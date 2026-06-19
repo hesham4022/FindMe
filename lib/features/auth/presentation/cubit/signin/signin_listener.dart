@@ -1,6 +1,8 @@
+import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/shared/widgets/alerts.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_cubit.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/signin/signin_state.dart';
+import 'package:find_me_app/features/auth/presentation/pages/verify_otp.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/pages/host.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +16,16 @@ void signInListener(BuildContext context, SignInState state) async {
       AlertType.error,
     );
     context.read<SignInCubit>().resetState();
+  }
+
+  if (state.status == SignInStatus.needVerifyEmail) {
+    Navigator.pushNamed(
+      context,
+      AppRoutes.verifyOTPRoute,
+      arguments: VerifyOTPArgs(
+        username: state.username ?? '',
+      ),
+    );
   }
 
   if (state.isSuccess) {

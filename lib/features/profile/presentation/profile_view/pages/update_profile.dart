@@ -8,6 +8,7 @@ import 'package:find_me_app/features/profile/presentation/profile_view/widgets/p
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/update_profile_fields.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class UpdateProfileView extends StatelessWidget {
   const UpdateProfileView({super.key});
@@ -27,8 +28,8 @@ class UpdateProfileBody extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBar(
-        title: Text("profile"),
+      appBar: CustomAppBar(
+        title: Text('profile'.ts),
       ),
       body: BlocConsumer<UpdateProfileCubit, UpdateProfileState>(
         listener: updateProfileListener,

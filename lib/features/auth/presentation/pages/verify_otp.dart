@@ -45,7 +45,6 @@ class VerfiyOTPView extends StatelessWidget {
         BlocProvider(
           create: (_) => SinupCubit(
             sl<AuthRepo>(),
-            sl<AuthLocal>(),
           ),
         ),
       ],

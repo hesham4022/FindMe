@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class CasesMapView extends StatelessWidget {
   const CasesMapView({super.key});
@@ -37,9 +38,9 @@ class CasesMapView extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(width: 6),
-                      const Expanded(
+                      Expanded(
                         child: Text(
-                          "Cases Map",
+                          'casesMap'.ts,
                           style: TextStyle(
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
@@ -55,8 +56,8 @@ class CasesMapView extends StatelessWidget {
                           ),
                           padding: const EdgeInsets.symmetric(horizontal: 12),
                         ),
-                        child: const Text(
-                          "View All Cases",
+                        child: Text(
+                          'allCases'.ts,
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 11,
@@ -144,8 +145,8 @@ class CasesMapView extends StatelessWidget {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Text("Age: ${caseItem.age ?? '-'}"),
-                    Text("Address: ${caseItem.address ?? '-'}"),
+                    Text("${'Age'.ts}: ${caseItem.age ?? '-'}"),
+                    Text("${'address'.ts}: ${caseItem.address ?? '-'}"),
                   ],
                 ),
               ),

@@ -123,8 +123,16 @@ class AddCaseCubit extends Cubit<AddCaseState> {
   void breakdownDetailsErrorChanged(String value) =>
       emit(state.copyWith(fullBreakdownDetailsError: value));
 
+  void governorateChanged(String value) => emit(state.copyWith(
+      governorate: value,
+      governorateErrorText: null,
+      policeStation: null)); // reset police station when governorate changes
+
+  void governorateErrorChanged(String value) =>
+      emit(state.copyWith(governorateErrorText: value));
+
   void policeStationChanged(String value) =>
-      emit(state.copyWith(policeStation: value));
+      emit(state.copyWith(policeStation: value, policeStationErrorText: null));
 
   void policeStationErrorChanged(String value) =>
       emit(state.copyWith(policeStationErrorText: value));
@@ -287,6 +295,8 @@ class AddCaseCubit extends Cubit<AddCaseState> {
       fullBreakdownDetails: state.fullBreakdownDetails,
       vehicleDetails: state.vehicleDetails,
       hasVehicle: false,
+      governorate: state.governorate,
+      policeStation: state.policeStation,
       confirmInformation: state.confirmInformation,
       consentToShare: state.consentToShare,
       photos: state.photos,
@@ -329,6 +339,8 @@ class AddCaseCubit extends Cubit<AddCaseState> {
       fullBreakdownDetails: state.fullBreakdownDetails,
       vehicleDetails: state.vehicleDetails,
       hasVehicle: false,
+      governorate: state.governorate,
+      policeStation: state.policeStation,
       confirmInformation: state.confirmInformation,
       consentToShare: state.consentToShare,
       photos: state.photos,

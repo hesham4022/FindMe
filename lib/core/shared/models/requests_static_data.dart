@@ -5,7 +5,6 @@ import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/core/resources/strings.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class ListTileModel {
   final String title;
@@ -62,7 +61,7 @@ List<ListTileModel> kRequests(BuildContext context) => [
       ),
       ListTileModel(
         title: AppStrings.overtimeRequest,
-        icon: MdiIcons.clockTimeFour,
+        icon: Icons.access_time,
         color: AppColors.warning800,
         onTap: () {
           unawaited(context.back());
@@ -71,7 +70,7 @@ List<ListTileModel> kRequests(BuildContext context) => [
       ),
       ListTileModel(
         title: AppStrings.letterRequest,
-        icon: MdiIcons.emailArrowRight,
+        icon: Icons.forward_to_inbox,
         color: AppColors.success800,
         onTap: () {
           unawaited(context.back());
@@ -80,7 +79,7 @@ List<ListTileModel> kRequests(BuildContext context) => [
       ),
   ListTileModel(
     title: AppStrings.terminationRequest,
-    icon: MdiIcons.emailArrowRight,
+    icon: Icons.forward_to_inbox,
     color: AppColors.warning800,
     onTap: () {
       unawaited(context.back());
@@ -89,7 +88,7 @@ List<ListTileModel> kRequests(BuildContext context) => [
   ),
   ListTileModel(
     title: AppStrings.businessTrips,
-    icon: MdiIcons.airplane,
+    icon: Icons.flight,
     color: AppColors.mojo800,
     onTap: () {
       unawaited(context.back());
@@ -99,7 +98,7 @@ List<ListTileModel> kRequests(BuildContext context) => [
       //TODO: Not Implemented yet
       // ListTileModel(
       //   title: AppStrings.businessTripRequest,
-      //   icon: MdiIcons.airplane,
+      //   icon: Icons.flight,
       //   color: AppColors.mojo800,
       //   onTap: () {
       //     unawaited(context.back());

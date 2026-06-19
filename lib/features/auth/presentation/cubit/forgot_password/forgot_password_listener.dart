@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/features/auth/presentation/cubit/reset_password/reset_password_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
@@ -9,7 +10,7 @@ void forgotPasswordListener(BuildContext context, ForgotPasswordState state) {
   if (state.isSuccess) {
     showAlertSnackBar(
       context,
-      state.success?.message ?? 'تم إرسال رمز التحقق إلى بريدك الإلكتروني ✅',
+      state.success?.message ?? 'verificationCodeSent'.ts,
       AlertType.success,
     );
 

@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_scrolling_fab_animated/flutter_scrolling_fab_animated.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class AllCasesView extends StatefulWidget {
   const AllCasesView({super.key});
@@ -29,7 +30,7 @@ class _AllCasesViewState extends State<AllCasesView> {
     return Scaffold(
       appBar: CustomAppBar(
         hideBackButton: true,
-        title: const Text("All Cases"),
+        title: Text('allCases'.ts),
         elevation: 2,
         actions: [
           Padding(
@@ -52,7 +53,7 @@ class _AllCasesViewState extends State<AllCasesView> {
             padding: const EdgeInsets.only(left: 15),
             child: Row(
               children: [
-                const Text("Sort By"),
+                Text('sortBy'.ts),
                 const HSpace(5),
                 Container(
                   padding:

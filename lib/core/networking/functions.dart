@@ -93,8 +93,11 @@ Future<Either<Failure, T>> executeFunctionality<T>({
     return Right(await function());
   } on CacheException catch (error) {
     return Left(CacheFailure(error.msg));
-  } on NavigateToVerifyEmailException {
-    rethrow;
+    // } on NavigateToVerifyEmailException {
+    //   rethrow;
+    // }
+  } on NavigateToVerifyEmailException catch (error) {
+    return Left(NavigateToVerifyEmailFailure(error.msg));
   } on ServerException catch (error) {
     return Left(ServerFailure(error.msg));
   } on UserCancellationException catch (error) {
@@ -178,7 +181,6 @@ Future<http.Response> makeHttpRequest({
 
   log("🌐 API Request: $uri");
 
-  // ✅ تنفيذ الطلب
   switch (requestType) {
     case HttpRequestType.get:
       response = await http.get(uri, headers: headers);

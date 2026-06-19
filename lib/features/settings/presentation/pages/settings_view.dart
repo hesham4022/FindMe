@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:find_me_app/core/di.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
@@ -51,7 +52,7 @@ class _PersonalInfoBody extends StatelessWidget {
           MenuItemWidget(
             isContainer: false,
             icon: Icons.lightbulb_outlined,
-            title: "Notification Setting",
+            title: "notificationSetting".ts,
             onTap: () {
               context.toNamed(AppRoutes.notificationSettingRoute);
             },
@@ -60,7 +61,7 @@ class _PersonalInfoBody extends StatelessWidget {
           MenuItemWidget(
             isContainer: false,
             icon: Icons.key,
-            title: "Password Manager",
+            title: "passwordManager".ts,
             onTap: () {
               context.toNamed(AppRoutes.changePasswordRoute);
             },
@@ -69,7 +70,7 @@ class _PersonalInfoBody extends StatelessWidget {
           MenuItemWidget(
             isContainer: false,
             icon: Icons.person_outlined,
-            title: "Delete Account",
+            title: "deleteAccount".ts,
             onTap: () {
               DeleteAcountDialog.show(
                 context,
@@ -83,7 +84,7 @@ class _PersonalInfoBody extends StatelessWidget {
           MenuItemWidget(
             isContainer: false,
             icon: Icons.public_rounded,
-            title: "Change Language",
+            title: "changeLanguage".ts,
             onTap: () {
               context.locale.languageCode == 'en'
                   ? context.setLocale(Locale('ar'))

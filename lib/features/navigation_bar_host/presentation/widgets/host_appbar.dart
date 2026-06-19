@@ -7,6 +7,7 @@ import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/images.dart';
 import 'package:find_me_app/core/shared/widgets/custom_appbar.dart';
 import 'package:find_me_app/features/notifications/presentation/widgets/notification_btn.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class HostAppBar extends StatelessWidget implements PreferredSizeWidget {
   const HostAppBar({
@@ -55,7 +56,7 @@ class HostAppBar extends StatelessWidget implements PreferredSizeWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text("Hi welcome",
+              Text("welcomeMessage".ts,
                   style:
                       Theme.of(context).textTheme.kHeadingH5SemiBold.copyWith(
                             fontSize: 12,

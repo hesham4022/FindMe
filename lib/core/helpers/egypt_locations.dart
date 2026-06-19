@@ -1,0 +1,31 @@
+class EgyptLocations {
+  static const Map<String, List<String>> governorates = {
+    "Cairo": ["Nasr City 1", "Nasr City 2", "Maadi", "Heliopolis", "New Cairo 1", "New Cairo 2", "Downtown", "Shoubra", "El Marg", "El Salam", "Zamalek"],
+    "Giza": ["Dokki", "Agouza", "6th of October 1", "6th of October 2", "Sheikh Zayed", "Haram", "Faisal", "Imbaba", "Bulaq El Dakrour", "El Omraniya"],
+    "Alexandria": ["Smouha", "Sidi Gaber", "Montaza 1", "Montaza 2", "Miami", "Borg El Arab", "El Raml", "Karmouz", "El Dekheila"],
+    "Dakahlia": ["Mansoura 1", "Mansoura 2", "Talkha", "Mit Ghamr", "Dekernes", "Aga"],
+    "Red Sea": ["Hurghada 1", "Hurghada 2", "Safaga", "Marsa Alam", "Ras Ghareb"],
+    "Beheira": ["Damanhour", "Kafr El Dawwar", "Rashid", "Edku", "Abu Hummus"],
+    "Fayoum": ["Fayoum City", "Ibsheway", "Tamiya", "Senoress", "Itsa"],
+    "Gharbia": ["Tanta 1", "Tanta 2", "El Mahalla 1", "El Mahalla 2", "Zifta", "Samanoud"],
+    "Ismailia": ["Ismailia 1", "Ismailia 2", "Ismailia 3", "El Qantara West", "Fayed"],
+    "Menofia": ["Shibin El Kom", "Menouf", "Ashmoun", "Quesna", "Tala"],
+    "Minya": ["Minya City", "Maghagha", "Bani Mazar", "Matai", "Samalut"],
+    "Qalyubia": ["Banha", "Shubra El Kheima 1", "Shubra El Kheima 2", "Qalyub", "Khanka", "Obour"],
+    "New Valley": ["Kharga", "Dakhla", "Farafra", "Baris"],
+    "Suez": ["Suez 1", "Suez 2", "Arbaeen", "Attaka"],
+    "Aswan": ["Aswan 1", "Aswan 2", "Edfu", "Kom Ombo", "Daraw"],
+    "Assiut": ["Assiut 1", "Assiut 2", "Dairut", "Qusiya", "Manfalut", "Abutig"],
+    "Beni Suef": ["Beni Suef City", "Nasser", "Al Wasta", "Biba", "Ihnasiya"],
+    "Port Said": ["Al-Sharq", "Al-Arab", "Port Fouad", "Al-Manakh", "Al-Dawahi"],
+    "Damietta": ["Damietta 1", "Damietta 2", "New Damietta", "Faraskour", "Kafr Saad"],
+    "Sharkia": ["Zagazig 1", "Zagazig 2", "10th of Ramadan 1", "10th of Ramadan 2", "Minya El Qamh", "Bilbeis"],
+    "South Sinai": ["Sharm El-Sheikh", "Dahab", "Nuweiba", "Saint Catherine", "El Tor"],
+    "Kafr El Sheikh": ["Kafr El Sheikh City", "Desouk", "Bella", "Baltim", "Metoubes"],
+    "Matrouh": ["Marsa Matrouh", "Al Alamein", "Sidi Barrani", "El Dabaa", "Siwa"],
+    "Luxor": ["Luxor City", "Karnak", "Esna", "Armant", "Qurna"],
+    "Qena": ["Qena City", "Nagaa Hammadi", "Qus", "Deshna", "Abu Tesht"],
+    "North Sinai": ["Arish 1", "Arish 2", "Sheikh Zuweid", "Rafah", "Bir al-Abed"],
+    "Sohag": ["Sohag 1", "Sohag 2", "Akhmim", "Girga", "Tahta", "Tama"]
+  };
+}

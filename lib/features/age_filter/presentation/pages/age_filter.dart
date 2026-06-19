@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:find_me_app/core/di.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:http/http.dart' as http;
 import 'package:find_me_app/core/helpers/extensions/context.dart';
 import 'package:find_me_app/core/resources/routes.dart';
@@ -201,7 +202,7 @@ class _AgeFilterState extends State<AgeFilter> with TickerProviderStateMixin {
       child: Column(
         children: [
           _buildAgeSlider(
-            label: 'Current Age',
+            label: 'currentAge'.ts,
             value: _sourceAge,
             color: const Color(0xFF5DCAA5),
             onChanged: (v) => setState(() => _sourceAge = v),
@@ -214,7 +215,7 @@ class _AgeFilterState extends State<AgeFilter> with TickerProviderStateMixin {
                 : Colors.black.withOpacity(0.07),
           ),
           _buildAgeSlider(
-            label: 'Target Age',
+            label: 'targetAge'.ts,
             value: _targetAge,
             color: const Color(0xFF7F77DD),
             onChanged: (v) => setState(() => _targetAge = v),

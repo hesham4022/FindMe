@@ -4,6 +4,7 @@ import 'package:find_me_app/features/profile/presentation/profile_view/pages/pro
 import 'package:find_me_app/features/settings/presentation/pages/settings_view.dart';
 import 'package:flutter/material.dart';
 import 'package:find_me_app/core/resources/strings.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class BottomNavBarTab {
   Widget? screen;
@@ -30,14 +31,14 @@ List<BottomNavBarTab> kUserBottomBarTabs = [
       img: 'assets/icons/home_icon.svg'),
   BottomNavBarTab(
       screen: const AllCasesView(),
-      title: "Casses",
+      title: "cases".ts,
       img: 'assets/icons/place_icon.svg'),
   BottomNavBarTab(
       screen: const ProfileView(),
-      title: "profile",
+      title: "profile".ts,
       img: 'assets/icons/person_icon.svg'),
   BottomNavBarTab(
       screen: const SettingsView(),
-      title: "settings",
+      title: "settings".ts,
       img: 'assets/icons/settingss.svg'),
 ];

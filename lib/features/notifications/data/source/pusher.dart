@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:pusher_channels_flutter/pusher_channels_flutter.dart';
+import 'package:find_me_app/core/app_secured_data/app_data.dart';
+import 'package:find_me_app/core/di.dart';
 
 class PusherService {
   static final PusherChannelsFlutter _pusher =
@@ -20,10 +22,9 @@ class PusherService {
       cluster: "mt1",
       onAuthorizer: (channelName, socketId, options) async {
         try {
+          final String baseUrl = sl<AppEnvironmentData>().baseUrl;
           final response = await http.post(
-            Uri.parse(
-              "https://web-production-25022.up.railway.app/api/broadcasting/auth",
-            ),
+            Uri.parse("$baseUrl/api/broadcasting/auth"),
             headers: {
               "Authorization": "Bearer $token",
               "Accept": "application/json",

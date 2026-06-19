@@ -13,6 +13,7 @@ import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host
 import 'package:find_me_app/features/notifications/presentation/cubit/notifications/notifications_cubit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class HomePageNoNavBar extends StatelessWidget {
   HomePageNoNavBar({
@@ -38,16 +39,16 @@ class HomePageNoNavBar extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  const Padding(
+                  Padding(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
-                    child: const Text("search by:"),
+                    child: Text('searchBy'.ts),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(16, 12, 16, 0),
                     child: Row(
                       children: [
                         _actionButton(
-                          title: "Name",
+                          title: "name".ts,
                           icon: Icons.person,
                           onTap: () {
                             context.toNamed(
@@ -58,7 +59,7 @@ class HomePageNoNavBar extends StatelessWidget {
                         ),
                         SizedBox(width: 8),
                         _actionButton(
-                          title: "Image",
+                          title: "image".ts,
                           icon: Icons.image,
                           onTap: () {
                             context.toNamed(
@@ -69,7 +70,7 @@ class HomePageNoNavBar extends StatelessWidget {
                         ),
                         SizedBox(width: 8),
                         _actionButton(
-                          title: "Age Filter",
+                          title: "ageFilter".ts,
                           icon: Icons.auto_awesome,
                           onTap: () {
                             context.toNamed(AppRoutes.ageFilterRoute);
@@ -128,9 +129,9 @@ class HomePageNoNavBar extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  const Text(
-                                    'Recent Cases:',
-                                    style: TextStyle(
+                                  Text(
+                                    'recentCases'.ts,
+                                    style: const TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.w800,
                                       color: Colors.black,
@@ -140,9 +141,9 @@ class HomePageNoNavBar extends StatelessWidget {
                                     onTap: () {
                                       context.read<HostCubit>().changeIndex(1);
                                     },
-                                    child: const Text(
-                                      'Show All Cases',
-                                      style: TextStyle(
+                                    child: Text(
+                                      'showAllCases'.ts,
+                                      style: const TextStyle(
                                         fontSize: 14,
                                         fontWeight: FontWeight.w800,
                                         color: AppColors.mainColor,
@@ -179,12 +180,12 @@ class HomePageNoNavBar extends StatelessWidget {
                                         return ListView(
                                           physics:
                                               const AlwaysScrollableScrollPhysics(),
-                                          children: const [
-                                            SizedBox(height: 200),
+                                          children: [
+                                            const SizedBox(height: 200),
                                             Center(
                                               child: Text(
-                                                "No recent cases found",
-                                                style: TextStyle(
+                                                "noRecentCasesFound".ts,
+                                                style: const TextStyle(
                                                     color: Colors.grey),
                                               ),
                                             ),

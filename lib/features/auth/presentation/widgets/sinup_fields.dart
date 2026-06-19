@@ -15,7 +15,6 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'dart:io';
 
 // class NameField extends StatelessWidget {
@@ -134,7 +133,7 @@ class NameField extends StatelessWidget {
 //               errorText: state.nameErrorText,
 //               hint: "hintname".ts,
 //               prefixIcon: Icon(
-//                 MdiIcons.lockOpenVariantOutline,
+//                 Icons.lock_open_outlined,
 //                 size: 20.sp,
 //                 color: AppColors.saltBox600,
 //               ),
@@ -246,7 +245,7 @@ class SignUpPasswordField extends StatelessWidget {
               errorText: state.passwordErrorText,
               hint: '******',
               prefixIcon: Icon(
-                MdiIcons.lockOpenVariantOutline,
+                Icons.lock_open_outlined,
                 size: 20.sp,
                 color: AppColors.saltBox600,
               ),
@@ -293,7 +292,7 @@ class SignUpConfirmPasswordField extends StatelessWidget {
               errorText: state.passwordConfirmationErrorText,
               hint: "******",
               prefixIcon: Icon(
-                MdiIcons.lockOpenVariantOutline,
+                Icons.lock_open_outlined,
                 size: 20.sp,
                 color: AppColors.saltBox600,
               ),
@@ -409,31 +408,66 @@ class PhoneNumberField extends StatelessWidget {
   }
 }
 
-class NationalIdField extends StatelessWidget {
-  const NationalIdField({
-    super.key,
-    this.onSubmit,
-  });
-
+class NationalIdField extends StatefulWidget {
+  const NationalIdField({super.key, this.onSubmit});
   final Function(String)? onSubmit;
 
   @override
+  State<NationalIdField> createState() => _NationalIdFieldState();
+}
+
+class _NationalIdFieldState extends State<NationalIdField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    final state = context.read<SinupCubit>().state;
+    _controller = TextEditingController(text: state.nationalId ?? '');
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SinupCubit, SinupState>(
-      builder: (context, state) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "nationalidLabel".ts,
-              style: Theme.of(context).textTheme.kSubheadingRegular,
-            ),
-            const VSpace(10),
-            CustomTextField(
+    return BlocListener<SinupCubit, SinupState>(
+      listenWhen: (prev, curr) => prev.nationalId != curr.nationalId,
+      listener: (_, state) {
+        if (_controller.text != state.nationalId) {
+          _controller.text = state.nationalId ?? '';
+        }
+      },
+      child: BlocBuilder<SinupCubit, SinupState>(
+        builder: (context, state) {
+          return Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "nationalidLabel".ts,
+                style: Theme.of(context).textTheme.kSubheadingRegular,
+              ),
+              const VSpace(10),
+              CustomTextField(
+                controller: _controller,
+                readOnly: true,
                 hint: "hintId".ts,
                 errorText: state.nationalIdErrorText,
                 keyboardType: TextInputType.number,
-                onSubmit: onSubmit,
+                onSubmit: widget.onSubmit,
+                suffixIcon: state.isOcrLoading 
+                    ? const Padding(
+                        padding: EdgeInsets.all(12.0),
+                        child: SizedBox(
+                          width: 20,
+                          height: 20,
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                      ) 
+                    : null,
                 onChanged: (value) {
                   context.read<SinupCubit>().nationalIdChanged(value);
                 },
@@ -443,10 +477,12 @@ class NationalIdField extends StatelessWidget {
                       .read<SinupCubit>()
                       .nationalIdErrorTextChanged(err ?? "");
                   return (err == null || err.trim().isEmpty) ? null : err;
-                }),
-          ],
-        );
-      },
+                },
+              ),
+            ],
+          );
+        },
+      ),
     );
   }
 }

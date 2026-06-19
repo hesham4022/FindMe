@@ -20,6 +20,10 @@ class CacheFailure extends Failure {
   const CacheFailure(super.msg);
 }
 
+class NavigateToVerifyEmailFailure extends Failure {
+  const NavigateToVerifyEmailFailure(super.msg);
+}
+
 // class RefreshTokenFailure extends Failure {
 //   const RefreshTokenFailure(super.msg);
 // }

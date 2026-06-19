@@ -86,6 +86,8 @@ class UpdateCaseRemote {
         'date_last_seen': data.dateLastSeen ?? '',
         'latitude': data.latitude?.toString() ?? '',
         'longitude': data.longitude?.toString() ?? '',
+        'Governorate': data.governorate ?? '',
+        'police_station': data.policeStation ?? '',
         'confirm_information': data.confirmInformation ? '1' : '0',
         'consent_to_share': data.consentToShare ? '1' : '0',
       };

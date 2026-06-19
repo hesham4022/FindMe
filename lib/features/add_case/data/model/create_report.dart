@@ -18,6 +18,8 @@ class CreateReportRequest extends Equatable {
   final String? dateLastSeen;
   final double? latitude;
   final double? longitude;
+  final String? governorate;
+  final String? policeStation;
   final bool confirmInformation;
   final bool consentToShare;
   final List<String> photos;
@@ -38,6 +40,8 @@ class CreateReportRequest extends Equatable {
     this.dateLastSeen,
     this.latitude,
     this.longitude,
+    this.governorate,
+    this.policeStation,
     required this.confirmInformation,
     required this.consentToShare,
     this.photos = const [],
@@ -60,6 +64,8 @@ class CreateReportRequest extends Equatable {
       'date_last_seen': dateLastSeen,
       'latitude': latitude,
       'longitude': longitude,
+      'Governorate': governorate,
+      'police_station': policeStation,
       'confirm_information': confirmInformation,
       'consent_to_share': consentToShare,
     };
@@ -93,6 +99,8 @@ class CreateReportRequest extends Equatable {
         dateLastSeen,
         latitude,
         longitude,
+        governorate,
+        policeStation,
         confirmInformation,
         consentToShare,
         photos,

@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class CaseCard extends StatelessWidget {
   const CaseCard({super.key, required this.caseModel, required this.onTap});
@@ -343,7 +344,7 @@ class CaseCard extends StatelessWidget {
                               children: [
                                 ListTile(
                                   leading: const Icon(Icons.edit),
-                                  title: const Text('Edit'),
+                                  title: Text('edit'.ts),
                                   onTap: () {
                                     Navigator.pop(context);
                                     context.toNamed(
@@ -358,8 +359,8 @@ class CaseCard extends StatelessWidget {
                                 ListTile(
                                   leading: const Icon(Icons.delete,
                                       color: Colors.red),
-                                  title: const Text('Delete',
-                                      style: TextStyle(color: Colors.red)),
+                                  title: Text('delete'.ts,
+                                      style: const TextStyle(color: Colors.red)),
                                   onTap: () async {
                                     Navigator.pop(context);
 

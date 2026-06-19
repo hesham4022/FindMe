@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:find_me_app/core/helpers/extensions/context.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/resources/routes.dart';
 import 'package:find_me_app/features/navigation_bar_host/presentation/cubit/host_cubit.dart';
 import 'package:find_me_app/features/notifications/presentation/cubit/notifications/notifications_cubit.dart';
@@ -68,7 +69,7 @@ class HomeHeaderAppBar extends StatelessWidget implements PreferredSizeWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Hi, Welcome',
+                        'welcomeMessage'.ts,
                         style: TextStyle(
                           color: Colors.grey.shade600,
                           fontSize: 12,

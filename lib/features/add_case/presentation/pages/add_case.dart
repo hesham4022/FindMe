@@ -14,6 +14,7 @@ import 'package:find_me_app/features/add_case/presentation/widgets_Missing/repor
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class AddCaseView extends StatelessWidget {
   const AddCaseView({super.key, this.caseToEdit});
@@ -69,14 +70,14 @@ class _AddCaseViewBody extends StatelessWidget {
                             return Colors.white;
                           }),
                         ),
-                        segments: const [
+                        segments: [
                           ButtonSegment(
                             value: ReportType.missingChild,
-                            label: Text('Missing child'),
+                            label: Text('missingChild'.ts),
                           ),
                           ButtonSegment(
                             value: ReportType.foundChild,
-                            label: Text('Found child'),
+                            label: Text('foundChild'.ts),
                           ),
                         ],
                         selected: {state.reportType ?? ReportType.missingChild},

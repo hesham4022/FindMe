@@ -31,11 +31,10 @@ class CacheException extends AppException {
 }
 
 /////////
-class NavigateToVerifyEmailException implements Exception {
-  final String? message;
-  NavigateToVerifyEmailException([this.message]);
-  @override
-  String toString() => message ?? "NavigateToVerifyEmailException";
+class NavigateToVerifyEmailException extends AppException {
+  NavigateToVerifyEmailException([
+    String msg = "Please verify your email before logging in.",
+  ]) : super(msg);
 }
 
 class UserTokenException extends AppException {

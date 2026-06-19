@@ -1,3 +1,5 @@
+import 'package:easy_localization/easy_localization.dart';
+
 String timeAgo(String? isoDate) {
   if (isoDate == null) return '';
 
@@ -7,13 +9,22 @@ String timeAgo(String? isoDate) {
     final difference = now.difference(date);
 
     if (difference.inDays > 0) {
-      return '${difference.inDays} day${difference.inDays > 1 ? 's' : ''} ago';
+      if (difference.inDays == 1) {
+        return "dayAgo".tr(args: [difference.inDays.toString()]);
+      }
+      return "daysAgo".tr(args: [difference.inDays.toString()]);
     } else if (difference.inHours > 0) {
-      return '${difference.inHours} hour${difference.inHours > 1 ? 's' : ''} ago';
+      if (difference.inHours == 1) {
+        return "hourAgo".tr(args: [difference.inHours.toString()]);
+      }
+      return "hoursAgo".tr(args: [difference.inHours.toString()]);
     } else if (difference.inMinutes > 0) {
-      return '${difference.inMinutes} min${difference.inMinutes > 1 ? 's' : ''} ago';
+      if (difference.inMinutes == 1) {
+        return "minuteAgo".tr(args: [difference.inMinutes.toString()]);
+      }
+      return "minutesAgo".tr(args: [difference.inMinutes.toString()]);
     } else {
-      return 'just now';
+      return 'justNow'.tr();
     }
   } catch (e) {
     return '';

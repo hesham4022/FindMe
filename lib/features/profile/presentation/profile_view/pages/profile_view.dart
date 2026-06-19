@@ -10,6 +10,7 @@ import 'package:find_me_app/features/profile/presentation/profile_view/widgets/m
 import 'package:find_me_app/features/profile/presentation/profile_view/widgets/profile_avater.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -30,9 +31,9 @@ class ProfileViewBody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: const CustomAppBar(
+      appBar: CustomAppBar(
         hideBackButton: true,
-        title: Text("My Profile"),
+        title: Text('myProfile'.ts),
       ),
       body: BlocBuilder<HostCubit, HostState>(
         builder: (context, state) {
@@ -57,7 +58,7 @@ class ProfileViewBody extends StatelessWidget {
                 MenuItemWidget(
                   isContainer: true,
                   icon: Icons.person_outline,
-                  title: 'Profile',
+                  title: 'profile'.ts,
                   onTap: () {
                     context.toNamed(AppRoutes.updateProfileRoute);
                   },
@@ -65,13 +66,13 @@ class ProfileViewBody extends StatelessWidget {
                 MenuItemWidget(
                   isContainer: true,
                   icon: Icons.favorite_outline,
-                  title: 'Favorite',
+                  title: 'favorite'.ts,
                   onTap: () {},
                 ),
                 MenuItemWidget(
                   isContainer: true,
                   icon: Icons.lock_outline,
-                  title: 'Privacy Policy',
+                  title: 'privacyPolicy'.ts,
                   onTap: () {
                     context.toNamed(AppRoutes.privacyRoute);
                   },
@@ -79,7 +80,7 @@ class ProfileViewBody extends StatelessWidget {
                 MenuItemWidget(
                   isContainer: true,
                   icon: Icons.settings_outlined,
-                  title: 'Settings',
+                  title: 'settings'.ts,
                   onTap: () {
                     context.read<HostCubit>().changeIndex(3);
                   },
@@ -87,7 +88,7 @@ class ProfileViewBody extends StatelessWidget {
                 MenuItemWidget(
                   isContainer: true,
                   icon: Icons.help_outline,
-                  title: 'Help',
+                  title: 'help'.ts,
                   onTap: () {
                     context.toNamed(AppRoutes.helpCenterView);
                   },
@@ -95,7 +96,7 @@ class ProfileViewBody extends StatelessWidget {
                 MenuItemWidget(
                   isContainer: true,
                   icon: Icons.logout,
-                  title: 'Logout',
+                  title: 'logout'.ts,
                   onTap: () {
                     LogoutDialog.show(
                       context,

@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:flutter/material.dart';
 
 class CommentsPage extends StatelessWidget {
@@ -23,7 +24,7 @@ class CommentsPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Comments (12)"),
+        title: Text("comments".ts),
         backgroundColor: Colors.blueAccent,
       ),
       body: Padding(

@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/error_management/failure.dart';
 import 'package:find_me_app/core/helpers/formfield_validator.dart';
 import 'package:find_me_app/features/notifications/data/model/notification.dart';
 import 'package:find_me_app/features/notifications/data/source/pusher.dart';
@@ -62,8 +63,52 @@ class SignInCubit extends Cubit<SignInState> {
   }
 
   // -------------------- Submit --------------------
+  // Future<void> submitSignIn() async {
+  //   if (state.isLoading) return;
+  //   final passwordError = AppValidators.validateSignInPassword(state.password);
+  //   final usernameError = AppValidators.validateEmail(state.username);
+
+  //   if (passwordError != null || usernameError != null) {
+  //     emit(state.copyWith(
+  //       passwordErrorText: passwordError,
+  //       usernameErrorText: usernameError,
+  //       status: SignInStatus.initial,
+  //     ));
+  //     return;
+  //   }
+
+  //   emit(state.copyWith(status: SignInStatus.loading));
+
+  //   final request = SignInUserRequest(
+  //     email: state.username!,
+  //     password: state.password!,
+  //   );
+
+  //   final result = await _authRepo.signin(request);
+
+  //   result.fold(
+  //     (error) {
+  //       emit(state.copyWith(
+  //         status: SignInStatus.error,
+  //         error: error,
+  //       ));
+  //     },
+  //     (data) async {
+  //       await _authLocal.saveAccessToken(data.accessToken);
+  //       await _authLocal.saveRefreshToken(data.refreshToken);
+
+  //       emit(state.copyWith(
+  //         status: SignInStatus.success,
+  //         isActivated: true,
+  //         user: data.user,
+  //       ));
+  //     },
+  //   );
+  // }
+
   Future<void> submitSignIn() async {
     if (state.isLoading) return;
+
     final passwordError = AppValidators.validateSignInPassword(state.password);
     final usernameError = AppValidators.validateEmail(state.username);
 
@@ -87,6 +132,14 @@ class SignInCubit extends Cubit<SignInState> {
 
     result.fold(
       (error) {
+        if (error is NavigateToVerifyEmailFailure) {
+          emit(state.copyWith(
+            status: SignInStatus.needVerifyEmail,
+            error: error,
+          ));
+          return;
+        }
+
         emit(state.copyWith(
           status: SignInStatus.error,
           error: error,
