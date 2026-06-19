@@ -211,6 +211,12 @@ class AddCaseCubit extends Cubit<AddCaseState> {
   }
 
   bool get isFormValid {
+    bool isLocationValid = true;
+    if (state.reportType == ReportType.foundChild) {
+      isLocationValid = state.governorate != null && state.governorate!.isNotEmpty &&
+          state.policeStation != null && state.policeStation!.isNotEmpty;
+    }
+
     return AppValidators.validateUsername(state.firstName) == null &&
         AppValidators.validateLastName(state.lastName) == null &&
         AppValidators.validateAddress(state.address) == null &&
@@ -218,7 +224,8 @@ class AddCaseCubit extends Cubit<AddCaseState> {
         state.gender != null &&
         state.gender!.isNotEmpty &&
         state.confirmInformation &&
-        state.consentToShare;
+        state.consentToShare &&
+        isLocationValid;
   }
 
   void fillWithCase(CaseInfoModel? caseModel) {

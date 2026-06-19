@@ -77,6 +77,7 @@ dev_dependencies:
   flutter_native_splash: ^2.4.4
   envied_generator: ^1.1.1
   build_runner: ^2.4.15
+  image: ^4.8.0
   
 
 flutter_native_splash:
@@ -88,7 +89,7 @@ flutter_native_splash:
   ios_content_mode: center
   android_12:
     color: "#1D4ED8"
-    image: assets/images/splash_logo.png
+    image: assets/images/splash_logo_padded.png
 
 flutter_launcher_icons:
   android: true

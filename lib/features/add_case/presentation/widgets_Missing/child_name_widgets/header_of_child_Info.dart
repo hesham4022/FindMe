@@ -58,7 +58,6 @@ class HeaderOfChildInfo extends StatelessWidget {
                     spacing: 10,
                     runSpacing: 10,
                     children: [
-                      // عرض الصور الحالية
                       for (final photo in photos)
                         Stack(
                           clipBehavior: Clip.none,

@@ -275,38 +275,40 @@ class CurrentChildLocationField extends StatelessWidget {
               value: state.governorate,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.white,
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+                fillColor: const Color(0xffECF1FF),
+                contentPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(13),
-                  borderSide: BorderSide(color: Colors.grey, width: 0.8),
+                  borderSide: const BorderSide(color: Colors.transparent, width: 0),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(13),
-                  borderSide: BorderSide(color: Colors.grey, width: 0.8),
+                  borderSide: const BorderSide(color: Colors.transparent, width: 0),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(13),
-                  borderSide:
-                      BorderSide(color: AppColors.mainColor, width: 1.5),
+                  borderSide: const BorderSide(color: Colors.transparent, width: 0),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(13),
-                  borderSide: BorderSide(color: Colors.red, width: 1.5),
+                  borderSide: const BorderSide(color: Colors.red, width: 1.5),
                 ),
                 errorText: state.governorateErrorText,
               ),
               hint: Text(
                 "Select Governorate".ts,
-                style: Theme.of(context).textTheme.kSubheadingRegular.copyWith(
-                      color: Colors.grey,
+                style: Theme.of(context).textTheme.kCaptionRegular.copyWith(
+                      color: AppColors.saltBox300,
+                      fontSize: 14,
                     ),
               ),
               items: governorates.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(
+                    value,
+                    style: Theme.of(context).textTheme.kCaptionRegular.copyWith(fontSize: 14),
+                  ),
                 );
               }).toList(),
               onChanged: (newValue) {
@@ -338,47 +340,47 @@ class CurrentChildLocationField extends StatelessWidget {
               value: state.policeStation,
               decoration: InputDecoration(
                 filled: true,
-                fillColor: Colors.white,
-                contentPadding:
-                    const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
+                fillColor: const Color(0xffECF1FF),
+                contentPadding: const EdgeInsets.symmetric(vertical: 7, horizontal: 12),
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(13),
-                  borderSide: BorderSide(color: Colors.grey, width: 0.8),
+                  borderSide: const BorderSide(color: Colors.transparent, width: 0),
                 ),
                 enabledBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(13),
-                  borderSide: BorderSide(color: Colors.grey, width: 0.8),
+                  borderSide: const BorderSide(color: Colors.transparent, width: 0),
                 ),
                 focusedBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(13),
-                  borderSide:
-                      BorderSide(color: AppColors.mainColor, width: 1.5),
+                  borderSide: const BorderSide(color: Colors.transparent, width: 0),
                 ),
                 errorBorder: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(13),
-                  borderSide: BorderSide(color: Colors.red, width: 1.5),
+                  borderSide: const BorderSide(color: Colors.red, width: 1.5),
                 ),
                 errorText: state.policeStationErrorText,
               ),
               hint: Text(
                 "Select Police Station".ts,
-                style: Theme.of(context).textTheme.kSubheadingRegular.copyWith(
-                      color: Colors.grey,
+                style: Theme.of(context).textTheme.kCaptionRegular.copyWith(
+                      color: AppColors.saltBox300,
+                      fontSize: 14,
                     ),
               ),
               items: policeStations.map((String value) {
                 return DropdownMenuItem<String>(
                   value: value,
-                  child: Text(value),
+                  child: Text(
+                    value,
+                    style: Theme.of(context).textTheme.kCaptionRegular.copyWith(fontSize: 14),
+                  ),
                 );
               }).toList(),
               onChanged: state.governorate == null
                   ? null
                   : (newValue) {
                       if (newValue != null) {
-                        context
-                            .read<AddCaseCubit>()
-                            .policeStationChanged(newValue);
+                        context.read<AddCaseCubit>().policeStationChanged(newValue);
                       }
                     },
               validator: (value) {

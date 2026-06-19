@@ -60,6 +60,8 @@ class CaseInfoModel {
   bool isLiked;
   double? similarityScore;
   bool isDeleting;
+  String? governorate;
+  String? policeStation;
 
   CaseInfoModel({
     this.id,
@@ -87,6 +89,8 @@ class CaseInfoModel {
     this.isLiked = false,
     this.similarityScore,
     this.isDeleting = false,
+    this.governorate,
+    this.policeStation,
   });
 
   factory CaseInfoModel.fromMap(Map<String, dynamic> json) => CaseInfoModel(
@@ -125,6 +129,8 @@ class CaseInfoModel {
         createdAt: json['created_at'],
         updatedAt: json['updated_at'],
         isDeleting: false,
+        governorate: json['Governorate'],
+        policeStation: json['police_station'],
       );
 
   Map<String, dynamic> toMap() => {
@@ -155,6 +161,8 @@ class CaseInfoModel {
         "updated_at": updatedAt,
         "isLiked": isLiked,
         "isDeleting": isDeleting,
+        "Governorate": governorate,
+        "police_station": policeStation,
       };
 
   CaseInfoModel copyWith({
@@ -183,6 +191,8 @@ class CaseInfoModel {
     String? updatedAt,
     bool? isLiked,
     bool? isDeleting,
+    String? governorate,
+    String? policeStation,
   }) =>
       CaseInfoModel(
         id: id ?? this.id,
@@ -210,6 +220,8 @@ class CaseInfoModel {
         isLiked: isLiked ?? this.isLiked,
         similarityScore: similarityScore ?? this.similarityScore,
         isDeleting: isDeleting ?? this.isDeleting,
+        governorate: governorate ?? this.governorate,
+        policeStation: policeStation ?? this.policeStation,
       );
 
   factory CaseInfoModel.fromJson(Map<String, dynamic> json) {

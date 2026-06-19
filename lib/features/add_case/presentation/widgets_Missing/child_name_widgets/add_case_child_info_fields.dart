@@ -5,13 +5,11 @@ import 'package:find_me_app/core/helpers/formfield_validator.dart';
 import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/custom_textfield.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
-import 'package:find_me_app/features/add_case/data/model/create_report.dart';
 import 'package:find_me_app/features/add_case/presentation/cubits/cubit/add_case_cubit.dart';
 import 'package:find_me_app/features/cases_map/data/models/location_result.dart';
 import 'package:find_me_app/features/cases_map/data/services/location_search_searvice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:http/http.dart' as http;
 
 class ChildFirstNameField extends StatefulWidget {
   const ChildFirstNameField({
@@ -156,7 +154,7 @@ class _AgeFieldState extends State<AgeField> {
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Text(
-                "Age:",
+                "Age".ts,
                 style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
@@ -342,7 +340,7 @@ class _AddressOfChildState extends State<AddressOfChild> {
                 Padding(
                   padding: const EdgeInsets.only(left: 8),
                   child: Text(
-                    "Last Known Location:".ts,
+                    "Last Known Location".ts,
                     style:
                         Theme.of(context).textTheme.kSubheadingRegular.copyWith(
                               fontSize: 13,

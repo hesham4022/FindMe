@@ -16,7 +16,7 @@ class FirstAndLastNameFeilds extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(left: 8.0),
           child: Text(
-            "Child name:",
+            "Child name* :",
             style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
                   fontSize: 13,
                   fontWeight: FontWeight.w400,

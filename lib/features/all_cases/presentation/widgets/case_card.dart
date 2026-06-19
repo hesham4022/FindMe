@@ -404,7 +404,12 @@ class CaseCard extends StatelessWidget {
                       SizedBox(width: 4.w),
                       Expanded(
                         child: Text(
-                          caseModel.address ?? '',
+                          (caseModel.governorate != null &&
+                                  caseModel.governorate!.isNotEmpty &&
+                                  caseModel.policeStation != null &&
+                                  caseModel.policeStation!.isNotEmpty)
+                              ? "${caseModel.governorate}, ${caseModel.policeStation}"
+                              : caseModel.address ?? '',
                           style: TextStyle(
                             fontSize: 12.sp,
                             color: Colors.grey[600],

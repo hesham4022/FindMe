@@ -40,8 +40,6 @@ class IncidentDetailsContainer extends StatelessWidget {
           const VSpace(10),
           const HalfWidthField(child: DateTimeLastSeenField()),
           const VSpace(10),
-          const HalfWidthField(child: LastKnownLocation()),
-          const VSpace(10),
           const PartialWidthField(child: FullBreakdownOfTheincidentField()),
           const VSpace(10),
           SizedBox(width: fieldWidth, child: const VehicleDetailsField()),

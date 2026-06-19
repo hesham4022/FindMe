@@ -125,21 +125,32 @@ class CardAllCaseInfo extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Row(
-                                children: [
-                                  CustomFeature(
-                                      text: caseInfo?.height
-                                              ?.toInt()
-                                              .toString() ??
-                                          ''),
-                                  const Text("cm",
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 11,
-                                        height: 1.2,
-                                      )),
-                                ],
-                              ),
+                              if (caseInfo?.height != null)
+                                Row(
+                                  children: [
+                                    CustomFeature(
+                                        text: caseInfo!.height!.toInt().toString()),
+                                    const Text(" cm",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 11,
+                                          height: 1.2,
+                                        )),
+                                  ],
+                                ),
+                              if (caseInfo?.weight != null)
+                                Row(
+                                  children: [
+                                    CustomFeature(
+                                        text: caseInfo!.weight!.toInt().toString()),
+                                    const Text(" kg",
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: 11,
+                                          height: 1.2,
+                                        )),
+                                  ],
+                                ),
                               // CustomFeature(text: caseInfo?.eyeColor ?? ''),
                               // CustomFeature(text: caseInfo?.skinColor ?? ''),
                               // CustomFeature(text: caseInfo?.hairColor ?? ''),
@@ -177,39 +188,123 @@ class CardAllCaseInfo extends StatelessWidget {
             ],
           ),
           const VSpace(10),
-          Container(
-            width: double.infinity,
-            padding: const EdgeInsets.only(bottom: 2, top: 1),
-            decoration: BoxDecoration(
-                color: Colors.white, borderRadius: BorderRadius.circular(12)),
-            child: Column(
-              children: [
-                Text("${caseInfo?.firstName} ${caseInfo?.lastName}",
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.w500,
-                    )),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
+          Builder(
+            builder: (context) {
+              final bool isFoundChild = caseInfo?.governorate != null &&
+                  caseInfo!.governorate!.isNotEmpty &&
+                  caseInfo?.policeStation != null &&
+                  caseInfo!.policeStation!.isNotEmpty;
+
+              return IntrinsicHeight(
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    const Icon(
-                      Icons.location_on,
-                      color: Colors.red,
-                      size: 16,
+                    Expanded(
+                      flex: 6,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text(
+                              "${caseInfo?.firstName} ${caseInfo?.lastName}",
+                              style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const VSpace(4),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Icon(
+                                  Icons.location_on,
+                                  color: isFoundChild
+                                      ? Colors.green
+                                      : Colors.red,
+                                  size: 16,
+                                ),
+                                const HSpace(4),
+                                Flexible(
+                                  child: Text(
+                                    isFoundChild
+                                        ? "${caseInfo?.governorate}, ${caseInfo?.policeStation}"
+                                        : caseInfo?.address ?? '',
+                                    softWrap: true,
+                                    textAlign: TextAlign.start,
+                                    style: const TextStyle(
+                                      fontSize: 12,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
-                    const HSpace(4),
-                    Flexible(
-                      
-                      child: Text(
-                        caseInfo?.address ?? '',
-                        softWrap: true, 
-                        textAlign: TextAlign.center,
+                    const HSpace(8),
+                    Expanded(
+                      flex: 4,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            vertical: 8, horizontal: 8),
+                        decoration: BoxDecoration(
+                          color: isFoundChild
+                              ? Colors.green
+                              : const Color(0xFF1D4ED8),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            if (isFoundChild) ...[
+                              const Center(
+                                child: Text(
+                                  "Status:\nFound Child",
+                                  textAlign: TextAlign.center,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ] else ...[
+                              const Text(
+                                "Missing Since:",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 12,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                              const VSpace(4),
+                              Text(
+                                caseInfo?.dateLastSeen ?? 'Unknown',
+                                style: const TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 11,
+                                ),
+                              ),
+                            ],
+                          ],
+                        ),
                       ),
                     ),
                   ],
                 ),
-              ],
-            ),
+              );
+            },
           ),
           const VSpace(20),
           Row(

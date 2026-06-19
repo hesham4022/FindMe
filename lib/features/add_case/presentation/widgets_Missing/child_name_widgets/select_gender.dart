@@ -1,3 +1,4 @@
+import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/core/resources/themes.dart';
 import 'package:find_me_app/core/shared/widgets/sizes.dart';
@@ -27,7 +28,7 @@ class SelectedGender extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(left: 8),
               child: Text(
-                "Gender:",
+                "Gender".ts,
                 style: Theme.of(context).textTheme.kHeadingH3SmallBold.copyWith(
                       fontSize: 13,
                       fontWeight: FontWeight.w400,
@@ -43,8 +44,7 @@ class SelectedGender extends StatelessWidget {
                   padding: const EdgeInsets.only(right: 10),
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      tapTargetSize:
-                          MaterialTapTargetSize.shrinkWrap, // 👈 أهم سطر
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                       minimumSize: const Size(61, 25),
                       side: const BorderSide(color: Colors.black),
                       backgroundColor: isSelected

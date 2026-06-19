@@ -12,6 +12,7 @@ import 'package:find_me_app/features/case_info/presentation/widgets/more_photo.d
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:find_me_app/core/helpers/extensions/translation_ex.dart';
+import 'package:find_me_app/features/case_info/presentation/widgets/addition_info.dart';
 
 class CaseInfoView extends StatelessWidget {
   final CaseInfoModel? caseInfo;
@@ -37,6 +38,7 @@ class CaseInfoView extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 BlocBuilder<AllCasesCubit, AllCasesState>(
                   builder: (context, state) {
@@ -125,20 +127,30 @@ class CaseInfoView extends StatelessWidget {
                 //   ),
                 // ),
 
-                // AdditionInfo(
-                //   title: 'Last seen wearing:',
-                //   text: caseInfo!.lastSeenLocation,
-                // ),
-                // const VSpace(20),
-                // AdditionInfo(
-                //   title: 'Details of the perpetrator:',
-                //   text: caseInfo!.lastSeenLocation,
-                // ),
-                // const VSpace(20),
-                // AdditionInfo(
-                //   title: 'Details of what happened:',
-                //   text: caseInfo!.lastSeenLocation,
-                // ),
+                if (caseInfo!.description != null &&
+                    caseInfo!.description!.isNotEmpty) ...[
+                  AdditionInfo(
+                    title: 'Details Of The Child:',
+                    text: caseInfo!.description,
+                  ),
+                  const VSpace(20),
+                ],
+                if (caseInfo!.fullBreakdownDetails != null &&
+                    caseInfo!.fullBreakdownDetails!.isNotEmpty) ...[
+                  AdditionInfo(
+                    title: 'Details Of The Perpetrator:',
+                    text: caseInfo!.fullBreakdownDetails,
+                  ),
+                  const VSpace(20),
+                ],
+                if (caseInfo!.vehicleDetails != null &&
+                    caseInfo!.vehicleDetails!.isNotEmpty) ...[
+                  AdditionInfo(
+                    title: 'Vehicle Details:',
+                    text: caseInfo!.vehicleDetails,
+                  ),
+                  const VSpace(20),
+                ],
 
                 // CommentsPage(),
               ],
@@ -172,6 +184,7 @@ class CaseInfoView extends StatelessWidget {
             return SingleChildScrollView(
               padding: const EdgeInsets.symmetric(horizontal: 20),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // CardAllCaseInfo(caseInfo: selectedCase),
                   CardAllCaseInfo(
@@ -181,79 +194,31 @@ class CaseInfoView extends StatelessWidget {
                   ),
                   const VSpace(20),
 
-                  Container(
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: AppColors.secondColor,
-                      borderRadius: BorderRadius.circular(12),
+                  MorePhotosCard(caseInfo: selectedCase),
+                  if (selectedCase.description != null &&
+                      selectedCase.description!.isNotEmpty) ...[
+                    AdditionInfo(
+                      title: 'Details Of The Child:',
+                      text: selectedCase.description,
                     ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          Text("morePhotos".ts),
-                          const VSpace(10),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                width: 90,
-                                height: 70,
-                                color: Colors.white,
-                                child: CachedNetworkImage(
-                                  imageUrl: selectedCase.photos.length > 1
-                                      ? (selectedCase.photos[1].url ??
-                                          "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png")
-                                      : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Container(
-                                width: 90,
-                                height: 70,
-                                color: Colors.white,
-                                child: CachedNetworkImage(
-                                  imageUrl: selectedCase.photos.length > 2
-                                      ? (selectedCase.photos[2].url ??
-                                          "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png")
-                                      : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                              Container(
-                                width: 90,
-                                height: 70,
-                                color: Colors.white,
-                                child: CachedNetworkImage(
-                                  imageUrl: selectedCase.photos.length > 3
-                                      ? (selectedCase.photos[3].url ??
-                                          "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png")
-                                      : "https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png",
-                                  fit: BoxFit.cover,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const VSpace(10),
-                        ],
-                      ),
+                    const VSpace(20),
+                  ],
+                  if (selectedCase.fullBreakdownDetails != null &&
+                      selectedCase.fullBreakdownDetails!.isNotEmpty) ...[
+                    AdditionInfo(
+                      title: 'Details Of The Perpetrator:',
+                      text: selectedCase.fullBreakdownDetails,
                     ),
-                  ),
-                  // const VSpace(20),
-                  // AdditionInfo(
-                  //   title: 'Last seen wearing:',
-                  //   text: selectedCase.lastSeenLocation ?? '',
-                  // ),
-                  // const VSpace(20),
-                  // AdditionInfo(
-                  //   title: 'Details of the perpetrator:',
-                  //   text: selectedCase.lastSeenLocation ?? '',
-                  // ),
-                  // const VSpace(20),
-                  // AdditionInfo(
-                  //   title: 'Details of what happened:',
-                  //   text: selectedCase.lastSeenLocation ?? '',
-                  // ),
+                    const VSpace(20),
+                  ],
+                  if (selectedCase.vehicleDetails != null &&
+                      selectedCase.vehicleDetails!.isNotEmpty) ...[
+                    AdditionInfo(
+                      title: 'Vehicle Details:',
+                      text: selectedCase.vehicleDetails,
+                    ),
+                    const VSpace(20),
+                  ],
                 ],
               ),
             );

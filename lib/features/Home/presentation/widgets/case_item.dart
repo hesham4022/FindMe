@@ -64,7 +64,12 @@ class CaseCard extends StatelessWidget {
                             HSpace(4),
                             Expanded(
                               child: Text(
-                                caseModel.address ?? '',
+                                (caseModel.governorate != null &&
+                                        caseModel.governorate!.isNotEmpty &&
+                                        caseModel.policeStation != null &&
+                                        caseModel.policeStation!.isNotEmpty)
+                                    ? "${caseModel.governorate}, ${caseModel.policeStation}"
+                                    : caseModel.address ?? '',
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                                 style: const TextStyle(

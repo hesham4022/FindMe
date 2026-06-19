@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:find_me_app/core/resources/colors.dart';
 import 'package:find_me_app/features/all_cases/data/model/case_model_info.dart';
 import 'package:flutter/material.dart';
+import 'package:find_me_app/features/case_info/presentation/widgets/full_screen_gallery.dart';
 
 class MorePhotosCard extends StatelessWidget {
   final CaseInfoModel caseInfo;
@@ -11,15 +12,15 @@ class MorePhotosCard extends StatelessWidget {
 
   MorePhotosCard({required this.caseInfo});
 
-  String _photoAt(int index) {
-    if (caseInfo.photos.length > index) {
-      return caseInfo.photos[index].url ?? _placeholder;
-    }
-    return _placeholder;
+  List<String> get _allUrls {
+    final urls = caseInfo.photos.map((p) => p.url).whereType<String>().toList();
+    if (urls.isEmpty) return [_placeholder];
+    return urls;
   }
 
   @override
   Widget build(BuildContext context) {
+    final urls = _allUrls;
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.all(14),
@@ -52,11 +53,11 @@ class MorePhotosCard extends StatelessWidget {
           // Photo grid — 3 columns
           Row(
             children: [
-              Expanded(child: _PhotoTile(url: _photoAt(1))),
+              Expanded(child: _PhotoTile(allUrls: urls, currentIndex: 1)),
               const SizedBox(width: 6),
-              Expanded(child: _PhotoTile(url: _photoAt(2))),
+              Expanded(child: _PhotoTile(allUrls: urls, currentIndex: 2)),
               const SizedBox(width: 6),
-              Expanded(child: _PhotoTile(url: _photoAt(3))),
+              Expanded(child: _PhotoTile(allUrls: urls, currentIndex: 3)),
             ],
           ),
         ],
@@ -66,33 +67,49 @@ class MorePhotosCard extends StatelessWidget {
 }
 
 class _PhotoTile extends StatelessWidget {
-  final String url;
+  final List<String> allUrls;
+  final int currentIndex;
 
-  const _PhotoTile({required this.url});
+  const _PhotoTile({required this.allUrls, required this.currentIndex});
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 1,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(10),
-        child: CachedNetworkImage(
-          imageUrl: url,
-          fit: BoxFit.cover,
-          placeholder: (_, __) => Container(
-            color: const Color(0xFFF3F4F6),
-            child: const Icon(
-              Icons.person_outline,
-              color: Color(0xFFD1D5DB),
-              size: 28,
+    final url = currentIndex < allUrls.length ? allUrls[currentIndex] : 'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png';
+
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (_) => FullScreenGallery(
+              imageUrls: allUrls,
+              initialIndex: currentIndex < allUrls.length ? currentIndex : 0,
             ),
           ),
-          errorWidget: (_, __, ___) => Container(
-            color: const Color(0xFFF3F4F6),
-            child: const Icon(
-              Icons.broken_image_outlined,
-              color: Color(0xFFD1D5DB),
-              size: 28,
+        );
+      },
+      child: AspectRatio(
+        aspectRatio: 1,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: CachedNetworkImage(
+            imageUrl: url,
+            fit: BoxFit.cover,
+            placeholder: (_, __) => Container(
+              color: const Color(0xFFF3F4F6),
+              child: const Icon(
+                Icons.person_outline,
+                color: Color(0xFFD1D5DB),
+                size: 28,
+              ),
+            ),
+            errorWidget: (_, __, ___) => Container(
+              color: const Color(0xFFF3F4F6),
+              child: const Icon(
+                Icons.broken_image_outlined,
+                color: Color(0xFFD1D5DB),
+                size: 28,
+              ),
             ),
           ),
         ),
